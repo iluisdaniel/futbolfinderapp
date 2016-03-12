@@ -11,7 +11,8 @@ class BusinessesController < ApplicationController
   def create
   	@business = Business.new(business_params)
   	if@business.save
-  		flash[:success] = "Welcome to Futbol Finder!"
+  		log_in @business
+      flash[:success] = "Welcome to Futbol Finder!"
   		redirect_to @business
   	else
   		render 'new'

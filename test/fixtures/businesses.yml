@@ -10,4 +10,12 @@
   #country: MyString
   #zipcode: MyString
 
-
+canchita:
+ name: La Canchita Example
+ email: canchita@example.com
+ phone: 7862707682
+ address: 8384 nw 114
+ city: Doral
+ state: Florida
+ zipcode: '33178'
+ password_digest: <%= Business.digest('password') %>

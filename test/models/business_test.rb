@@ -120,5 +120,9 @@ class BusinessTest < ActiveSupport::TestCase
     assert_not @business.valid?
   end
 
+   test "authenticated? should return false for a user with nil digest" do
+    assert_not @business.authenticated?('')
+  end
+
 
 end
