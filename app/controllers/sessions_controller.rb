@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
   	if business && business.authenticate(params[:session][:password])
   		log_in business
   		params[:session][:remember_me] == '1' ? remember(business) : forget(business)
-  		redirect_to business
+  		redirect_back_or business
   	else	
   		flash.now[:danger] = 'Invalid email/password combination' 
   		render 'new'

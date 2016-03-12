@@ -1,0 +1,10 @@
+<% provide(:title, 'All businesses') %>
+<h1>All businesses</h1>
+
+<ul class="businesses">
+  <% @businesses.each do |business| %>
+    <li>
+      <%= link_to business.name, business %>
+    </li>
+  <% end %>
+</ul>

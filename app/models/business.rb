@@ -12,7 +12,7 @@ class Business < ActiveRecord::Base
 	validates :state, presence: true, length: {maximum: 50}
 	validates :zipcode, presence: true, length: {maximum: 5, minimum: 5}
 	has_secure_password
-	validates :password, presence: true, length: { minimum: 6 }
+	validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
 	# Return the hash digest of the given string
 	def Business.digest(string)

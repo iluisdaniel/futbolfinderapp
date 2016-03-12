@@ -6,8 +6,7 @@ class BusinessTest < ActiveSupport::TestCase
   # end
 
   def setup
-  	@business = Business.new(name: "La Caimanera", email: "caimanera@example.com", phone: "7862367863", address: "8323 nw 12 ct", city: "Doral", 
-  		state: "Florida", zipcode: "33189", password: "123456", password_confirmation: "123456")
+  	@business = businesses(:canchita)
   end
 
   test "should be valid" do

@@ -19,3 +19,13 @@ canchita:
  state: Florida
  zipcode: '33178'
  password_digest: <%= Business.digest('password') %>
+
+caimanera:
+ name: La caimanera Example
+ email: caimanera@example.com
+ phone: 7862704747
+ address: 8384 nw 114
+ city: Doral
+ state: Florida
+ zipcode: '33178'
+ password_digest: <%= Business.digest('password') %>

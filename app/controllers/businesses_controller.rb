@@ -1,5 +1,11 @@
 class BusinessesController < ApplicationController
+  before_action :logged_in_business, only: [:index, :edit, :update]
+  before_action :correct_business,   only: [:edit, :update]
   
+  def index
+    @businesses = Business.all
+  end
+
   def show
   	@business = Business.find(params[:id])
   end
@@ -19,11 +25,41 @@ class BusinessesController < ApplicationController
   	end
   end
 
+  def edit
+    @business = Business.find(params[:id])
+  end
+
+  def update
+    @business = Business.find(params[:id])
+    if @business.update_attributes(business_params)
+      flash[:success] = "Profile updated"
+      redirect_to @business
+    else
+      render 'edit'
+    end
+  end
+
   private
 
   def business_params
   	params.require(:business).permit(:name, :email, :phone, :address, :city, :state, :zipcode, :password, 
   										:password_confirmation)
   end
+
+  # Confirms a logged-in user.
+    def logged_in_business
+      unless logged_in?
+        store_location
+        flash[:danger] = "Please log in."
+        redirect_to login_url
+      end
+    end
+
+    # Confirms the correct user.
+    def correct_business
+      @business = Business.find(params[:id])
+      redirect_to(root_url) unless current_business?(@business)
+    end
+
 
 end
