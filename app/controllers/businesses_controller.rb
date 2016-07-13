@@ -7,7 +7,7 @@ class BusinessesController < ApplicationController
   end
 
   def show
-  	@business = Business.find(params[:id])
+  	@business = Business.friendly.find(params[:id])
   end
 
   def new
@@ -26,11 +26,11 @@ class BusinessesController < ApplicationController
   end
 
   def edit
-    @business = Business.find(params[:id])
+    @business = Business.friendly.find(params[:id])
   end
 
   def update
-    @business = Business.find(params[:id])
+    @business = Business.friendly.find(params[:id])
     if @business.update_attributes(business_params)
       flash[:success] = "Profile updated"
       redirect_to @business
@@ -57,7 +57,7 @@ class BusinessesController < ApplicationController
 
     # Confirms the correct user.
     def correct_business
-      @business = Business.find(params[:id])
+      @business = Business.friendly.find(params[:id])
       redirect_to(root_url) unless current_business?(@business)
     end
 

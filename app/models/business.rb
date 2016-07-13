@@ -1,5 +1,7 @@
 class Business < ActiveRecord::Base
 	attr_accessor :remember_token
+	extend FriendlyId
+	friendly_id :slug_candidates, use: :slugged
 	before_save { self.email = email.downcase }
 	validates :name, presence: true, length: {maximum: 50}
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
@@ -41,6 +43,19 @@ class Business < ActiveRecord::Base
    # Forgets a user.
   def forget
     update_attribute(:remember_digest, nil)
+  end
+
+  def should_generate_new_friendly_id?
+  	new_record?
+  end
+
+   def slug_candidates
+    [
+      :name,
+      [:name, :city],
+      [:name, :zipcode, :city],
+      [:name, :zipcode, :city, :state]
+    ]
   end
 
 end
