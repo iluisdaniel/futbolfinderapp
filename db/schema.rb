@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713044735) do
+ActiveRecord::Schema.define(version: 20160714045853) do
 
   create_table "businesses", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -26,12 +26,10 @@ ActiveRecord::Schema.define(version: 20160713044735) do
     t.datetime "updated_at",                  null: false
     t.string   "password_digest", limit: 255
     t.string   "remember_digest", limit: 255
-    t.string   "username",        limit: 255
     t.string   "slug",            limit: 255
   end
 
   add_index "businesses", ["email"], name: "index_businesses_on_email", unique: true, using: :btree
-  add_index "businesses", ["username"], name: "index_businesses_on_username", unique: true, using: :btree
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",           limit: 255, null: false
