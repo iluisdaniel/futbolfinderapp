@@ -1,5 +1,6 @@
 class Business < ActiveRecord::Base
 	attr_accessor :remember_token
+  has_many :schedules, dependent: :destroy
 	extend FriendlyId
 	friendly_id :slug_candidates, use: :slugged
 	before_save { self.email = email.downcase }
