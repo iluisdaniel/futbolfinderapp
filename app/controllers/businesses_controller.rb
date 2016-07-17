@@ -8,6 +8,7 @@ class BusinessesController < ApplicationController
 
   def show
   	@business = Business.friendly.find(params[:id])
+    @schedules = @business.schedules.all
   end
 
   def new
