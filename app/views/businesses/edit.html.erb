@@ -1,39 +1,151 @@
 <% provide(:title, 'Edit Business') %>
 <h1>Update Business</h1>
+<div class="container business-settings">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-xs-12 col-md-3">
+       <ul class="nav nav-pills nav-stacked" role="tablist">
+          <li role="presentation" class="active"><a href="#info" aria-controls="home" role="tab" data-toggle="tab">Account<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
+          <li role="presentation"><a href="#schedule" aria-controls="profile" role="tab" data-toggle="tab">Schedule<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
+          <li role="presentation"><a href="#fields" aria-controls="messages" role="tab" data-toggle="tab">Fields and Prices<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
+        </ul>
+    </div><!-- End col-md-4 -->
+    <div class="col-xs-12 col-md-7">
+      <div class="panel panel-default panel-main">
+        <div class="panel-body">
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="info">
+              
+                <h1 class="lead"><span class="text-uppercase">Information</span><small><br> Change your basic settings</small></h1><hr>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@business) do |f| %>
-      <%= render 'shared/error_messages' %>	
-
-      <%= f.label :name %>
-      <%= f.text_field :name, class: 'form-control' %>
-
-      <%= f.label :email %>
-      <%= f.email_field :email, class: 'form-control' %>
-
-      <%= f.label :phone %>
-      <%= f.text_field :phone, class: 'form-control' %>
-
-      <%= f.label :address %>
-      <%= f.text_field :address, class: 'form-control' %>
-
-      <%= f.label :city %>
-      <%= f.text_field :city, class: 'form-control' %>
-
-      <%= f.label :state %>
-      <%= f.text_field :state, class: 'form-control' %>
-
-      <%= f.label :zipcode %>
-      <%= f.text_field :zipcode, class: 'form-control' %>
-
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control' %>
-
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation, class: 'form-control' %>
-
-      <%= f.submit "Save Changes", class: "btn btn-primary" %>
-    <% end %>
-  </div>
-</div>
+                <%= form_for(@business, class: "form-horizontal") do |f| %>
+                  <div class="form-group">
+                    <%= f.label :name, class: "col-sm-3 control-label" %>
+                    <div class="col-sm-8">
+                      <%= f.text_field :name, class: 'form-control', placeholder: "Name" %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label :email, class: "col-sm-3 control-label" %>
+                    <div class="col-sm-8">
+                      <%= f.email_field :email, class: 'form-control', placeholder: "Email" %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label :phone, class: "col-sm-3 control-label" %>
+                    <div class="col-sm-8">
+                      <%= f.text_field :phone, class: 'form-control', placeholder: "Phone" %>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="form-group">
+                    <%= f.label :address, class: "col-sm-3 control-label" %>
+                    <div class="col-sm-8">
+                      <%= f.text_field :address, class: 'form-control', placeholder: "Address" %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label :city, class: "col-sm-3 control-label" %>
+                    <div class="col-sm-8">
+                     <%= f.text_field :city, class: 'form-control', placeholder: "City" %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label :state, class: "col-sm-3 control-label" %>
+                    <div class="col-sm-8">
+                       <%= f.text_field :state, class: 'form-control', placeholder: "State" %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label :zipcode, class: "col-sm-3 control-label" %>
+                    <div class="col-sm-8">
+                      <%= f.text_field :zipcode, class: 'form-control', placeholder: "Zip Code" %>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="form-group">
+                    <%= f.label :password, class: "col-sm-3 control-label" %>
+                    <div class="col-sm-8">
+                     <%= f.password_field :password, class: 'form-control', placeholder: "Password" %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                   <%= f.label :password_confirmation, class: "col-sm-3 control-label" %>
+                    <div class="col-sm-8">
+                     <%= f.password_field :password_confirmation, class: 'form-control', placeholder: "Confirm Password" %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-10">
+                      <%= f.submit "Save Changes", class: "btn btn-primary" %>
+                    </div>
+                  </div>
+                <% end %>
+                  
+            </div><!-- end tab info-->
+            <div role="tabpanel" class="tab-pane" id="schedule">
+              <h1 class="lead"><span class="text-uppercase">Schedule</span><small><br> Change your business hours</small></h1>
+              <hr>
+              <form class="form-horizontal">
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-3 control-label">Day</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="Day">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-3 control-label">Open Time</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="Open">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-3 control-label">Close Time</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="Close">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-10">
+                      <button type="submit" class="btn btn-primary">Add New Day</button>
+                    </div>
+                  </div>
+                </form>
+            </div><!-- end schedule tab-->
+            <div role="tabpanel" class="tab-pane" id="fields">
+              <h1 class="lead"><span class="text-uppercase">Fields</span><small> <br>Add or Remove type of Fields and their prices</small></h1>
+              <hr>
+              <form class="form-horizontal">
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-3 control-label">Number of Players</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="Number">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-3 control-label">Quantity</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="Quantity">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-3 control-label">Price</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="Price">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-10">
+                      <button type="submit" class="btn btn-primary">Add Field</button>
+                    </div>
+                  </div>
+                </form>
+            </div><!-- end fields tab -->
+          </div><!-- end tabs -->
+        </div><!-- end panel body -->
+      </div><!-- End panel -->    
+    </div><!-- End col-md-8 -->
+    <div class="col-md-1"></div>
+  </div><!--End row -->  
+</div><!-- End container business-->
