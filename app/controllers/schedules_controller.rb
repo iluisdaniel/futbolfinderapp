@@ -1,5 +1,6 @@
 class SchedulesController < ApplicationController
 	before_action :signed_in_business, only: [:create, :destroy]
+	before_action :correct_business,   only: :destroy
 
 	def create
 		@schedule = current_business.schedules.build(schedule_params)
@@ -12,10 +13,19 @@ class SchedulesController < ApplicationController
 	end
 
 	def destroy
+		@schedule.destroy
+		redirect_to edit_business_path(current_business.id)
 	end
 
-	def schedule_params
-      params.require(:schedule).permit(:day, :open_time, :close_time, :business)
-    end
+	private
+
+		def schedule_params
+    	  	params.require(:schedule).permit(:day, :open_time, :close_time, :business)
+   		end
+
+   		def correct_business
+	      @schedule = current_business.schedules.find_by(id: params[:id])
+	      redirect_to root_url if @schedule.nil?
+    	end
 
 end
