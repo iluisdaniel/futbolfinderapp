@@ -28,6 +28,8 @@ class BusinessesController < ApplicationController
 
   def edit
     @business = Business.friendly.find(params[:id])
+    @schedules = @business.schedules.all
+    @schedule = Schedule.new
   end
 
   def update

@@ -17,7 +17,7 @@
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="info">
               
-                <h1 class="lead"><span class="text-uppercase">Information</span><small><br> Change your basic settings</small></h1><hr>
+                <h3 class="lead"><span class="text-uppercase">Information</span><small><br> Change your basic settings</small></h3><hr>
 
                 <%= form_for(@business, class: "form-horizontal") do |f| %>
                   <div class="form-group">
@@ -85,36 +85,43 @@
                   
             </div><!-- end tab info-->
             <div role="tabpanel" class="tab-pane" id="schedule">
-              <h1 class="lead"><span class="text-uppercase">Schedule</span><small><br> Change your business hours</small></h1>
+              <h3 class="lead"><span class="text-uppercase">Schedule</span><small><br> Change your business hours</small></h3>
               <hr>
-              <form class="form-horizontal">
+                <div class="container">
+                  <h4>Business Hours</h4>
+                    <%= render @schedules %>
+                </div>
+              <hr>
+              <%= form_for(@schedule, class: "form-horizontal") do |f| %>
+              <%= render 'shared/error_messages' %> 
                   <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-3 control-label">Day</label>
+                    <%= f.label :day, class: "col-sm-3 control-label" %>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="Day">
+                      <%= f.text_field :day, class: 'form-control', placeholder: "Day" %>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-3 control-label">Open Time</label>
+                    <%= f.label :open_time, class: "col-sm-3 control-label" %>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="Open">
+                      <%= f.text_field :open_time, class: 'form-control', placeholder: "Open Time" %>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-3 control-label">Close Time</label>
+                  <div class="form-group">                 
+                    <%= f.label :close_time, class: "col-sm-3 control-label" %>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="Close">
+                      <%= f.text_field :close_time, class: 'form-control', placeholder: "Close Time" %>
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-sm-offset-1 col-sm-10">
-                      <button type="submit" class="btn btn-primary">Add New Day</button>
+                      <%= f.submit "Add New Day", class: "btn btn-primary" %>
                     </div>
                   </div>
-                </form>
+                <% end %>
             </div><!-- end schedule tab-->
+
             <div role="tabpanel" class="tab-pane" id="fields">
-              <h1 class="lead"><span class="text-uppercase">Fields</span><small> <br>Add or Remove type of Fields and their prices</small></h1>
+              <h3 class="lead"><span class="text-uppercase">Fields</span><small> <br>Add or Remove type of Fields and their prices</small></h3>
               <hr>
               <form class="form-horizontal">
                   <div class="form-group">
