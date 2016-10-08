@@ -89,3 +89,48 @@ input {
     border-bottom: 1px solid $gray-lighter;
   }
 }
+
+/*Business Edit page */
+.schedules{
+  td, th {
+  width: 10rem;
+  height: 4rem;
+  border-bottom: 1px solid #eeeeee;
+  text-align: center;
+}
+th {
+  background:#f5f5f5;
+  border-color: white;
+}
+body {
+  padding: 1rem;
+}
+}
+
+.panel #info{
+  input{
+    margin-bottom:2rem;
+  }
+  .btn{
+    margin-top: 2rem;
+  }
+}
+
+.panel #schedule{
+  select{
+    margin-bottom:2rem;
+  }
+  .time-select{
+    select{
+      width:30%;
+    }
+  }
+  table{
+    margin-bottom: 3rem;
+  }
+  .btn{
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+  }
+}
+

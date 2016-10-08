@@ -1,4 +1,8 @@
-<li>
-  <span class="content"><%= schedule.day %></span>
-  <%= link_to "delete", schedule, method: :delete, data: {confirm: "You sure?"}, title: schedule.day %>
-</li>
+<tr>
+    <th><%= schedule.day %></th>
+    <td><%= schedule.open_time.strftime("%I:%M%p") %></td>
+    <td><%= schedule.close_time.strftime("%I:%M%p") %></td>
+    <td> 
+  		<%= link_to "delete", schedule, method: :delete, data: {confirm: "You sure?"}, title: schedule.day %>
+  	</td>
+ </tr>

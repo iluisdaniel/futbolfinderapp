@@ -5,8 +5,8 @@
  <div class="span8">
     <% if @business.schedules.any? %>
       <h3>Schedules (<%= @business.schedules.count %>)</h3>
-      <ol class="schedules">
+      <table class="schedules">
         <%= render @schedules %>
-      </ol>
+      </table>
     <% end %>
   </div>
