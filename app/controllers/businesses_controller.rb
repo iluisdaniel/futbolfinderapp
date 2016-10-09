@@ -34,6 +34,8 @@ class BusinessesController < ApplicationController
 
   def update
     @business = Business.friendly.find(params[:id])
+    @schedules = @business.schedules.all
+    @schedule = Schedule.new
     if @business.update_attributes(business_params)
       flash[:success] = "Profile updated"
       redirect_to @business
