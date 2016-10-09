@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  number_players: 10
+  name: Cancha 1
+  description: Es ta es la primera cancha
+  price: 100
+  business_id: 1
+

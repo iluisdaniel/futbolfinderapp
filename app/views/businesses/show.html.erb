@@ -10,3 +10,12 @@
       </table>
     <% end %>
   </div>
+
+   <div class="span8">
+    <% if @business.fields.any? %>
+      <h3>Fields (<%= @business.fields.count %>)</h3>
+      <table class="schedules">
+        <%= render @fields %>
+      </table>
+    <% end %>
+  </div>

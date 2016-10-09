@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160716025125) do
+ActiveRecord::Schema.define(version: 20161009001108) do
 
   create_table "businesses", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -30,6 +30,18 @@ ActiveRecord::Schema.define(version: 20160716025125) do
   end
 
   add_index "businesses", ["email"], name: "index_businesses_on_email", unique: true, using: :btree
+
+  create_table "fields", force: :cascade do |t|
+    t.integer  "number_players", limit: 4
+    t.string   "name",           limit: 255
+    t.string   "description",    limit: 255
+    t.decimal  "price",                      precision: 10
+    t.integer  "business_id",    limit: 4
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+  end
+
+  add_index "fields", ["business_id"], name: "index_fields_on_business_id", using: :btree
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",           limit: 255, null: false

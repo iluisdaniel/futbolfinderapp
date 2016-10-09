@@ -9,6 +9,7 @@ class BusinessesController < ApplicationController
   def show
   	@business = Business.friendly.find(params[:id])
     @schedules = @business.schedules.all
+    @fields = @business.fields.all
   end
 
   def new
@@ -29,13 +30,17 @@ class BusinessesController < ApplicationController
   def edit
     @business = Business.friendly.find(params[:id])
     @schedules = @business.schedules.all
+    @fields = @business.fields.all
     @schedule = Schedule.new
+    @field = Field.new
   end
 
   def update
     @business = Business.friendly.find(params[:id])
     @schedules = @business.schedules.all
+    @fields = @business.fields.all
     @schedule = Schedule.new
+    @field = Field.new
     if @business.update_attributes(business_params)
       flash[:success] = "Profile updated"
       redirect_to @business

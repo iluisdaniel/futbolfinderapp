@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   delete 'logout'  => 'sessions#destroy'
 
   resources :schedules, only: [:create, :destroy]
+  resources :fields, only: [:create, :update, :destroy]
 
   resources :businesses, path: ''
 

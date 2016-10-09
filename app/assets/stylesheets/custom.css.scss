@@ -91,6 +91,9 @@ input {
 }
 
 /*Business Edit page */
+.fields{
+  
+}
 .schedules{
   td, th {
   width: 10rem;
@@ -107,7 +110,7 @@ body {
 }
 }
 
-.panel #info{
+.panel{
   input{
     margin-bottom:2rem;
   }

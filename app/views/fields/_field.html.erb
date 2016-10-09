@@ -1,0 +1,9 @@
+<tr>
+    <th><%= field.name %></th>
+    <td><%= field.description %></td>
+    <td><%= field.number_players %></td>
+    <td><%= field.price %></td>
+    <td> 
+  		<%= link_to "delete", field, method: :delete, data: {confirm: "You sure?"}, title: field.number_players %>
+  	</td>
+ </tr>

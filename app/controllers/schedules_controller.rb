@@ -8,7 +8,8 @@ class SchedulesController < ApplicationController
 			flash[:success] = "Schedule created!"
 			redirect_to edit_business_path(current_business.id) 
 		else 
-			render 'static_pages/home'
+			flash[:danger] = "Error, Schedule was not created"
+			redirect_to edit_business_path(current_business.id) 
 		end
 	end
 
