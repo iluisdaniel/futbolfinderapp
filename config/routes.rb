@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  
+
   get 'sessions/new'
 
   root             'static_pages#home'
@@ -12,12 +14,13 @@ Rails.application.routes.draw do
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
 
+  get 'u/signup' => 'users#new'
+
   resources :schedules, only: [:create, :destroy]
   resources :fields, only: [:create, :update, :destroy]
-
   resources :businesses, path: ''
-
-
+  
+  resources :users, path: '/u/'
 
   # Get routes in the shell: bundle exec rake routes
 
