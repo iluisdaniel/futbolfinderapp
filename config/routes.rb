@@ -15,12 +15,14 @@ Rails.application.routes.draw do
   delete 'logout'  => 'sessions#destroy'
 
   get 'u/signup' => 'users#new'
+  get 'u/users' => 'users#index'
 
   resources :schedules, only: [:create, :destroy]
   resources :fields, only: [:create, :update, :destroy]
   resources :businesses, path: ''
   
   resources :users, path: '/u/'
+  
 
   # Get routes in the shell: bundle exec rake routes
 

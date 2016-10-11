@@ -31,7 +31,7 @@
                     </ul>
                 </li>
                 <% elsif signed_in? %>
-                  <li><%= link_to "Users", '#' %></li>
+                  <li><%= link_to "Users", u_users_path %></li>
                   <li><%= link_to "Businesses", fields_path %></li>
                     <li id="fat-menu" class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -39,7 +39,7 @@
                       </a>
                       <ul class="dropdown-menu">
                         <li><%= link_to "Profile", current_user %></li>
-                        <li><%= link_to "Settings", '#' %></li>
+                        <li><%= link_to "Settings", edit_user_path(current_user) %></li>
                         <li class="divider"></li>
                         <li>
                           <%= link_to "Sign out", logout_path, method: "delete" %>
