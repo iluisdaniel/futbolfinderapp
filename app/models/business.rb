@@ -6,7 +6,8 @@ class Business < ActiveRecord::Base
 	friendly_id :slug_candidates, use: :slugged
 	before_save { self.email = email.downcase }
 	validates :name, presence: true, length: {maximum: 50}
-	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+	validate :check_email_in_user
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 	validates :email, presence: true, length: {maximum: 255},
 					  format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
 	validates :phone, presence: true, length: {maximum: 10, minimum: 10},
@@ -59,5 +60,12 @@ class Business < ActiveRecord::Base
       [:name, :zipcode, :city, :state]
     ]
   end
+
+  def check_email_in_user
+        email = User.find_by_email(self.email)
+        if  email != nil 
+          errors.add(:email, "There is a User using the same email.")
+        end 
+      end
 
 end
