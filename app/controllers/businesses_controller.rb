@@ -1,5 +1,5 @@
 class BusinessesController < ApplicationController
-  before_action :logged_in_business, only: [:index, :edit, :update]
+  before_action :logged_in_business, only: [:edit, :update]
   before_action :correct_business,   only: [:edit, :update]
   
   def index
@@ -56,7 +56,7 @@ class BusinessesController < ApplicationController
   										:password_confirmation)
   end
 
-  # Confirms a logged-in user.
+  # Confirms a logged-in business.
     def logged_in_business
       unless logged_in?
         store_location
