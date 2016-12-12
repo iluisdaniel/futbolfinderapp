@@ -19,8 +19,9 @@ module SessionsHelper
 
   def signed_in_business
     unless logged_in?
-      store_location
-      redirect_to signin_url, notice: "Please sign in"
+       store_location
+        flash[:danger] = "Please log in."
+        redirect_to login_url
     end
   end
 

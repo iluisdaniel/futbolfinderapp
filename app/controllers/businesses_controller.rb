@@ -1,5 +1,5 @@
 class BusinessesController < ApplicationController
-  before_action :logged_in_business, only: [:edit, :update]
+  before_action :signed_in_business, only: [:edit, :update]
   before_action :correct_business,   only: [:edit, :update]
   
   def index
@@ -55,15 +55,6 @@ class BusinessesController < ApplicationController
   	params.require(:business).permit(:name, :email, :phone, :address, :city, :state, :zipcode, :password, 
   										:password_confirmation)
   end
-
-  # Confirms a logged-in business.
-    def logged_in_business
-      unless logged_in?
-        store_location
-        flash[:danger] = "Please log in."
-        redirect_to login_url
-      end
-    end
 
     # Confirms the correct user.
     def correct_business
