@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161010231133) do
+ActiveRecord::Schema.define(version: 20161212050532) do
 
   create_table "businesses", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -56,6 +56,19 @@ ActiveRecord::Schema.define(version: 20161010231133) do
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
+  create_table "games", force: :cascade do |t|
+    t.date     "date"
+    t.time     "time"
+    t.integer  "user_id",     limit: 4
+    t.integer  "business_id", limit: 4
+    t.integer  "field_id",    limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "games", ["business_id"], name: "index_games_on_business_id", using: :btree
+  add_index "games", ["user_id"], name: "index_games_on_user_id", using: :btree
+
   create_table "schedules", force: :cascade do |t|
     t.string   "day",         limit: 255
     t.time     "open_time"
@@ -79,4 +92,6 @@ ActiveRecord::Schema.define(version: 20161010231133) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
 
+  add_foreign_key "games", "businesses"
+  add_foreign_key "games", "users"
 end

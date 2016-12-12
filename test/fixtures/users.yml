@@ -3,7 +3,9 @@
 luis:
   name: Luis Daniel
   email: luis@example.com
+  password_digest: 123456lg
 
 two:
   name: MyString
   email: MyString
+  password_digest: 123456lk
