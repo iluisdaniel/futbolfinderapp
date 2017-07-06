@@ -67,6 +67,6 @@ class Business < ActiveRecord::Base
         if  email != nil 
           errors.add(:email, "There is a User using the same email.")
         end 
-      end
+  end
 
 end

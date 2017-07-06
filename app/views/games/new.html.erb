@@ -1,0 +1,32 @@
+<% provide(:title, 'New Game') %>
+<h1>New Game</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@game) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>	
+
+      <%= f.label :date %>
+      <%= f.date_select :date,:default => Date.today, class: 'form-control' %>
+
+      <%= f.label :time %>
+      <%= f.time_select :time, :default => Time.now, ampm:true, :class => 'form-control' %> 
+
+      <%= f.label :user_id %>
+      <%= f.text_field :user_id, class: 'form-control' %>
+
+
+     <%= f.label :business_id %>
+      <%= f.text_field :business_id, class: 'form-control' %>
+
+      <%= f.label :field_id %>
+      <%= f.text_field :field_id, class: 'form-control' %>
+
+      <%= f.label :end_time %>
+      <%= f.time_select :end_time, :default => Time.now + 1 * 60 * 60, ampm:true, :class => 'form-control' %> 
+
+
+      <%= f.submit "Create game", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

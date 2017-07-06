@@ -1,11 +1,12 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  date: 2016-12-12
+  date: 2017-12-11
   time: 2016-12-12 00:05:32
   user_id: 1
   business_id: 1
   field_id: 1
+  end_time: 2016-12-12 07:06:32
 
 two:
   date: 2016-12-12
