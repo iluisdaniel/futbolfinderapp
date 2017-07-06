@@ -40,14 +40,18 @@ class Game < ActiveRecord::Base
 	  	end
 
 	  	def game_time_greater_than_time_now?
-			game_day = date.wday
-			today = Date.today.wday
 
-			if game_day == today
-				d = Time.now.to_i
-				time = time.to_i
+			if date < Date.today
+				return false
+			end
 
-				if (time < d)
+			#game_day = date.wday
+			today = Date.today
+
+			if date.day == today.day
+				d = Time.now
+				
+				if (time.hour < d.hour)
 					return false
 				end
 			end

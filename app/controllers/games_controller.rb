@@ -1,6 +1,5 @@
 class GamesController < ApplicationController
-	before_action :signed_in_business_or_user?, only: [:index, :show]
-	include GamesHelper
+	before_action :signed_in_business_or_user?, only: [:index, :show, :new, :create]
 
 	def index
 		@user = current_user
@@ -39,7 +38,13 @@ class GamesController < ApplicationController
 	end
 
 	def create
-		@game = Game.new(game_params)		
+		@game = Game.new(game_params)
+
+		if logged_in?
+			@b = current_business
+			@game[:business_id] = @b.id 
+		end
+
 		if @game.save
 			redirect_to games_path
 			flash[:success] = "Game was created"

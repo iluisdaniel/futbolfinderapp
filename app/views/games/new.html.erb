@@ -15,9 +15,10 @@
       <%= f.label :user_id %>
       <%= f.text_field :user_id, class: 'form-control' %>
 
-
-     <%= f.label :business_id %>
+      <% if !logged_in? %> 
+      <%= f.label :business_id %>
       <%= f.text_field :business_id, class: 'form-control' %>
+      <% end %>
 
       <%= f.label :field_id %>
       <%= f.text_field :field_id, class: 'form-control' %>
