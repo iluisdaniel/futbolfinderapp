@@ -5,9 +5,9 @@ class GamesController < ApplicationController
 		@user = current_user
 		@business = current_business
 		if @business != nil
-			@games = Game.where(business_id: @business)
+			@games = Game.where(business_id: @business).order(created_at: :desc)
 		elsif @user !=nil
-			@games = Game.where(user_id: @user)
+			@games = Game.where(user_id: @user).order(created_at: :desc)
 		end
 	end
 

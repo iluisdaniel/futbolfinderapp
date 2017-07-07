@@ -4,7 +4,11 @@
 <ul class="games">
   <% @games.each do |game| %>
     <li>
-      <%= link_to game.time, game %>
+      <%= link_to game.date, game %>
+      <%= game.time.hour %>:<%= game.time.min %>
+      <%= game.business.name %>
+      <%= game.business.id%>
+      <%= game.field_id %>
     </li>
   <% end %>
 </ul>

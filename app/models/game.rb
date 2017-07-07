@@ -9,6 +9,9 @@ class Game < ActiveRecord::Base
   validate :check_game_is_at_least_one_hour
   validate :check_game_time_greater_than_time_now
   validate :check_if_the_business_is_open_at_that_time
+  validate :check_fields_are_availble_at_that_time
+  validate :check_if_field_is_reserverd
+  validate :check_if_field_id_belongs_to_buesiness
 
 
   	def check_date_later_than_today
@@ -27,7 +30,68 @@ class Game < ActiveRecord::Base
   		errors.add(:time, " business is close at that time") unless is_it_open?
   	end
 
+  	def check_fields_are_availble_at_that_time
+  		errors.add(:date, "there are no fiels availble at that time") unless are_fields_available_at_that_time?
+  	end
+
+  	def check_if_field_is_reserverd
+  		errors.add(:field_id, "the field is reserved already") unless is_field_reserved?
+  	end
+
+  	def check_if_field_id_belongs_to_buesiness
+  		errors.add(:field_id, "This field doesn't belong to the business") unless is_field_id_correct?
+  	end
+
   	private
+
+  		def is_field_reserved?
+  			@games = Game.where(date:date, time:time)
+
+  			@games.each do |g|
+  							
+				if g.field_id == field_id
+					return false
+				end	
+  			end
+
+  			return true
+  		end
+
+  		def is_field_id_correct?
+  			@fields = Field.where(business_id: business_id)
+
+  			@fields.each do |f|
+  							
+				if f.id != field_id
+					return false
+				end	
+  			end
+
+  			return true
+  		end
+
+  		def are_fields_available_at_that_time?
+  			@games = Game.where(date:date, time:time)
+  			@fields = Field.where(business_id: business_id)
+
+  			if @fields.empty?
+  				return false  				
+  			end
+
+  			if @fields.count <= @games.count 
+  				return false
+  			end
+
+  			return true
+  		end
+
+  		def are_there_fields?
+  			@fields = Field.where(business_id:business_id)
+
+  			if @fields.empty?
+  				return false  				
+  			end
+  		end
 
 	  	def game_time_greater_than_one_hour?
 	  		t = time.to_i
@@ -40,12 +104,6 @@ class Game < ActiveRecord::Base
 	  	end
 
 	  	def game_time_greater_than_time_now?
-
-			if date < Date.today
-				return false
-			end
-
-			#game_day = date.wday
 			today = Date.today
 
 			if date.day == today.day
@@ -55,6 +113,7 @@ class Game < ActiveRecord::Base
 					return false
 				end
 			end
+
 			return true
 		end
 
@@ -77,7 +136,7 @@ class Game < ActiveRecord::Base
 
 						if is_open == true 
 							break
-						end
+						end	
 					end
 
 					return is_open
