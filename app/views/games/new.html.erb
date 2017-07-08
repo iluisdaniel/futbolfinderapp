@@ -7,10 +7,10 @@
     <%= render 'shared/error_messages', object: f.object %>	
 
       <%= f.label :date %>
-      <%= f.date_select :date,:default => Date.today, class: 'form-control' %>
+      <%= f.date_select(:date,prompt: { day: 'choose day', month: 'choose month' }, start_year: Date.today.year, end_year: Date.today.year, class: 'form-control') %>
 
       <%= f.label :time %>
-      <%= f.time_select :time, :default => Time.now, ampm:true, :class => 'form-control' %> 
+      <%= f.time_select(:time, prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 10) %> 
 
       <%= f.label :user_id %>
       <%= f.text_field :user_id, class: 'form-control' %>
@@ -24,7 +24,8 @@
       <%= f.text_field :field_id, class: 'form-control' %>
 
       <%= f.label :end_time %>
-      <%= f.time_select :end_time, :default => Time.now + 1 * 60 * 60, ampm:true, :class => 'form-control' %> 
+      <%= f.time_select(:end_time, prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 10) %>
+      
 
 
       <%= f.submit "Create game", class: "btn btn-large btn-primary" %>
