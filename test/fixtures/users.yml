@@ -1,11 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 luis:
+  id: 1
   name: Luis Daniel
   email: luis@example.com
   password_digest: 123456lg
 
-two:
-  name: MyString
-  email: MyString
+Maria:
+  id: 2
+  name: Maria Del Mar
+  email: Maria@example.com
   password_digest: 123456lk

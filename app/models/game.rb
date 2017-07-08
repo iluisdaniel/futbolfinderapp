@@ -12,6 +12,7 @@ class Game < ActiveRecord::Base
   validate :check_fields_are_availble_at_that_time
   validate :check_if_field_is_reserverd
   validate :check_if_field_id_belongs_to_buesiness
+  validate :check_if_user_have_reserve_a_game_that_date
 
 
   	def check_date_later_than_today
@@ -42,7 +43,20 @@ class Game < ActiveRecord::Base
   		errors.add(:field_id, "This field doesn't belong to the business") unless is_field_id_correct?
   	end
 
+  	def check_if_user_have_reserve_a_game_that_date
+  		errors.add(:date, "An user can have two reservations the same date") unless have_user_reserved_the_same_date?
+  	end
+
   	private
+
+  		def have_user_reserved_the_same_date?
+  			@userGames = Game.where(user_id: user_id, date: date)
+
+  			if @userGames.count > 0
+  				return false
+  			end
+  			return true
+  		end
 
   		def is_field_reserved?
   			@games = Game.where(date:date, time:time)

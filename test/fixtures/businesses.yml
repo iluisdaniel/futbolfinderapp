@@ -11,6 +11,7 @@
   #zipcode: MyString
 
 canchita:
+ id: 1
  name: La Canchita Example
  email: canchita@example.com
  phone: 7862707682

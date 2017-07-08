@@ -1,6 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   number_players: 10
   name: Cancha 1
   description: Es ta es la primera cancha

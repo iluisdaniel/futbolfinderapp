@@ -1,8 +1,9 @@
 require 'test_helper'
 
-class GamesControllerTest < ActionController::TestCase
+class GamesCreateTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
 
+  
 end
