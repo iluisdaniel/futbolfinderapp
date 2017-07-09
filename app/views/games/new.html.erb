@@ -12,6 +12,9 @@
       <%= f.label :time %>
       <%= f.time_select(:time, prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 10) %> 
 
+      <%= f.label :end_time %>
+      <%= f.time_select(:end_time, prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 10) %>
+
       <%= f.label :user_id %>
       <%= f.text_field :user_id, class: 'form-control' %>
 
@@ -22,10 +25,9 @@
 
       <%= f.label :field_id %>
       <%= f.text_field :field_id, class: 'form-control' %>
-
-      <%= f.label :end_time %>
-      <%= f.time_select(:end_time, prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 10) %>
-      
+            
+      <!--<%= f.label #:number_players %>
+       <%= f.select #:number_players, ['option1', 'option2'] %>-->
 
 
       <%= f.submit "Create game", class: "btn btn-large btn-primary" %>

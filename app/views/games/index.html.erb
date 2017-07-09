@@ -4,6 +4,7 @@
 <ul class="games">
   <% @games.each do |game| %>
     <li>
+      <%= game.id %>
       <%= link_to game.date, game %>
       <%= game.time.hour %>:<%= game.time.min %>
       <%= game.business.name %>

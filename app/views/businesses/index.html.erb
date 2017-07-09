@@ -4,6 +4,7 @@
 <ul class="businesses">
   <% @businesses.each do |business| %>
     <li>
+    	<%= business.id %>
       <%= link_to business.name, business %>
     </li>
   <% end %>
