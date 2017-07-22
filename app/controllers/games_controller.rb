@@ -40,10 +40,18 @@ class GamesController < ApplicationController
 	def create
 		@game = Game.new(game_params)
 
+
 		if logged_in?
 			@b = current_business
 			@game[:business_id] = @b.id 
 		end
+
+		# available_field = assign_field_id(@game[:number_players], @game[:business_id], @game[:date], @game[:time])
+		# if !(available_field = nil)
+		# 	@game[:field_id] = available_field
+		# else
+		# 	flash[:warning] = "hey" + available_field.to_s
+		# end
 
 		if @game.save
 			redirect_to games_path
@@ -58,4 +66,30 @@ class GamesController < ApplicationController
 	def game_params
 		params.require(:game).permit(:date, :time, :user_id, :business_id, :field_id, :end_time)
 	end
+
+	# def assign_field_id(number_players, business_id, date, time)
+	# 	fields = Field.where(business_id: business_id, number_players: number_players)
+	# 	games = Game.where(date: date, time: time, number_players: number_players)
+
+	# 	field_ids_in_games = Array.new
+
+	# 	#check if there are fields availble at that time
+	# 	if games.count >= fields.count
+ #          return nil
+ #        end
+
+          
+ #        games.each do |g|
+ #        	field_ids_in_games.push(g.field_id)
+ #        end
+	    
+
+	# 	fields.each do |f|			
+	# 		if !(field_ids_in_games.include?(f.id))
+	# 			return f.id
+	# 		end
+	# 	end
+
+	# 	return nil
+	# end
 end

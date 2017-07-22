@@ -51,16 +51,15 @@ class BusinessesController < ApplicationController
 
   private
 
-  def business_params
-  	params.require(:business).permit(:name, :email, :phone, :address, :city, :state, :zipcode, :password, 
-  										:password_confirmation)
-  end
+    def business_params
+    	params.require(:business).permit(:name, :email, :phone, :address, :city, :state, :zipcode, :password, 
+    										:password_confirmation)
+    end
 
     # Confirms the correct user.
     def correct_business
       @business = Business.friendly.find(params[:id])
       redirect_to(root_url) unless current_business?(@business)
     end
-
 
 end

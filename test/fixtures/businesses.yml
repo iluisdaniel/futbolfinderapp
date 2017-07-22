@@ -23,6 +23,7 @@ canchita:
  slug: la-canchita
 
 caimanera:
+ id: 2
  name: La caimanera Example
  email: caimanera@example.com
  phone: 7862704747

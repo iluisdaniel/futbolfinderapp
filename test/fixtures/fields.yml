@@ -8,3 +8,11 @@ one:
   price: 100
   business_id: 1
 
+two:
+  id: 2
+  number_players: 10
+  name: Cancha 1
+  description: Es ta es la primera cancha
+  price: 100
+  business_id: 2
+
