@@ -19,14 +19,6 @@ class Game < ActiveRecord::Base
   validate :check_if_field_belongs_to_business
   validate :check_if_field_is_reserved_on_this_time
 
-  
-
-  # validate :check_fields_are_availble_at_that_time
-  # validate :check_if_field_is_reserverd
-  # validate :check_if_field_id_belongs_to_buesiness
-  # validate :check_if_user_have_reserve_a_game_that_date
-  # validate :check_if_there_are_fields_with_that_number_of_players_available
-
 
     ### Validate Date
   	def check_date_later_than_today
@@ -64,41 +56,8 @@ class Game < ActiveRecord::Base
       errors.add(:field_id, " this field is reserved at this time") unless is_the_field_reserved_at_this_time?
     end
 
-  # 	def check_fields_are_availble_at_that_time
-  # 		errors.add(:date, "there are no fiels availble at that time") unless are_fields_available_at_that_time?
-  # 	end
-
-  # 	### Validate field 
-  #   def check_if_field_id_belongs_to_buesiness
-  #     errors.add(:field_id, "This field doesn't belong to the business") unless is_field_id_correct?
-  #   end
-
-  #   ### Validate availability
-  #   def check_if_field_is_reserverd
-  # 		errors.add(:field_id, "the field is reserved already") unless is_field_reserved?
-  # 	end
-
-  # 	def check_if_user_have_reserve_a_game_that_date
-  # 		errors.add(:date, "An user can have two reservations the same date") unless have_user_reserved_the_same_date?
-  # 	end
-
-  #   def check_if_there_are_fields_with_that_number_of_players_available
-  #     errors.add(:number_players, "There is no fields available right now") unless are_there_any_fields_available?
-  #   end
 
   	private
-
-  #     def are_there_any_fields_available?
-  #       games = Game.where(date:date, time:time, number_players: number_players)
-
-  #       fields = Field.where(business_id: business_id, number_players: number_players)
-
-  #       if games.count < fields.count
-  #         return false
-  #       end
-
-  #       return true
-  #     end
 
   # 		def have_user_reserved_the_same_date?
   # 			userGames = Game.where(user_id: user_id, date: date)
@@ -117,6 +76,7 @@ class Game < ActiveRecord::Base
 
   ############ USER ##############
 
+  #maybe check if business id is equal to current business
   #aybe user can reserved only a game each day
 
   ############ FIELDS ##############

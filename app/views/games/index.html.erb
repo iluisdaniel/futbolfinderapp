@@ -4,17 +4,17 @@
 <ul class="games">
   <% @games.each do |game| %>
     <li>
-      <%= game.id %>
-      <%= link_to game.date, game %>
-      <%= game.time.hour %>:<%= game.time.min %>
-      <%= game.business.name %>
-      <%= game.business.id%>
-      <%= game.field_id %>
-      <% if current_business?(game.business) %>
-        <%= link_to "delete", game, method: :delete,
+      Game id: <%= game.id %> |
+        <%= link_to game.date, game %> |
+        <%= game.time.hour %>:<%= game.time.min %> |
+        Name: <%= game.business.name %> |
+        B id: <%= game.business.id%> |
+        field id: <%= game.field_id %> |
+        <% if current_business?(game.business) %>
+          <%= link_to "delete", game, method: :delete,
                                      data: { confirm: "You sure?" },
                                      title: game.date %>
-      <% end %>
+          <% end %>
     </li>
   <% end %>
 </ul>
