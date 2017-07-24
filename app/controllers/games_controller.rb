@@ -1,11 +1,12 @@
 class GamesController < ApplicationController
-	before_action :signed_in_business_or_user?, only: [:index, :show, :new, :create]
+	before_action :signed_in_business_or_user?, only: [:index, :show, :new, :create, :destroy]
+	before_action :correct_business,   only: :destroy
 
 	def index
 		@user = current_user
-		@business = current_business
-		if @business != nil
-			@games = Game.where(business_id: @business).order(created_at: :desc)
+		if logged_in?
+			@games = current_business.games.order(created_at: :desc)
+			#@games = Game.where(business_id: @business).order(created_at: :desc)
 		elsif @user !=nil
 			@games = Game.where(user_id: @user).order(created_at: :desc)
 		end
@@ -38,10 +39,8 @@ class GamesController < ApplicationController
 	end
 
 	def create
-		@game = Game.new(game_params)
-
-
 		if logged_in?
+			@game = current_business.games.build(game_params)
 			@b = current_business
 			@game[:business_id] = @b.id 
 		end
@@ -61,11 +60,21 @@ class GamesController < ApplicationController
 		end
 	end
 
+	def destroy
+		@game.destroy
+		redirect_to root_path
+	end
+
 	private
 
 	def game_params
 		params.require(:game).permit(:date, :time, :user_id, :business_id, :field_id, :end_time)
 	end
+
+	def correct_business
+	      @game = current_business.games.find_by(id: params[:id])
+	      redirect_to root_url if @game.nil?
+    end
 
 	# def assign_field_id(number_players, business_id, date, time)
 	# 	fields = Field.where(business_id: business_id, number_players: number_players)
