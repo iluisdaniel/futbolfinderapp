@@ -1,14 +1,15 @@
 class GamesController < ApplicationController
 	before_action :signed_in_business_or_user?, only: [:index, :show, :new, :create, :destroy]
 	before_action :correct_business,   only: :destroy
+	before_action :correct_user,   only: :destroy
 
 	def index
 		@user = current_user
 		if logged_in?
 			@games = current_business.games.order(created_at: :desc)
 			#@games = Game.where(business_id: @business).order(created_at: :desc)
-		elsif @user !=nil
-			@games = Game.where(user_id: @user).order(created_at: :desc)
+		elsif signed_in?
+			@games = current_user.games.order(created_at: :desc)
 		end
 	end
 
@@ -45,6 +46,12 @@ class GamesController < ApplicationController
 			@game[:business_id] = @b.id 
 		end
 
+		if signed_in?
+			@game = current_user.games.build(game_params)
+			@u = current_user
+			@game[:user_id] = @u.id
+		end
+
 		# available_field = assign_field_id(@game[:number_players], @game[:business_id], @game[:date], @game[:time])
 		# if !(available_field = nil)
 		# 	@game[:field_id] = available_field
@@ -73,6 +80,11 @@ class GamesController < ApplicationController
 
 	def correct_business
 	      @game = current_business.games.find_by(id: params[:id])
+	      redirect_to root_url if @game.nil?
+    end
+
+    def correct_user
+	      @game = current_user.games.find_by(id: params[:id])
 	      redirect_to root_url if @game.nil?
     end
 

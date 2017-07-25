@@ -1,4 +1,4 @@
-<% if !logged_in? %> 
+<% if !signed_in_business_or_user? %> 
 <div class="center jumbotron">
 	<h1> Futbol Finder</h1>
 	<%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>

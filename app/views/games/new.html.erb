@@ -15,8 +15,10 @@
       <%= f.label :end_time %>
       <%= f.time_select(:end_time, prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 10) %>
 
+      <% if !signed_in? %> 
       <%= f.label :user_id %>
       <%= f.text_field :user_id, class: 'form-control' %>
+      <% end %>
 
       <% if !logged_in? %> 
       <%= f.label :business_id %>
