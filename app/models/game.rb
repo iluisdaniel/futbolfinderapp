@@ -75,6 +75,7 @@ class Game < ActiveRecord::Base
 
 
   ############ USER ##############
+  # check the user exists
 
   #maybe check if business id is equal to current business
   #aybe user can reserved only a game each day
