@@ -1,7 +1,6 @@
 class GamesController < ApplicationController
 	before_action :signed_in_business_or_user?, only: [:index, :show, :new, :create, :destroy]
-	before_action :correct_business,   only: :destroy
-	before_action :correct_user,   only: :destroy
+	before_action :correct_business_or_user,   only: :destroy
 
 	def index
 		@user = current_user
@@ -86,6 +85,17 @@ class GamesController < ApplicationController
     def correct_user
 	      @game = current_user.games.find_by(id: params[:id])
 	      redirect_to root_url if @game.nil?
+    end
+
+    def correct_business_or_user
+    	if logged_in?
+    		correct_business
+    	elsif signed_in?
+    		correct_user
+    	else
+    		return false
+    	end
+    		
     end
 
 	# def assign_field_id(number_players, business_id, date, time)

@@ -10,7 +10,8 @@
         Name: <%= game.business.name %> |
         B id: <%= game.business.id%> |
         field id: <%= game.field_id %> |
-        <% if current_business?(game.business) %>
+        USer Name: <%= game.user.name %> |
+        <% if current_business?(game.business) || current_user?(game.user) %>
           <%= link_to "delete", game, method: :delete,
                                      data: { confirm: "You sure?" },
                                      title: game.date %>
