@@ -19,6 +19,12 @@ class Game < ActiveRecord::Base
   validate :check_if_field_belongs_to_business
   validate :check_if_field_is_reserved_on_this_time
 
+  #Validate Business
+  validate :check_if_business_exists
+
+  #validate user
+  validate :check_if_user_exists
+
 
     ### Validate Date
   	def check_date_later_than_today
@@ -43,6 +49,11 @@ class Game < ActiveRecord::Base
   		errors.add(:time, " business is close at that time") unless is_it_open?
   	end
 
+    def check_if_business_exists
+      errors.add(:business_id, " the business doesn't exist") unless does_business_exists?
+    end
+
+
     ### Validate Fields
     def check_if_the_business_has_fields
       errors.add(:field_id, " The business doesn't have any fields") unless does_the_business_has_fields?
@@ -56,7 +67,12 @@ class Game < ActiveRecord::Base
       errors.add(:field_id, " this field is reserved at this time") unless is_the_field_reserved_at_this_time?
     end
 
+    ### Valite User
 
+    def check_if_user_exists
+      errors.add(:user_id, " the user doesn't exist") unless does_user_exists?
+    end
+    
   	private
 
   # 		def have_user_reserved_the_same_date?
@@ -75,7 +91,15 @@ class Game < ActiveRecord::Base
 
 
   ############ USER ##############
-  # check the user exists
+  def does_user_exists?
+    user = User.where(id: user_id)
+
+    if user.empty?
+      return false
+    end
+
+    return true
+  end
 
   #maybe check if business id is equal to current business
   #aybe user can reserved only a game each day
@@ -142,6 +166,16 @@ class Game < ActiveRecord::Base
   end
 
   ######### Check Business Schedule ######################
+
+  def does_business_exists?
+    business = Business.where(id: business_id)
+
+    if business.empty?
+      return false
+    end
+
+    return true
+  end
 
   def is_it_open?
     day = date.strftime("%A")
