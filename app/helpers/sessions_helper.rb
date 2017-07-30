@@ -78,6 +78,14 @@ module SessionsHelper
 
   #For Users
 
+  def signed_in_user
+      unless signed_in?
+        store_location
+        flash[:danger] = "Please sign in."
+        redirect_to login_url
+      end
+    end
+
   def sign_in(user)
     remember_token = User.new_remember_token
     cookies.permanent[:remember_token] = remember_token
