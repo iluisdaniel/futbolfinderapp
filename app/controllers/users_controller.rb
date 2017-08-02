@@ -4,10 +4,13 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    if signed_in?
+      @fRequested = Friendship.where(friend_id: current_user.id, accepted: false)
+    end
   end
 
   def show
-  	@user = User.find(params[:id])
+    @user = User.find(params[:id])
   end
 
   def new

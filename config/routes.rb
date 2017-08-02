@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resources :businesses, path: ''
   
   resources :users, path: '/u/'
+  resources :friendships, only: [:create, :update, :destroy]
   
 
   # Get routes in the shell: bundle exec rake routes
