@@ -10,3 +10,42 @@
                                      data: { confirm: "You sure?" },
                                      title: @game.date %>
           <% end %>
+
+<%= form_for(@game_line) do |f| %>
+<%= render 'shared/error_messages', object: f.object %> 
+<div class="">
+  <%= f.label :user_id %>
+  <div class="">
+    <%= f.number_field :user_id %>
+  </div>
+</div>
+<div >
+  <div >
+  <%= f.hidden_field :game_id, :value => @game.id %>
+  </div>
+</div>
+<div>
+  <div>
+    <%= f.submit "Add Player" %>
+  </div>
+</div>
+<% end %>
+<hr>
+
+<h4>Players</h4>
+<table class="schedules">
+<tr>
+    <th>Id</th>
+    <th>User</th>
+    <th>Game</th>
+    <th></th>
+</tr>
+<tr>
+    <th></th>
+    <td><%= @game.user_id %></td>
+    <td><%= @game.id %></td>
+    <td> Admin
+    </td>
+ </tr>
+<%= render @game_lines %>
+</table>

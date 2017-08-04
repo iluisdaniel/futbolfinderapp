@@ -1,6 +1,8 @@
 class GamesController < ApplicationController
+	include GamesHelper
 	before_action :signed_in_business_or_user?, only: [:index, :show, :new, :create, :destroy]
-	before_action :correct_business_or_user,   only: :destroy
+	before_action :correct_business_or_user_to_see,   only: [:show]
+	before_action :correct_business_or_user_to_delete, only: [:destroy]
 
 	def index
 		@user = current_user
@@ -8,30 +10,19 @@ class GamesController < ApplicationController
 			@games = current_business.games.order(created_at: :desc)
 			#@games = Game.where(business_id: @business).order(created_at: :desc)
 		elsif signed_in?
-			@games = current_user.games.order(created_at: :desc)
+			#@games = current_user.games.order(created_at: :desc)
+			#games = current_user.games :joins => :game_line, :conditions => {:order => "created_at DESC"}
+
+			@games = Game.where(user_id: current_user.id).where(GameLine.where(user_id: current_user.id))
+			
+
 		end
 	end
 
 	def show
 		@game = Game.find(params[:id])
-
-		if logged_in? 
-			@business = current_business
-		
-			if !(@business.id == @game.business_id)
-				@game = nil
-				redirect_to games_path
-			end
-		end
-
-		if signed_in?
-				@user = current_user
-
-				if !(@user.id == @game.user_id)
-					@game = nil
-					redirect_to games_path
-				end
-		end		
+		@game_lines = @game.game_lines
+		@game_line = GameLine.new	
 	end
 
 	def new
@@ -77,26 +68,7 @@ class GamesController < ApplicationController
 		params.require(:game).permit(:date, :time, :user_id, :business_id, :field_id, :end_time)
 	end
 
-	def correct_business
-	      @game = current_business.games.find_by(id: params[:id])
-	      redirect_to root_url if @game.nil?
-    end
-
-    def correct_user
-	      @game = current_user.games.find_by(id: params[:id])
-	      redirect_to root_url if @game.nil?
-    end
-
-    def correct_business_or_user
-    	if logged_in?
-    		correct_business
-    	elsif signed_in?
-    		correct_user
-    	else
-    		return false
-    	end
-    		
-    end
+	
 
 	# def assign_field_id(number_players, business_id, date, time)
 	# 	fields = Field.where(business_id: business_id, number_players: number_players)

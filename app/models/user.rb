@@ -1,7 +1,9 @@
 class User < ActiveRecord::Base
 	before_save { self.email = email.downcase }
 	before_create :create_remember_token
+
 	has_many :games, dependent: :destroy
+	has_many :game_lines, dependent: :destroy
 	has_many :friendships, dependent: :destroy
     has_many :received_friendships, class_name: "Friendship", foreign_key: "friend_id"
     has_many :active_friends, -> { where(friendships: { accepted: true}) }, through: :friendships, source: :friend

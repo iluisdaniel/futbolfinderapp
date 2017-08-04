@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get 'u/users' => 'users#index'
 
   resources :games, path: '/games/'
+  resources :game_lines, only: [:create, :destroy]
 
   resources :schedules, only: [:create, :destroy]
   resources :fields, only: [:create, :update, :destroy]

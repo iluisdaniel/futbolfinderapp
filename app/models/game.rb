@@ -1,6 +1,9 @@
 class Game < ActiveRecord::Base
   belongs_to :user
   belongs_to :business
+  
+  has_many :game_lines, dependent: :destroy
+
   validates  :user_id, presence: true
   validates :business_id, presence: true
   validates :field_id, presence: true
