@@ -10,12 +10,7 @@ class GamesController < ApplicationController
 			@games = current_business.games.order(created_at: :desc)
 			#@games = Game.where(business_id: @business).order(created_at: :desc)
 		elsif signed_in?
-			#@games = current_user.games.order(created_at: :desc)
-			#games = current_user.games :joins => :game_line, :conditions => {:order => "created_at DESC"}
-
-			@games = Game.where(user_id: current_user.id).where(GameLine.where(user_id: current_user.id))
-			
-
+			@games = Game.joins(game_lines: :user).where(game_lines: {user_id: current_user.id}).order(created_at: :desc)
 		end
 	end
 
@@ -67,8 +62,6 @@ class GamesController < ApplicationController
 	def game_params
 		params.require(:game).permit(:date, :time, :user_id, :business_id, :field_id, :end_time)
 	end
-
-	
 
 	# def assign_field_id(number_players, business_id, date, time)
 	# 	fields = Field.where(business_id: business_id, number_players: number_players)
