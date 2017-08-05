@@ -4,7 +4,7 @@ class GameLine < ActiveRecord::Base
 
   validate :validate_user_exists
   validate :validate_user_is_not_duplicate
-  validate :validate_user_is_not_game_creator
+  # validate :validate_user_is_not_game_creator
 
   	def validate_user_exists
   		errors.add(:user_id, "User doesn't exist") unless does_user_exist?
@@ -14,9 +14,9 @@ class GameLine < ActiveRecord::Base
   		errors.add(:user_id, "User is already there") unless is_the_user_already_in_the_game?
   	end
 
-  	def validate_user_is_not_game_creator
-  		errors.add(:user_id, "cant add the admin") unless is_the_user_the_game_creator?
-  	end
+  	# def validate_user_is_not_game_creator
+  	# 	errors.add(:user_id, "cant add the admin") unless is_the_user_the_game_creator?
+  	# end
 
   	private
 
@@ -40,12 +40,12 @@ class GameLine < ActiveRecord::Base
   		return true
   	end
 
-  	def is_the_user_the_game_creator?
-  		game = Game.find_by(id: game_id)
+  	# def is_the_user_the_game_creator?
+  	# 	game = Game.find_by(id: game_id)
 
-  		if  game.user_id == user_id
-  			return false
-  		end
-  		return true
-  	end
+  	# 	if  game.user_id == user_id
+  	# 		return false
+  	# 	end
+  	# 	return true
+  	# end
 end

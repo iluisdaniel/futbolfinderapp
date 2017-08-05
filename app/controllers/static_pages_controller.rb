@@ -9,7 +9,7 @@ class StaticPagesController < ApplicationController
 	if @business != nil
 		@games = Game.where(business_id: @business, :date => Date.today.beginning_of_day..week ).order(date: :asc)
 	elsif @user !=nil
-		@games = Game.where(user_id: @user, :date => Date.today.beginning_of_day..week).order(date: :desc)
+		@games = Game.joins(game_lines: :user).where(game_lines: {user_id: current_user.id}, :date => Date.today.beginning_of_day..week).order(created_at: :desc)
 	end
 
   end

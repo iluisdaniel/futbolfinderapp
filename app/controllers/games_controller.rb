@@ -47,6 +47,7 @@ class GamesController < ApplicationController
 		if @game.save
 			redirect_to games_path
 			flash[:success] = "Game was created"
+			GameLine.create(user_id: @game.user_id, game_id: @game.id)
 		else
 			render 'new'
 		end
