@@ -22,10 +22,12 @@ Rails.application.routes.draw do
 
   resources :schedules, only: [:create, :destroy]
   resources :fields, only: [:create, :update, :destroy]
-  resources :businesses, path: ''
+  resources :businesses, path: '/b/'
   
   resources :users, path: '/u/'
   resources :friendships, only: [:create, :update, :destroy]
+
+  resources :groups, path: '/groups/'
   
 
   # Get routes in the shell: bundle exec rake routes

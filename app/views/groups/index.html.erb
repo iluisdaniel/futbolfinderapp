@@ -1,0 +1,10 @@
+<% provide(:title, 'Groups') %>
+<h1>All Groups</h1>
+
+<ul class="games">
+  <% @groups.each do |group| %>
+    <li>
+      Id: <%= group.id %> | Title: <%= link_to group.title, group %>| About: <%= group.about %>| User:<%= group.user_id %>
+    </li>
+  <% end %>
+</ul>
