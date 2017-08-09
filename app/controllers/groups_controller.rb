@@ -24,7 +24,7 @@ class GroupsController < ApplicationController
 	    if @group.save
 	    	redirect_to @group
 	    	flash[:success] = "Welcome to futbol finder app"
-	    	GroupLine.create(user_id: @game.user_id, group_id: @group.id)
+	    	GroupLine.create(user_id: @group.user_id, group_id: @group.id)
 	    else
 	      render 'new'
 	    end
