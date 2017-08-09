@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170807044929) do
+ActiveRecord::Schema.define(version: 20170808144531) do
 
   create_table "businesses", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -89,6 +89,17 @@ ActiveRecord::Schema.define(version: 20170807044929) do
   add_index "games", ["business_id"], name: "index_games_on_business_id", using: :btree
   add_index "games", ["user_id"], name: "index_games_on_user_id", using: :btree
 
+  create_table "group_lines", force: :cascade do |t|
+    t.integer  "group_id",   limit: 4
+    t.integer  "user_id",    limit: 4
+    t.boolean  "admin",                default: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
+  add_index "group_lines", ["group_id"], name: "index_group_lines_on_group_id", using: :btree
+  add_index "group_lines", ["user_id"], name: "index_group_lines_on_user_id", using: :btree
+
   create_table "groups", force: :cascade do |t|
     t.string   "title",      limit: 255
     t.string   "about",      limit: 255
@@ -126,4 +137,6 @@ ActiveRecord::Schema.define(version: 20170807044929) do
   add_foreign_key "game_lines", "users"
   add_foreign_key "games", "businesses"
   add_foreign_key "games", "users"
+  add_foreign_key "group_lines", "groups"
+  add_foreign_key "group_lines", "users"
 end

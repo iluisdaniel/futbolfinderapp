@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :friendships, only: [:create, :update, :destroy]
 
   resources :groups, path: '/groups/'
+  resources :group_lines, only: [:create, :destroy]
   
 
   # Get routes in the shell: bundle exec rake routes

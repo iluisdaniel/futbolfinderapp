@@ -1,5 +1,7 @@
 class GroupsController < ApplicationController
+	include GroupsHelper
 	before_action :signed_in_user, only: [:index, :show, :new, :create]
+	before_action :correct_user_to_see_group,   only: [:show]
 
 	def index
 		@groups = Group.all
@@ -7,6 +9,8 @@ class GroupsController < ApplicationController
 
 	def show
 		@group = Group.find(params[:id])
+		@group_lines = @group.group_lines
+		@group_line = GroupLine.new
 	end
 
 	def new
@@ -18,8 +22,9 @@ class GroupsController < ApplicationController
 		@group[:user_id] = current_user.id
 
 	    if @group.save
-	      flash[:success] = "Welcome to futbol finder app"
 	    	redirect_to @group
+	    	flash[:success] = "Welcome to futbol finder app"
+	    	GroupLine.create(user_id: @game.user_id, group_id: @group.id)
 	    else
 	      render 'new'
 	    end

@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 	before_create :create_remember_token
 
 	has_many :groups
+	has_many :group_lines, dependent: :destroy
 	has_many :games, dependent: :destroy
 	has_many :game_lines, dependent: :destroy
 	has_many :friendships, dependent: :destroy

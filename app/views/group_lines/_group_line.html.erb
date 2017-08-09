@@ -1,0 +1,10 @@
+<tr>
+    <th>id:<%= group_line.id %></th>
+    <td><%= group_line.user_id %></td>
+    <td><%= group_line.group_id %></td>
+    <td> 
+    	<% if is_correct_user_associated_with_group_line?(group_line) %>
+  			<%= link_to "delete",group_line, method: :delete, data: {confirm: "You sure?"}, title: group_line.id %>
+  		<% end %>
+  	</td>
+ </tr>
