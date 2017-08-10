@@ -17,7 +17,9 @@ Rails.application.routes.draw do
   get 'u/signup' => 'users#new'
   get 'u/users' => 'users#index'
 
-  resources :games, path: '/games/'
+  resources :games, path: '/games/' do 
+    resources :comments, module: :games
+  end
   resources :game_lines, only: [:create, :destroy]
 
   resources :schedules, only: [:create, :destroy]
@@ -27,7 +29,9 @@ Rails.application.routes.draw do
   resources :users, path: '/u/'
   resources :friendships, only: [:create, :update, :destroy]
 
-  resources :groups, path: '/groups/'
+  resources :groups, path: '/groups/' do 
+    resources :comments, module: :groups
+  end 
   resources :group_lines, only: [:create, :destroy]
   
 

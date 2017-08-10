@@ -21,7 +21,7 @@ module GroupsHelper
     	correct_user = false
 		
 		if signed_in?
-    		@group = current_user.groups.find_by(id: group_line.group_id)
+    		group = current_user.groups.find_by(id: group_line.group_id)
 
     		if group_line.user_id == current_user.id
     			correct_user = true
@@ -29,7 +29,7 @@ module GroupsHelper
 
     	end
 
-    	if correct_user || !@group.nil? 
+    	if correct_user || !group.nil? 
     		return true
     	end
 

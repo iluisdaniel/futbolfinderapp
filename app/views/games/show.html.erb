@@ -42,3 +42,7 @@
 </tr>
 <%= render @game_lines %>
 </table>
+
+<%= render partial: "comments/comments", locals: {commentable: @game }%>
+
+<%= render partial: "comments/form", locals: {commentable: @game} %>

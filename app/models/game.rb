@@ -3,6 +3,7 @@ class Game < ActiveRecord::Base
   belongs_to :business
   
   has_many :game_lines, dependent: :destroy
+  has_many :comments, as: :commentable
 
   validates  :user_id, presence: true
   validates :business_id, presence: true

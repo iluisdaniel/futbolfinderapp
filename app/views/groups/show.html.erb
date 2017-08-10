@@ -1,23 +1,25 @@
 Id: <%= @group.id %> | Title: <%= @group.title %>| About: <%= @group.about %>| User:<%= @group.user_id %>
 
+
+
 <%= form_for(@group_line) do |f| %>
-<%= render 'shared/error_messages', object: f.object %> 
-<div class="">
-  <%= f.label :user_id %>
+  <%= render 'shared/error_messages', object: f.object %> 
   <div class="">
-    <%= f.number_field :user_id %>
+    <%= f.label :user_id %>
+    <div class="">
+      <%= f.number_field :user_id %>
+    </div>
   </div>
-</div>
-<div >
   <div >
-  <%= f.hidden_field :group_id, :value => @group.id %>
+    <div >
+    <%= f.hidden_field :group_id, :value => @group.id %>
+    </div>
   </div>
-</div>
-<div>
   <div>
-    <%= f.submit "Add Player" %>
+    <div>
+      <%= f.submit "Add Player" %>
+    </div>
   </div>
-</div>
 <% end %>
 <hr>
 
@@ -31,3 +33,8 @@ Id: <%= @group.id %> | Title: <%= @group.title %>| About: <%= @group.about %>| U
 </tr>
 <%= render @group_lines %>
 </table>
+
+<%= render partial: "comments/comments", locals: {commentable: @group }%>
+
+<%= render partial: "comments/form", locals: {commentable: @group} %>
+
