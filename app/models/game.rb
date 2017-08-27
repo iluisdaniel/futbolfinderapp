@@ -5,8 +5,11 @@ class Game < ActiveRecord::Base
   has_many :game_lines, dependent: :destroy
   has_many :comments, as: :commentable
 
+  validates :public, presence: true
   validates :user_id, presence: true
-  
+  validates :description, length: { maximum: 500, minimum: 5 }, allow_blank: true
+  validates :title, presence: true, length: { minimum: 5, maximum: 50}
+  validates :number_players, presence: true, numericality: {only_integer: true}
 
   #Validate Date
   validate :check_date_later_than_today

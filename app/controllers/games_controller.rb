@@ -71,7 +71,8 @@ class GamesController < ApplicationController
 	private
 
 	def game_params
-		params.require(:game).permit(:date, :time, :user_id, :business_id, :field_id, :end_time)
+		params.require(:game).permit(:date, :time, :user_id, :business_id, 
+			:field_id, :end_time, :number_players, :title, :description, :public)
 	end
 
 	def find_user_with_email(email)
