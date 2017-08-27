@@ -6,8 +6,7 @@ class Game < ActiveRecord::Base
   has_many :comments, as: :commentable
 
   validates :user_id, presence: true
-  validates :business_id, presence: true
-  validates :field_id, presence: true
+  
 
   #Validate Date
   validate :check_date_later_than_today
@@ -50,21 +49,29 @@ class Game < ActiveRecord::Base
 
   	## Validate business Schedule
     def check_if_the_business_is_open_at_that_time
-  		errors.add(:time, " business is close at that time") unless is_it_open?
+  		if !business_id.nil?
+        errors.add(:time, " business is close at that time") unless is_it_open?
+      end
   	end
 
     def check_if_business_exists
-      errors.add(:business_id, " the business doesn't exist") unless does_business_exists?
+      if !business_id.nil?
+        errors.add(:business_id, " the business doesn't exist") unless does_business_exists?
+      end
     end
 
 
     ### Validate Fields
     def check_if_the_business_has_fields
-      errors.add(:field_id, " The business doesn't have any fields") unless does_the_business_has_fields?
+      if !business_id.nil?
+        errors.add(:field_id, " The business doesn't have any fields") unless does_the_business_has_fields?
+      end
     end
 
     def check_if_field_belongs_to_business
-      errors.add(:field_id, " this field doesn't belong to the business") unless does_the_field_belongs_to_business?
+      if !business_id.nil?
+        errors.add(:field_id, " this field doesn't belong to the business") unless does_the_field_belongs_to_business?
+      end
     end
 
     def check_if_field_is_reserved_on_this_time

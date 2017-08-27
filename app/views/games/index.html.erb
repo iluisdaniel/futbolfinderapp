@@ -7,9 +7,11 @@
       Game id: <%= game.id %> |
         <%= link_to game.date, game %> |
         <%= game.time.hour %>:<%= game.time.min %> |
+        <% if !game.business.nil? %>
         Name: <%= game.business.name %> |
         B id: <%= game.business.id%> |
         field id: <%= game.field_id %> |
+        <% end %>
         USer Name: <%= game.user.name %> |
         <% if current_business?(game.business) || current_user?(game.user) %>
           <%= link_to "delete", game, method: :delete,
