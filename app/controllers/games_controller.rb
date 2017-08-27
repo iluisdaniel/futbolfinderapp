@@ -3,12 +3,13 @@ class GamesController < ApplicationController
 	before_action :signed_in_business_or_user?, only: [:index, :show, :new, :create, :destroy]
 	before_action :correct_business_or_user_to_see,   only: [:show]
 	before_action :correct_business_or_user_to_delete, only: [:destroy]
+	before_action :set_fields_collection, only: [:new, :create]
+	before_action :set_businesses_collection, only: [:new, :create]
 
 	def index
 		@user = current_user
 		if logged_in?
 			@games = current_business.games.order(created_at: :desc)
-			#@games = Game.where(business_id: @business).order(created_at: :desc)
 		elsif signed_in?
 			@games = Game.joins(game_lines: :user).where(game_lines: {user_id: current_user.id}).order(created_at: :desc)
 		end
@@ -21,6 +22,7 @@ class GamesController < ApplicationController
 	end
 
 	def new
+		#TODO: FIx fields from form when there is an error
 		@game = Game.new
 	end
 
@@ -28,21 +30,19 @@ class GamesController < ApplicationController
 		if logged_in?
 			@game = current_business.games.build(game_params)
 			@b = current_business
-			@game[:business_id] = @b.id 
+			@game[:business_id] = @b.id
+			user =  find_user_with_email(game_params[:user_id])
+			if !user.nil?
+				@game[:user_id] = user.id
+			end	
 		end
 
 		if signed_in?
 			@game = current_user.games.build(game_params)
 			@u = current_user
 			@game[:user_id] = @u.id
+			@game[:field_id] = get_available_field(@game[:business_id], @game)
 		end
-
-		# available_field = assign_field_id(@game[:number_players], @game[:business_id], @game[:date], @game[:time])
-		# if !(available_field = nil)
-		# 	@game[:field_id] = available_field
-		# else
-		# 	flash[:warning] = "hey" + available_field.to_s
-		# end
 
 		if @game.save
 			redirect_to games_path
@@ -58,35 +58,47 @@ class GamesController < ApplicationController
 		redirect_to root_path
 	end
 
+	def search
+		# results = Array.new
+		# results = find_available_fields(params[:city], params[:time], params[:number])
+		@businesses = find_available_fields(params[:city], params[:time], params[:number])
+
+		if @businesses.empty?
+			flash.now[:warning] = @message
+		end
+	end
+
 	private
 
 	def game_params
 		params.require(:game).permit(:date, :time, :user_id, :business_id, :field_id, :end_time)
 	end
 
-	# def assign_field_id(number_players, business_id, date, time)
-	# 	fields = Field.where(business_id: business_id, number_players: number_players)
-	# 	games = Game.where(date: date, time: time, number_players: number_players)
+	def find_user_with_email(email)
+		user = User.find_by(email: email)
+		return user
+	end
 
-	# 	field_ids_in_games = Array.new
+	def set_fields_collection
+		if logged_in?
+			@fields = current_business.fields
+		end
+	end
 
-	# 	#check if there are fields availble at that time
-	# 	if games.count >= fields.count
- #          return nil
- #        end
+	def set_businesses_collection
+		if signed_in?
+			@businesses = Business.all
+		end
+	end
 
-          
- #        games.each do |g|
- #        	field_ids_in_games.push(g.field_id)
- #        end
-	    
+	def get_available_field(business_id, game)
+		fields = Field.where(business_id: business_id)
 
-	# 	fields.each do |f|			
-	# 		if !(field_ids_in_games.include?(f.id))
-	# 			return f.id
-	# 		end
-	# 	end
+		fields.each do |f|
+			game[:field_id] = f.id
 
-	# 	return nil
-	# end
+			return f.id if game.valid?
+		end
+	end
+
 end

@@ -1,39 +1,117 @@
 <% provide(:title, 'New Game') %>
-<h1>New Game</h1>
-
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-6 col-md-offset-2">
+    <h1>New Game</h1>
     <%= form_for(@game) do |f| %>
-    <%= render 'shared/error_messages', object: f.object %>	
+    <div class="row">
+    <%= render 'shared/error_messages', object: f.object %>
+    </div>	
 
-      <%= f.label :date %>
-      <%= f.date_select(:date,prompt: { day: 'choose day', month: 'choose month' }, start_year: Date.today.year, end_year: Date.today.year, class: 'form-control') %>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-2">
+            <%= f.label :date, 'Date' %>
+          </div>
+          <div class="col-md-8">
+            <div class="col-md-4">
+               <%= f.date_select :date, {prompt: { day: 'Day', month: 'Month' }, start_year: Date.today.year, end_year: Date.today.year,  with_css_classes: true, date_separator: "</div><div class='col-md-4'>"}, { class: 'form-control'} %>
+            </div>
+          </div>
+        </div>   
+      </div>
+      
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-2">
+            <%= f.label :time, 'Time' %>
+          </div>
+          <div class="col-md-8">
+            <div class="col-md-6">
+                <%= f.time_select :time, {prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 6, time_separator: "</div><div class='col-md-6'>"}, {class: 'form-control'} %> 
+            </div>
+          </div>
+        </div>   
+      </div>
 
-      <%= f.label :time %>
-      <%= f.time_select(:time, prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 10) %> 
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-2">
+           <%= f.label :end_time, 'End Time' %>
+          </div>
+          <div class="col-md-8">
+            <div class="col-md-6">
+                <%= f.time_select :end_time, {prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 10, time_separator: "</div><div class='col-md-6'>"}, {class: 'form-control'} %>
+            </div>
+          </div>
+        </div>   
+      </div>
 
-      <%= f.label :end_time %>
-      <%= f.time_select(:end_time, prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 10) %>
+      <hr>
 
       <% if !signed_in? %> 
-      <%= f.label :user_id %>
-      <%= f.text_field :user_id, class: 'form-control' %>
+         <div class="row">
+           <div class="form-group">
+             <div class="col-md-2">
+              <%= f.label :user_id, 'User Email' %>
+             </div>
+             <div class="col-md-10">
+               <div class="col-md-8">
+                  <%= f.text_field :user_id, class: 'form-control' %>
+             </div>
+           </div>   
+         </div>
+       </div>
       <% end %>
+
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-2">
+          <%= f.label :number_players, '#Players' %>
+          </div>
+          <div class="col-md-10">
+            <div class="col-md-8">
+              <%= f.text_field :number_players, class: 'form-control' %>      
+            </div>
+          </div>   
+        </div>
+      </div>
+
+      <hr>
 
       <% if !logged_in? %> 
-      <%= f.label :business_id %>
-      <%= f.text_field :business_id, class: 'form-control' %>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-2">
+          <%= f.label :business_id, 'Business' %>
+          </div>
+          <div class="col-md-10">
+            <div class="col-md-8">
+              <%= f.collection_select(:business_id, @businesses, :id,:name, {prompt: true},  {:class => 'form-control'}) %>   
+            </div>
+          </div>   
+        </div>
+      </div>
+      
+      
       <% end %>
 
-      <%= f.label :field_id %>
-      <%= f.text_field :field_id, class: 'form-control' %>
-      
-      <%= f.label :number_players %>
-      <%= f.text_field :number_players, class: 'form-control' %>      
-      
+      <% if !signed_in? %>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-2">
+          <%= f.label :field_id, 'Field' %>
+          </div>
+          <div class="col-md-10">
+            <div class="col-md-8">
+              <%= f.collection_select(:field_id, @fields, :id,:name, {prompt: true},  {:class => 'form-control'}) %>      
+            </div>
+          </div>   
+        </div>
+      </div>
+      <% end %>
+      <hr>
 
-
-      <%= f.submit "Create game", class: "btn btn-large btn-primary" %>
+      <%= f.submit "Create game", class: "btn btn-large btn-primary btn-fill btn-round" %>
     <% end %>
   </div>
 </div>

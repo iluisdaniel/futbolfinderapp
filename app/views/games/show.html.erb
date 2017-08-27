@@ -1,6 +1,7 @@
       Game id: <%= @game.id %> |
         <%= link_to @game.date, @game %> |
         <%= @game.time.hour %>:<%= @game.time.min %> |
+        <%= @game.end_time.hour %>:<%= @game.end_time.min %> |
         Name: <%= @game.business.name %> |
         B id: <%= @game.business.id%> |
         field id: <%= @game.field_id %> |

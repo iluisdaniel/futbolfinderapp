@@ -5,7 +5,7 @@ class Game < ActiveRecord::Base
   has_many :game_lines, dependent: :destroy
   has_many :comments, as: :commentable
 
-  validates  :user_id, presence: true
+  validates :user_id, presence: true
   validates :business_id, presence: true
   validates :field_id, presence: true
 

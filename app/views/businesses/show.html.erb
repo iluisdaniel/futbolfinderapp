@@ -1,6 +1,7 @@
 <% provide(:title, @business.name)%>
 <h1><%= @business.name%></h1>
 <%= @business.email %>
+<%= @business.city %>
 
  <div class="span8">
     <% if @business.schedules.any? %>
