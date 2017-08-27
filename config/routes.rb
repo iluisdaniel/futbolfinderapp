@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   get 'u/signup' => 'users#new'
   get 'u/users' => 'users#index'
 
+  get 'search' => 'games#search'
+
   resources :games, path: '/games/' do 
     resources :comments, module: :games
   end
