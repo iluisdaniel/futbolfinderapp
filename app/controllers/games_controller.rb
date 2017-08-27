@@ -16,13 +16,14 @@ class GamesController < ApplicationController
 	end
 
 	def show
+		# TODO: Dont show comment form for businesses and people who is not part of the game. 
 		@game = Game.find(params[:id])
 		@game_lines = @game.game_lines
 		@game_line = GameLine.new	
 	end
 
 	def new
-		#TODO: FIx fields from form when there is an error
+		#TODO: How to show businesses field. 
 		@game = Game.new
 	end
 
