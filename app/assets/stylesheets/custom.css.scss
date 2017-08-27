@@ -1,5 +1,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "variables";
+@import "mixins";
 
 html{ height: 100%; }
 body { padding-top: 50px; height:100%; }
@@ -37,123 +39,279 @@ body { padding-top: 50px; height:100%; }
       }
 }
 
-/* forms */
-
-input, textarea, select, .uneditable-input {
-  border: 1px solid #bbb;
-  width: 100%;
-  margin-bottom: 15px;
-  @include box_sizing;
-}
-
-input {
-  height: auto !important;
-}
-
-#error_explanation {
-  color: red;
-  ul {
-    color: red;
-    margin: 0 0 30px 0;
-  }
-}
-
-.field_with_errors {
-  @extend .has-error;
-  .form-control {
-    color: $state-danger-text;
-  }
-}
-
-.checkbox {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  span {
-    margin-left: 20px;
-    font-weight: normal;
-  }
-}
-
-#session_remember_me {
-  width: auto;
-  margin-left: 0;
-}
-
-/* Users index */
-
-.businesses {
-  list-style: none;
-  margin: 0;
-  li {
-    overflow: auto;
-    padding: 10px 0;
-    border-bottom: 1px solid $gray-lighter;
-  }
-}
-
-/*Business Edit page */
-.fields{
-  
-}
-.schedules{
-  td, th {
-  width: 10rem;
-  height: 4rem;
-  border-bottom: 1px solid #eeeeee;
-  text-align: center;
-}
-th {
-  background:#f5f5f5;
-  border-color: white;
-}
-body {
-  padding: 1rem;
-}
-}
-
-.panel{
-  input{
-    margin-bottom:2rem;
-  }
-  .btn{
-    margin-top: 2rem;
-  }
-}
-
-.panel #schedule{
-  select{
-    margin-bottom:2rem;
-  }
-  .time-select{
-    select{
-      width:30%;
+/********* BUTTONS ************/
+.btn{
+    border-width: $border-thick;
+    background-color: $transparent-bg;
+    font-weight: $font-weight-normal;
+    
+    @include opacity(.8);
+    padding: $padding-base-vertical $padding-base-horizontal;
+    
+    @include btn-styles($default-color, $default-states-color);
+    
+    &:hover,
+    &:focus{
+        @include opacity(1);
+        outline: 0 !important;
     }
-  }
-  table{
-    margin-bottom: 3rem;
-  }
-  .btn{
-    margin-bottom: 2rem;
-    margin-top: 1rem;
-  }
-}
-
-/* Users index */
-
-.users {
-  list-style: none;
-  margin: 0;
-  li {
-    overflow: auto;
-    padding: 10px 0;
-    border-top: 1px solid #f2f2f2;
-    &:last-child {
-      border-bottom: 1px solid #f2f2f2;
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle {
+         @include box-shadow(none);
+         outline: 0 !important;
     }
+    
+    &.btn-icon{
+        padding: $padding-base-vertical;
+    }
+    
+}
+
+// Apply the mixin to the buttons
+//.btn-default { @include btn-styles($default-color, $default-states-color); }
+.btn-primary { @include btn-styles($primary-color, $primary-states-color); }
+.btn-success { @include btn-styles($success-color, $success-states-color); }
+.btn-info    { @include btn-styles($info-color, $info-states-color); }
+.btn-warning { @include btn-styles($warning-color, $warning-states-color); }
+.btn-danger  { @include btn-styles($danger-color, $danger-states-color); }
+.btn-neutral { 
+    @include btn-styles($white-color, $white-color);
+    
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle{
+         background-color: $white-color;
+         color: $default-color;
+    }    
+    
+    &.btn-fill,
+    &.btn-fill:hover,
+    &.btn-fill:focus{
+        color: $default-color;
+    }
+    
+    &.btn-simple:active,
+    &.btn-simple.active{
+        background-color: transparent;
+    }
+}
+
+.btn{
+     &:disabled,
+     &[disabled],
+     &.disabled{
+        @include opacity(.5);
+    }
+}
+.btn-round{
+    border-width: $border-thin;
+    border-radius: $btn-round-radius !important;
+    padding: $padding-round-vertical $padding-round-horizontal;
+    
+    &.btn-icon{
+        padding: $padding-round-vertical;
+    }
+}
+.btn-simple{
+    border: $none;
+    font-size: $font-size-medium;
+    padding: $padding-base-vertical $padding-base-horizontal;
+    
+    &.btn-icon{
+        padding: $padding-base-vertical;
+    }
+}
+.btn-lg{
+   @include btn-size($padding-large-vertical, $padding-large-horizontal, $font-size-large, $border-radius-large);
+   font-weight: $font-weight-normal;
+}
+.btn-sm{
+    @include btn-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $border-radius-small);    
+}
+.btn-xs {
+    @include btn-size($padding-xs-vertical, $padding-xs-horizontal, $font-size-small, $border-radius-small);
+}
+.btn-wd {
+    min-width: 140px;
+}
+
+.btn-group.select{
+    width: 100%;
+}
+.btn-group.select .btn{
+    text-align: left;
+}
+.btn-group.select .caret{
+    position: absolute;
+    top: 50%;
+    margin-top: -1px;
+    right: 8px;
+}
+
+/************* Inputs and Forms ****************/
+form{
+  .row{
+    margin-bottom: 15px;
   }
 }
 
-/************/
+.form-group{
+
+  label{
+    padding-top: 5px;
+    float: right;
+  }
+}
+
+.form-control::-moz-placeholder{
+   @include placeholder($medium-gray,1);
+}
+.form-control:-moz-placeholder{
+   @include placeholder($medium-gray,1);
+}
+.form-control::-webkit-input-placeholder{
+   @include placeholder($medium-gray,1);
+}
+.form-control:-ms-input-placeholder{
+   @include placeholder($medium-gray,1);
+}
+
+.form-control {
+    height:30px !important;
+    background-color: $white-bg;
+    border: 1px solid $medium-gray;
+    border-radius: $border-radius-base;
+    color: #444444;
+    @include input-size($padding-base-vertical, $padding-base-horizontal, $height-base);
+    @include box-shadow(none);
+
+    &:focus{
+           background-color: $white-bg;
+           border: 1px solid $dark-gray;
+           @include box-shadow(none);
+           outline: 0 !important;
+    }
+
+    .has-success &,
+    .has-error &,
+    .has-success &:focus,
+    .has-error &:focus{
+        border-color: $light-gray;
+        @include box-shadow(none);
+    }
+
+    .has-success &{
+        border-color: $success-color;
+    }
+    .has-success &:focus{
+        border-color: $success-color;
+    }
+    .has-error &{
+        color: $danger-color;
+        border-color: $danger-color;
+    }
+    .has-error &:focus{
+        border-color: $danger-color;
+    }
+
+    & + .form-control-feedback{
+        border-radius: $border-radius-large;
+        font-size: $font-size-base;
+        margin-top: -7px;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        vertical-align: middle;
+    }
+
+    .open > &{
+        border-radius: $border-radius-base $border-radius-base 0 0;
+        border-bottom-color: transparent;
+    }
+}
+
+.input-lg{
+    height: 55px;
+    padding: $padding-large-vertical $padding-large-horizontal;
+}
+
+.has-error{
+    .form-control-feedback{
+        color: $danger-color;
+    }
+}
+.has-success{
+    .form-control-feedback{
+        color: $success-color
+    }
+}
+
+
+.input-group-addon {
+    background-color: $white-color;
+    border: 1px solid $light-gray;
+    border-radius: $border-radius-base;
+
+    .has-success &,
+    .has-error &{
+        background-color: $white-color;
+        border: 1px solid $light-gray;
+    }
+    .has-error .form-control:focus + &{
+        border-color: $danger-color;
+        color: $danger-color;
+    }
+    .has-success .form-control:focus + &{
+        border-color: $success-color;
+        color: $success-color;
+    }
+    .form-control:focus + &,
+    .form-control:focus ~ &{
+        background-color: $white-color;
+        border-color: $dark-gray;
+    }
+}
+
+.input-group .form-control:first-child,
+.input-group-addon:first-child,
+.input-group-btn:first-child > .dropdown-toggle,
+.input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle) {
+    border-right: 0 none;
+}
+.input-group .form-control:last-child,
+.input-group-addon:last-child,
+.input-group-btn:last-child > .dropdown-toggle,
+.input-group-btn:first-child > .btn:not(:first-child) {
+    border-left: 0 none;
+}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    background-color: $light-gray;
+    color: $default-color;
+    cursor: not-allowed;
+}
+
+.input-group-btn .btn{
+    border-width: $border-thin;
+    padding: $padding-round-vertical $padding-base-horizontal;
+}
+.input-group-btn .btn-default:not(.btn-fill){
+    border-color: $medium-gray;
+}
+
+.input-group-btn:last-child > .btn{
+    margin-left: 0;
+}
+
+.input-group-focus .input-group-addon{
+    border-color: $dark-gray;
+}
+
+
+
+/****** END INPUT AND FORMS******/
+
+
 
 /* Global Styles */
 
@@ -320,3 +478,17 @@ ul.alert-dropdown {
   width: 100%;
 }
 
+/*************** GAMES *****************/
+.date-picker{
+  
+
+}
+.year{
+  
+}
+.month{
+  
+}
+.day{
+  
+}
