@@ -23,11 +23,16 @@ class GamesController < ApplicationController
 	end
 
 	def new
-		#TODO: How to show businesses field. 
+		#TODO: How to choose businesses field. 
 		@game = Game.new
 	end
 
 	def create
+		#TODO
+		#- look user with phone as well. 
+		#- Improve showing validation of email or phone 
+		#- when there is an error, field of email shows id instead of email
+		#- Add custom address
 		if logged_in?
 			@game = current_business.games.build(game_params)
 			@b = current_business
