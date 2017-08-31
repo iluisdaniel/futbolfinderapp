@@ -8,6 +8,7 @@ class GroupsController < ApplicationController
 	end
 
 	def show
+		# have two columns, one for information, other for conversation
 		@group = Group.find(params[:id])
 		@group_lines = @group.group_lines
 		@group_line = GroupLine.new
@@ -18,6 +19,7 @@ class GroupsController < ApplicationController
 	end
 
 	def create
+		#- make groups public or private
 		@group = Group.new(group_params)
 		@group[:user_id] = current_user.id
 

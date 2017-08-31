@@ -1,10 +1,12 @@
-<tr>
-    <th>id:<%= game_line.id %></th>
-    <td><%= game_line.user_id %></td>
-    <td><%= game_line.game_id %></td>
-    <td> 
-    	<% if is_correct_user_or_business_associated_with_game_line?(game_line) %>
-  			<%= link_to "delete",game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id %>
-  		<% end %>
-  	</td>
- </tr>
+<div class="media game-sb-players">
+	 <div class="media-body">
+	 	<a class="pull-left" href="#">
+			  <%= image_tag("64x64.png", :alt => "rss feed", class: "media-object img-circle") %>
+		</a>
+			  <h5 class="media-heading"><%= game_line.user_id %> <%= game_line.user.name %> <%= game_line.game_id %> <small ><% if is_correct_user_or_business_associated_with_game_line?(game_line) %>
+	  			<%= link_to "delete",game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id %>
+	  		<% end %></small></h5>
+	</div>
+</div>
+
+

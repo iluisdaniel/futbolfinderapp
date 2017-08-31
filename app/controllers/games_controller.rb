@@ -16,10 +16,24 @@ class GamesController < ApplicationController
 	end
 
 	def show
-		# TODO: Dont show comment form for businesses and people who is not part of the game. 
+		# TODO: Dont show comment form for people who is not part of the game. 
+		# maybe when the game is public, the admin should accept the players. 
+		# - Have the option for admins in the game to make other players admin
+		# - if the player exit the game, make another player the admin. 
+		# - Show active players on the sidebar
+		# - Use emails or usernames to invite people
+		#-show rules or guidelines for the business
+		# add number of players 
+
 		@game = Game.find(params[:id])
 		@game_lines = @game.game_lines
-		@game_line = GameLine.new	
+		@game_line = GameLine.new
+
+		if @game.public == true
+			@isPublic = "Public"
+		else
+			@isPublic = "Private"
+		end	
 	end
 
 	def new
@@ -33,6 +47,9 @@ class GamesController < ApplicationController
 		#- Improve showing validation of email or phone 
 		#- when there is an error, field of email shows id instead of email
 		#- Add custom address
+		#- add random 6 digit id for games
+		#- Remove description for private games when businesses create the game
+		#- sanitize inputs
 		if logged_in?
 			@game = current_business.games.build(game_params)
 			@b = current_business
@@ -81,10 +98,6 @@ class GamesController < ApplicationController
 			:field_id, :end_time, :number_players, :title, :description, :public)
 	end
 
-	def find_user_with_email(email)
-		user = User.find_by(email: email)
-		return user
-	end
 
 	def set_fields_collection
 		if logged_in?

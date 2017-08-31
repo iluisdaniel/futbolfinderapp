@@ -71,4 +71,19 @@ module GamesHelper
 
     	return false
     end
+
+    def find_user_with_email(email)
+        user = User.find_by(email: email)
+        return user
+    end
+
+    def get_user_name_for_comment(id)
+        
+        if id.nil?
+        return "Unknown"
+        else
+            user = User.find(id)
+            return user.name
+        end
+    end
 end

@@ -1,3 +1,72 @@
+<div class="container">
+  
+  <div class="row game-header">
+    <div class="col-md-12">
+      <h1 style="margin-bottom:0px;"><small><%= @game.id%></small> <%= @game.title %></h1>
+      <hr style="margin-top:0.5em; margin-bottom:0.5em;">
+      <ul class="list-unstyled list-inline">
+        <li><i class="fa fa-futbol-o"></i> <%= @isPublic %> Game</li>
+        <li><i class="fa fa-calendar"></i> <%= @game.date %></li>
+        <li><i class="fa fa-clock-o"></i> <%= @game.time.strftime("%I:%M %p") %> - <%= @game.end_time.strftime("%I:%M %p") %></li>
+      </ul>
+      
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 game-content">
+      <% if !logged_in? %>
+        <p class="lead game-description"><%= @game.description %></p>
+      <% end %>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <address>
+            <strong><i class="fa fa-map-marker"></i> <%= @game.business.name %></strong><br>
+           <%= @game.business.address %><br>
+            <%= @game.business.city %>, <%= @game.business.state %> <%= @game.business.zipcode %><br>
+            <abbr title="Phone">P:</abbr> <%= @game.business.phone %>
+          </address>
+        </div>
+      </div>
+       
+      <% if !logged_in? %>
+        <%= render partial: "comments/comments", locals: {commentable: @game }%>
+
+        <%= render partial: "comments/form", locals: {commentable: @game} %>
+      <% end %>
+    </div>
+    
+
+    <div class="col-md-3">
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs game-sd-tabs">
+        <li><a href="#invited" data-toggle="tab">Invited <span class="badge"><%=@game_lines.count%></span></a></li>
+        <li><a href="#profile" data-toggle="tab">Profile</a></li>
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div class="tab-pane active" id="invited">
+          <%= render @game_lines %>
+        </div>
+        <div class="tab-pane" id="profile">...</div>
+      </div>
+
+      <div class="invite-player-game"> 
+        <%= form_for(@game_line) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %> 
+        
+        <%= f.text_field :user_id, placeholder: "Add Player", class: "form-control" %> 
+        
+          <%= f.hidden_field :game_id, :value => @game.id %>
+          
+            <%= f.submit "Invite", class: "btn btn-primary btn-fill btn-round" %>
+        <% end %>
+      </div>
+     </div>
+  </div>
+
+<div style="margin-top:200px;">
       Game id: <%= @game.id %> |
         <%= link_to @game.date, @game %> |
         <%= @game.time.hour %>:<%= @game.time.min %> |
@@ -14,38 +83,8 @@
                                      title: @game.date %>
           <% end %>
 
-<%= form_for(@game_line) do |f| %>
-<%= render 'shared/error_messages', object: f.object %> 
-<div class="">
-  <%= f.label :user_id %>
-  <div class="">
-    <%= f.number_field :user_id %>
-  </div>
-</div>
-<div >
-  <div >
-  <%= f.hidden_field :game_id, :value => @game.id %>
-  </div>
-</div>
-<div>
-  <div>
-    <%= f.submit "Add Player" %>
-  </div>
-</div>
-<% end %>
-<hr>
 
-<h4>Players</h4>
-<table class="schedules">
-<tr>
-    <th>Id</th>
-    <th>User</th>
-    <th>Game</th>
-    <th></th>
-</tr>
-<%= render @game_lines %>
-</table>
+</div>
 
-<%= render partial: "comments/comments", locals: {commentable: @game }%>
+</div>
 
-<%= render partial: "comments/form", locals: {commentable: @game} %>

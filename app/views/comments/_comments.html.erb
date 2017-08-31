@@ -1,6 +1,16 @@
-<h4>Comments</h4>
+<h4 class="lead">Comments  <span class="badge pull-left"><%= commentable.comments.count %></span></h4>
+<div class="pre-scrollable comments">
 <% commentable.comments.each do |comment| %>
-  <div class="well">
-    <%= comment.body %>
-  </div>
+	<div class="media" data-spy="scroll">
+		<a class="pull-left" href="#">
+		  <%= image_tag("64x64.png", :alt => "rss feed", class: "media-object img-circle") %>
+		</a>
+		<div class="media-body">
+		  <h5 class="media-heading"><%= get_user_name_for_comment(comment.user_id) %><small class="pull-right"><%= comment.created_at.strftime(("On %B %d at %I:%M %p")) %></small></h5>
+		   <%= comment.body %>
+		</div>
+	</div>
+	<hr>
 <% end %>
+
+</div>

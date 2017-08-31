@@ -4,7 +4,14 @@ class GameLinesController < ApplicationController
 
 
 	def create
+		# todo- sanitize inputs
 	  	@game_line = GameLine.new(game_line_params)
+	  	user =  find_user_with_email(game_line_params[:user_id])
+	  	
+	  	if !user.nil?
+			@game_line[:user_id] = user.id
+		end
+
 	  	if @game_line.save
 	      flash[:success] = "Player added"
 	      redirect_to game_path(@game_line.game_id)
@@ -33,3 +40,7 @@ class GameLinesController < ApplicationController
 	end
 	
 end
+
+
+
+			

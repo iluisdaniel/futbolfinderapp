@@ -3,9 +3,10 @@ class CommentsController < ApplicationController
 
     def create
         @comment = @commentable.comments.new comment_params
-        @comment.user_id = current_user
+        @comment.user_id = current_user.id
         @comment.save
-            redirect_to @commentable, notice: "Your comment was successfully posted."
+        flash[:success] = "Your comment was successfully posted."
+        redirect_to @commentable
     end
 
     private

@@ -494,3 +494,46 @@ ul.alert-dropdown {
 .day{
   
 }
+.comments{
+    max-height:550px !important;
+    padding-right: 20px;
+    padding-bottom:20px;
+
+    img{
+        width:40px;
+    }
+}
+.game-description{
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+.game-sb-players{
+    img{
+        width:30px;
+        margin-right:5px;
+    }
+    h5{
+        padding-top: 6px;
+    }
+}
+.game-sd-tabs{
+    margin-bottom: 20px;
+}
+.game-content{
+    margin-right: 30px;
+
+    h4{
+        margin-top: 40px;
+    }
+}
+.game-header{
+    margin-bottom: 20px;
+}
+
+.invite-player-game{
+    margin-top: 20px;
+
+    .btn{
+        margin-top: 10px;
+    }
+}
