@@ -17,17 +17,18 @@ class GamesController < ApplicationController
 
 	def show
 		# TODO: Dont show comment form for people who is not part of the game. 
-		# maybe when the game is public, the admin should accept the players. 
-		# - Have the option for admins in the game to make other players admin
+		# maybe when the game is public, the admin should accept the players?
+		# - Have the option for admins in the game to make other players admin?
 		# - if the player exit the game, make another player the admin. 
-		# - Show active players on the sidebar
 		# - Use emails or usernames to invite people
-		#-show rules or guidelines for the business
-		# add number of players 
+		#-show rules or guidelines for the business 
+		# make game lines accepted able to change accepted true to false, instead of delete them
 
 		@game = Game.find(params[:id])
-		@game_lines = @game.game_lines
+		@game_lines = @game.game_lines.where(accepted: false)
+		@game_lines_accepted = @game.game_lines.where(accepted: true)
 		@game_line = GameLine.new
+		@field = @game.business.fields.find(@game.field_id)
 
 		if @game.public == true
 			@isPublic = "Public"

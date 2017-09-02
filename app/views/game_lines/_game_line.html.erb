@@ -3,9 +3,28 @@
 	 	<a class="pull-left" href="#">
 			  <%= image_tag("64x64.png", :alt => "rss feed", class: "media-object img-circle") %>
 		</a>
-			  <h5 class="media-heading"><%= game_line.user_id %> <%= game_line.user.name %> <%= game_line.game_id %> <small ><% if is_correct_user_or_business_associated_with_game_line?(game_line) %>
-	  			<%= link_to "delete",game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id %>
-	  		<% end %></small></h5>
+			  <h5 class="media-heading">
+			  	<%= game_line.user_id %> <%= game_line.user.name %> <%= game_line.game_id %> gl:<%= game_line.id %> 
+			  	<small class="pull-right">
+			  		<% if is_correct_user_or_business_associated_with_game_line?(game_line) %>
+			  		
+				  		<% if game_line.accepted != true %>
+					  		<%= link_to game_line_path(id: game_line.id), method: "put", class: 'btn btn-default btn-fill btn-round btn-success' do %>
+					  			<i class="fa fa-check"></i> 
+					  		<% end %>
+			  						
+		  					<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id, class: 'btn btn-default btn-fill btn-round btn-danger' do%>
+		  						<i class="fa fa-times"></i> 
+		  					<% end %>
+		  				<% else %>
+		  					<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id, class: 'btn btn-default btn-fill btn-round btn-danger' do%>
+		  						<i class="fa fa-times"></i> 
+		  					<% end %>
+		  				<% end %>	
+
+	  				<% end %>
+	  			</small>
+	  		</h5>
 	</div>
 </div>
 

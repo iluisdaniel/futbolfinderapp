@@ -509,11 +509,25 @@ ul.alert-dropdown {
 }
 .game-sb-players{
     img{
-        width:30px;
+        width:40px;
         margin-right:5px;
     }
     h5{
-        padding-top: 6px;
+        padding-top: 12px;
+    }
+    small{
+        a:hover{
+            background-color:#da0836 !important;
+            border: none !important;
+        }
+
+        .btn-success:hover{
+            background-color: #027708 !important;
+        }
+    }
+    .btn-round{
+        padding:2px 7px !important; 
+        border:none !important;       
     }
 }
 .game-sd-tabs{

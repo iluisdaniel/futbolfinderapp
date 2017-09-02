@@ -11,7 +11,7 @@ class GameLine < ActiveRecord::Base
   	end
 
   	def validate_user_is_not_duplicate
-  		errors.add(:user_id, "User is already there") unless is_the_user_already_in_the_game?
+  		errors.add(:user_id, "User is already there") unless can_the_user_be_added?
   	end
 
   	# def validate_user_is_not_game_creator
@@ -30,14 +30,20 @@ class GameLine < ActiveRecord::Base
 	    return true
   	end
 
-  	def is_the_user_already_in_the_game?
+  	def can_the_user_be_added?
   		game_line = GameLine.where(game_id: game_id, user_id: user_id)
 
-  		if !game_line.empty?
-  			return false
-  		end
+  		if game_line.empty?
+  			return true
+  		else
 
-  		return true
+        if accepted == true
+          return true
+        else
+          return false
+        end
+      end
+
   	end
 
   	# def is_the_user_the_game_creator?

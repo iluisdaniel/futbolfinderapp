@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   resources :games, path: '/games/' do 
     resources :comments, module: :games
   end
-  resources :game_lines, only: [:create, :destroy]
+  resources :game_lines, only: [:create, :update,:destroy]
 
   resources :schedules, only: [:create, :destroy]
   resources :fields, only: [:create, :update, :destroy]

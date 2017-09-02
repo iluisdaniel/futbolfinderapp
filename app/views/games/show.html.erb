@@ -8,6 +8,8 @@
         <li><i class="fa fa-futbol-o"></i> <%= @isPublic %> Game</li>
         <li><i class="fa fa-calendar"></i> <%= @game.date %></li>
         <li><i class="fa fa-clock-o"></i> <%= @game.time.strftime("%I:%M %p") %> - <%= @game.end_time.strftime("%I:%M %p") %></li>
+        <li><i class="fa fa-user"></i> <%= @game.user.name %></li>
+        <li><i class="fa fa-users"></i> <%= @game.number_players %></li>
       </ul>
       
     </div>
@@ -19,13 +21,25 @@
         <p class="lead game-description"><%= @game.description %></p>
       <% end %>
       <div class="panel panel-default">
+        <div class="panel-heading">
+         <h3 class="panel-title"><i class="fa fa-info-circle"></i> Information</h3>
+        </div>
         <div class="panel-body">
-          <address>
-            <strong><i class="fa fa-map-marker"></i> <%= @game.business.name %></strong><br>
-           <%= @game.business.address %><br>
-            <%= @game.business.city %>, <%= @game.business.state %> <%= @game.business.zipcode %><br>
-            <abbr title="Phone">P:</abbr> <%= @game.business.phone %>
-          </address>
+         
+          <div class="col-md-4">
+            <address>
+              <strong><i class="fa fa-map-marker"></i> <%= @game.business.name %></strong><br>
+             <%= @game.business.address %><br>
+              <%= @game.business.city %>, <%= @game.business.state %> <%= @game.business.zipcode %>
+              <br>
+              <i class="fa fa-phone"></i> <%= @game.business.phone %> 
+            </address>
+           </div>
+           <div class="col-md-4">
+              <i class="fa fa-futbol-o"></i> Field: <%= @field.name %> <br>
+              <i class="fa fa-users"></i> Field size: <%= @field.number_players %> <br>
+              <i class="fa fa-dollar"></i> Price: <%= @field.price %> 
+            </div>  
         </div>
       </div>
        
@@ -40,29 +54,48 @@
     <div class="col-md-3">
       <!-- Nav tabs -->
       <ul class="nav nav-tabs game-sd-tabs">
+        <li><a href="#playing" data-toggle="tab">Playing <span class="badge"><%=@game_lines_accepted.count%></span></a></li>
         <li><a href="#invited" data-toggle="tab">Invited <span class="badge"><%=@game_lines.count%></span></a></li>
-        <li><a href="#profile" data-toggle="tab">Profile</a></li>
       </ul>
 
       <!-- Tab panes -->
       <div class="tab-content">
-        <div class="tab-pane active" id="invited">
-          <%= render @game_lines %>
+        <div class="tab-pane active" id="playing">
+          <% if @game_lines_accepted.empty? %>
+            <p>There is no active players yet.</p>
+          <% else %>
+            <%= render @game_lines_accepted %>
+          <% end %>
         </div>
-        <div class="tab-pane" id="profile">...</div>
+        <div class="tab-pane" id="invited">
+          <% if @game_lines.empty? %>
+            <p>There are no players invited yet.</p>
+          <% else %>
+            <%= render @game_lines %>
+          <% end %>  
+        </div>
+        
       </div>
 
-      <div class="invite-player-game"> 
-        <%= form_for(@game_line) do |f| %>
-        <%= render 'shared/error_messages', object: f.object %> 
-        
-        <%= f.text_field :user_id, placeholder: "Add Player", class: "form-control" %> 
-        
-          <%= f.hidden_field :game_id, :value => @game.id %>
+      <% if @game_lines_accepted.count != @game.number_players %>
+        <div class="invite-player-game"> 
+          <%= form_for(@game_line) do |f| %>
+          <%= render 'shared/error_messages', object: f.object %> 
           
-            <%= f.submit "Invite", class: "btn btn-primary btn-fill btn-round" %>
+          <%= f.text_field :user_id, placeholder: "Enter Email or ID", class: "form-control" %> 
+          
+            <%= f.hidden_field :game_id, :value => @game.id %>
+            
+              <%= f.submit "Invite", readonly: true,class: "btn btn-primary btn-fill btn-round" %>
+          <% end %>
+        </div>
+        <% else %>
+          <div class="alert alert-success" style="margin-top:20px;">
+            
+              Number of Players are completed!
+            
+          </div>
         <% end %>
-      </div>
      </div>
   </div>
 

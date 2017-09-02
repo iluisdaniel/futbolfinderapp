@@ -1,6 +1,6 @@
 class GameLinesController < ApplicationController
 	include GamesHelper
-	before_action :signed_in_business_or_user?, only: [:create, :destroy]
+	before_action :signed_in_business_or_user?, only: [:create, :update, :destroy]
 
 
 	def create
@@ -16,10 +16,24 @@ class GameLinesController < ApplicationController
 	      flash[:success] = "Player added"
 	      redirect_to game_path(@game_line.game_id)
 	    else
-	    	flash[:error] = "Unable to add player"
+	    	flash[:danger] = "Unable to add player"
 	    	redirect_to :back
 	    end
 	end
+
+	def update
+  		@game_line = GameLine.find_by(id: params[:id])
+  		
+  		@game_line.update(accepted: true)
+  		
+		if @game_line.save
+			flash[:success] = "You are ready to play!"
+			redirect_to :back
+		else
+			flash[:danger] = "Error, you cannot accept to play"
+			redirect_to :back
+		end	  			
+  	end
 
   	def destroy
 	  	@game_line = GameLine.find(params[:id])
@@ -32,11 +46,10 @@ class GameLinesController < ApplicationController
   	end
 
 
-
 	private 
 
 	def game_line_params
-  		params.require(:game_line).permit(:user_id, :game_id)
+  		params.require(:game_line).permit(:user_id, :game_id, :accepted)
 	end
 	
 end
