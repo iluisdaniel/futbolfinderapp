@@ -1,6 +1,23 @@
 <% provide(:title, 'All users') %>
 <h1>All users</h1>
 
+<div class="row">
+  <ul class="nav nav-tabs game-sd-tabs">
+    <li><a href="#friends" data-toggle="tab">Friends</a></li>
+    <li><a href="#pending" data-toggle="tab">Pending</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div class="tab-pane active" id="friends">
+      
+    </div>
+
+    <div class="tab-pane" id="pending">  
+      
+  </div> 
+</div>
+
 <ul class="users">
   <% @users.each do |user| %>
     
