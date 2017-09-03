@@ -1,0 +1,39 @@
+
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>End Time</th> 
+        <th>Location</th>
+        <th>User</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @games.each do |game| %>
+
+        <tr>
+          <td><%= game.id %></td>
+          <td><%= link_to game.date, game %></td>
+          <td><%= game.time.hour %>:<%= game.time.min %></td>
+          <td><%= game.end_time.hour %>:<%= game.end_time.min %></td>
+          <td><%= game.business.name %></td>
+          <td><%= game.user.name %></td>
+          <td>
+          <% if current_business?(game.business) || current_user?(game.user) %>
+          <%= link_to "delete", game, method: :delete,
+                   data: { confirm: "You sure?" },
+                   title: game.date %>
+          <% end %>
+          </td>
+        </tr>
+
+      <% end %>  
+    </tbody>
+  </table>
+</div>  
+
+

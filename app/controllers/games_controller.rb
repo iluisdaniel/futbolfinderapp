@@ -7,11 +7,14 @@ class GamesController < ApplicationController
 	before_action :set_businesses_collection, only: [:new, :create]
 
 	def index
-		@user = current_user
 		if logged_in?
-			@games = current_business.games.order(created_at: :desc)
+			gs = current_business.games.order(created_at: :desc)
+			@games = gs.where("date > ?", Date.today)
+			@oldgames = gs.where("date < ?", Date.today)
 		elsif signed_in?
-			@games = Game.joins(game_lines: :user).where(game_lines: {user_id: current_user.id}).order(created_at: :desc)
+			gs = Game.joins(game_lines: :user).where(game_lines: {user_id: current_user.id}).order(created_at: :desc)
+			@games = gs.where("date > ?", Date.today)
+			@oldgames = gs.where("date < ?", Date.today)
 		end
 	end
 
@@ -28,6 +31,8 @@ class GamesController < ApplicationController
 		@game_lines = @game.game_lines.where(accepted: false)
 		@game_lines_accepted = @game.game_lines.where(accepted: true)
 		@game_line = GameLine.new
+		#Bug - when a field is erased from a business, and the show action is called it fails because it cannot find field to show field info into the show page
+		# Make impossible to erase a field in the case there are open games. Or it has to erased all of them. 
 		@field = @game.business.fields.find(@game.field_id)
 
 		if @game.public == true
