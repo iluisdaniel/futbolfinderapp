@@ -8,24 +8,8 @@
   <%= csrf_meta_tags %>
  <%= render 'layouts/shim' %>
 </head>
-<body class"<%= 'black-background' if logged_in? %>">
-  <% if logged_in? %>  
-    <div id="wrapper">
-      <div id="page-wrapper">
-        <div class="container-fluid">
-          <!-- normal collapsible navbar markup -->
-          <%= render 'layouts/header_businesses' %>
-          <!-- your page content -->
-          <% flash.each do |message_type, message| %>
-              <div class="alert alert-<%= message_type %>"><%= message %></div>
-          <% end %>
-          <%= yield %>
-          <%= debug(params) if Rails.env.development? %>
-        </div>    
-      </div>      
-    </div>
-  <% else %>
-    <%= render 'layouts/header_users' %>
+<body > 
+    <%= render 'layouts/header' %>
       <div class="container">
         <% flash.each do |message_type, message| %>
               <div class="alert alert-<%= message_type %>"><%= message %></div>
@@ -33,6 +17,6 @@
         <%= yield %>
         <%= debug(params) if Rails.env.development? %>
       </div>
-  <% end %>
+  
 </body>
 </html>
