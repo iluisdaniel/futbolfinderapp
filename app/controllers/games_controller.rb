@@ -80,6 +80,9 @@ class GamesController < ApplicationController
 			@game[:field_id] = get_available_field(@game[:business_id], @game)
 		end
 
+		@game[:title] = set_game_title(@game.title, @game.business.name, @game.date, @game.time)
+		@game[:description] = set_game_description(@game.description, @game.business.name)
+
 		if @game.save
 			redirect_to games_path
 			flash[:success] = "Game was created"
@@ -122,6 +125,21 @@ class GamesController < ApplicationController
 		if signed_in?
 			@businesses = Business.all
 		end
+	end
+
+	def set_game_title(title, location, date, time)
+		if title.nil?
+			return "Game at " + location + ". " + date.strftime("%B %e") + ", " + time.strftime("%I:%M %p") + "."
+		end
+		return title
+	end
+
+	def set_game_description(desc, location)
+		if desc.nil?
+			return "Your game have been created by " + location  + ". Enjoy your game!. Your are welcome to change this descrition and let the other players what's up"
+		end
+
+		return title 
 	end
 
 	def get_available_field(business_id, game)

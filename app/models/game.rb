@@ -5,10 +5,9 @@ class Game < ActiveRecord::Base
   has_many :game_lines, dependent: :destroy
   has_many :comments, as: :commentable
 
-  validates :public, presence: true
   validates :user_id, presence: true
   validates :description, length: { maximum: 500, minimum: 5 }, allow_blank: true
-  validates :title, presence: true, length: { minimum: 5, maximum: 50}
+  validates :title, length: { minimum: 5, maximum: 60}, allow_blank: true
   validates :number_players, presence: true, numericality: {only_integer: true}
 
   #Validate Date
@@ -30,6 +29,12 @@ class Game < ActiveRecord::Base
 
   #validate user
   validate :check_if_user_exists
+
+  #validate number of players
+  validate :check_number_players_greater_than_0
+
+  #validate public 
+  validate :check_public_is_presence
 
 
     ### Validate Date
@@ -85,6 +90,17 @@ class Game < ActiveRecord::Base
 
     def check_if_user_exists
       errors.add(:user_id, " the user doesn't exist") unless does_user_exists?
+    end
+
+    #### Validate Number of Players 
+
+    def check_number_players_greater_than_0
+      errors.add(:number_players, " should be greater than 0") unless number_players > 0
+    end
+
+    ####### validate public presence
+    def check_public_is_presence
+      errors.add(:public, " should be presence") unless !public.nil?
     end
     
   	private
