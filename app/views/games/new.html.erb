@@ -148,7 +148,9 @@
       <% end %>
       <hr>
 
-      <%= f.submit "Create game", class: "btn btn-large btn-primary btn-fill btn-round" %>
+     
+      <%= f.submit "Create game", class: "btn btn-large btn-primary btn-fill btn-round pull-right" %>
+       <%= link_to 'Cancel', url_for(:back), class: "btn btn-large btn-default btn-round pull-right" %>
     <% end %>
   </div>
 </div>
