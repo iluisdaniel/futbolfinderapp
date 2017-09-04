@@ -60,6 +60,8 @@ class GamesController < ApplicationController
 		#- Remove description for private games when businesses create the game
 		#- sanitize inputs
 		# if user is nil, that means it is a public pickup game created by the business, if user doesnt have an account, create an accoun from its email and name
+		# add button to create games from modal
+		# hide title and description when business is going to create the game and show notes
 
 		if logged_in?
 			@game = current_business.games.build(game_params)
