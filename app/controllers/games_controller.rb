@@ -7,6 +7,7 @@ class GamesController < ApplicationController
 	before_action :set_businesses_collection, only: [:new, :create]
 
 	def index
+		# add field id
 		if logged_in?
 			gs = current_business.games.order(created_at: :desc)
 			@games = gs.where("date > ?", Date.today)
@@ -20,12 +21,14 @@ class GamesController < ApplicationController
 
 	def show
 		# TODO: Dont show comment form for people who is not part of the game. 
-		# maybe when the game is public, the admin should accept the players?
+		# maybe when the game is public, the admin should accept the players?. Or admin could erased and blocked users. 
 		# - Have the option for admins in the game to make other players admin?
 		# - if the player exit the game, make another player the admin. 
 		# - Use emails or usernames to invite people
 		#-show rules or guidelines for the business 
 		# make game lines accepted able to change accepted true to false, instead of delete them
+		#- when user creates the game business cannot edit and see the title
+		# when games are old people cant edit the game, and business only games they create themselves. 
 
 		@game = Game.find(params[:id])
 		@game_lines = @game.game_lines.where(accepted: false)
@@ -56,6 +59,8 @@ class GamesController < ApplicationController
 		#- add random 6 digit id for games
 		#- Remove description for private games when businesses create the game
 		#- sanitize inputs
+		# if user is nil, that means it is a public pickup game created by the business, if user doesnt have an account, create an accoun from its email and name
+
 		if logged_in?
 			@game = current_business.games.build(game_params)
 			@b = current_business
