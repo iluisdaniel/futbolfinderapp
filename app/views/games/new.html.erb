@@ -1,7 +1,9 @@
 <% provide(:title, 'New Game') %>
+<% provide(:htitle, 'New Game') %>
+<% provide(:secondaryTitle, 'Create a Game!')%>
+
 <div class="row">
   <div class="col-md-6 col-md-offset-2">
-    <h1>New Game</h1>
     <%= form_for(@game) do |f| %>
     <div class="row">
     <%= render 'shared/error_messages', object: f.object %>

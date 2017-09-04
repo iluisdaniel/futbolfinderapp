@@ -9,4 +9,10 @@ module ApplicationHelper
       page_title + " | " + base_title
     end
   end
+
+  def show_title_page_header(title, secondaryTitle)
+  	if !title.empty?
+  		render partial: "layouts/title_page_header", locals: {title: title, secondaryTitle: secondaryTitle}
+  	end
+  end
 end
