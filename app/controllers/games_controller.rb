@@ -83,8 +83,7 @@ class GamesController < ApplicationController
 		@game[:title] = set_game_title(@game.title, @game.business.name, @game.date, @game.time)
 		@game[:description] = set_game_description(@game.description, @game.business.name)
 
-		if @game.save		
-			
+		if @game.save				
 			redirect_to @game
 			flash[:success] = "Your Game Was Created"		
 			if !@game.user_id.nil?
