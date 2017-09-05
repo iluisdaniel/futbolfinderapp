@@ -61,6 +61,7 @@ class GamesController < ApplicationController
 		# if user is nil, that means it is a public pickup game created by the business, if user doesnt have an account, create an accoun from its email and name
 		# add button to create games from modal
 		#  show notes when business is going to create the game 
+		# user cannot reserve two games at the same date
 
 		if logged_in?
 			@game = current_business.games.build(game_params)
@@ -82,10 +83,13 @@ class GamesController < ApplicationController
 		@game[:title] = set_game_title(@game.title, @game.business.name, @game.date, @game.time)
 		@game[:description] = set_game_description(@game.description, @game.business.name)
 
-		if @game.save
-			redirect_to games_path
-			flash[:success] = "Game was created"
-			GameLine.create(user_id: @game.user_id, game_id: @game.id)
+		if @game.save		
+			
+			redirect_to @game
+			flash[:success] = "Your Game Was Created"		
+			if !@game.user_id.nil?
+				GameLine.create(user_id: @game.user_id, game_id: @game.id)
+			end
 		else
 			render 'new'
 		end
@@ -127,18 +131,24 @@ class GamesController < ApplicationController
 	end
 
 	def set_game_title(title, location, date, time)
-		if title.nil?
+		if title.nil? || title.empty?
 			return "Game at " + location + ". " + date.strftime("%B %e") + ", " + time.strftime("%I:%M %p") + "."
 		end
 		return title
 	end
 
 	def set_game_description(desc, location)
-		if desc.nil?
-			return "Your game have been created by " + location  + ". Enjoy your game!. Your are welcome to change this descrition and let the other players what's up"
+		if desc.nil? || desc.empty?
+			w = "by"
+
+			if signed_in?
+				w = "at"
+			end
+
+			return "Your game has been created " + w + " "+ location  + ". Enjoy your game!. Your are welcome to change this descrition and let the other players what's up"
 		end
 
-		return title 
+		return desc
 	end
 
 	def get_available_field(business_id, game)

@@ -112,7 +112,7 @@
         field id: <%= @game.field_id %> |
         <% end %>
          <% if !@game.user.nil? %>   
-          USer Name: <%= game.user.name %> |
+          USer Name: <%= @game.user.name %> |
         <% end %>
         <% if current_business?(@game.business) || current_user?(@game.user) %>
           <%= link_to "delete", @game, method: :delete,
