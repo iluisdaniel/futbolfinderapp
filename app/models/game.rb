@@ -5,7 +5,6 @@ class Game < ActiveRecord::Base
   has_many :game_lines, dependent: :destroy
   has_many :comments, as: :commentable
 
-  validates :user_id, presence: true
   validates :description, length: { maximum: 500, minimum: 5 }, allow_blank: true
   validates :title, length: { minimum: 5, maximum: 60}, allow_blank: true
   validates :number_players, presence: true, numericality: {only_integer: true}
@@ -122,11 +121,16 @@ class Game < ActiveRecord::Base
 
   ############ USER ##############
   def does_user_exists?
-    user = User.where(id: user_id)
+    
+    if !user_id.nil?
+      user = User.where(id: user_id)
 
-    if user.empty?
-      return false
+      if user.empty?
+        return false
+      end
     end
+
+    
 
     return true
   end

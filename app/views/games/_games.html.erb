@@ -21,7 +21,11 @@
           <td><%= game.time.hour %>:<%= game.time.min %></td>
           <td><%= game.end_time.hour %>:<%= game.end_time.min %></td>
           <td><%= game.business.name %></td>
-          <td><%= game.user.name %></td>
+          <% if game.user.nil? %>
+            <td></td>
+          <% else %>
+            <td><%= game.user.name %></td>
+          <% end %>
           <td>
           <% if current_business?(game.business) || current_user?(game.user) %>
           <%= link_to "delete", game, method: :delete,

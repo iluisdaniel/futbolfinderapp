@@ -33,7 +33,10 @@
         B id: <%= game.business.id%> |
         field id: <%= game.field_id %> |
         <% end %>
-        USer Name: <%= game.user.name %> |
+        <% if !game.user.nil? %>   
+          USer Name: <%= game.user.name %> |
+        <% end %>
+      
         <% if current_business?(game.business) || current_user?(game.user) %>
           <%= link_to "delete", game, method: :delete,
                                      data: { confirm: "You sure?" },

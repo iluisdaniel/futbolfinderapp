@@ -8,7 +8,9 @@
         <li style="font-size:1.2em;"><span class="label label-default"><i class="fa fa-futbol-o"></i> <%= @isPublic %> Game</li>
         <li><i class="fa fa-calendar"></i> <%= @game.date.strftime("%B %e %Y") %></li>
         <li><i class="fa fa-clock-o"></i> <%= @game.time.strftime("%I:%M %p") %> - <%= @game.end_time.strftime("%I:%M %p") %></li>
-        <li><i class="fa fa-user"></i> <%= @game.user.name %></li>
+        <% if !@game.user.nil? %>   
+          <li><i class="fa fa-user"></i> <%= @game.user.name %></li>
+        <% end %>
         <li><i class="fa fa-users"></i> <%= @game.number_players %></li>
       </ul>
       
@@ -109,7 +111,9 @@
         B id: <%= @game.business.id%> |
         field id: <%= @game.field_id %> |
         <% end %>
-        USer Name: <%= @game.user.name %> |
+         <% if !@game.user.nil? %>   
+          USer Name: <%= game.user.name %> |
+        <% end %>
         <% if current_business?(@game.business) || current_user?(@game.user) %>
           <%= link_to "delete", @game, method: :delete,
                                      data: { confirm: "You sure?" },
