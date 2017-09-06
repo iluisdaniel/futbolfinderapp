@@ -19,11 +19,11 @@
         <tr>
           <td><%= game.id %></td>
           <td><%= link_to game.date.strftime("%B %e %Y"), game %></td>
-          <td><%= game.time.hour %>:<%= game.time.min %></td>
+          <td><%= game.time.strftime("%r") %></td>
           <% if game.end_time.nil? %>
           <td></td>
           <%else%>
-          <td><%= game.end_time.hour %>:<%= game.end_time.min %></td>
+          <td><%= game.end_time.strftime("%r") %></td>
           <% end %>
           <td><%= get_field_from_game(game.field_id) %></td>
           <% if game.user.nil? %>

@@ -1,10 +1,10 @@
 class GamesController < ApplicationController
 	include GamesHelper
-	before_action :signed_in_business_or_user?, only: [:index, :show, :new, :create, :destroy]
+	before_action :signed_in_business_or_user?, only: [:index, :show, :new, :create,:edit, :update, :destroy]
 	before_action :correct_business_or_user_to_see,   only: [:show]
-	before_action :correct_business_or_user_to_delete, only: [:destroy]
-	before_action :set_fields_collection, only: [:new, :create]
-	before_action :set_businesses_collection, only: [:new, :create]
+	before_action :correct_business_or_user_to_delete, only: [:edit, :update,:destroy]
+	before_action :set_fields_collection, only: [:new, :edit, :update, :create]
+	before_action :set_businesses_collection, only: [:new, :edit,:update, :create]
 
 	def index
 		# add field id
@@ -92,6 +92,25 @@ class GamesController < ApplicationController
 			end
 		else
 			render 'new'
+		end
+	end
+
+	def edit
+		@game = Game.find(params[:id])
+	end
+
+	def update
+		@game = Game.find(params[:id])
+
+		if @game.number_players.nil?
+			flash[:success] = "Noooooooo"
+		end
+
+		if @game.update_attributes(game_params)
+		  flash[:success] = "Game updated"
+		  redirect_to @game
+		else
+		  render 'edit'
 		end
 	end
 

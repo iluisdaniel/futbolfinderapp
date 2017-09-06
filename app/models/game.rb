@@ -130,8 +130,6 @@ class Game < ActiveRecord::Base
       end
     end
 
-    
-
     return true
   end
 
@@ -164,7 +162,29 @@ class Game < ActiveRecord::Base
     games = Game.where(date: date, time: time, business_id: business_id)
 
     games.each do |game|
-      if game.field_id == field_id
+      # check first if it is the correct to let update it
+      if check_if_the_game_need_to_check_for_field_availability(id, game, date, time, end_time, 
+        business_id, field_id)
+
+        if game.field_id == field_id
+          return false
+        end
+
+      end
+
+    end
+
+    return true
+  end
+
+  def check_if_the_game_need_to_check_for_field_availability(id, game, date, time, end_time, business_id, field_id)
+    if id.nil?
+      return true
+    end
+
+    if game.id == id
+      if date==game.date && time == game.time && end_time == game.end_time && 
+        game.business_id == business_id && game.field_id == field_id
         return false
       end
     end

@@ -12,6 +12,7 @@
           <li><i class="fa fa-user"></i> <%= @game.user.name %></li>
         <% end %>
         <li><i class="fa fa-users"></i> <%= @game.number_players %></li>
+        <li class="pull-right"><i class="fa fa-gear"></i> <%= link_to "Settings", edit_game_path(@game.id) %></li>
       </ul>
       
     </div>
