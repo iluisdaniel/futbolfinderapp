@@ -9,13 +9,13 @@ class GamesController < ApplicationController
 	def index
 		# add field id
 		if logged_in?
-			gs = current_business.games.order(created_at: :desc)
-			@games = gs.where("date > ?", Date.today)
-			@oldgames = gs.where("date < ?", Date.today)
+			gs = current_business.games
+			@games = gs.where("date > ?", Date.today).order(date: :asc)
+			@oldgames = gs.where("date < ?", Date.today).order(date: :desc)
 		elsif signed_in?
-			gs = Game.joins(game_lines: :user).where(game_lines: {user_id: current_user.id}).order(created_at: :desc)
-			@games = gs.where("date > ?", Date.today)
-			@oldgames = gs.where("date < ?", Date.today)
+			gs = Game.joins(game_lines: :user).where(game_lines: {user_id: current_user.id})
+			@games = gs.where("date > ?", Date.today).order(date: :asc)
+			@oldgames = gs.where("date < ?", Date.today).order(date: :desc)
 		end
 	end
 
@@ -29,6 +29,7 @@ class GamesController < ApplicationController
 		# make game lines accepted able to change accepted true to false, instead of delete them
 		#- when user creates the game business cannot edit and see the title
 		# when games are old people cant edit the game, and business only games they create themselves. 
+		# users can set alerts in case a filed got reserved on a time. Maybe, choose prefered place and time and if another users reserved they get an alert. 
 
 		@game = Game.find(params[:id])
 		@game_lines = @game.game_lines.where(accepted: false)

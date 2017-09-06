@@ -7,25 +7,31 @@
         <th>Date</th>
         <th>Time</th>
         <th>End Time</th> 
-        <th>Location</th>
+        <th>Field Name</th>
         <th>User</th>
+        <th>Created</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      <% @games.each do |game| %>
+      <% games.each do |game| %>
 
         <tr>
           <td><%= game.id %></td>
-          <td><%= link_to game.date, game %></td>
+          <td><%= link_to game.date.strftime("%B %e %Y"), game %></td>
           <td><%= game.time.hour %>:<%= game.time.min %></td>
+          <% if game.end_time.nil? %>
+          <td></td>
+          <%else%>
           <td><%= game.end_time.hour %>:<%= game.end_time.min %></td>
-          <td><%= game.business.name %></td>
+          <% end %>
+          <td><%= get_field_from_game(game.field_id) %></td>
           <% if game.user.nil? %>
             <td></td>
           <% else %>
-            <td><%= game.user.name %></td>
+            <td><%= link_to game.user.name, game.user %></td>
           <% end %>
+          <td><%= game.created_at.strftime("%D at %r") %></td>
           <td>
           <% if current_business?(game.business) || current_user?(game.user) %>
           <%= link_to "delete", game, method: :delete,

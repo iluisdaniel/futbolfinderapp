@@ -1,47 +1,33 @@
 <% provide(:title, 'All games') %>
+<% provide(:htitle, 'My Games') %>
+<% provide(:secondaryTitle, '')%>
 
+<div class="container" style="margin-top:20px;">
+<%= link_to 'New Game', new_game_path, class: "btn btn-large btn-primary btn-round btn-fill pull-right" %> 
+  <div class="row">
+    <ul class="nav nav-tabs game-sd-tabs">
+      <li><a href="#current-games" data-toggle="tab">Current</a></li>
+      <li><a href="#old-games" data-toggle="tab">Old</a></li>
+    </ul>
 
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="current-games">
+        <% if logged_in? %>
+           <%= render partial: "games/games", locals: {games: @games} %>
+        <% elsif signed_in? %>
+          <%= render partial: "games/users_games", locals: {games: @games} %>
+        <% end %>
+       
+      </div>
 
-<h1 >All Games</h1>
-<div class="row">
-  <ul class="nav nav-tabs game-sd-tabs">
-    <li><a href="#current-games" data-toggle="tab">Current</a></li>
-    <li><a href="#old-games" data-toggle="tab">Old</a></li>
-  </ul>
+      <div class="tab-pane" id="old-games">  
+        <% if logged_in? %>
+           <%= render partial: "games/games", locals: {games: @oldgames} %>
+        <% elsif signed_in? %>
+        <%= render partial: "games/users_games", locals: {games: @oldgames} %>
+        <% end %>
+    </div> 
 
-  <!-- Tab panes -->
-  <div class="tab-content">
-    <div class="tab-pane active" id="current-games">
-      <%= render partial: "games/games"%>
-    </div>
-
-    <div class="tab-pane" id="old-games">  
-      <%= render partial: "games/old" %>
-  </div> 
-
+  </div>
 </div>
-
-
-<ul class="games">
-  <% @games.each do |game| %>
-    <li>
-      Game id: <%= game.id %> |
-        <%= link_to game.date, game %> |
-        <%= game.time.hour %>:<%= game.time.min %> |
-        <% if !game.business.nil? %>
-        Name: <%= game.business.name %> |
-        B id: <%= game.business.id%> |
-        field id: <%= game.field_id %> |
-        <% end %>
-        <% if !game.user.nil? %>   
-          USer Name: <%= game.user.name %> |
-        <% end %>
-      
-        <% if current_business?(game.business) || current_user?(game.user) %>
-          <%= link_to "delete", game, method: :delete,
-                                     data: { confirm: "You sure?" },
-                                     title: game.date %>
-          <% end %>
-    </li>
-  <% end %>
-</ul>

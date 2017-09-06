@@ -86,4 +86,20 @@ module GamesHelper
             return user.name
         end
     end
+
+    def get_field_from_game(id)
+        if id.nil?
+            return "none"
+        end
+
+        if Field.exists?(id)
+            field = Field.find(id)
+        end
+
+        if !field.nil?
+            return field.name
+        end
+        
+        return "none"
+    end
 end

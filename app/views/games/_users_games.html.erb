@@ -6,24 +6,30 @@
         <th>ID</th>
         <th>Date</th>
         <th>Time</th>
-        <th>End Time</th>
+        <th>End Time</th> 
         <th>Location</th>
         <th>User</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      <% @oldgames.each do |game| %>
+      <% games.each do |game| %>
 
         <tr>
           <td><%= game.id %></td>
-          <td><%= link_to game.date, game %></td>
+          <td><%= link_to game.date.strftime("%B %e %Y"), game %></td>
           <td><%= game.time.hour %>:<%= game.time.min %></td>
-          <% if !game.end_time.nil? %><!--  we have to remove this after development -->
+          <% if game.end_time.nil? %>
+          <td></td>
+          <%else%>
           <td><%= game.end_time.hour %>:<%= game.end_time.min %></td>
           <% end %>
-          <td><%= game.business.name %></td>
-          <td><%= game.user.name %></td>
+          <td><%= link_to game.business.name, game.business %></td>
+          <% if game.user.nil? %>
+            <td></td>
+          <% else %>
+            <td><%= link_to game.user.name, game.user %></td>
+          <% end %>
           <td>
           <% if current_business?(game.business) || current_user?(game.user) %>
           <%= link_to "delete", game, method: :delete,
@@ -37,3 +43,5 @@
     </tbody>
   </table>
 </div>  
+
+
