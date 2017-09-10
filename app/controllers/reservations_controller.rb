@@ -1,8 +1,8 @@
 class ReservationsController < ApplicationController
 	include GamesHelper
 	include ReservationsHelper
-	before_action :signed_in_business_or_user?, only: [:index, :show, :new, :create]
-	
+	before_action :signed_in_business, only: [:index, :show, :new, :create]
+	before_action :signed_in_user, only: [:create]
 	before_action :set_fields_collection, only: [:new, :create]
 	before_action :set_businesses_collection, only: [:new, :create]
 	
@@ -58,4 +58,25 @@ class ReservationsController < ApplicationController
 			return f.id if reservation.valid?
 		end
 	end
+
+	 def correct_business_or_user_to_delete_reservation
+    	if logged_in?
+    		correct_business
+    	elsif signed_in?
+    		correct_user_to_delete
+    	else
+    		return false
+    	end
+    end
+
+    def correct_business
+	      res = current_business.reservations.find_by(id: params[:id])
+          redirect_to root_url if res.nil?
+    end
+
+    def correct_user_to_delete
+    	res = Reservation.find_by(id: params[:id])
+    	user = res.game.user
+    	redirect_to root_url if current_user != user
+    end
 end
