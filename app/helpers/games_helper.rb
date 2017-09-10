@@ -120,4 +120,40 @@ module GamesHelper
         return g
     end
 
+    def get_reservation_date_from_game(game_id)
+        g = Game.find(game_id)
+        if g.reservation.nil?
+            return "N/A"
+        else
+            return g.reservation.date.strftime("%D")
+        end
+    end
+
+    def get_reservation_time_from_game(game_id)
+        g = Game.find(game_id)
+        if g.reservation.nil?
+            return "N/A"
+        else
+            return g.reservation.time.strftime("%r")
+        end
+    end
+
+    def get_reservation_end_time_from_game(game_id)
+        g = Game.find(game_id)
+        if g.reservation.nil?
+            return "N/A"
+        else
+            return g.reservation.end_time.strftime("%r")
+        end
+    end
+
+     def get_reservation_location_from_game(game_id)
+        g = Game.find(game_id)
+        if g.reservation.nil?
+            return "N/A"
+        else
+            return g.reservation.business.name
+        end
+    end
+
 end

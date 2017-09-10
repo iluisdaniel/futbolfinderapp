@@ -17,10 +17,10 @@
 
         <tr>
           <td><%= link_to game.id, game %></td>
-          <td>Date</td>
-          <td>Time</td>
-          <td>En time</td>
-          <td>Location</td>
+          <td><%=  get_reservation_date_from_game(game.id) %></td>
+          <td><%= get_reservation_time_from_game(game.id) %></td>
+           <td><%= get_reservation_end_time_from_game(game.id) %></td>
+          <td><%= get_reservation_location_from_game(game.id) %></td>
           <td><%= link_to game.user.name, game.user %></td>
           <td>
           <% if current_user?(game.user) %>
