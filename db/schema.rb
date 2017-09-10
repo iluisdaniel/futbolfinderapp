@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170901045528) do
+ActiveRecord::Schema.define(version: 20170909040241) do
 
   create_table "businesses", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -85,14 +85,10 @@ ActiveRecord::Schema.define(version: 20170901045528) do
   add_index "game_lines", ["user_id"], name: "index_game_lines_on_user_id", using: :btree
 
   create_table "games", force: :cascade do |t|
-    t.date     "date"
-    t.time     "time"
     t.integer  "user_id",        limit: 4
     t.integer  "business_id",    limit: 4
-    t.integer  "field_id",       limit: 4
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.time     "end_time"
     t.integer  "number_players", limit: 4
     t.string   "title",          limit: 255
     t.text     "description",    limit: 65535
@@ -122,6 +118,19 @@ ActiveRecord::Schema.define(version: 20170901045528) do
   end
 
   add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
+
+  create_table "reservations", force: :cascade do |t|
+    t.date     "date"
+    t.time     "time"
+    t.time     "end_time"
+    t.integer  "business_id", limit: 4
+    t.integer  "field_id",    limit: 4
+    t.integer  "game_id",     limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "reservations", ["game_id", "business_id", "field_id"], name: "index_reservations_on_game_id_and_business_id_and_field_id", using: :btree
 
   create_table "schedules", force: :cascade do |t|
     t.string   "day",         limit: 255

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2017-09-06
+  time: 2017-09-06 21:15:58
+  end_time: 2017-09-06 21:15:58
+  business_id: 1
+  field_id: 1
+  game_id: 1
+
+two:
+  date: 2017-09-06
+  time: 2017-09-06 21:15:58
+  end_time: 2017-09-06 21:15:58
+  business_id: 1
+  field_id: 1
+  game_id: 1

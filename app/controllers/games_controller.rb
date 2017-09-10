@@ -3,19 +3,21 @@ class GamesController < ApplicationController
 	before_action :signed_in_business_or_user?, only: [:index, :show, :new, :create,:edit, :update, :destroy]
 	before_action :correct_business_or_user_to_see,   only: [:show]
 	before_action :correct_business_or_user_to_delete, only: [:edit, :update,:destroy]
-	before_action :set_fields_collection, only: [:new, :edit, :update, :create]
-	before_action :set_businesses_collection, only: [:new, :edit,:update, :create]
+	before_action :set_businesses_collection, only: [:show]
+	before_action :set_fields_collection, only: [:show]
 
 	def index
 		# add field id
 		if logged_in?
-			gs = current_business.games
-			@games = gs.where("date > ?", Date.today).order(date: :asc)
-			@oldgames = gs.where("date < ?", Date.today).order(date: :desc)
+			@games = current_business.games
+			@oldgames = []
+			# @games = gs.where("date > ?", Date.today).order(date: :asc)
+			# @oldgames = gs.where("date < ?", Date.today).order(date: :desc)
 		elsif signed_in?
-			gs = Game.joins(game_lines: :user).where(game_lines: {user_id: current_user.id})
-			@games = gs.where("date > ?", Date.today).order(date: :asc)
-			@oldgames = gs.where("date < ?", Date.today).order(date: :desc)
+			@games = Game.joins(game_lines: :user).where(game_lines: {user_id: current_user.id})
+			@oldgames = []
+			# @games = gs.where("date > ?", Date.today).order(date: :asc)
+			# @oldgames = gs.where("date < ?", Date.today).order(date: :desc)
 		end
 	end
 
@@ -35,9 +37,9 @@ class GamesController < ApplicationController
 		@game_lines = @game.game_lines.where(accepted: false)
 		@game_lines_accepted = @game.game_lines.where(accepted: true)
 		@game_line = GameLine.new
+		@reservation = Reservation.new
 		#Bug - when a field is erased from a business, and the show action is called it fails because it cannot find field to show field info into the show page
 		# Make impossible to erase a field in the case there are open games. Or it has to erased all of them. 
-		@field = @game.business.fields.find(@game.field_id)
 
 		if @game.public == true
 			@isPublic = "Public"
@@ -66,8 +68,6 @@ class GamesController < ApplicationController
 
 		if logged_in?
 			@game = current_business.games.build(game_params)
-			@b = current_business
-			@game[:business_id] = @b.id
 			user =  find_user_with_email(game_params[:user_id])
 			if !user.nil?
 				@game[:user_id] = user.id
@@ -76,13 +76,10 @@ class GamesController < ApplicationController
 
 		if signed_in?
 			@game = current_user.games.build(game_params)
-			@u = current_user
-			@game[:user_id] = @u.id
-			@game[:field_id] = get_available_field(@game[:business_id], @game)
 		end
 
-		@game[:title] = set_game_title(@game.title, @game.business.name, @game.date, @game.time)
-		@game[:description] = set_game_description(@game.description, @game.business.name)
+		@game[:title] = set_game_title(@game.title)
+		@game[:description] = set_game_description(@game.description)
 
 		if @game.save				
 			redirect_to @game
@@ -101,10 +98,6 @@ class GamesController < ApplicationController
 
 	def update
 		@game = Game.find(params[:id])
-
-		if @game.number_players.nil?
-			flash[:success] = "Noooooooo"
-		end
 
 		if @game.update_attributes(game_params)
 		  flash[:success] = "Game updated"
@@ -132,31 +125,23 @@ class GamesController < ApplicationController
 	private
 
 	def game_params
-		params.require(:game).permit(:date, :time, :user_id, :business_id, 
-			:field_id, :end_time, :number_players, :title, :description, :public)
+		params.require(:game).permit(:user_id, :business_id, :number_players, :title, 
+			:description, :public)
 	end
 
-
-	def set_fields_collection
-		if logged_in?
-			@fields = current_business.fields
-		end
-	end
-
-	def set_businesses_collection
-		if signed_in?
-			@businesses = Business.all
-		end
-	end
-
-	def set_game_title(title, location, date, time)
+	def set_game_title(title)
+		
 		if title.nil? || title.empty?
-			return "Game at " + location + ". " + date.strftime("%B %e") + ", " + time.strftime("%I:%M %p") + "."
+			return "Game " + current_business.name
 		end
+
 		return title
 	end
 
-	def set_game_description(desc, location)
+
+
+
+	def set_game_description(desc)
 		if desc.nil? || desc.empty?
 			w = "by"
 
@@ -164,20 +149,10 @@ class GamesController < ApplicationController
 				w = "at"
 			end
 
-			return "Your game has been created " + w + " "+ location  + ". Enjoy your game!. Your are welcome to change this descrition and let the other players what's up"
+			return "Your game has been created " + w + " "+ current_business.name + ". Enjoy your game!. Your are welcome to change this descrition and let the other players what's up"
 		end
 
 		return desc
-	end
-
-	def get_available_field(business_id, game)
-		fields = Field.where(business_id: business_id)
-
-		fields.each do |f|
-			game[:field_id] = f.id
-
-			return f.id if game.valid?
-		end
 	end
 
 end

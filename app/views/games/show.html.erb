@@ -6,8 +6,6 @@
       <hr style="margin-top:0.5em; margin-bottom:0.5em;">
       <ul class="list-unstyled list-inline">
         <li style="font-size:1.2em;"><span class="label label-default"><i class="fa fa-futbol-o"></i> <%= @isPublic %> Game</li>
-        <li><i class="fa fa-calendar"></i> <%= @game.date.strftime("%B %e %Y") %></li>
-        <li><i class="fa fa-clock-o"></i> <%= @game.time.strftime("%I:%M %p") %> - <%= @game.end_time.strftime("%I:%M %p") %></li>
         <% if !@game.user.nil? %>   
           <li><i class="fa fa-user"></i> <%= @game.user.name %></li>
         <% end %>
@@ -29,20 +27,29 @@
         </div>
         <div class="panel-body">
          
-          <div class="col-md-4">
-            <address>
-              <strong><i class="fa fa-map-marker"></i> <%= @game.business.name %></strong><br>
-             <%= @game.business.address %><br>
-              <%= @game.business.city %>, <%= @game.business.state %> <%= @game.business.zipcode %>
-              <br>
-              <i class="fa fa-phone"></i> <%= @game.business.phone %> 
-            </address>
+          <div class="">
+            <% if @game.reservation.nil? %>
+              <%= render partial: 'reservations/new_reservation' %>
+            <% else %>
+              <div style="float:left; margin-right:80px;">
+                <address>
+                  <strong><i class="fa fa-map-marker"></i> <%= @game.reservation.business.name %></strong><br>
+                 <%= @game.reservation.business.address %><br>
+                  <%= @game.reservation.business.city %>, <%= @game.reservation.business.state %> <%= @game.reservation.business.zipcode %>
+                  <br>
+                  <i class="fa fa-phone"></i> <%= @game.reservation.business.phone %> 
+              </address>
+              </div>
+
+              <div style="">
+                <strong><i class="fa fa-soccer-ball-o"></i> <%= get_field(@game.reservation.field_id).name %></strong><br>
+                <i class="fa fa-users"></i> <%= get_field(@game.reservation.field_id).number_players %> Players Field<br>
+                <strong><i class="fa fa-calendar"></i> <%= @game.reservation.date %></strong><br>
+                <i class="fa fa-clock-o"></i> <%= @game.reservation.time.strftime("%I:%M %p") %> - <%= @game.reservation.end_time.strftime("%I:%M %p") %> 
+              </div>
+              
+            <% end %>  
            </div>
-           <div class="col-md-4">
-              <i class="fa fa-futbol-o"></i> Field: <%= @field.name %> <br>
-              <i class="fa fa-users"></i> Field size: <%= @field.number_players %> <br>
-              <i class="fa fa-dollar"></i> Price: <%= @field.price %> 
-            </div>  
         </div>
       </div>
        
@@ -102,27 +109,6 @@
      </div>
   </div>
 
-<div style="margin-top:200px;">
-      Game id: <%= @game.id %> |
-        <%= link_to @game.date, @game %> |
-        <%= @game.time.hour %>:<%= @game.time.min %> |
-        <%= @game.end_time.hour %>:<%= @game.end_time.min %> |
-        <% if !@game.business.nil? %>
-        Name: <%= @game.business.name %> |
-        B id: <%= @game.business.id%> |
-        field id: <%= @game.field_id %> |
-        <% end %>
-         <% if !@game.user.nil? %>   
-          USer Name: <%= @game.user.name %> |
-        <% end %>
-        <% if current_business?(@game.business) || current_user?(@game.user) %>
-          <%= link_to "delete", @game, method: :delete,
-                                     data: { confirm: "You sure?" },
-                                     title: @game.date %>
-          <% end %>
-
-
-</div>
 
 </div>
 

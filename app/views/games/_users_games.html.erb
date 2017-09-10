@@ -16,25 +16,17 @@
       <% games.each do |game| %>
 
         <tr>
-          <td><%= game.id %></td>
-          <td><%= link_to game.date.strftime("%B %e %Y"), game %></td>
-          <td><%= game.time.strftime("%r") %></td>
-          <% if game.end_time.nil? %>
-          <td></td>
-          <%else%>
-          <td><%= game.end_time.strftime("%r") %></td>
-          <% end %>
-          <td><%= link_to game.business.name, game.business %></td>
-          <% if game.user.nil? %>
-            <td></td>
-          <% else %>
-            <td><%= link_to game.user.name, game.user %></td>
-          <% end %>
+          <td><%= link_to game.id, game %></td>
+          <td>Date</td>
+          <td>Time</td>
+          <td>En time</td>
+          <td>Location</td>
+          <td><%= link_to game.user.name, game.user %></td>
           <td>
-          <% if current_business?(game.business) || current_user?(game.user) %>
+          <% if current_user?(game.user) %>
           <%= link_to "delete", game, method: :delete,
                    data: { confirm: "You sure?" },
-                   title: game.date %>
+                   title: game.title %>
           <% end %>
           </td>
         </tr>

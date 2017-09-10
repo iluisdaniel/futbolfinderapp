@@ -7,8 +7,7 @@
         <th>Date</th>
         <th>Time</th>
         <th>End Time</th> 
-        <th>Field Name</th>
-        <th>User</th>
+        <th>Location</th>
         <th>Created</th>
         <th></th>
       </tr>
@@ -17,26 +16,17 @@
       <% games.each do |game| %>
 
         <tr>
-          <td><%= game.id %></td>
-          <td><%= link_to game.date.strftime("%B %e %Y"), game %></td>
-          <td><%= game.time.strftime("%r") %></td>
-          <% if game.end_time.nil? %>
-          <td></td>
-          <%else%>
-          <td><%= game.end_time.strftime("%r") %></td>
-          <% end %>
-          <td><%= get_field_from_game(game.field_id) %></td>
-          <% if game.user.nil? %>
-            <td></td>
-          <% else %>
-            <td><%= link_to game.user.name, game.user %></td>
-          <% end %>
+          <td><%= link_to game.id, game %></td>
+          <td>Date</td>
+          <td>TIme</td>
+          <td>End_time</td>
+          <td>Location</td>
           <td><%= game.created_at.strftime("%D at %r") %></td>
           <td>
-          <% if current_business?(game.business) || current_user?(game.user) %>
+          <% if current_business?(game.business) %>
           <%= link_to "delete", game, method: :delete,
                    data: { confirm: "You sure?" },
-                   title: game.date %>
+                   title: game.title %>
           <% end %>
           </td>
         </tr>

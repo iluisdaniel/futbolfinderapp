@@ -11,23 +11,7 @@
 	<%= link_to "Make a new game", new_game_path, class: "btn btn-lg btn-primary" %>
 	<hr>
 	<h3>Games for this week</h3>
-	<ul class="games">
-	  <% @games.each do |game| %>
-	    <li>
-	      Game id: <%= game.id %> |
-	      <%= link_to game.date, game %> |
-	      <%= game.time.hour %>:<%= game.time.min %> |
-	      Name: <%= game.business.name %> |
-	      B id: <%= game.business.id%> |
-	      field id: <%= game.field_id %> |
-	      <% if current_business?(game.business) %>
-        	<%= link_to "delete", game, method: :delete,
-                                     data: { confirm: "You sure?" },
-                                     title: game.date %>
-      	  <% end %>
-	    </li>
-	  <% end %>
-	</ul>
+	
 
 <% end %>
 

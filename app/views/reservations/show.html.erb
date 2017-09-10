@@ -1,0 +1,29 @@
+<div class="container">
+  
+  <div class="row game-header">
+    <div class="col-md-12">
+      <h1 style="margin-bottom:0px;">Reservation <%= @reservation.id%></h1>
+      <hr style="margin-top:0.5em; margin-bottom:0.5em;">
+      <ul class="list-unstyled list-inline">
+        <li><i class="fa fa-calendar"></i> <%= @reservation.date.strftime("%B %e %Y") %></li>
+        <li><i class="fa fa-clock-o"></i> <%= @reservation.time.strftime("%I:%M %p") %> - <%= @reservation.end_time.strftime("%I:%M %p") %></li>
+        <li><i class="fa fa-users"></i> <%= @field.number_players %></li>
+      </ul>
+      
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 game-content">
+      <h2 class="lead">Information</h2>
+    </div>
+    
+
+    <div class="col-md-3">
+      
+    </div>
+
+  </div>
+
+</div>
+

@@ -3,7 +3,14 @@
 <% provide(:secondaryTitle, '')%>
 
 <div class="container" style="margin-top:20px;">
-<%= link_to 'New Game', new_game_path, class: "btn btn-large btn-primary btn-round btn-fill pull-right" %> 
+<% if @games.empty?  %>
+  <div>
+    <P class="lead">You haven't created games yet. </P>
+    <%= link_to 'New Game', new_game_path, class: "btn btn-large btn-primary btn-round btn-fill" %>
+  </div>
+<% else %>  
+
+<%= link_to 'New Game', new_game_path, class: "btn btn-large btn-primary btn-round btn-fill pull-right" %>
   <div class="row">
     <ul class="nav nav-tabs game-sd-tabs">
       <li><a href="#current-games" data-toggle="tab">Current</a></li>
@@ -13,21 +20,31 @@
     <!-- Tab panes -->
     <div class="tab-content">
       <div class="tab-pane active" id="current-games">
-        <% if logged_in? %>
-           <%= render partial: "games/games", locals: {games: @games} %>
-        <% elsif signed_in? %>
-          <%= render partial: "games/users_games", locals: {games: @games} %>
-        <% end %>
-       
+        <% if @games.empty?%>
+            <P class="lead">You don't have games availble at the moment. </P>
+             <%= link_to 'New Game', new_game_path, class: "btn btn-large btn-primary btn-round btn-fill" %>
+        <% else %>
+          <% if logged_in? %>
+             <%= render partial: "games/games", locals: {games: @games} %>
+          <% elsif signed_in? %>
+            <%= render partial: "games/users_games", locals: {games: @games} %>
+          <% end %>
+        <% end %>  
       </div>
 
       <div class="tab-pane" id="old-games">  
-        <% if logged_in? %>
-           <%= render partial: "games/games", locals: {games: @oldgames} %>
-        <% elsif signed_in? %>
-        <%= render partial: "games/users_games", locals: {games: @oldgames} %>
-        <% end %>
-    </div> 
-
+        <% if @oldgames.empty?%>
+            <P class="lead">No old games to display.</P>
+        <% else %>
+          <% if logged_in? %>
+             <%= render partial: "games/games", locals: {games: @oldgames} %>
+          <% elsif signed_in? %>
+          <%= render partial: "games/users_games", locals: {games: @oldgames} %>
+          <% end %>
+        <% end %>  
+      </div> 
+    </div>
   </div>
+
+<% end %>  
 </div>

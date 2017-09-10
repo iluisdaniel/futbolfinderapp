@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   get 'search' => 'games#search'
 
+  resources :reservations
+
   resources :games, path: '/games/' do 
     resources :comments, module: :games
   end

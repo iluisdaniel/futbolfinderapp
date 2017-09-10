@@ -1,7 +1,7 @@
 module GamesHelper
 	def correct_business
 	      game = current_business.games.find_by(id: params[:id])
-	      redirect_to root_url if game.nil?
+          redirect_to root_url if game.nil?
     end
 
     def correct_user_to_see
@@ -87,9 +87,9 @@ module GamesHelper
         end
     end
 
-    def get_field_from_game(id)
+    def get_field(id)
         if id.nil?
-            return "none"
+            return 
         end
 
         if Field.exists?(id)
@@ -97,9 +97,27 @@ module GamesHelper
         end
 
         if !field.nil?
-            return field.name
+            return field
         end
         
-        return "none"
+        return 
     end
+
+    def set_fields_collection
+        if logged_in?
+            @fields = current_business.fields
+        end
+    end
+
+    def set_businesses_collection
+        if signed_in?
+            @businesses = Business.all
+        end
+    end
+
+    def get_game(id)
+        g = Game.find(id)
+        return g
+    end
+
 end

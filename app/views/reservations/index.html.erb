@@ -1,0 +1,23 @@
+<% provide(:title, 'Reservations') %>
+<% provide(:htitle, 'My Reservations') %>
+<% provide(:secondaryTitle, '')%>
+
+
+<div class="container" style="margin-top:20px;">
+  <div class="row">
+    <ul class="nav nav-tabs game-sd-tabs">
+      <li><a href="#current-games" data-toggle="tab">Current</a></li>
+      <li><a href="#old-games" data-toggle="tab">Old</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="current-games">
+        <%= render partial: "reservations/reservations", locals: {reservations: @reservations} %>
+      </div>
+
+      <div class="tab-pane" id="old-games">  
+       <%= render partial: "reservations/reservations", locals: {reservations: @oldreservations} %>
+      </div> 
+    </div>
+</div>
