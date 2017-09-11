@@ -13,7 +13,7 @@
           <th>Players Needed</th>
           <th>Players Comfirmed</th>
           <th>Admin</th>
-          <th></th>
+          <th>Settings</th>
         </tr>
       </thead>
       <tbody>
@@ -31,9 +31,13 @@
             <td><%= link_to get_game_creator_link_name(game), get_game_creator_link(game) %></td>
             <td>
             <% if current_user?(game.user) %>
-            <%= link_to "delete", game, method: :delete,
-                     data: { confirm: "You sure?" },
-                     title: game.title %>
+                <%= link_to "Edit", :controller => "games", :action => "edit", :id => game
+                          %>
+                <%= link_to game, method: :delete,
+                         data: { confirm: "Are you sure you want to delete this game?" },
+                         title: game.title do %>
+                         Delete
+                <%end%>
             <% end %>
             </td>
           </tr>
@@ -57,7 +61,7 @@
             <th>Players Needed</th>
             <th>Players Comfirmed</th>
             <th>Admin</th>
-            <th></th>
+            <th>Settings</th>
           </tr>
         </thead>
         <tbody>
@@ -70,11 +74,15 @@
               <td><%= get_number_of_players_ready(game.id)%></td>
              <td><%= link_to get_game_creator_link_name(game), get_game_creator_link(game) %></td>
               <td>
-              <% if current_user?(game.user) %>
-              <%= link_to "delete", game, method: :delete,
-                       data: { confirm: "You sure?" },
-                       title: game.title %>
-              <% end %>
+             <% if current_user?(game.user) %>
+                <%= link_to "Edit", :controller => "games", :action => "edit", :id => game
+                          %>
+                <%= link_to game, method: :delete,
+                                        data: { confirm: "Are you sure you want to delete this game?" },
+                                        title: game.title do %>
+                                        Delete
+                 <%end%>
+             <% end %>
               </td>
             </tr>
 
