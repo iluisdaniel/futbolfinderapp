@@ -386,6 +386,9 @@ body {
     margin-top: 100px;
     
 }
+h1{
+    font-size: 2.2em !important;
+}
 .black-background{
   background-color: #222;
 }
@@ -625,6 +628,9 @@ ul.alert-dropdown {
 }
 .game-header{
     margin-bottom: 20px;
+    .btn-primary{
+        margin-top: 20px;
+    }
 }
 
 .invite-player-game{

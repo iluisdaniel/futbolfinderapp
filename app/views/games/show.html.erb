@@ -1,29 +1,45 @@
-<div class="container">
+
   
   <div class="row game-header">
+    <div class="container">
     <div class="col-md-12">
-      <h1 style="margin-bottom:0px;"><small><%= @game.id%></small> <%= @game.title %></h1>
-      <hr style="margin-top:0.5em; margin-bottom:0.5em;">
-      <ul class="list-unstyled list-inline">
-        <li style="font-size:1.2em;"><span class="label label-default"><i class="fa fa-futbol-o"></i> <%= @isPublic %> Game</li>
-        <% if !@game.user.nil? %>   
-          <li><i class="fa fa-user"></i> <%= @game.user.name %></li>
-        <% end %>
-        <li><i class="fa fa-users"></i> <%= @game.number_players %></li>
-        <li class="pull-right"><i class="fa fa-gear"></i> <%= link_to "Settings", edit_game_path(@game.id) %></li>
-      </ul>
-      
-    </div>
+      <h1 style="margin-bottom:0px; float:left;" ><small><%= @game.id%></small> <%= @game.title %></h1>
+        <%= link_to edit_game_path(@game.id), class: "btn btn-primary pull-right" do %>
+            <i class="fa fa-gear"></i> Settings
+          <% end %>        
+    </div>  
   </div>
+</div>
 
+ <hr>
+<div class="container">
   <div class="row">
     <div class="col-md-8 game-content">
+
       <% if !logged_in? %>
         <p class="lead game-description"><%= @game.description %></p>
       <% end %>
+
       <div class="panel panel-default">
         <div class="panel-heading">
-         <h3 class="panel-title"><i class="fa fa-info-circle"></i> Information</h3>
+          <h3 class="panel-title lead"><i class="fa fa-info-circle"></i> Information</h3>
+        </div>
+        <div class="panel-body">
+         <ul class="list-unstyled list-inline">
+                <li style="font-size:1.2em;"><span class="label label-default"><i class="fa fa-futbol-o"></i> <%= @isPublic %> Game</li>
+                <% if !@game.user.nil? %>   
+                  <li><i class="fa fa-user"></i> Admin: <%= @game.user.name %></li>
+                <% end %>
+                <li><i class="fa fa-users"></i> Players Wanted: <%= @game.number_players %></li>
+                <li><i class="fa fa-calendar"></i> Created: <%= @game.created_at.strftime("%b/%d") %></li>
+                <li><i class="fa fa-clock-o"></i> Updated: <%= @game.updated_at.strftime("%b/%d") %></li>
+              </ul>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+         <h3 class="panel-title lead"><i class="fa fa-map-marker"></i> Where <i class="fa fa-calendar"></i> When</h3>
         </div>
         <div class="panel-body">
          
@@ -54,14 +70,21 @@
       </div>
        
       <% if !logged_in? %>
+      <div class="panel panel-default">
         <%= render partial: "comments/comments", locals: {commentable: @game }%>
-
+        </div>
         <%= render partial: "comments/form", locals: {commentable: @game} %>
+
       <% end %>
     </div>
     
+ 
+  
+      
 
     <div class="col-md-3">
+      <div class="panel panel-default">
+         <div class="panel-body">
       <!-- Nav tabs -->
       <ul class="nav nav-tabs game-sd-tabs">
         <li><a href="#playing" data-toggle="tab">Playing <span class="badge"><%=@game_lines_accepted.count%></span></a></li>
@@ -105,10 +128,13 @@
               Number of Players are completed!
             
           </div>
-        <% end %>
+      <% end %>
+        </div>
+      </div>
      </div>
+  
   </div>
 
 
-</div>
+
 
