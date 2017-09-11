@@ -13,8 +13,7 @@ class GamesController < ApplicationController
 			# @games = gs.where("date > ?", Date.today).order(date: :asc)
 			# @oldgames = gs.where("date < ?", Date.today).order(date: :desc)
 		elsif signed_in?
-			gs = Game.joins(game_lines: :user).where(game_lines: {user_id: current_user.id})
-			
+			gs = Game.joins(game_lines: :user).where(game_lines: {user_id: current_user.id})	
 			# @games = gs.where("date > ?", Date.today).order(date: :asc)
 			# @oldgames = gs.where("date < ?", Date.today).order(date: :desc)
 			# User.includes(:posts).references(:posts).where('posts.id IS NULL')
