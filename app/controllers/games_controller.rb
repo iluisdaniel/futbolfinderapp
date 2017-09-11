@@ -9,16 +9,24 @@ class GamesController < ApplicationController
 	def index
 		# add field id
 		if logged_in?
-			@games = current_business.games
-			@oldgames = []
+			gs = current_business.games
 			# @games = gs.where("date > ?", Date.today).order(date: :asc)
 			# @oldgames = gs.where("date < ?", Date.today).order(date: :desc)
 		elsif signed_in?
-			@games = Game.joins(game_lines: :user).where(game_lines: {user_id: current_user.id})
-			@oldgames = []
+			gs = Game.joins(game_lines: :user).where(game_lines: {user_id: current_user.id})
+			
 			# @games = gs.where("date > ?", Date.today).order(date: :asc)
 			# @oldgames = gs.where("date < ?", Date.today).order(date: :desc)
+			# User.includes(:posts).references(:posts).where('posts.id IS NULL')
 		end
+		@games = gs.includes(:reservation).references(:reservation)
+					.where('reservations.id IS NOT NULL AND reservations.date > ?', Date.today)
+					.order("reservations.date asc")
+		@games_no_reservation = gs.includes(:reservation).references(:reservation).where('reservations.id IS NULL')
+		
+		@oldgames = gs.includes(:reservation).references(:reservation)
+					.where('reservations.id IS NOT NULL AND reservations.date < ?', Date.today)
+					.order("reservations.date desc")
 	end
 
 	def show
@@ -85,7 +93,7 @@ class GamesController < ApplicationController
 			redirect_to @game
 			flash[:success] = "Your Game Was Created"		
 			if !@game.user_id.nil?
-				GameLine.create(user_id: @game.user_id, game_id: @game.id)
+				GameLine.create(user_id: @game.user_id, game_id: @game.id, accepted: true)
 			end
 		else
 			render 'new'

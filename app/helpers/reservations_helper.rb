@@ -5,4 +5,12 @@ module ReservationsHelper
 	      redirect_to root_url if res.nil?	
     end
 
+    def get_reservation_user(reservation)
+    	if reservation.game.nil?
+    		return "N/A"
+    	end
+
+    	return reservation.game.user.name
+    end
+
 end

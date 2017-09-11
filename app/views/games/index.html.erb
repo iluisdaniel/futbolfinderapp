@@ -3,7 +3,7 @@
 <% provide(:secondaryTitle, '')%>
 
 <div class="container" style="margin-top:20px;">
-<% if @games.empty?  %>
+<% if @games.empty? && @games_no_reservation.empty? && @oldgames.empty?  %>
   <div>
     <P class="lead">You haven't created games yet. </P>
     <%= link_to 'New Game', new_game_path, class: "btn btn-large btn-primary btn-round btn-fill" %>
@@ -20,16 +20,13 @@
     <!-- Tab panes -->
     <div class="tab-content">
       <div class="tab-pane active" id="current-games">
-        <% if @games.empty?%>
-            <P class="lead">You don't have games availble at the moment. </P>
-             <%= link_to 'New Game', new_game_path, class: "btn btn-large btn-primary btn-round btn-fill" %>
-        <% else %>
-          <% if logged_in? %>
-             <%= render partial: "games/games", locals: {games: @games} %>
-          <% elsif signed_in? %>
-            <%= render partial: "games/users_games", locals: {games: @games} %>
-          <% end %>
-        <% end %>  
+        <% if logged_in? %>
+           <%= render partial: "games/games", locals: {games: @games, games_no_res: 
+            @games_no_reservation } %>
+        <% elsif signed_in? %>
+          <%= render partial: "games/games", locals: {games: @games, games_no_res: 
+            @games_no_reservation } %>
+        <% end %>
       </div>
 
       <div class="tab-pane" id="old-games">  
@@ -39,7 +36,7 @@
           <% if logged_in? %>
              <%= render partial: "games/games", locals: {games: @oldgames} %>
           <% elsif signed_in? %>
-          <%= render partial: "games/users_games", locals: {games: @oldgames} %>
+          <%= render partial: "games/games", locals: {games: @oldgames} %>
           <% end %>
         <% end %>  
       </div> 

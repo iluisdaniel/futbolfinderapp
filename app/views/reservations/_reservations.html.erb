@@ -22,6 +22,7 @@
           <td><%= reservation.time.strftime("%r") %></td>
           <td><%= reservation.end_time.strftime("%r") %></td>
           <td><%= get_field(reservation.field_id).name %></td>
+          <td><%= get_reservation_user(reservation) %></td>
           <td><%= reservation.created_at.strftime("%D at %r") %></td>
           <td>
           Settings

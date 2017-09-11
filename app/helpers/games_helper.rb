@@ -156,4 +156,40 @@ module GamesHelper
         end
     end
 
+    def get_number_of_players_ready(game_id)
+        g = Game.find(game_id)
+        return g.game_lines.where(accepted: true).count
+    end
+
+    def public_or_private(public)
+        if public == true
+            return "Public"
+        end
+        return "Private"
+    end
+
+    def get_game_creator_link(game)
+        if !game.user.nil?
+            return game.user
+        end
+
+        if !game.business.nil?
+            return game.business
+        end
+
+        return
+    end
+
+    def get_game_creator_link_name(game)
+        if !game.user.nil?
+            return game.user.name
+        end
+
+        if !game.business.nil?
+            return game.business.name
+        end
+
+        return
+    end
+
 end
