@@ -26,10 +26,8 @@
         </div>
         <div class="panel-body">
          <ul class="list-unstyled list-inline">
-                <li style="font-size:1.2em;"><span class="label label-default"><i class="fa fa-futbol-o"></i> <%= @isPublic %> Game</li>
-                <% if !@game.user.nil? %>   
-                  <li><i class="fa fa-user"></i> Admin: <%= @game.user.name %></li>
-                <% end %>
+                <li style="font-size:1.2em;"><span class="label label-default"><i class="fa fa-futbol-o"></i> <%= @isPublic %> Game</li> 
+                <li><i class="fa fa-user"></i> Admin: <%= link_to get_game_creator_link_name(@game), get_game_creator_link(@game) %></li>
                 <li><i class="fa fa-users"></i> Players Wanted: <%= @game.number_players %></li>
                 <li><i class="fa fa-calendar"></i> Created: <%= @game.created_at.strftime("%b/%d") %></li>
                 <li><i class="fa fa-clock-o"></i> Updated: <%= @game.updated_at.strftime("%b/%d") %></li>
@@ -67,6 +65,11 @@
             <% end %>  
            </div>
         </div>
+        <% if !@game.reservation.nil? && @game.user == current_user %>
+          <div class="panel-footer">
+             <i class="fa fa-times"></i><span> Cancel Reservation</span>
+          </div>
+          <% end %>
       </div>
        
       <% if !logged_in? %>
