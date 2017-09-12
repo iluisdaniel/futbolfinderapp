@@ -1,12 +1,10 @@
-
-  
-  <div class="row game-header">
-    <div class="container">
+<div class="row game-header">
+  <div class="container">
     <div class="col-md-12">
       <h1 style="margin-bottom:0px; float:left;" ><small><%= @game.id%></small> <%= @game.title %></h1>
-        <%= link_to edit_game_path(@game.id), class: "btn btn-primary pull-right" do %>
-            <i class="fa fa-gear"></i> Settings
-          <% end %>        
+      <%= link_to edit_game_path(@game.id), class: "btn btn-primary pull-right" do %>
+          <i class="fa fa-gear"></i> Settings
+        <% end %>        
     </div>  
   </div>
 </div>
@@ -80,17 +78,17 @@
 
       <% end %>
     </div>
-    
- 
-  
       
 
     <div class="col-md-3">
       <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title lead"><i class="fa fa-users"></i> Players List</h3>
+          </div>
          <div class="panel-body">
       <!-- Nav tabs -->
       <ul class="nav nav-tabs game-sd-tabs">
-        <li><a href="#playing" data-toggle="tab">Playing <span class="badge"><%=@game_lines_accepted.count%></span></a></li>
+        <li><a href="#playing" data-toggle="tab">Confirmed <span class="badge"><%=@game_lines_accepted.count%></span></a></li>
         <li><a href="#invited" data-toggle="tab">Invited <span class="badge"><%=@game_lines.count%></span></a></li>
       </ul>
 
