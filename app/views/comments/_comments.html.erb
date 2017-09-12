@@ -5,6 +5,9 @@
   	</div>
   	<div class="panel-body">
 		<div class="pre-scrollable comments">
+			<% if commentable.comments.count == 0 %>
+				<span class="lead">No comments</span>
+			<% end %>
 		<% commentable.comments.each do |comment| %>
 		<div class="media" data-spy="scroll">
 			<a class="pull-left" href="#">
