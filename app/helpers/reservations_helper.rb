@@ -7,7 +7,7 @@ module ReservationsHelper
 
     def get_reservation_user(reservation)
     	if reservation.game.nil?
-    		return "N/A"
+    		return current_business.name
     	end
 
     	return reservation.game.user.name

@@ -14,128 +14,127 @@
   <div class="row">
     <div class="col-md-8 game-content">
 
-      <% if !logged_in? %>
-        <p class="lead game-description"><%= @game.description %></p>
-      <% end %>
+        <% if !logged_in? %>
+          <p class="lead game-description"><%= @game.description %></p>
+        <% end %>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title lead"><i class="fa fa-info-circle"></i> Information</h3>
-        </div>
-        <div class="panel-body">
-         <ul class="list-unstyled list-inline">
-                <li style="font-size:1.2em;"><span class="label label-success"><i class="fa fa-futbol-o"></i> <%= @isPublic %> Game</li> 
-                <li><i class="fa fa-user"></i> Admin: <%= link_to get_game_creator_link_name(@game), get_game_creator_link(@game) %></li>
-                <li><i class="fa fa-users"></i> Players Wanted: <%= @game.number_players %></li>
-                <li><i class="fa fa-calendar"></i> Created: <%= @game.created_at.strftime("%b/%d") %></li>
-                <li><i class="fa fa-clock-o"></i> Updated: <%= @game.updated_at.strftime("%b/%d") %></li>
-              </ul>
-        </div>
-      </div>
-
-      <div class="panel panel-default">
-        <div class="panel-heading">
-         <h3 class="panel-title lead"><i class="fa fa-map-marker"></i> Where <i class="fa fa-calendar"></i> When</h3>
-        </div>
-        <div class="panel-body">
-         
-          <div class="">
-            <% if @game.reservation.nil? %>
-              <%= render partial: 'reservations/new_reservation' %>
-            <% else %>
-              <div style="float:left; margin-right:80px;">
-                <address>
-                  <strong><i class="fa fa-map-marker"></i> <%= @game.reservation.business.name %></strong><br>
-                 <%= @game.reservation.business.address %><br>
-                  <%= @game.reservation.business.city %>, <%= @game.reservation.business.state %> <%= @game.reservation.business.zipcode %>
-                  <br>
-                  <i class="fa fa-phone"></i> <%= @game.reservation.business.phone %> 
-              </address>
-              </div>
-
-              <div style="">
-                <strong><i class="fa fa-soccer-ball-o"></i> <%= get_field(@game.reservation.field_id).name %></strong><br>
-                <i class="fa fa-users"></i> <%= get_field(@game.reservation.field_id).number_players %> Players Field<br>
-                <strong><i class="fa fa-calendar"></i> <%= @game.reservation.date %></strong><br>
-                <i class="fa fa-clock-o"></i> <%= @game.reservation.time.strftime("%I:%M %p") %> - <%= @game.reservation.end_time.strftime("%I:%M %p") %> 
-              </div>
-              
-            <% end %>  
-           </div>
-        </div>
-        <% if !@game.reservation.nil? && @game.user == current_user %>
-          <div class="panel-footer">
-             <i class="fa fa-times"></i><span> Cancel Reservation</span>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title lead"><i class="fa fa-info-circle"></i> Information</h3>
           </div>
-          <% end %>
-      </div>
-       
-      <% if !logged_in? %>
-      <div class="panel panel-default">
-        <%= render partial: "comments/comments", locals: {commentable: @game }%>
+          <div class="panel-body">
+           <ul class="list-unstyled list-inline">
+                  <li style="font-size:1.2em;"><span class="label label-success"><i class="fa fa-futbol-o"></i> <%= @isPublic %> Game</li> 
+                  <li><i class="fa fa-user"></i> Admin: <%= link_to get_game_creator_link_name(@game), get_game_creator_link(@game) %></li>
+                  <li><i class="fa fa-users"></i> Players Wanted: <%= @game.number_players %></li>
+                  <li><i class="fa fa-calendar"></i> Created: <%= @game.created_at.strftime("%b/%d") %></li>
+                  <li><i class="fa fa-clock-o"></i> Updated: <%= @game.updated_at.strftime("%b/%d") %></li>
+                </ul>
+          </div>
         </div>
-        <%= render partial: "comments/form", locals: {commentable: @game} %>
 
-      <% end %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+           <h3 class="panel-title lead"><i class="fa fa-map-marker"></i> Where <i class="fa fa-calendar"></i> When</h3>
+          </div>
+          <div class="panel-body">
+           
+            <div class="">
+              <% if @game.reservation.nil? %>
+                <%= render partial: 'reservations/new_reservation' %>
+              <% else %>
+                <div style="float:left; margin-right:80px;">
+                  <address>
+                    <strong><i class="fa fa-map-marker"></i> <%= @game.reservation.business.name %></strong><br>
+                   <%= @game.reservation.business.address %><br>
+                    <%= @game.reservation.business.city %>, <%= @game.reservation.business.state %> <%= @game.reservation.business.zipcode %>
+                    <br>
+                    <i class="fa fa-phone"></i> <%= @game.reservation.business.phone %> 
+                </address>
+                </div>
+
+                <div style="">
+                  <strong><i class="fa fa-soccer-ball-o"></i> <%= get_field(@game.reservation.field_id).name %></strong><br>
+                  <i class="fa fa-users"></i> <%= get_field(@game.reservation.field_id).number_players %> Players Field<br>
+                  <strong><i class="fa fa-calendar"></i> <%= @game.reservation.date %></strong><br>
+                  <i class="fa fa-clock-o"></i> <%= @game.reservation.time.strftime("%I:%M %p") %> - <%= @game.reservation.end_time.strftime("%I:%M %p") %> 
+                </div>
+                
+              <% end %>  
+             </div>
+          </div>
+          <% if !@game.reservation.nil? && @game.user == current_user %>
+            <div class="panel-footer">
+               <i class="fa fa-times"></i><span> Cancel Reservation</span>
+            </div>
+            <% end %>
+        </div>
+         
+        <% if !logged_in? %>
+        <div class="panel panel-default">
+          <%= render partial: "comments/comments", locals: {commentable: @game }%>
+          </div>
+          <%= render partial: "comments/form", locals: {commentable: @game} %>
+
+        <% end %>
     </div>
       
 
     <div class="col-md-3">
-      <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title lead"><i class="fa fa-users"></i> Players List</h3>
-          </div>
-         <div class="panel-body">
-      <!-- Nav tabs -->
-      <ul class="nav nav-tabs game-sd-tabs">
-        <li><a href="#playing" data-toggle="tab">Confirmed <span class="badge"><%=@game_lines_accepted.count%></span></a></li>
-        <li><a href="#invited" data-toggle="tab">Invited <span class="badge"><%=@game_lines.count%></span></a></li>
-      </ul>
+        <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title lead"><i class="fa fa-users"></i> Players List</h3>
+              </div>
+        <div class="panel-body">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs game-sd-tabs">
+              <li><a href="#playing" data-toggle="tab">Confirmed <span class="badge"><%=@game_lines_accepted.count%></span></a></li>
+              <li><a href="#invited" data-toggle="tab">Invited <span class="badge"><%=@game_lines.count%></span></a></li>
+            </ul>
 
-      <!-- Tab panes -->
-      <div class="tab-content">
-        <div class="tab-pane active" id="playing">
-          <% if @game_lines_accepted.empty? %>
-            <p>There is no active players yet.</p>
-          <% else %>
-            <%= render @game_lines_accepted %>
-          <% end %>
-        </div>
-        <div class="tab-pane" id="invited">
-          <% if @game_lines.empty? %>
-            <p>There are no players invited yet.</p>
-          <% else %>
-            <%= render @game_lines %>
-          <% end %>  
-        </div>
-        
-      </div>
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div class="tab-pane active" id="playing">
+                <% if @game_lines_accepted.empty? %>
+                  <p>There is no active players yet.</p>
+                <% else %>
+                  <%= render @game_lines_accepted %>
+                <% end %>
+              </div>
+              <div class="tab-pane" id="invited">
+                <% if @game_lines.empty? %>
+                  <p>There are no players invited yet.</p>
+                <% else %>
+                  <%= render @game_lines %>
+                <% end %>  
+              </div>
+              
+            </div>
 
-      <% if @game_lines_accepted.count != @game.number_players %>
-        <div class="invite-player-game"> 
-          <%= form_for(@game_line) do |f| %>
-          <%= render 'shared/error_messages', object: f.object %> 
-          
-          <%= f.text_field :user_id, placeholder: "Enter Email or ID", class: "form-control" %> 
-          
-            <%= f.hidden_field :game_id, :value => @game.id %>
-            
-              <%= f.submit "Invite", readonly: true,class: "btn btn-primary btn-fill btn-round" %>
-          <% end %>
-        </div>
-        <% else %>
-          <div class="alert alert-success" style="margin-top:20px;">
-            
-              Number of Players are completed!
-            
-          </div>
-      <% end %>
+            <% if @game_lines_accepted.count != @game.number_players %>
+              <div class="invite-player-game"> 
+                <%= form_for(@game_line) do |f| %>
+                <%= render 'shared/error_messages', object: f.object %> 
+                
+                <%= f.text_field :user_id, placeholder: "Enter Email or ID", class: "form-control" %> 
+                
+                  <%= f.hidden_field :game_id, :value => @game.id %>
+                  
+                    <%= f.submit "Invite", readonly: true,class: "btn btn-primary btn-fill btn-round" %>
+                <% end %>
+              </div>
+              <% else %>
+                <div class="alert alert-success" style="margin-top:20px;">
+                  
+                    Number of Players are completed!
+                  
+                </div>
+            <% end %>
         </div>
       </div>
-     </div>
-  
+    </div>
   </div>
-
+</div>
 
 
 

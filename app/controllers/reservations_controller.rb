@@ -1,20 +1,19 @@
 class ReservationsController < ApplicationController
 	include GamesHelper
 	include ReservationsHelper
-	before_action :signed_in_business, only: [:index, :show, :new, :create]
+	before_action :signed_in_business, only: [:index, :show, :new, :create, :edit, :update]
 	before_action :signed_in_user, only: [:create]
-	before_action :set_fields_collection, only: [:new, :create]
+	before_action :set_fields_collection, only: [:new, :create, :edit, :update]
 	before_action :set_businesses_collection, only: [:new, :create]
 	
 	def index 
 		rs = current_business.reservations
-		@reservations = rs.where("date > ?", Date.today).order(date: :asc)
-		@oldreservations = rs.where("date < ?", Date.today).order(date: :desc)
+		@reservations = rs.where("date > ?", Time.now).order(date: :asc)
+		@oldreservations = rs.where("date < ?", Time.now).order(date: :desc)
 	end
 
 	def show
 		@reservation = Reservation.find(params[:id])
-		@field = @reservation.business.fields.find(@reservation.field_id)
 	end
 
 	def new 
@@ -41,6 +40,10 @@ class ReservationsController < ApplicationController
 		else
 			render 'new'
 		end
+	end
+
+	def edit
+		@reservation = Reservation.find(params[:id])
 	end
 
 	private
