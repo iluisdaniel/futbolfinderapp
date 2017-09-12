@@ -76,7 +76,7 @@
 
      
       <%= f.submit "Update game", class: "btn btn-primary btn-fill btn-round pull-right" %>
-       <%= link_to 'Cancel', url_for(:back), class: "btn btn-default btn-round pull-right" %> 
+       <%= link_to 'Cancel', game_path(@game), class: "btn btn-default btn-round pull-right" %> 
     <% end %>
 
      <%= link_to "delete", @game, method: :delete,
