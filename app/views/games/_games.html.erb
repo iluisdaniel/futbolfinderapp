@@ -49,7 +49,7 @@
 </div>
 <% end %>
 
-<% if !games_no_res.empty? %>
+<% if defined?(games_no_res) != nil && !games_no_res.empty? %>
   <div class="row">
     <h3 class="lead">Games with no reservation</h3>
     <div class="table-responsive">
@@ -80,7 +80,7 @@
                 <%= link_to game, method: :delete,
                                         data: { confirm: "Are you sure you want to delete this game?" },
                                         title: game.title do %>
-                                        Delete
+                                          Delete
                  <%end%>
              <% end %>
               </td>
@@ -92,7 +92,7 @@
     </div>
   </div>  
 <% end %>
-<% if games_no_res.empty? && games.empty? %>
+<% if (defined?(games_no_res) != nil && games_no_res.empty?) && games.empty? %>
   <P class="lead">You don't have games availble at the moment. </P>
    <%= link_to 'New Game', new_game_path, class: "btn btn-large btn-primary btn-round btn-fill" %>
 <% end%>

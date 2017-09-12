@@ -19,12 +19,12 @@ class GamesController < ApplicationController
 			# User.includes(:posts).references(:posts).where('posts.id IS NULL')
 		end
 		@games = gs.includes(:reservation).references(:reservation)
-					.where('reservations.id IS NOT NULL AND reservations.date > ?', Date.today)
+					.where('reservations.id IS NOT NULL AND reservations.date > ?', Time.now)
 					.order("reservations.date asc")
 		@games_no_reservation = gs.includes(:reservation).references(:reservation).where('reservations.id IS NULL')
 		
 		@oldgames = gs.includes(:reservation).references(:reservation)
-					.where('reservations.id IS NOT NULL AND reservations.date < ?', Date.today)
+					.where('reservations.id IS NOT NULL AND reservations.date < ?', Time.now)
 					.order("reservations.date desc")
 	end
 
