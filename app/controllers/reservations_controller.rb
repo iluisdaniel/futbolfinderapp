@@ -1,8 +1,10 @@
 class ReservationsController < ApplicationController
 	include GamesHelper
 	include ReservationsHelper
-	before_action :signed_in_business, only: [:index, :show, :new, :create, :edit, :update]
-	before_action :signed_in_user, only: [:create]
+	before_action :signed_in_business, only: [:index, :show, :new, :edit, :update]
+	before_action :signed_in_business_or_user?, only: [:create, :destroy]
+	before_action :correct_user_or_business_to_destroy, only: [:destroy]
+	before_action :correct_business_res, only: [:show, :edit, :update]
 	before_action :set_fields_collection, only: [:new, :create, :edit, :update]
 	before_action :set_businesses_collection, only: [:new, :create]
 	
@@ -21,6 +23,7 @@ class ReservationsController < ApplicationController
 	end
 
 	def create
+		# fix redirection when businesses create reservations from games
 		if logged_in?
 			@reservation = current_business.reservations.build(reservation_params)
 		elsif signed_in?
@@ -46,6 +49,25 @@ class ReservationsController < ApplicationController
 		@reservation = Reservation.find(params[:id])
 	end
 
+	def update
+		@reservation = Reservation.find(params[:id])
+
+		if @reservation.update_attributes(reservation_params)
+		  flash[:success] = "Reservation updated"
+		  redirect_to @reservation
+		else
+		  render 'edit'
+		end
+	end
+
+	def destroy
+		# improve redirection part for users
+		@reservation = Reservation.find(params[:id])
+		@reservation.destroy
+		flash[:success] = "Reservation was deleted"
+		define_redirection
+	end
+
 	private
 
 	def reservation_params
@@ -62,24 +84,35 @@ class ReservationsController < ApplicationController
 		end
 	end
 
-	 def correct_business_or_user_to_delete_reservation
-    	if logged_in?
-    		correct_business
+	def correct_user_or_business_to_destroy
+		if logged_in?
+    		correct_business_res
     	elsif signed_in?
-    		correct_user_to_delete
+    		correct_user_res
     	else
     		return false
     	end
-    end
+	end
 
-    def correct_business
+    def correct_business_res
 	      res = current_business.reservations.find_by(id: params[:id])
           redirect_to root_url if res.nil?
     end
 
-    def correct_user_to_delete
+    def correct_user_res
     	res = Reservation.find_by(id: params[:id])
     	user = res.game.user
     	redirect_to root_url if current_user != user
     end
+
+    def define_redirection
+    	if logged_in?
+    		redirect_to reservations_path
+    	elsif signed_in?
+    		redirect_to games_path
+    	else
+    		redirect_to root_path
+    	end
+    end
+
 end

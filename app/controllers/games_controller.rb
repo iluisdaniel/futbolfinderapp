@@ -8,6 +8,7 @@ class GamesController < ApplicationController
 
 	def index
 		# add field id
+		#FIX displaying same day games in games and not in old games
 		if logged_in?
 			gs = current_business.games
 			# @games = gs.where("date > ?", Date.today).order(date: :asc)
@@ -115,8 +116,10 @@ class GamesController < ApplicationController
 	end
 
 	def destroy
+		@game = Game.find(params[:id])
 		@game.destroy
-		redirect_to root_path
+		flash[:success] = "Game destroyed"
+		redirect_to games_path
 	end
 
 	def search

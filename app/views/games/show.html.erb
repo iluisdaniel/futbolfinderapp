@@ -65,7 +65,9 @@
           </div>
           <% if !@game.reservation.nil? && @game.user == current_user %>
             <div class="panel-footer">
-               <i class="fa fa-times"></i><span> Cancel Reservation</span>
+               <i class="fa fa-times"></i><%= link_to "Cancel Reservation", @game.reservation, method: :delete,
+                     data: { confirm: "Are you sure you want to delete this reservation?" },
+                     title: @game.reservation %>
             </div>
             <% end %>
         </div>

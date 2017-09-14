@@ -10,6 +10,10 @@ module ReservationsHelper
     		return current_business.name
     	end
 
+        if reservation.game.user.nil?
+            return current_business.name
+        end
+
     	return reservation.game.user.name
     end
 

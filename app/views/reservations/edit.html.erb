@@ -82,5 +82,8 @@
       <%= f.submit "Update Reservation", class: "btn btn-large btn-primary btn-fill btn-round pull-right" %>
        <%= link_to 'Cancel', reservation_path(@reservation), class: "btn btn-large btn-default btn-round pull-right" %> 
     <% end %>
+    <%= link_to "delete", @reservation, method: :delete,
+                     data: { confirm: "Are you sure you want to delete this reservation?" },
+                     title: @reservation, class: "btn btn-danger btn-round" %>
   </div>
 </div>
