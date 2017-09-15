@@ -1,38 +1,25 @@
 <% provide(:title, 'Businesses') %>
+<% provide(:htitle, 'Businesses') %>
+<% provide(:secondaryTitle, '')%>
 
-<div class="row">
-	<div class="col-sm-6">
-		<h1>Businesses</h1>
+<div class="container">
+
+	<div class="row business-list">
+		<% @businesses.each do |business| %>	
+			<div class="col-sm-6 col-md-4">
+			    <div class="thumbnail">
+			      <%= image_tag("300x200.png", :alt => "rss feed") %>
+			      <div class="caption">
+			        <h3><%= business.id %>, <%= link_to business.name, business %></h3>
+			          <address>
+			            <strong><i class="fa fa-map-marker"></i> <%= business.address %></strong><br>
+			            <%= business.city %>, <%= business.state %> <%= business.zipcode %>
+			            <br>
+			        </address>
+			        <p><a href="#" class="btn btn-primary btn-fill btn-round" role="button">Check Availability</a> <a href="#" class="btn btn-default btn-round" role="button">Contact</a></p>
+			      </div>
+			    </div>
+			</div>
+		<% end %>
 	</div>
-	<div class="col-sm-6">
-		
-	</div>
-</div>
-	  	
-
-		
-
-<%= form_tag search_path, action: "search", method: :get, class: "form-inline" do %>
-  <div class="form-group">
-    <%= text_field_tag :city, params[:city], placeholder: "Search",  class: "form-control" %>
-    <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-    	
-  <%= submit_tag "Search",name: nil, class: "btn btn-primary btn-fill" %>
-  </div>
-<% end %>
-
-<hr>
-<div class="row">
-	<% @businesses.each do |business| %>	
-		<div class="col-sm-6 col-md-4">
-		    <div class="thumbnail">
-		      <%= image_tag("300x200.png", :alt => "rss feed") %>
-		      <div class="caption">
-		        <h3><%= business.id %>, <%= link_to business.name, business %></h3>
-		        <p><%= business.address %></p>
-		        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-		      </div>
-		    </div>
-		</div>
-	<% end %>
 </div>
