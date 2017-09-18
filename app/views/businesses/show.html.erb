@@ -2,14 +2,11 @@
 
 <div class="container">
   <div class="row biz-page">
-    <div class="col-md-4 col-sm-4 biz-sidebar">
+    <div class="col-md-4 biz-sidebar">
           <div class="thumbnail">
             <%= image_tag("300x200.png", :alt => "rss feed") %>
-            <p class="text-center"><a href="#"  role="button">View Gallery</a></p>
             <div class="caption">
               <h1><%= @business.name%></h1>
-              <strong>Followers <span class="badge" style="margin-right:5px;">120</span></strong>
-              <strong>Reviews <span class="badge" style="margin-right:5px;">8</span></strong>
               <p class="btn-profile"><a href="#" class="btn btn-primary btn-fill btn-round" role="button">Check Availability</a> 
                 <a href="#" class="btn btn-default btn-round" role="button">Contact</a></p>
             </div>
@@ -60,77 +57,39 @@
           </div><!-- Location -->
 
     </div>
-    <div class="col-md-8 biz-posts">
-      <h3>Posts</h3>
-      <hr>
+    <div class="col-md-8">
 
-      <div class="media">
-        <a class="pull-left" href="#">
-          <%= image_tag("64x64.png", :alt => "rss feed", class: "media-object img-circle") %>
-        </a>
-        <div class="media-body">
-          <h4 class="media-heading">La Canchita</h4>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique congue dolor, in tincidunt metus consectetur eget. Nulla maximus sapien sit amet purus aliquam, semper fringilla tellus ultricies. Morbi a egestas lectus. Sed aliquam, dui tincidunt pharetra mattis, ex massa lacinia nunc, eu pharetra velit massa id magna.
-          <hr>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title lead"><i class="fa fa-photo"></i> Gallery</h3>
+        </div>
+        <div class="panel-body">
+         <div class="row">
+           <div class="col-xs-6 col-md-3">
+             <a href="#" class="thumbnail">
+                <%= image_tag("171x180.png", :alt => "rss feed") %>
+             </a>
+           </div>
+           <div class="col-xs-6 col-md-3">
+             <a href="#" class="thumbnail">
+                <%= image_tag("171x180.png", :alt => "rss feed") %>
+             </a>
+           </div>
+           <div class="col-xs-6 col-md-3">
+             <a href="#" class="thumbnail">
+                <%= image_tag("171x180.png", :alt => "rss feed") %>
+             </a>
+           </div>
+           <div class="col-xs-6 col-md-3">
+             <a href="#" class="thumbnail">
+                <%= image_tag("171x180.png", :alt => "rss feed") %>
+             </a>
+           </div>
+         </div>
+         <a href="#">View Gallery</a>
         </div>
       </div>
-
-      <div class="media">
-        <a class="pull-left" href="#">
-          <%= image_tag("64x64.png", :alt => "rss feed", class: "media-object img-circle") %>
-        </a>
-        <div class="media-body">
-          <h4 class="media-heading">La Canchita</h4>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique congue dolor, in tincidunt metus consectetur eget. 
-          <hr>
-        </div>
-      </div>
-
-       <div class="media">
-        <a class="pull-left" href="#">
-          <%= image_tag("64x64.png", :alt => "rss feed", class: "media-object img-circle") %>
-        </a>
-        <div class="media-body">
-          <h4 class="media-heading">La Canchita</h4>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique congue dolor, in tincidunt metus consectetur eget. 
-          <hr>
-        </div>
-      </div>
-
-      <div class="media">
-        <a class="pull-left" href="#">
-          <%= image_tag("64x64.png", :alt => "rss feed", class: "media-object img-circle") %>
-        </a>
-        <div class="media-body">
-          <h4 class="media-heading">La Canchita</h4>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique congue dolor, in tincidunt metus consectetur eget. Nulla maximus sapien sit amet purus aliquam, semper fringilla tellus ultricies. Morbi a egestas lectus. Sed aliquam, dui tincidunt pharetra mattis, ex massa lacinia nunc, eu pharetra velit massa id magna.
-          <hr>
-        </div>
-      </div>
-
-      <div class="media">
-        <a class="pull-left" href="#">
-          <%= image_tag("64x64.png", :alt => "rss feed", class: "media-object img-circle") %>
-        </a>
-        <div class="media-body">
-          <h4 class="media-heading">La Canchita</h4>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          <hr>
-        </div>
-      </div>
-
-       <div class="media">
-        <a class="pull-left" href="#">
-          <%= image_tag("64x64.png", :alt => "rss feed", class: "media-object img-circle") %>
-        </a>
-        <div class="media-body">
-          <h4 class="media-heading">La Canchita</h4>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique congue dolor, in tincidunt metus consectetur eget. Nulla maximus sapien sit amet purus aliquam, semper fringilla tellus ultricies. Morbi a egestas lectus. Sed aliquam, dui tincidunt pharetra mattis, ex massa lacinia nunc, eu pharetra velit massa id magna.
-
-        </div>
-      </div>
-
-      <hr>
+      
 
        <div class="panel panel-default">
             <div class="panel-heading">
@@ -139,8 +98,9 @@
             <div class="panel-body">
               Panel content
             </div>
-          </div><!-- Reviews -->
+        </div><!-- Reviews -->
     </div>
+
   </div>  
 </div>
 
