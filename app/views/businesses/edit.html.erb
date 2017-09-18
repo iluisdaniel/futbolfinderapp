@@ -1,18 +1,17 @@
 <% provide(:title, 'Edit Business') %>
-<h1>Update Business</h1>
+<% provide(:htitle, 'Settings') %>
+<% provide(:secondaryTitle, '')%>
+
 <div class="container business-settings">
   <div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-xs-12 col-md-3">
+    <div class="col-xs-12 col-md-3" style="margin-top:20px;">
        <ul class="nav nav-pills nav-stacked" role="tablist">
-          <li role="presentation" class="active"><a href="#info" aria-controls="home" role="tab" data-toggle="tab">Account<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
-          <li role="presentation"><a href="#schedule" aria-controls="profile" role="tab" data-toggle="tab">Schedule<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
-          <li role="presentation"><a href="#fields" aria-controls="messages" role="tab" data-toggle="tab">Fields and Prices<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
+          <li role="presentation" class="active"><a href="#info" aria-controls="home" role="tab" data-toggle="tab">Account<span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span></a></li>
+          <li role="presentation"><a href="#schedule" aria-controls="profile" role="tab" data-toggle="tab">Schedule<span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span></a></li>
+          <li role="presentation"><a href="#fields" aria-controls="messages" role="tab" data-toggle="tab">Fields and Prices<span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span></a></li>
         </ul>
     </div><!-- End col-md-4 -->
     <div class="col-xs-12 col-md-7">
-      <div class="panel panel-default panel-main">
-        <div class="panel-body">
           <!-- Tab panes -->
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="info">
@@ -21,66 +20,116 @@
                 <hr>
 
                 <%= form_for(@business, class: "form-horizontal") do |f| %>
-                <%= render 'shared/error_messages', object: f.object %> 
-                  <div class="form-group">
-                    <%= f.label :name, class: "col-sm-3 control-label" %>
-                    <div class="col-sm-8">
-                      <%= f.text_field :name, class: 'form-control', placeholder: "Name" %>
+                <div class="row">
+                  <%= render 'shared/error_messages', object: f.object %> 
+                </div>
+
+                  <div class="row">
+                    <div class="form-group">
+                      <div class="col-md-2">
+                        <%= f.label :name, class: "" %>
+                      </div>
+                      <div class="col-md-8">
+                        <%= f.text_field :name, class: 'form-control', placeholder: "Name" %>
+                      </div>
                     </div>
+                  </div>  
+
+                  <div class="row">
+                    <div class="form-group">
+                      <div class="col-md-2">
+                        <%= f.label :email, class: "" %>
+                      </div>
+                      <div class="col-md-8">
+                        <%= f.email_field :email, class: 'form-control', placeholder: "Email" %>
+                      </div>
+                    </div>  
                   </div>
+
+                 <div class="row">
                   <div class="form-group">
-                    <%= f.label :email, class: "col-sm-3 control-label" %>
-                    <div class="col-sm-8">
-                      <%= f.email_field :email, class: 'form-control', placeholder: "Email" %>
+                    <div class="col-md-2">
+                      <%= f.label :phone, class: "" %>
                     </div>
-                  </div>
-                  <div class="form-group">
-                    <%= f.label :phone, class: "col-sm-3 control-label" %>
-                    <div class="col-sm-8">
+                    <div class="col-md-8">
                       <%= f.text_field :phone, class: 'form-control', placeholder: "Phone" %>
                     </div>
                   </div>
+                </div>
+
+                <hr>
                   
-                  <div class="form-group">
-                    <%= f.label :address, class: "col-sm-3 control-label" %>
-                    <div class="col-sm-8">
+                <div class="row">
+                 <div class="form-group">
+                    <div class="col-md-2">
+                      <%= f.label :address, class: "" %>
+                    </div>
+                    <div class="col-md-8">
                       <%= f.text_field :address, class: 'form-control', placeholder: "Address" %>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <%= f.label :city, class: "col-sm-3 control-label" %>
-                    <div class="col-sm-8">
+                 </div>
+
+                <div class="row">
+                   <div class="form-group">
+                    <div class="col-md-2">
+                      <%= f.label :city, class: "" %>
+                    </div>
+                    <div class="col-md-8">
                      <%= f.text_field :city, class: 'form-control', placeholder: "City" %>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <%= f.label :state, class: "col-sm-3 control-label" %>
-                    <div class="col-sm-8">
+                </div>
+
+                  <div class="row">
+                   <div class="form-group">
+                      <div class="col-md-2">
+                        <%= f.label :state, class: "" %>
+                      </div>
+                    <div class="col-md-8">
                        <%= f.text_field :state, class: 'form-control', placeholder: "State" %>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <%= f.label :zipcode, class: "col-sm-3 control-label" %>
-                    <div class="col-sm-8">
-                      <%= f.text_field :zipcode, class: 'form-control', placeholder: "Zip Code" %>
+                </div>
+
+                  <div class="row">
+                   <div class="form-group">
+                     <div class="col-md-2">
+                        <%= f.label :zipcode, class: "" %>
+                      </div>
+                      <div class="col-md-8">
+                        <%= f.text_field :zipcode, class: 'form-control', placeholder: "Zip Code" %>
+                      </div>
                     </div>
                   </div>
+
+                  <hr>
                   
-                  <div class="form-group">
-                    <%= f.label :password, class: "col-sm-3 control-label" %>
-                    <div class="col-sm-8">
-                     <%= f.password_field :password, class: 'form-control', placeholder: "Password" %>
+                  <div class="row">
+                   <div class="form-group">
+                      <div class="col-md-2">
+                        <%= f.label :password, class: "" %>
+                      </div>
+                      <div class="col-md-8">
+                        <%= f.password_field :password, class: 'form-control', placeholder: "Password" %>
+                      </div>
                     </div>
                   </div>
-                  <div class="form-group">
-                   <%= f.label :password_confirmation, class: "col-sm-3 control-label" %>
-                    <div class="col-sm-8">
+
+                  <div class="row">
+                    <div class="form-group">
+                       <div class="col-md-2">
+                         <%= f.label :password_confirmation, class: "" %>
+                       </div>
+                    <div class="col-md-8">
                      <%= f.password_field :password_confirmation, class: 'form-control', placeholder: "Confirm Password" %>
                     </div>
                   </div>
+                </div>
+                <hr>
                   <div class="form-group">
                     <div class="col-sm-offset-1 col-sm-10">
-                      <%= f.submit "Save Changes", class: "btn btn-primary" %>
+                      <%= f.submit "Save Changes", class: "btn btn-primary btn-fill btn-round pull-right" %>
                     </div>
                   </div>
                 <% end %>                
@@ -88,45 +137,65 @@
             <div role="tabpanel" class="tab-pane" id="schedule">
               <h3 class="lead"><span class="text-uppercase">Schedule</span><small><br> Change your business hours</small></h3>
               <hr>
-                <div class="container">
-                  <h4>Business Hours</h4>
-                  <table class="schedules">
-                    <tr>
-                        <th>Day</th>
-                        <th>Open Time</th>
-                        <th>Close Time</th>
-                        <th></th>
-                     </tr>
-                    <%= render @schedules %>
-                  </table>
-                </div>
+               <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <h3 class="panel-title lead"><i class="fa fa-calendar"></i> Schedule</h3>
+                          </div>
+                          <div class="panel-body">
+                            <table class="schedules">
+                              <%= render @schedules %>
+                            </table>
+                          </div>
+                        </div><!-- schedule -->
               <hr>
-              <h4>Add a new hour</h4>
-              <%= form_for(@schedule, class: "form-horizontal") do |f| %>
-                  <%= render 'shared/error_messages', object: f.object %> 
-                  <div class="form-group">
 
-                    <%= f.label :day, class: "col-sm-3 control-label" %>
-                    <div class="col-sm-8">
+              <%= form_for(@schedule, class: "form-horizontal") do |f| %>
+                  <div class="row">
+                    <%= render 'shared/error_messages', object: f.object %> 
+                  </div>
+
+                  <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                          <%= f.label :day, class: "" %>
+                        </div>
+                    <div class="col-md-8">
                       <%= f.select(:day, ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], {include_blank: "Select Day"}, { :class => 'form-control' }) %>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <%= f.label :open_time, class: "col-sm-3 control-label" %>
-                    <div class="col-sm-8 time-select">
-                     <%= f.time_select :open_time, :default => Time.now, ampm:true, :class => 'form-control' %> 
-                   
-                    </div>
+                </div>
+
+                  <div class="row">
+                    <div class="form-group">
+                      <div class="col-md-2">
+                        <%= f.label :open_time, 'Time' %>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="col-md-6">
+                            <%= f.time_select :open_time, {prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 6, time_separator: "</div><div class='col-md-6'>"}, {class: 'form-control'} %> 
+                        </div>
+                      </div>
+                    </div>   
                   </div>
-                  <div class="form-group">                 
-                    <%= f.label :close_time, class: "col-sm-3 control-label" %>
-                    <div class="col-sm-8 time-select">
-                      <%= f.time_select :close_time, :default => Time.now, ampm:true, :class => 'form-control' %> 
-                    </div>
+
+                  <div class="row">
+                    <div class="form-group">
+                      <div class="col-md-2">
+                        <%= f.label :close_time, 'Time' %>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="col-md-6">
+                            <%= f.time_select :close_time, {prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 6, time_separator: "</div><div class='col-md-6'>"}, {class: 'form-control'} %> 
+                        </div>
+                      </div>
+                    </div>   
                   </div>
+
+                  <hr>
+
                   <div class="form-group">
                     <div class="col-sm-offset-1 col-sm-10">
-                      <%= f.submit "Add New Day", class: "btn btn-primary" %>
+                      <%= f.submit "Add New Day", class: "btn btn-primary btn-round btn-fill pull-right" %>
                     </div>
                   </div>
                 <% end %>
@@ -135,57 +204,80 @@
             <div role="tabpanel" class="tab-pane" id="fields">
               <h3 class="lead"><span class="text-uppercase">Fields</span><small> <br>Add or Remove type of Fields and their prices</small></h3>
               <hr>
-              <div class="container">
-                  <h4>Fields</h4>
-                  <table class="schedules">
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Number Of Players</th>
-                        <th>Price</th>
-                        <th></th>
-                     </tr>
-                   <%= render @fields %>
-                  </table>
-                </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title lead"><i class="fa fa-soccer-ball-o"></i> Fields</h3>
+              </div>
+              <div class="panel-body">
+                <table>
+                   <%= render @fields %>  
+                </table>
+               
+              </div>
+            </div><!-- end info -->
+                
+
               <hr>
               <%= form_for(@field, class: "form-horizontal") do |f| %>
-              <%= render 'shared/error_messages', object: f.object %> 
-                  <div class="form-group">
-                    <%= f.label :number_players, class: "col-sm-3 control-label" %>
-                    <div class="col-sm-8">
-                      <%= f.number_field :number_players, class: 'form-control', placeholder: "Number Of Players" %>
+                  <div class="row">
+                    <%= render 'shared/error_messages', object: f.object %> 
+                  </div> 
+
+                 <div class="row">
+                   <div class="form-group">
+                      <div class="col-md-2">
+                          <%= f.label :number_players, class: "" %>
+                      </div>
+                      <div class="col-md-8">
+                          <%= f.number_field :number_players, class: 'form-control', placeholder: "Number Of Players" %>
+                      </div>
+                  </div>
+                </div>
+
+                  <div class="row">
+                      <div class="form-group">
+                         <div class="col-md-2">
+                           <%= f.label :name, class: "" %>
+                         </div>
+                      <div class="col-md-8">
+                        <%= f.text_field :name, class: 'form-control', placeholder: "Name" %>
+                      </div>
                     </div>
                   </div>
+
+                 <div class="row">
                   <div class="form-group">
-                    <%= f.label :name, class: "col-sm-3 control-label" %>
-                    <div class="col-sm-8">
-                      <%= f.text_field :name, class: 'form-control', placeholder: "Name" %>
+                    <div class="col-md-2">
+                        <%= f.label :description, class: "" %>
                     </div>
-                  </div>
-                  <div class="form-group">
-                    <%= f.label :description, class: "col-sm-3 control-label" %>
-                    <div class="col-sm-8">
+                    <div class="col-md-8">
                       <%= f.text_field :description, class: 'form-control', placeholder: "Description" %>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <%= f.label :price, class: "col-sm-3 control-label" %>
-                    <div class="col-sm-8">
+                </div>
+
+                  <div class="row">
+                   <div class="form-group">
+                    <div class="col-md-2">
+                        <%= f.label :price, class: "" %>
+                    </div>
+                    <div class="col-md-8">
                       <%= f.text_field :price, class: 'form-control', value: number_to_currency(f.object.price.to_f, delimiter: '', unit: ''), step: :any %>
                     </div>
                   </div>
+                </div>
+
+                <hr>
+
                   <div class="form-group">
                     <div class="col-sm-offset-1 col-sm-10">
-                      <%= f.submit "Add Field", class: "btn btn-primary" %>
+                      <%= f.submit "Add Field", class: "btn btn-primary btn-fill btn-round pull-right" %>
                     </div>
                   </div>
                 <% end %>
             </div><!-- end fields tab -->
           </div><!-- end tabs -->
-        </div><!-- end panel body -->
-      </div><!-- End panel -->    
     </div><!-- End col-md-8 -->
-    <div class="col-md-1"></div>
   </div><!--End row -->  
 </div><!-- End container business-->
