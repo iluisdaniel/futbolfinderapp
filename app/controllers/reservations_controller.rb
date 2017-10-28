@@ -9,9 +9,8 @@ class ReservationsController < ApplicationController
 	before_action :set_businesses_collection, only: [:new, :create]
 	
 	def index 
-		rs = current_business.reservations
-		@reservations = rs.where("date > ?", Time.now).order(date: :asc)
-		@oldreservations = rs.where("date < ?", Time.now).order(date: :desc)
+		@reservations = current_business.reservations.current
+		@oldreservations = current_business.reservations.old
 	end
 
 	def show

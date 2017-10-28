@@ -75,6 +75,13 @@ class Reservation < ActiveRecord::Base
       errors.add(:field_id, " this field is reserved at this time") unless is_the_field_reserved_at_this_time?
     end
 
+    def self.current
+      where("date > ?", Time.now).order(date: :asc)
+    end
+
+    def self.old
+      where("date < ?", Time.now).order(date: :desc)
+    end
 
   
   	private
