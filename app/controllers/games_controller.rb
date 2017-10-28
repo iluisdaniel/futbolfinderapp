@@ -9,24 +9,9 @@ class GamesController < ApplicationController
 	def index
 		# add field id
 		#FIX displaying same day games in games and not in old games
-		if logged_in?
-			gs = current_business.games
-			# @games = gs.where("date > ?", Date.today).order(date: :asc)
-			# @oldgames = gs.where("date < ?", Date.today).order(date: :desc)
-		elsif signed_in?
-			gs = Game.joins(game_lines: :user).where(game_lines: {user_id: current_user.id})	
-			# @games = gs.where("date > ?", Date.today).order(date: :asc)
-			# @oldgames = gs.where("date < ?", Date.today).order(date: :desc)
-			# User.includes(:posts).references(:posts).where('posts.id IS NULL')
-		end
-		@games = gs.includes(:reservation).references(:reservation)
-					.where('reservations.id IS NOT NULL AND reservations.date > ?', Time.now)
-					.order("reservations.date asc")
-		@games_no_reservation = gs.includes(:reservation).references(:reservation).where('reservations.id IS NULL')
-		
-		@oldgames = gs.includes(:reservation).references(:reservation)
-					.where('reservations.id IS NOT NULL AND reservations.date < ?', Time.now)
-					.order("reservations.date desc")
+		@games = Game.with_reservation(current_business_or_user)
+		@games_no_reservation = Game.without_reservation(current_business_or_user)
+		@oldgames = Game.old_reservations(current_business_or_user)
 	end
 
 	def show

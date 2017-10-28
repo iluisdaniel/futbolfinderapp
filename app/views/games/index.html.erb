@@ -20,24 +20,15 @@
     <!-- Tab panes -->
     <div class="tab-content">
       <div class="tab-pane active" id="current-games">
-        <% if logged_in? %>
            <%= render partial: "games/games", locals: {games: @games, games_no_res: 
             @games_no_reservation } %>
-        <% elsif signed_in? %>
-          <%= render partial: "games/games", locals: {games: @games, games_no_res: 
-            @games_no_reservation } %>
-        <% end %>
       </div>
 
       <div class="tab-pane" id="old-games">  
         <% if @oldgames.empty? %>
             <P class="lead">No old games to display.</P>
         <% else %>
-          <% if logged_in? %>
              <%= render partial: "games/games", locals: {games: @oldgames} %>
-          <% elsif signed_in? %>
-          <%= render partial: "games/games", locals: {games: @oldgames} %>
-          <% end %>
         <% end %>  
       </div> 
     </div>

@@ -22,6 +22,14 @@ module SessionsHelper
     redirect_to login_url
   end
 
+  def current_business_or_user
+    if !current_user.nil?
+      return current_user
+    elsif !current_business.nil?
+      return current_business
+    end
+  end
+
   # Logs in the given business.
 	def log_in(business)
 		session[:business_id] = business.id

@@ -18,6 +18,38 @@ class Game < ActiveRecord::Base
     def check_public_is_presence
       errors.add(:public, " should be presence") unless !public.nil?
     end
+
+    def self.with_reservation(user_business)
+      gs = get_games(user_business)
+
+      gs.includes(:reservation).references(:reservation)
+          .where('reservations.id IS NOT NULL AND reservations.date > ?', Time.now)
+          .order("reservations.date asc")
+    end
+
+    def self.without_reservation(user_business)
+        gs = get_games(user_business)
+        gs.includes(:reservation).references(:reservation).where('reservations.id IS NULL')
+    end
+
+    def self.old_reservations(user_business)
+       gs = get_games(user_business)
+
+      gs.includes(:reservation).references(:reservation)
+          .where('reservations.id IS NOT NULL AND reservations.date < ?', Time.now)
+          .order("reservations.date desc")
+    end
+
+    private
+
+      def self.get_games(u_biz)
+        if u_biz.instance_of? Business
+          gs = u_biz.games
+        else
+          gs = Game.joins(game_lines: :user).where(game_lines: {user_id: u_biz.id})
+        end
+        return gs
+      end
     
 
 end
