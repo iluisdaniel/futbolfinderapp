@@ -27,7 +27,7 @@
             </div>
             <div class="panel-body">
               <table class="schedules">
-                <%= render @schedules %>
+                <%= render @business.schedules.all %>
               </table>
             </div>
           </div><!-- schedule -->
@@ -37,7 +37,7 @@
               <h3 class="panel-title lead"><i class="fa fa-soccer-ball-o"></i> Fields</h3>
             </div>
             <div class="panel-body">
-              Fields info
+              <%= render @business.fields.all %>
             </div>
           </div><!-- end info -->
 
@@ -111,7 +111,7 @@
     <% if @business.schedules.any? %>
       <h3>Schedules (<%= @business.schedules.count %>)</h3>
       <table class="schedules">
-        <%= render @schedules %>
+        <%= render @business.schedules.all %>
       </table>
     <% end %>
   </div>
@@ -120,7 +120,7 @@
     <% if @business.fields.any? %>
       <h3>Fields (<%= @business.fields.count %>)</h3>
       <table class="schedules">
-        <%= render @fields %>
+        <%= render @business.fields.all %>
       </table>
     <% end %>
   </div>

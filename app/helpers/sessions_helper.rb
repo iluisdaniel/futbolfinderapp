@@ -1,11 +1,25 @@
 module SessionsHelper
 
-	def signed_in_business_or_user?
+	def redirect_back_when_is_already_logged_in?
+    if (signed_in? || logged_in?)
+      redirect_to root_path
+      return false
+    end
+      return true
+  end
+
+  def signed_in_business_or_user?
     if !(signed_in? || logged_in?)
       store_location_and_login
       return false
     end
     return true
+  end
+
+  def store_location_and_login
+    store_location
+    flash[:danger] = "Please log in."
+    redirect_to login_url
   end
 
   # Logs in the given business.
@@ -115,12 +129,6 @@ module SessionsHelper
                                   User.digest(User.new_remember_token))
     cookies.delete(:remember_token)
     self.current_user = nil
-  end
-
-  def store_location_and_login
-    store_location
-    flash[:danger] = "Please log in."
-    redirect_to login_url
   end
 
   def redirect_back_home
