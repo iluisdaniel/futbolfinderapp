@@ -7,8 +7,8 @@ class Game < ActiveRecord::Base
   has_many :game_lines, dependent: :destroy
   has_many :comments, as: :commentable
 
-  validates :description, length: { maximum: 500, minimum: 5 }, allow_blank: true
-  validates :title, length: { minimum: 5, maximum: 60}, allow_blank: true
+  validates :description, length: { maximum: 500, minimum: 5 }, allow_blank: false
+  validates :title, length: { minimum: 5, maximum: 60}, allow_blank: false
   validates :number_players, presence: true, numericality: {only_integer: true}
 
   #validate public 

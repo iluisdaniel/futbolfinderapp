@@ -65,9 +65,6 @@ class GamesController < ApplicationController
 			@game = current_user.games.build(game_params)
 		end
 
-		@game[:title] = set_game_title(@game.title)
-		@game[:description] = set_game_description(@game.description)
-
 		if @game.save				
 			redirect_to @game
 			flash[:success] = "Your Game Was Created"		
@@ -132,32 +129,6 @@ class GamesController < ApplicationController
 	def game_params
 		params.require(:game).permit(:user_id, :business_id, :number_players, :title, 
 			:description, :public)
-	end
-
-	def set_game_title(title)
-		
-		if title.nil? || title.empty?
-			return "Game " + current_business.name
-		end
-
-		return title
-	end
-
-
-
-
-	def set_game_description(desc)
-		if desc.nil? || desc.empty?
-			w = "by"
-
-			if signed_in?
-				w = "at"
-			end
-
-			return "Your game has been created " + w + " "+ current_business.name + ". Enjoy your game!. Your are welcome to change this descrition and let the other players what's up"
-		end
-
-		return desc
 	end
 
 end
