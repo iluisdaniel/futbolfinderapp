@@ -192,4 +192,12 @@ module GamesHelper
         return
     end
 
+    def get_public_or_private_string
+        if @game.public == true
+            return "Public"
+        else
+            return "Private"
+        end 
+    end
+
 end

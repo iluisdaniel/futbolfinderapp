@@ -27,18 +27,12 @@ class GamesController < ApplicationController
 		# users can set alerts in case a filed got reserved on a time. Maybe, choose prefered place and time and if another users reserved they get an alert. 
 
 		@game = Game.find(params[:id])
-		@game_lines = @game.game_lines.where(accepted: false)
-		@game_lines_accepted = @game.game_lines.where(accepted: true)
 		@game_line = GameLine.new
 		@reservation = Reservation.new
 		#Bug - when a field is erased from a business, and the show action is called it fails because it cannot find field to show field info into the show page
 		# Make impossible to erase a field in the case there are open games. Or it has to erased all of them. 
 
-		if @game.public == true
-			@isPublic = "Public"
-		else
-			@isPublic = "Private"
-		end	
+		
 	end
 
 	def new

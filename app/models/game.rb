@@ -40,6 +40,14 @@ class Game < ActiveRecord::Base
           .order("reservations.date desc")
     end
 
+    def players_confirmed 
+      self.game_lines.where(accepted: true)
+    end
+
+    def players_invited
+      self.game_lines.where(accepted: false)
+    end
+
     private
 
       def self.get_games(u_biz)
