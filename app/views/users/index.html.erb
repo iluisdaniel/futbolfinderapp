@@ -1,5 +1,24 @@
-<% provide(:title, 'All users') %>
-<h1>All users</h1>
+<% provide(:title, 'Players') %>
+<% provide(:htitle, 'Players') %>
+<% provide(:secondaryTitle, '')%>
+
+<div class="container" style="margin-top:20px;">
+  <ul class="users">
+    <% @users.each do |user| %>
+      
+      <li>
+        <%= image_tag("64x64.png", :alt => "rss feed", class: "img-circle") %>        
+        <%= user.id %>
+        <%= link_to user.name, user %>
+      </li>
+
+    <% end %>
+  </ul>
+</div>
+
+<br>
+<br>
+<br>
 
 <div class="row">
   <ul class="nav nav-tabs game-sd-tabs">
