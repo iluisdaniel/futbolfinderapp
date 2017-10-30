@@ -72,6 +72,19 @@ module GamesHelper
     	return false
     end
 
+    def are_there_games?
+      if signed_in?
+          if current_user.games_involved.count == 0 
+              return false
+          end
+       elsif logged_in?
+          if current_business.games.count == 0 
+            return false
+          end
+      end
+      return true   
+    end
+
     def find_user_with_email(email)
         user = User.find_by(email: email)
         return user
@@ -129,12 +142,21 @@ module GamesHelper
         end
     end
 
+    def get_reservation_month_and_day_from_game(game_id)
+        g = Game.find(game_id)
+        if g.reservation.nil?
+            return "N/A"
+        else
+            return g.reservation.date.strftime("%^b %d")
+        end
+    end
+
     def get_reservation_time_from_game(game_id)
         g = Game.find(game_id)
         if g.reservation.nil?
             return "N/A"
         else
-            return g.reservation.time.strftime("%r")
+            return g.reservation.time.strftime("%l:%M %p")
         end
     end
 
@@ -143,7 +165,7 @@ module GamesHelper
         if g.reservation.nil?
             return "N/A"
         else
-            return g.reservation.end_time.strftime("%r")
+            return g.reservation.end_time.strftime("%l:%M %p")
         end
     end
 
@@ -152,7 +174,7 @@ module GamesHelper
         if g.reservation.nil?
             return "N/A"
         else
-            return g.reservation.business.name
+            return g.reservation.business
         end
     end
 
@@ -168,25 +190,13 @@ module GamesHelper
         return "Private"
     end
 
-    def get_game_creator_link(game)
+    def get_game_creator(game)
         if !game.user.nil?
             return game.user
         end
 
         if !game.business.nil?
             return game.business
-        end
-
-        return
-    end
-
-    def get_game_creator_link_name(game)
-        if !game.user.nil?
-            return game.user.name
-        end
-
-        if !game.business.nil?
-            return game.business.name
         end
 
         return

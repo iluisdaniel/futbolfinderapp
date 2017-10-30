@@ -10,8 +10,7 @@ class GamesController < ApplicationController
 		# add field id
 		#FIX displaying same day games in games and not in old games
 		@games = Game.with_reservation(current_business_or_user)
-		@games_no_reservation = Game.without_reservation(current_business_or_user)
-		@oldgames = Game.old_reservations(current_business_or_user)
+		@games_no_reservation = Game.without_reservation(current_business_or_user)	
 	end
 
 	def show

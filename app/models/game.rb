@@ -23,7 +23,15 @@ class Game < ActiveRecord::Base
       gs = get_games(user_business)
 
       gs.includes(:reservation).references(:reservation)
-          .where('reservations.id IS NOT NULL AND reservations.date > ?', Time.now)
+          .where('reservations.id IS NOT NULL AND reservations.date >= ?', Date.today)
+          .order("reservations.date asc")
+    end
+
+    def self.this_week_games_with_reservation(user_business)
+      gs = get_games(user_business)
+
+      gs.includes(:reservation).references(:reservation)
+          .where('reservations.id IS NOT NULL AND reservations.date > ? AND reservations.date < ?', Time.now, Time.now + 7.days )
           .order("reservations.date asc")
     end
 
@@ -36,8 +44,24 @@ class Game < ActiveRecord::Base
        gs = get_games(user_business)
 
       gs.includes(:reservation).references(:reservation)
-          .where('reservations.id IS NOT NULL AND reservations.date < ?', Time.now)
+          .where('reservations.id IS NOT NULL AND reservations.date < ?', Date.today)
           .order("reservations.date desc")
+    end
+
+    def self.today_games_with_reservations(user_business)
+      gs = get_games(user_business)
+
+      gs.includes(:reservation).references(:reservation)
+          .where('reservations.id IS NOT NULL AND reservations.date = ?', Date.today)
+          .order("reservations.date asc")
+    end
+
+    def self.tomorrow_games_with_reservations(user_business)
+      gs = get_games(user_business)
+
+      gs.includes(:reservation).references(:reservation)
+          .where('reservations.id IS NOT NULL AND reservations.date = ?', Date.today + 1.days )
+          .order("reservations.date asc")
     end
 
     def players_confirmed 

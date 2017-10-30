@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   
   get 'u/businesses' => 'businesses#index'
   get 'signup'  => 'businesses#new'
-  
+
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
@@ -22,9 +22,16 @@ Rails.application.routes.draw do
 
   resources :reservations
 
+  namespace "games" do
+    resources :old_games, only: :index
+    resources :upcoming_games, only: :index
+    resources :today, only: :index
+  end
+
   resources :games, path: '/games/' do 
     resources :comments, module: :games
   end
+
   resources :game_lines, only: [:create, :update,:destroy]
 
   resources :schedules, only: [:create, :destroy]

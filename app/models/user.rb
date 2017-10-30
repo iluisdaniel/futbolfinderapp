@@ -43,6 +43,10 @@ class User < ActiveRecord::Base
         pending_friends | requested_friendships
     end
 
+    def games_involved
+    	Game.joins(game_lines: :user).where(game_lines: {user_id: id})
+    end
+
 	private
 
 		def create_remember_token
