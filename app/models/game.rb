@@ -31,7 +31,7 @@ class Game < ActiveRecord::Base
       gs = get_games(user_business)
 
       gs.includes(:reservation).references(:reservation)
-          .where('reservations.id IS NOT NULL AND reservations.date > ? AND reservations.date < ?', Time.now, Time.now + 7.days )
+          .where('reservations.id IS NOT NULL AND reservations.date > ? AND reservations.date < ?', Date.tomorrow, Date.today + 7.days )
           .order("reservations.date asc")
     end
 
