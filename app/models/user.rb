@@ -47,6 +47,10 @@ class User < ActiveRecord::Base
     	Game.joins(game_lines: :user).where(game_lines: {user_id: id})
     end
 
+    def invited_games
+        Game.joins(game_lines: :user).where(game_lines: {user_id: id, accepted: false })   
+    end
+
 	private
 
 		def create_remember_token

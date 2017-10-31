@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     resources :old_games, only: :index
     resources :upcoming_games, only: :index
     resources :planning, only: :index
+    resources :invited, only: :index
   end
 
   resources :games, path: '/games/' do 

@@ -67,6 +67,20 @@ class Game < ActiveRecord::Base
           .order("reservations.date asc")
     end
 
+    def self.get_invited_ones_with_res(user)
+      gs = get_invited_games(user)
+      gs.includes(:reservation).references(:reservation)
+              .where('reservations.id IS NOT NULL')
+              .order("reservations.date asc")
+    end
+    def self.get_invited_ones_without_res(user)
+      gs = get_invited_games(user)
+      gs.includes(:reservation).references(:reservation)
+              .where('reservations.id IS NULL')
+              .order("reservations.date asc")
+    end
+
+
     def players_confirmed 
       self.game_lines.where(accepted: true)
     end
@@ -101,9 +115,13 @@ class Game < ActiveRecord::Base
         if u_biz.instance_of? Business
           gs = u_biz.games
         else
-          gs = Game.joins(game_lines: :user).where(game_lines: {user_id: u_biz.id})
+          gs = Game.joins(game_lines: :user).where(game_lines: {user_id: u_biz.id, accepted: true })
         end
         return gs
+      end
+
+      def self.get_invited_games(user)
+        return Game.joins(game_lines: :user).where(game_lines: {user_id: user.id, accepted: false })   
       end
     
 

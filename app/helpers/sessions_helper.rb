@@ -16,6 +16,14 @@ module SessionsHelper
     return true
   end
 
+  def signed_in_user_but_not_business?
+    if signed_in?
+      return true
+    end
+    redirect_to root_path
+    return false 
+  end
+
   def store_location_and_login
     store_location
     flash[:danger] = "Please log in."

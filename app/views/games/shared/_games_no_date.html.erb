@@ -4,10 +4,9 @@
       <table class="table table-striped table-hover">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>Game</th>
             <th>Type</th>
-            <th>Players Needed</th>
-            <th>Players Comfirmed</th>
+            <th>Players</th>
             <th>Admin</th>
           </tr>
         </thead>
@@ -15,10 +14,10 @@
           <% games.each do |game| %>
 
             <tr>
-              <td><%= link_to game.id, game %></td>
+              <td><%= link_to game.title, game %></td>
               <td><%= public_or_private(game.public) %></td>
-              <td><%= game.number_players %></td>
-              <td><%= get_number_of_players_ready(game.id)%></td>
+              <td><%= get_number_of_players_ready(game.id)%> / <%= game.number_players %></td>
+
                <td><%= link_to get_game_creator(game).name, get_game_creator(game) %></td>
             </tr>
 

@@ -2,6 +2,13 @@
 <ul class="nav nav-tabs game-sd-tabs">
 
           <li class="<%= 'active' if current_page?(controller: '/games/upcoming_games', action: 'index') %>"><%= link_to 'Upcoming', games_upcoming_games_path, class: "" %></li>
+          <%if signed_in? %>
+          	<li class="<%= 'active' if current_page?(controller: '/games/invited', action: 'index') %>">
+          		<%= link_to games_invited_index_path, class: ""  do %>
+          			Invited <span class="badge"> <%= current_user.invited_games.count %> </span>
+          		<% end%> 		
+          	</li>
+          <% end %>
           <li class="<%= 'active' if current_page?(controller: '/games/planning', action: 'index') %>"><%= link_to 'Planning', games_planning_index_path, class: "" %></li>
            <li class="<%= 'active' if current_page?(controller: '/games', action: 'index') %>"><%= link_to 'All Games', games_path, class: "" %></li>
           <li class="<%= 'active' if current_page?(controller: '/games/old_games', action: 'index') %>"><%= link_to 'Past Games', games_old_games_path, class: "" %></li>

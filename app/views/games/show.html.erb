@@ -24,7 +24,7 @@
           </div>
           <div class="panel-body">
            <ul class="list-unstyled list-inline">
-                  <li style="font-size:1.2em;"><span class="label label-success"><i class="fa fa-futbol-o"></i> <%= get_public_or_private_string %> Game</li> 
+                  <li style="font-size:1.2em;"><span class="label label-success"><i class="fa fa-futbol-o"></i> <%= get_public_or_private_string_from_game %> Game</li> 
                   <li><i class="fa fa-user"></i> Admin: <%= link_to get_game_creator(@game).name, get_game_creator(@game) %></li>
                   <li><i class="fa fa-users"></i> Players Wanted: <%= @game.number_players %></li>
                   <li><i class="fa fa-calendar"></i> Created: <%= @game.created_at.strftime("%b/%d") %></li>
