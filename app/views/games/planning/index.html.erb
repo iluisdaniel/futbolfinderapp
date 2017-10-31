@@ -9,7 +9,7 @@
 
     <div class="row">
       <%= render partial: "games/shared/menu_bar" %>
-      <%= render partial: "games/shared/games", locals: {games: @games, subtitle: 'Today'} %>
+      <%= render partial: "games/shared/games_no_date", locals: {games: @games, subtitle: 'Planning'} %>
       
     </div>
   <% end %>  

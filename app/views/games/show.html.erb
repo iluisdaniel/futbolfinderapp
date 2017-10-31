@@ -14,7 +14,7 @@
   <div class="row">
     <div class="col-md-8 game-content">
 
-        <% if !logged_in? %>
+        <% if signed_in? || (@game.user_id.nil? && @game.business_id.present?) %>
           <p class="lead game-description"><%= @game.description %></p>
         <% end %>
 
@@ -72,7 +72,7 @@
             <% end %>
         </div>
          
-        <% if !logged_in? %>
+        <% if signed_in? %>
         <div class="panel panel-default">
           <%= render partial: "comments/comments", locals: {commentable: @game }%>
           </div>
@@ -90,7 +90,7 @@
         <div class="panel-body">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs game-sd-tabs">
-              <li><a href="#playing" data-toggle="tab">Confirmed <span class="badge"><%=@game.players_confirmed.count%></span></a></li>
+              <li class="active"><a href="#playing" data-toggle="tab">Confirmed <span class="badge"><%=@game.players_confirmed.count%></span></a></li>
               <li><a href="#invited" data-toggle="tab">Invited <span class="badge"><%=@game.players_invited.count%></span></a></li>
             </ul>
 

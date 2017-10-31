@@ -2,13 +2,16 @@ class Game < ActiveRecord::Base
   belongs_to :user
   belongs_to :business
 
+  #BUG: it doesnt work for users. only for businesses for some reason.
+  before_save :set_defaults, if: :new_record?
+
   has_one :reservation, :dependent => :destroy
   
   has_many :game_lines, dependent: :destroy
   has_many :comments, as: :commentable
 
-  validates :description, length: { maximum: 500, minimum: 5 }, allow_blank: false
-  validates :title, length: { minimum: 5, maximum: 60}, allow_blank: false
+  validates :description, length: { maximum: 500, minimum: 6 }, allow_blank: true
+  validates :title, length: { minimum: 4, maximum: 60}, allow_blank: true
   validates :number_players, presence: true, numericality: {only_integer: true}
 
   #validate public 
@@ -70,6 +73,19 @@ class Game < ActiveRecord::Base
 
     def players_invited
       self.game_lines.where(accepted: false)
+    end
+
+    def set_defaults
+      if self.title.nil?
+        self.title = 'New Game'
+      end
+
+      if self.description.nil?
+      self.description = "Enjoy your game! Your are welcome to change this 
+                            descrition and let the other players what's up."  
+      end
+      
+      
     end
 
     private

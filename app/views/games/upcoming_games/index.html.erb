@@ -10,12 +10,17 @@
     <div class="row">
       <%= render partial: "games/shared/menu_bar" %>
 
-      <% if @games.empty? && @tomorrow_games.empty? && @games_no_date.empty? %>
+      <% if @games.empty? && @tomorrow_games.empty? && @today_games.empty? %>
       	<div>
       	  <P class="lead">No upcoming games to display.</P>
       	  <%= link_to 'New Game', new_game_path, class: "btn btn-large btn-primary btn-round btn-fill" %>
       	</div>
       <% else %>
+
+      	<% if !@today_games.empty? %>
+      		<%= render partial: "games/shared/games", locals: {games: @today_games, subtitle: 'Today'} %>
+      	<% end %>
+
       	<% if !@tomorrow_games.empty? %>
 	      	<%= render partial: "games/shared/games", locals: {games: @tomorrow_games, subtitle: 'Tomorrow'} %>
 	      	<hr>
@@ -26,9 +31,7 @@
 	      	<hr>
       	<% end %>
 
-      	<% if !@games_no_date.empty? %>
-      		<%= render partial: "games/shared/games_no_date", locals: {games: @games_no_date, subtitle: 'Still Planning'} %>
-      	<% end %>
+      	
       <% end %>
 
     </div>

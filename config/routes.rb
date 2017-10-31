@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   namespace "games" do
     resources :old_games, only: :index
     resources :upcoming_games, only: :index
-    resources :today, only: :index
+    resources :planning, only: :index
   end
 
   resources :games, path: '/games/' do 
