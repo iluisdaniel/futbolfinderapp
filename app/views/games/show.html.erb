@@ -79,64 +79,28 @@
           <%= render partial: "comments/form", locals: {commentable: @game} %>
 
         <% end %>
-    </div>
-      
+    </div><!-- col-8 main content-->
 
     <div class="col-md-3">
-        <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title lead"><i class="fa fa-users"></i> Players List</h3>
-              </div>
-        <div class="panel-body">
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs game-sd-tabs">
-              <li class="active"><a href="#playing" data-toggle="tab">Confirmed <span class="badge"><%=@game.players_confirmed.count%></span></a></li>
-              <li><a href="#invited" data-toggle="tab">Invited <span class="badge"><%=@game.players_invited.count%></span></a></li>
-            </ul>
-
-            <!-- Tab panes -->
-            <div class="tab-content">
-              <div class="tab-pane active" id="playing">
-                <% if @game.players_confirmed.empty? %>
-                  <p>There is no active players yet.</p>
-                <% else %>
-                  <%= render @game.players_confirmed %>
-                <% end %>
-              </div>
-              <div class="tab-pane" id="invited">
-                <% if @game.players_invited.empty? %>
-                  <p>There are no players invited yet.</p>
-                <% else %>
-                  <%= render @game.players_invited %>
-                <% end %>  
-              </div>
-              
-            </div>
-
-            <% if @game.players_confirmed.count != @game.number_players %>
-              <div class="invite-player-game"> 
-                <%= form_for(@game_line) do |f| %>
-                <%= render 'shared/error_messages', object: f.object %> 
-                
-                <%= f.text_field :user_id, placeholder: "Enter Email or ID", class: "form-control" %> 
-                
-                  <%= f.hidden_field :game_id, :value => @game.id %>
-                  
-                    <%= f.submit "Invite", readonly: true,class: "btn btn-primary btn-fill btn-round" %>
-                <% end %>
-              </div>
-              <% else %>
-                <div class="alert alert-success" style="margin-top:20px;">
-                  
-                    Number of Players are completed!
-                  
-                </div>
-            <% end %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title lead"><i class="fa fa-users"></i> Players List</h3>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
+        <div class="panel-body">
+          <% if @game.players_confirmed.count != @game.number_players %>
+            <%= render partial: "/games/shared/tab_invitation_players" %>
+          <% else %>
+            <div class="alert alert-success" >
+                Players are completed!   
+            </div>
+            <%= render @game.players_confirmed %>
+          <% end %>  
+        </div><!-- panel body -->      
+      </div><!-- panel -->
+    </div><!-- col-3 side-bar-->
+
+  </div><!-- row -->
+</div><!-- container -->
 
 
 

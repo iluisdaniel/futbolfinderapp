@@ -1,0 +1,9 @@
+<div class="invite-player-game"> 
+      <%= form_for(@game_line) do |f| %>
+          <%= render 'shared/error_messages', object: f.object %> 
+          
+          <%= f.text_field :user_id, placeholder: "Enter Email or ID", class: "form-control" %> 
+          <%= f.hidden_field :game_id, :value => @game.id %>
+          <%= f.submit "Invite", readonly: true,class: "btn btn-primary btn-fill btn-round" %>
+      <% end %>
+</div>

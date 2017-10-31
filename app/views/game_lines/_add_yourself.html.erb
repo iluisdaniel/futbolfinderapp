@@ -1,0 +1,10 @@
+<div class="invite-player-game"> 
+      <%= form_for(@game_line) do |f| %>
+          <%= render 'shared/error_messages', object: f.object %> 
+          
+          <%= f.hidden_field :user_id, :value => current_user.id %> 
+          <%= f.hidden_field :game_id, :value => @game.id %>
+          <%= f.hidden_field :accepted, :value => true %>
+          <%= f.submit "Add Yourself", readonly: true,class: "btn btn-primary btn-fill btn-round" %>
+      <% end %>
+</div>

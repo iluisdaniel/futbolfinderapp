@@ -75,6 +75,13 @@ class Game < ActiveRecord::Base
       self.game_lines.where(accepted: false)
     end
 
+    def is_player_involved?(user)
+      if self.game_lines.where(user_id: user.id).empty?
+        return false
+      end
+      return true
+    end
+
     def set_defaults
       if self.title.nil?
         self.title = 'New Game'
