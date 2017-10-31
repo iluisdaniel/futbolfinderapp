@@ -12,7 +12,7 @@
 
 		<% if @games.empty? && @games_no_date.empty?  %>
 			<div>
-			  <P class="lead">No upcoming games to display.</P>
+			  <P class="lead">No invited games to display.</P>
 			  <%= link_to 'New Game', new_game_path, class: "btn btn-large btn-primary btn-round btn-fill" %>
 			</div>
 		<% else %>	
