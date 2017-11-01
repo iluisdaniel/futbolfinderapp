@@ -1,6 +1,7 @@
 <% provide(:title, 'All games') %>
 <% provide(:htitle, 'My Games') %>
 <% provide(:secondaryTitle, 'All')%>
+<%= render partial: "games/shared/menu_bar" %>
 
 <div class="container" style="margin-top:20px;">
   <% if !are_there_games?%>
@@ -8,7 +9,6 @@
   <% else %>  
 
     <div class="row">
-      <%= render partial: "games/shared/menu_bar" %>
       <%= render partial: "games/shared/games", locals: {games: @games, subtitle: 'All'} %>
       
     </div>

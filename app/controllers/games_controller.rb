@@ -24,7 +24,7 @@ class GamesController < ApplicationController
 		#- when user creates the game business cannot edit and see the title
 		# when games are old people cant edit the game, and business only games they create themselves. 
 		# users can set alerts in case a filed got reserved on a time. Maybe, choose prefered place and time and if another users reserved they get an alert. 
-
+		#use bootstrap h1 predertemined header
 		@game = Game.find(params[:id])
 		@game_line = GameLine.new
 		@reservation = Reservation.new

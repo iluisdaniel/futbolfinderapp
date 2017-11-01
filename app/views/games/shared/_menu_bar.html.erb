@@ -1,5 +1,5 @@
-<%= link_to 'New Game', new_game_path, class: "btn btn-large btn-primary btn-round btn-fill pull-right" %>
-<ul class="nav nav-tabs game-sd-tabs">
+
+<ul class="nav nav-tabs game-sd-tabs" style="background-color: #fafafa; padding-left: 3%">
 
           <li class="<%= 'active' if current_page?(controller: '/games/upcoming_games', action: 'index') %>"><%= link_to 'Upcoming', games_upcoming_games_path, class: "" %></li>
           <%if signed_in? %>

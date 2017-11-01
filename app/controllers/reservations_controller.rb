@@ -9,6 +9,10 @@ class ReservationsController < ApplicationController
 	before_action :set_businesses_collection, only: [:new, :create]
 	
 	def index 
+		#Upcoming - Show now, and next reservations
+		# Recently created by user
+		# todays view and possibility to change to another date
+		# past reservations
 		@reservations = current_business.reservations.current
 		@oldreservations = current_business.reservations.old
 	end

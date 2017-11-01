@@ -1,6 +1,7 @@
 <% provide(:title, 'My Games') %>
 <% provide(:htitle, 'My Games') %>
 <% provide(:secondaryTitle, 'Invited')%>
+<%= render partial: "games/shared/menu_bar" %>
 
 <div class="container" style="margin-top:20px;">
   <% if !are_there_games?%>
@@ -8,8 +9,6 @@
   <% else %>  
 
     <div class="row">
-    	<%= render partial: "games/shared/menu_bar" %>
-
 		<% if @games.empty? && @games_no_date.empty?  %>
 			<div>
 			  <P class="lead">No invited games to display.</P>

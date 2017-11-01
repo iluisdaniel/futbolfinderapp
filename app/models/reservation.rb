@@ -2,7 +2,7 @@ class Reservation < ActiveRecord::Base
 	belongs_to :game
 	belongs_to :business
   
-  	validates :date, presence: true
+  validates :date, presence: true
 	validates :time, presence: true
 	validates :end_time, presence: true
 	validates :field_id, presence: true
@@ -81,6 +81,14 @@ class Reservation < ActiveRecord::Base
 
     def self.old
       where("date < ?", Time.now).order(date: :desc)
+    end
+
+    def start_time
+         self.date ##Where 'start' is a attribute of type 'Date' accessible through MyModel's relationship
+    end
+
+    def date_and_time_to_date_time(d,t)
+      return DateTime.new(d.year, d.month, d.day, t.hour, t.min, t.sec, t.zone)
     end
 
   

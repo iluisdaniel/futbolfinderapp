@@ -20,6 +20,10 @@ Rails.application.routes.draw do
 
   get 'search' => 'games#search'
 
+  namespace "reservations" do
+    resources :day, only: :index
+  end
+
   resources :reservations
 
   namespace "games" do

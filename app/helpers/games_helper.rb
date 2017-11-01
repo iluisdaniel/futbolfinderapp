@@ -210,4 +210,18 @@ module GamesHelper
         end 
     end
 
+    def is_at_one_of_index_games?
+        if current_page?(controller: '/games/upcoming_games', action: 'index') ||
+            current_page?(controller: '/games/planning', action: 'index')  ||
+            current_page?(controller: '/games', action: 'index') ||
+            current_page?(controller: '/games/old_games', action: 'index') ||
+            current_page?(controller: '/games/invited', action: 'index')
+
+            return true
+        end
+
+        return false
+
+    end
+
 end
