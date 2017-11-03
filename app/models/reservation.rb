@@ -76,11 +76,11 @@ class Reservation < ActiveRecord::Base
     end
 
     def self.current
-      where("date > ?", Time.now).order(date: :asc)
+      where("date > ?", Date.today).order(date: :asc)
     end
 
-    def self.old
-      where("date < ?", Time.now).order(date: :desc)
+    def self.past
+      where("date < ?", Date.today).order(date: :desc)
     end
 
     def start_time

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
   namespace "reservations" do
     resources :day, only: :index
+    resources :past, only: :index
   end
 
   resources :reservations

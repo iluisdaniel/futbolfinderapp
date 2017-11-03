@@ -13,8 +13,9 @@ class ReservationsController < ApplicationController
 		# Recently created by user
 		# todays view and possibility to change to another date
 		# past reservations
+		## Create a view for fields. Where shows the avility of the field on that date. 
 		@reservations = current_business.reservations.current
-		@oldreservations = current_business.reservations.old
+		@oldreservations = current_business.reservations.past
 	end
 
 	def show

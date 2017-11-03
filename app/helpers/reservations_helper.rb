@@ -17,4 +17,14 @@ module ReservationsHelper
     	return reservation.game.user.name
     end
 
+     def is_at_one_of_index_reservations?
+        if current_page?(controller: '/reservations/past', action: 'index') 
+
+            return true
+        end
+
+        return false
+
+    end
+
 end

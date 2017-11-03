@@ -1,0 +1,10 @@
+<% provide(:title, 'Reservations') %>
+<% provide(:htitle, 'My Reservations') %>
+<% provide(:secondaryTitle, 'Past')%>
+<%= render partial: "shared/menu_bar" %>
+
+<div class="container" style="margin-top:20px;">
+  <div class="row">
+    <!-- Tab panes -->
+        <%= render partial: "reservations/reservations", locals: {reservations: @reservations} %>
+</div>
