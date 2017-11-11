@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 	before_save { self.email = email.downcase }
 	before_create :create_remember_token
 
+	has_many :notifications, as: :recipientable
 	has_many :groups
 	has_many :group_lines, dependent: :destroy
 	has_many :games, dependent: :destroy

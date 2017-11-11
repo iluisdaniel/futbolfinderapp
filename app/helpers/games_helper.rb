@@ -223,5 +223,4 @@ module GamesHelper
         return false
 
     end
-
 end

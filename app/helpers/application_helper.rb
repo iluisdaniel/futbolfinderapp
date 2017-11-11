@@ -15,4 +15,9 @@ module ApplicationHelper
   		render partial: "layouts/title_page_header", locals: {title: title, secondaryTitle: secondaryTitle}
   	end
   end
+
+  def get_number_notifications
+      return Notification.where(recipientable: current_business_or_user).unread.count
+  end
+
 end

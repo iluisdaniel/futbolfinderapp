@@ -40,7 +40,16 @@ class ReservationsController < ApplicationController
 			if logged_in?
 				redirect_to @reservation
 			elsif signed_in?
-				redirect_to get_game(@reservation.game_id)
+				game = get_game(@reservation.game_id)
+				redirect_to game
+				game.game_lines.uniq.each do |gl|
+				    if gl.user != current_user
+				        Notification.create(recipientable: gl.user, actorable: current_user, 
+				                action: "reserved a field", notifiable: game)
+				    end
+				end
+				Notification.create(recipientable: @reservation.business, actorable: current_user, 
+				                action: "Made", notifiable: @reservation)
 			end
 			
 			flash[:success] = "Reservation created succesfully"
@@ -67,9 +76,21 @@ class ReservationsController < ApplicationController
 	def destroy
 		# improve redirection part for users
 		@reservation = Reservation.find(params[:id])
+		game = @reservation.game
 		@reservation.destroy
 		flash[:success] = "Reservation was deleted"
 		define_redirection
+		# TODO - figure out a way to show res cancellations from users
+		if !game.nil? 
+			game.game_lines.uniq.each do |gl|
+				    if gl.user != current_user
+				        Notification.create(recipientable: gl.user, actorable: current_business_or_user, 
+				                action: "cancelled a reservation", notifiable: game)
+				    end
+				end
+			# Notification.create(recipientable: @reservation.business, actorable: current_user, 
+			# 	                action: "Cancelled", notifiable: @reservation)
+		end
 	end
 
 	private

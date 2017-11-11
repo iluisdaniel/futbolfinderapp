@@ -1,0 +1,24 @@
+<% if notifications.empty? %>
+	<P class="lead">No notifications to display.</P>
+	<%= link_to 'Dashboard', root_path, class: "btn btn-large btn-primary btn-round btn-fill" %>
+<% else %>
+	<div class="row">
+	  <div class="col-md-offset-1 col-md-10">
+	    <div class="table-responsive">
+	      <table class="table table-hover">
+	        
+	          <% notifications.each do |n| %>
+	            <tr>
+	              <td><i class="fa fa-<%= get_right_icon_name(n) %>"></i> 
+	              	<%= link_to n.actorable.name, get_actorable_path(n) %> 
+	              	<%= n.action.downcase %>
+	              	<%= get_rest_of_the_setence(n) %>
+	              	<%= link_to n.notifiable.class.to_s.underscore.humanize.downcase, get_notifiable_path(n) %>
+	              	<span class="label label-default"><%= get_new_if_no_read(n) %></span></td>
+	            </tr>
+ 				<% end %>
+	      </table>
+	    </div><!-- table responsive -->  
+	  </div>    
+	</div><!-- row -->
+<% end %>

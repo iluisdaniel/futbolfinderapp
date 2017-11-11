@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 
   get 'search' => 'games#search'
 
+  resources :notifications, only: :index
+
   namespace "reservations" do
     resources :day, only: :index
     resources :past, only: :index

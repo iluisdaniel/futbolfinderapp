@@ -1,6 +1,7 @@
 class Business < ActiveRecord::Base
 	attr_accessor :remember_token
 
+  has_many :notifications, as: :recipientable
   has_many :schedules, dependent: :destroy
   has_many :fields, dependent: :destroy
   has_many :games, dependent: :destroy
