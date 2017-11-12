@@ -9,6 +9,7 @@ class GamesController < ApplicationController
 	def index
 		# add field id
 		#FIX displaying same day games in games and not in old games
+		# TODO: Maybe, include game status ex: planning, ready, complete?
 		@games = Game.with_reservation(current_business_or_user)
 		@games_no_reservation = Game.without_reservation(current_business_or_user)	
 	end

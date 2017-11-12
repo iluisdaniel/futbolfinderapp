@@ -625,6 +625,9 @@ ul.alert-dropdown {
 .game-sd-tabs{
     margin-bottom: 20px;
 }
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
+    border-top: 3px solid #000;
+}
 .game-content{
     margin-right: 30px;
 

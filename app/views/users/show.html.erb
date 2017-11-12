@@ -1,13 +1,260 @@
-<% provide(:title, @user.name)%>
+<% provide(:title, @user.name) %>
 
-<div class="container user" style="margin-top: 40px;">
+<div class="container">
 	<div class="row">
-		<div class="col-md-offset-2 col-md-2 col-sm-12">
-			<%= image_tag("300x200.png", :alt => "rss feed", class: "img-circle") %>
-		</div>
-		<div class="col-md-6">
-			<h1><%= @user.name %></h1>
-			<%= @user.email %>
-		</div>
-	</div>	
+		<div class="col-md-4">
+			<div class="card card-user">
+			        <div class="image-plain"></div>
+
+			        <div class="content">
+
+			            <div class="author">
+			            	<a href="#">
+			                <%= image_tag("300x200.png", :alt => "rss feed", class: "avatar") %>
+			                  <h4 class="title"><%= @user.name %><br />
+			                     <small>Foward</small>
+			                  </h4>
+			                </a>
+			            </div>
+
+			            <p class="description text-center">
+
+			                Get Shit Done Kit PRO, the most wanted bootstrap kit is here
+			                Get Shit Done Kit PRO, the most wanted bootstrap kit is here
+			                Get Shit Done Kit PRO, the most wanted bootstrap kit is here
+			                <br>
+			                <br>
+		                	<i class="fa fa-users text-muted"></i> Friends <span class="badge">123</span> <i class="fa fa-soccer-ball-o text-muted" style="padding-left: 2%;"></i>Games <span class="badge">1K</span><br>
+
+		                    <i class="fa fa-map-marker text-muted"></i> Venezuela <br>
+
+			            </p>
+
+			        </div>
+
+			        <hr>
+
+			        <div class="text-center" style="padding-top: 10px; padding-bottom: 10px;">
+			            <button href="#" class="btn btn-deafault btn-round">Friends</button>
+			            <button href="#" class="btn btn-primary btn-fill btn-round">Message</button>
+			        </div>
+
+			    </div> <!-- end card -->
+
+			    <h3 class="lead" style="margin-top: 50px;">Upcoming Game</h3>
+			    <div class="card card-background">
+			    	<div class="image" >
+			    		<img src="<%= get_random_background_image %>" alt="...">
+			    		<div class="filter"></div>
+			    	</div>
+			    	<div class="content">
+			    		<p class="category">
+			    		<span class="label label-success">Public</span>
+
+			    		<%= link_to games_path, class: "pull-right" do %>
+			    			<i class="fa fa-user"></i> Luis Fonseca
+			    		<% end %>
+			    		</p>
+
+			    		<%= link_to games_path do %><br>
+			    			<h4 class="title">Game at La Canchita<br>
+			    			<small> <i class="fa fa-calendar"></i> Nov 15  <i class="fa fa-clock-o"></i> 1:00PM</small>
+			    			</h4>
+			    		<% end %>
+			    	</div>
+			    	<div class="footer">
+			    		<i class="fa fa-map-marker"></i> La Canchita
+
+			    		<div class="author pull-right">
+			    		<i class="fa fa-users"></i> 5 / 10  <i class="fa fa-comment"></i> 5
+			    		</a>
+			    		</div>
+			    	</div>
+			    </div><!-- end card background-->
+			    
+		</div><!-- end of column -->
+
+		<div class="col-md-8">
+
+			<h2 class="lead">Posts</h2>
+			<hr>
+			<div class="card">
+			    <div class="content">
+			    	<div class="author">
+			    	    <a class="card-link" href="#">
+			    	         <img src="assets/img/default-avatar.png" alt="..." class="avatar">
+			    	         <span> Alex Paduraru</span>
+			    	    </a>
+			    	</div>
+			        <a href="#">
+			            <h4 class="title">Get Shit Done Kit PRO, the most wanted bootstrap kit is here
+			            	Get Shit Done Kit PRO, the most wanted bootstrap kit is here
+			            	Get Shit Done Kit PRO, the most wanted bootstrap kit is here
+			            	Get Shit Done Kit PRO, the most wanted bootstrap kit is here
+			            </h4>
+			        </a>
+			         <div class="footer">
+			           Nov 15 1:00PM
+			            <div class="stats pull-right">
+			                 <a href="#">
+			                    <i class="fa fa-comments"></i> 89
+			                 </a>
+			            </div>
+			            <div class="stats pull-right">
+			                <a href="#">
+			                    <i class="fa fa-heart"></i> 341
+			                </a>
+			            </div>
+			        </div><!--end of footer-->
+			    </div><!-- end of content -->
+			</div><!-- end of card-->
+
+			<div class="card">
+			    <div class="content">
+			    	<div class="author">
+			    	    <a class="card-link" href="#">
+			    	         <img src="assets/img/default-avatar.png" alt="..." class="avatar">
+			    	         <span> Alex Paduraru</span>
+			    	    </a>
+			    	</div>
+			        <a href="#">
+			            <h4 class="title">Get Shit Done Kit PRO, the most wanted bootstrap kit is here </h4>
+			        </a>
+			         <div class="footer">
+			           Nov 15 1:00PM
+			            <div class="stats pull-right">
+			                 <a href="#">
+			                    <i class="fa fa-comments"></i> 89
+			                 </a>
+			            </div>
+			            <div class="stats pull-right">
+			                <a href="#">
+			                    <i class="fa fa-heart"></i> 341
+			                </a>
+			            </div>
+			        </div><!--end of footer-->
+			    </div><!-- end of content -->
+			</div><!-- end of card-->
+
+			<div class="card">
+			    <div class="content">
+			    	<div class="author">
+			    	    <a class="card-link" href="#">
+			    	         <img src="assets/img/default-avatar.png" alt="..." class="avatar">
+			    	         <span> Alex Paduraru</span>
+			    	    </a>
+			    	</div>
+			        <a href="#">
+			            <h4 class="title">Get Shit Done Kit PRO, the most wanted bootstrap kit is here </h4>
+			        </a>
+			         <div class="footer">
+			           Nov 15 1:00PM
+			            <div class="stats pull-right">
+			                 <a href="#">
+			                    <i class="fa fa-comments"></i> 89
+			                 </a>
+			            </div>
+			            <div class="stats pull-right">
+			                <a href="#">
+			                    <i class="fa fa-heart"></i> 341
+			                </a>
+			            </div>
+			        </div><!--end of footer-->
+			    </div><!-- end of content -->
+			</div><!-- end of card-->
+
+			<div class="card">
+			    <div class="content">
+			    	<div class="author">
+			    	    <a class="card-link" href="#">
+			    	         <img src="assets/img/default-avatar.png" alt="..." class="avatar">
+			    	         <span> Alex Paduraru</span>
+			    	    </a>
+			    	</div>
+			        <a href="#">
+			            <h4 class="title">Get Shit Done Kit PRO, the most wanted bootstrap kit is here </h4>
+			        </a>
+			         <div class="footer">
+			           Nov 15 1:00PM
+			            <div class="stats pull-right">
+			                 <a href="#">
+			                    <i class="fa fa-comments"></i> 89
+			                 </a>
+			            </div>
+			            <div class="stats pull-right">
+			                <a href="#">
+			                    <i class="fa fa-heart"></i> 341
+			                </a>
+			            </div>
+			        </div><!--end of footer-->
+			    </div><!-- end of content -->
+			</div><!-- end of card-->
+
+			<div class="card">
+			    <div class="content">
+			    	<div class="author">
+			    	    <a class="card-link" href="#">
+			    	         <img src="assets/img/default-avatar.png" alt="..." class="avatar">
+			    	         <span> Alex Paduraru</span>
+			    	    </a>
+			    	</div>
+			        <a href="#">
+			            <h4 class="title">Get Shit Done Kit PRO, the most wanted bootstrap kit is here </h4>
+			        </a>
+			         <div class="footer">
+			           Nov 15 1:00PM
+			            <div class="stats pull-right">
+			                 <a href="#">
+			                    <i class="fa fa-comments"></i> 89
+			                 </a>
+			            </div>
+			            <div class="stats pull-right">
+			                <a href="#">
+			                    <i class="fa fa-heart"></i> 341
+			                </a>
+			            </div>
+			        </div><!--end of footer-->
+			    </div><!-- end of content -->
+			</div><!-- end of card-->
+
+			<div class="card">
+			    <div class="content">
+			    	<div class="author">
+			    	    <a class="card-link" href="#">
+			    	         <img src="assets/img/default-avatar.png" alt="..." class="avatar">
+			    	         <span> Alex Paduraru</span>
+			    	    </a>
+			    	</div>
+			        <a href="#">
+			            <h4 class="title">Get Shit Done Kit PRO, the most wanted bootstrap kit is here </h4>
+			        </a>
+			         <div class="footer">
+			           Nov 15 1:00PM
+			            <div class="stats pull-right">
+			                 <a href="#">
+			                    <i class="fa fa-comments"></i> 89
+			                 </a>
+			            </div>
+			            <div class="stats pull-right">
+			                <a href="#">
+			                    <i class="fa fa-heart"></i> 341
+			                </a>
+			            </div>
+			        </div><!--end of footer-->
+			    </div><!-- end of content -->
+			</div><!-- end of card-->
+
+
+		</div><!-- end of col md 4 -->
+	</div><!--end of row-->
+
+
+
+
+	
+
+
+
 </div>
+
+
