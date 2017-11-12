@@ -105,8 +105,14 @@ class Game < ActiveRecord::Base
       self.description = "Enjoy your game! Your are welcome to change this 
                             descrition and let the other players what's up."  
       end
-      
-      
+    end
+
+    def self.upcoming_game(user_business)
+      gs = get_games(user_business)
+
+      gs.includes(:reservation).references(:reservation)
+          .where('reservations.id IS NOT NULL AND reservations.date >= ?', Date.today)
+          .order("reservations.date asc").first
     end
 
     private
@@ -116,6 +122,15 @@ class Game < ActiveRecord::Base
           gs = u_biz.games
         else
           gs = Game.joins(game_lines: :user).where(game_lines: {user_id: u_biz.id, accepted: true })
+        end
+        return gs
+      end
+
+       def self.get_public_games(u_biz)
+        if u_biz.instance_of? Business
+          gs = u_biz.games.where(public: true)
+        else
+          gs = Game.joins(game_lines: :user).where(game_lines: {user_id: u_biz.id, accepted: true }, public: true)
         end
         return gs
       end

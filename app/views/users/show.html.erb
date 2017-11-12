@@ -40,44 +40,17 @@
 			        </div>
 
 			    </div> <!-- end card -->
+			    <% if !@game.nil? %>
+			    	<h3 class="lead" style="margin-top: 50px;">Upcoming Game</h3>
+				    <%= render partial: '/games/shared/game_card', locals: {game: @game} %>
 
-			    <h3 class="lead" style="margin-top: 50px;">Upcoming Game</h3>
-			    <div class="card card-background">
-			    	<div class="image" >
-			    		<img src="<%= get_random_background_image %>" alt="...">
-			    		<div class="filter"></div>
-			    	</div>
-			    	<div class="content">
-			    		<p class="category">
-			    		<span class="label label-success">Public</span>
-
-			    		<%= link_to games_path, class: "pull-right" do %>
-			    			<i class="fa fa-user"></i> Luis Fonseca
-			    		<% end %>
-			    		</p>
-
-			    		<%= link_to games_path do %><br>
-			    			<h4 class="title">Game at La Canchita<br>
-			    			<small> <i class="fa fa-calendar"></i> Nov 15  <i class="fa fa-clock-o"></i> 1:00PM</small>
-			    			</h4>
-			    		<% end %>
-			    	</div>
-			    	<div class="footer">
-			    		<i class="fa fa-map-marker"></i> La Canchita
-
-			    		<div class="author pull-right">
-			    		<i class="fa fa-users"></i> 5 / 10  <i class="fa fa-comment"></i> 5
-			    		</a>
-			    		</div>
-			    	</div>
-			    </div><!-- end card background-->
+				<% end %>    
 			    
 		</div><!-- end of column -->
 
 		<div class="col-md-8">
 
 			<h2 class="lead">Posts</h2>
-			<hr>
 			<div class="card">
 			    <div class="content">
 			    	<div class="author">
