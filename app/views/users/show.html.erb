@@ -1,10 +1,12 @@
 <% provide(:title, @user.name) %>
 
 <div class="container">
-	<div class="row">
-		<div class="col-md-4">
+	<div class="row" >
+		<div class="col-md-4" style="margin-top: 30px;">
 			<div class="card card-user">
-			        <div class="image-plain"></div>
+			        <div class="image">
+                    	<img src="<%= get_random_background_image %>" alt="...">
+                    </div>
 
 			        <div class="content">
 
