@@ -21,7 +21,7 @@ class GameLinesController < ApplicationController
 	      end
 	      if @game_line.accepted == true && !@game_line.game.business.nil?
 	      	Notification.create(recipientable: @game_line.game.business, actorable: current_user, 
-	      				action: "Confirmed", notifiable: @game_line.game)
+	      				action: "Confirmed You", notifiable: @game_line.game)
 	      end
 	    else
 	    	flash[:danger] = "Unable to add player"

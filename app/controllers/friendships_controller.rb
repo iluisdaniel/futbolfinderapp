@@ -4,8 +4,10 @@ class FriendshipsController < ApplicationController
 	def create
      @friendship = current_user.friendships.build(friend_id: params[:friend_id])
       if @friendship.save
-        flash[:notice] = "Friend requested."
+        flash[:success] = "Friend requested."
         redirect_to :back
+        Notification.create(recipientable: @friendship.friend, actorable: current_user, 
+            action: "Added You", notifiable: @friendship)
       else
         flash[:error] = "Unable to request friendship."
         redirect_to :back
@@ -19,6 +21,8 @@ class FriendshipsController < ApplicationController
       if @friendship.save
         redirect_to user_path(@friendship.user_id) 
         flash[:success] = "Successfully confirmed friend!"
+        Notification.create(recipientable: @friendship.user, actorable: current_user, 
+            action: "Accepted Your", notifiable: @friendship)
       else
         redirect_to root_url, notice: "Sorry! Could not confirm friend!"
       end
@@ -27,7 +31,7 @@ class FriendshipsController < ApplicationController
     def destroy
       @friendship = Friendship.find_by(id: params[:id])
       @friendship.destroy
-      flash[:notice] = "Removed friendship."
+      flash[:success] = "Removed friendship."
       redirect_to :back
     end
 end

@@ -13,7 +13,11 @@
 	              	<%= link_to n.actorable.name, get_actorable_path(n) %> 
 	              	<%= n.action.downcase %>
 	              	<%= get_rest_of_the_setence(n) %>
-	              	<%= link_to n.notifiable.class.to_s.underscore.humanize.downcase, get_notifiable_path(n) %>
+	              	<% if n.notifiable.class.to_s == "Friendship" %>
+	              		<%= get_friendship_notification_words(n) %>
+	              	<% else %>
+	              		<%= link_to n.notifiable.class.to_s.underscore.humanize.downcase, get_notifiable_path(n) %>
+	              	<% end %>	
 	              	<span class="label label-default"><%= get_new_if_no_read(n) %></span></td>
 	            </tr>
  				<% end %>

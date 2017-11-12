@@ -10,6 +10,8 @@ module NotificationsHelper
             return "soccer-ball-o"
         elsif n.notifiable.class.to_s == "Reservation"
         	return "calendar"
+        elsif n.notifiable.class.to_s == "Friendship"
+            return "user-plus"    
         end
      end
 
@@ -44,9 +46,23 @@ module NotificationsHelper
      		return " from a "
      	elsif n.action == "Made"
      		return " a "
+        elsif n.action == "Added You"
+                return " as a "
+        elsif n.action == "Accept Your"
+            return ""
      	else
      		return " in a "	
      	end
+     end
+
+     def get_friendship_notification_words(n)
+
+        if n.action == "Added You"
+            return "friend"
+        elsif n.action == "Accept Your"
+            "friend request"
+        end
+         
      end
      
 end
