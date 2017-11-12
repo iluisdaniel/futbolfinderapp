@@ -48,7 +48,7 @@ module NotificationsHelper
      		return " a "
         elsif n.action == "Added You"
                 return " as a "
-        elsif n.action == "Accept Your"
+        elsif n.action == "Accepted Your"
             return ""
      	else
      		return " in a "	
@@ -59,7 +59,7 @@ module NotificationsHelper
 
         if n.action == "Added You"
             return "friend"
-        elsif n.action == "Accept Your"
+        elsif n.action == "Accepted Your"
             "friend request"
         end
          
