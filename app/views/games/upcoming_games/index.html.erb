@@ -17,16 +17,16 @@
       <% else %>
 
       	<% if !@today_games.empty? %>
-      		<%= render partial: "games/shared/games", locals: {games: @today_games, subtitle: 'Today'} %>
+      		<%= render partial: "games/shared/games_cards", locals: {games: @today_games, subtitle: 'Today'} %>
       	<% end %>
 
       	<% if !@tomorrow_games.empty? %>
-	      	<%= render partial: "games/shared/games", locals: {games: @tomorrow_games, subtitle: 'Tomorrow'} %>
+	      	<%= render partial: "games/shared/games_cards", locals: {games: @tomorrow_games, subtitle: 'Tomorrow'} %>
 	      	<hr>
 	    <% end %>  	
 
       	<% if !@games.empty? %>
-	      	<%= render partial: "games/shared/games", locals: {games: @games, subtitle: 'This Week'} %>
+	      	<%= render partial: "games/shared/games_cards", locals: {games: @games, subtitle: 'This Week'} %>
 	      	<hr>
       	<% end %>
 

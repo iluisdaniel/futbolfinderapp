@@ -17,12 +17,12 @@
 		<% else %>	
 
 		<% if !@games.empty? %>
-			<%= render partial: "games/shared/games", locals: {games: @games, subtitle: 'Games with Date'} %>
+			<%= render partial: "games/shared/games_cards", locals: {games: @games, subtitle: 'Date'} %>
 			<hr>
 		<% end %>
       	
       	<% if !@games_no_date.empty? %>
-      		<%= render partial: "games/shared/games_no_date", locals: {games: @games_no_date, subtitle: 'Games no date'} %>
+      		<%= render partial: "games/shared/games_no_date_cards", locals: {games: @games_no_date, subtitle: 'Games no date'} %>
       		<hr>
       	<% end %>
       

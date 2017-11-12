@@ -1,0 +1,49 @@
+<% if games.empty?  %>
+  <div>
+    <P class="lead">No games to display.</P>
+    <% if !current_page?(controller: '/games/upcoming_games', action: 'index') %>
+      <%= link_to 'New Game', new_game_path, class: "btn btn-large btn-primary btn-round btn-fill" %>
+    <% end %>  
+  </div>
+<% else %> 
+
+	<div class="row">
+		<h3 class="lead" style="padding-left:20px;"><%= subtitle %></h3>
+		<hr>
+		<% games.each do |game| %>
+			<div class="col-md-4">
+				<div class="card card-background">
+					<div class="image" >
+						<img src="<%= get_random_background_image %>" alt="...">
+						<div class="filter"></div>
+					</div>
+					<div class="content">
+						<p class="category">
+						<span class="label label-success"><%= public_or_private(game.public) %></span>
+
+						<%= link_to get_game_creator(game), class: "pull-right" do %>
+							<i class="fa fa-user"></i> <%= get_game_creator(game).name %>
+						<% end %>
+						</p>
+
+						<%= link_to game do %><br>
+							<h4 class="title">Game at <%= get_reservation_location_from_game(game.id).name %><br>
+							<small> <i class="fa fa-calendar"></i> <%= get_reservation_month_and_day_from_game(game.id)%> <i class="fa fa-clock-o"></i><%= get_reservation_time_from_game(game.id) %> - <%= get_reservation_end_time_from_game(game.id) %></small>
+							</h4>
+						<% end %>
+					</div>
+					<div class="footer">
+						<i class="fa fa-map-marker"></i> <%= link_to get_reservation_location_from_game(game.id).name, get_reservation_location_from_game(game.id) %>
+
+						<div class="author pull-right">
+						<i class="fa fa-users"></i> <%= get_number_of_players_ready(game.id)%> / <%= game.number_players %>  <i class="fa fa-comment"></i> <%= game.comments.count %> 
+						</a>
+						</div>
+					</div>
+				</div><!-- end card background-->
+			</div><!-- end col -->
+		<% end %>
+		
+	</div><!-- end row -->
+
+<% end %>

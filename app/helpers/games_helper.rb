@@ -221,6 +221,21 @@ module GamesHelper
         end
 
         return false
-
     end
+
+    def get_random_background_image
+        random = rand(4)
+        case random
+        when 0
+            return "/assets/soccer-game"
+        when 1 
+            return "/assets/soccer-field-background"
+        when 2
+            return "/assets/soccer-field"
+        else    
+            return "/assets/soccer-ball-field"
+        end
+    end
+
+
 end
