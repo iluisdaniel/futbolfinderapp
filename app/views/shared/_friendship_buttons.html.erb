@@ -1,0 +1,25 @@
+<% if signed_in? && current_user != @user %>
+	<% if are_they_friends?(@user) %>
+		<!--show alreasdy friends button, cancel friendship -->
+		<%= link_to "", class: "btn btn-primary btn-round " do %>
+				 <i class="fa fa-check"></i> Friends
+			<% end %>
+	<% else %>
+		<% if is_the_friendship_requested?(@user)%>
+			<%= link_to friendship_path(id: get_friendship_requested_id(@user)), method: "put", class: "btn btn-primary btn-fill btn-round" do %>
+				<i class="fa fa-plus"></i> Accept Request
+			<% end %>
+		<% elsif is_the_friendship_pending?(@user) %>
+			<%= link_to "", class: "btn btn-primary btn-round " do %>
+				 <i class="fa fa-clock-o"></i> Pending
+			<% end %>
+		<% else %>
+			<%= link_to friendships_path(friend_id: @user), method: :post, class: "btn btn-primary btn-fill btn-round " do %>
+				 <i class="fa fa-plus"></i> Add Friend
+			<% end %>
+		<% end %>
+	<% end %>
+<% end %>
+
+
+

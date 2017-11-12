@@ -17,7 +17,8 @@ class FriendshipsController < ApplicationController
      @friendship.update(accepted: true)
 
       if @friendship.save
-        redirect_to root_url, notice: "Successfully confirmed friend!"
+        redirect_to user_path(@friendship.user_id) 
+        flash[:success] = "Successfully confirmed friend!"
       else
         redirect_to root_url, notice: "Sorry! Could not confirm friend!"
       end
