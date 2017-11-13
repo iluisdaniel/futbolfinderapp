@@ -1,0 +1,24 @@
+<h3 class="lead" style="padding-left:30px; ">
+  Requests
+</h3>
+<hr>
+<ul class="users">
+  <% @requests.each do |req| %>
+    
+    <li>
+      <%= image_tag("64x64.png", :alt => "rss feed", class: "img-circle") %>        
+      <strong style="font-size: 1.2em; margin-left: 10px;"><%= link_to req.user.name, req.user %></strong>
+      <span class="pull-right" style="padding-top: 7px;">
+          <%= render partial: '/shared/friendship_buttons', locals: {user: req.user } %>
+          <button href="#" class="btn btn-default btn-fill btn-round"> <i class="fa fa-envelope"></i></button>
+      </span>
+    </li>
+    <hr>
+  <% end %>
+</ul>
+
+<% if @requests.empty?%>
+  <p class="lead">You don't have any requests.</p>
+<% end %>
+
+

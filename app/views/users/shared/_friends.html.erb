@@ -1,0 +1,20 @@
+<h3 class="lead" style="padding-left:30px; ">
+  <%= get_friends_page_subtitle %>
+</h3>
+<hr>
+<ul class="users">
+  <% @friends.each do |user| %>
+    
+    <li>
+      <%= image_tag("64x64.png", :alt => "rss feed", class: "img-circle") %>        
+      <strong style="font-size: 1.2em; margin-left: 10px;"><%= link_to user.name, user %></strong>
+      <span class="pull-right" style="padding-top: 7px;">
+          <% if signed_in? && current_user != user%>
+              <%= render partial: '/shared/friendship_buttons', locals: {user: user } %>
+           <% end %>     
+            <button href="#" class="btn btn-default btn-fill btn-round"> <i class="fa fa-envelope"></i></button>
+      </span>
+    </li>
+    <hr>
+  <% end %>
+</ul>

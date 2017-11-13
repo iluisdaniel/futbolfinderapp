@@ -1,0 +1,20 @@
+<% provide(:title, @user.name) %>
+
+<div class="container">
+  <div class="row" >
+    <div class="col-md-4" style="margin-top: 30px;">
+      <%= render '/users/shared/user_card' %>  
+    </div><!-- end of column -->
+
+    <div class="col-md-8">
+      <%= render '/users/shared/nav_bar' %>
+      <%= render '/users/shared/friends' %>
+      <% if @friends.empty?%>
+          <p class="lead">You don't have friends yet.</p>
+      <%end%>
+    </div><!-- end of col md 4 -->
+  </div><!--end of row-->
+
+</div><!-- end container -->
+
+

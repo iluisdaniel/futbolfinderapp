@@ -46,8 +46,19 @@ Rails.application.routes.draw do
   resources :fields, only: [:create, :update, :destroy]
   resources :businesses, path: '/b/'
   
-  resources :users, path: '/u/'
+  resources :users, path: '/u/' do
+    member do 
+      resources :friends, only: :index, module: :users
+      resources :pending_friends, only: :index, module: :users
+      resources :requests, only: :index, module: :users
+    end
+    
+  end
   resources :friendships, only: [:create, :update, :destroy]
+
+  # namespace :users, path: '/friends/' do
+  #   resources :friends, only: :index, as: ""
+  # end
 
   resources :groups, path: '/groups/' do 
     resources :comments, module: :groups
