@@ -24,6 +24,11 @@
     <%= yield %>
 
     <%= debug(params) if Rails.env.development? %>
+    <%= Time.now if Rails.env.development? %>
+    <br>
+    <%= Date.today if Rails.env.development? %>
+    <br>
+    <br>
   
 </body>
 </html>

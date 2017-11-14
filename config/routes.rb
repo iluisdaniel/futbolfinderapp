@@ -51,6 +51,7 @@ Rails.application.routes.draw do
       resources :friends, only: :index, module: :users
       resources :pending_friends, only: :index, module: :users
       resources :requests, only: :index, module: :users
+      resources :user_games, only: :index, module: :users
     end
     
   end

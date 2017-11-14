@@ -21,4 +21,6 @@
    		<li class="<%= 'active' if current_page?(controller: '/users/friends', action: 'index') %>"><%= link_to "Friends", friends_path(@user) %></li>
    <% end %>
 
+   <li class="<%= 'active' if current_page?(controller: '/users/user_games', action: 'index') %>"><%= link_to 'Games', user_games_path(@user) %></li>
+
 </ul>

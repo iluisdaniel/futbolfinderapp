@@ -34,7 +34,15 @@ class Game < ActiveRecord::Base
       gs = get_games(user_business)
 
       gs.includes(:reservation).references(:reservation)
-          .where('reservations.id IS NOT NULL AND reservations.date > ? AND reservations.date < ?', Date.tomorrow, Date.today + 7.days )
+          .where('reservations.id IS NOT NULL AND reservations.date > ? AND reservations.date < ?', Date.today, Date.today + 7.days )
+          .order("reservations.date asc")
+    end
+
+    def self.this_week_public_games_with_reservation(user_business)
+      gs = get_public_games(user_business)
+
+      gs.includes(:reservation).references(:reservation)
+          .where('reservations.id IS NOT NULL AND reservations.date > ? AND reservations.date < ?', Date.today, Date.today + 7.days )
           .order("reservations.date asc")
     end
 
