@@ -1,15 +1,12 @@
-<div class="row game-header">
-  <div class="container">
-    <div class="col-md-12">
-      <h1 style="margin-bottom:0px; float:left;" ><small><%= @game.id%></small> <%= @game.title %></h1>
-      <%= link_to edit_game_path(@game.id), class: "btn btn-primary pull-right" do %>
-          <i class="fa fa-gear"></i> Settings
-        <% end %>        
-    </div>  
-  </div>
-</div>
+<% provide(:title, 'My Games') %>
+<% provide(:htitle, @game.title) %>
+<% provide(:secondaryTitle, @game.id.to_s)%>
+<ul class="nav nav-tabs game-sd-tabs" style="background-color: #fafafa; padding-left: 3%">
+          <li class="active"><%= link_to 'Info', game_path(@game) %></li>
+          <li><a href="">Players</a></li>
+          <li><%= link_to 'Comments', conversation_index_path(@game) %></li>
+</ul>
 
- <hr>
 <div class="container">
   <div class="row">
     <div class="col-md-8 game-content">
@@ -71,14 +68,6 @@
             </div>
             <% end %>
         </div>
-         
-        <% if signed_in? %>
-        <div class="panel panel-default">
-          <%= render partial: "comments/comments", locals: {commentable: @game }%>
-          </div>
-          <%= render partial: "comments/form", locals: {commentable: @game} %>
-
-        <% end %>
     </div><!-- col-8 main content-->
 
     <div class="col-md-3">

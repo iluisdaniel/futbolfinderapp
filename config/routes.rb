@@ -38,6 +38,9 @@ Rails.application.routes.draw do
 
   resources :games, path: '/games/' do 
     resources :comments, module: :games
+    member do
+      resources :conversation, only: :index, module: :games
+    end
   end
 
   resources :game_lines, only: [:create, :update,:destroy]

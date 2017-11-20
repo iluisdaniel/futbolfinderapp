@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
         @comment.user_id = current_user.id
         @comment.save
         flash[:success] = "Your comment was successfully posted."
-        redirect_to @commentable
+        redirect_to :back
         @commentable.game_lines.each do |gl|
             if gl.user != current_user
                 Notification.create(recipientable: gl.user, actorable: current_user, 

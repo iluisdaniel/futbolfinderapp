@@ -1,0 +1,25 @@
+<% provide(:title, 'Game') %>
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+
+      <h1>
+        <%= @game.title %>
+        <small><%= @game.id %></small>
+      </h1>
+    </div>
+  </div>
+</div> 
+<ul class="nav nav-tabs game-sd-tabs" style="background-color: #fafafa; padding-left: 3%">
+          <li class=""><%= link_to 'Info', game_path(@game) %></li>
+          <li><a href="">Players</a></li>
+          <li class="active"><%= link_to 'Comments', conversation_index_path(@game) %></li>
+</ul>
+
+<div class="container">
+		<div class="col-md-offset-1 col-md-8">
+
+			  <%= render partial: "comments/comments", locals: {commentable: @game }%>
+			  
+		</div>
+</div>
