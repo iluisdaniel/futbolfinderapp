@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     resources :comments, module: :games
     member do
       resources :conversation, only: :index, module: :games
+      resources :players, only: :index, module: :games 
     end
   end
 

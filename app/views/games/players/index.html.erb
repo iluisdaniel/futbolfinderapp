@@ -1,0 +1,81 @@
+<% provide(:title, 'Game') %>
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+
+      <h1>
+        <%= @game.title %>
+        <small>Players</small>
+      </h1>
+    </div>
+  </div>
+</div> 
+<ul class="nav nav-tabs game-sd-tabs" style="background-color: #fafafa; padding-left: 3%">
+          <li class=""><%= link_to 'Info', game_path(@game) %></li>
+          <li class="active"><a href="">Players</a></li>
+          <li class=""><%= link_to 'Comments', conversation_index_path(@game) %></li>
+</ul>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-offset-1 col-md-7">
+			<h2 class="lead"> Players </h2>
+
+			<% if @game.game_lines.empty? %>
+			  <p>There are no players invited yet.</p>
+			<% else %>
+			  
+				<% @game.game_lines.each do |game_line| %>
+	            
+		            <li>
+		              <%= image_tag("64x64.png", :alt => "rss feed", class: "img-circle") %>        
+		              <span style="font-size: 1.2em; margin-left: 10px;"><%= link_to game_line.user.name, game_line.user %></span>
+		              <span class="pull-right" style="padding-top: 7px;">
+		                  <% if signed_in? && current_user != game_line.user%>
+		                      <%= render partial: '/shared/friendship_buttons', locals: {user: game_line.user } %>
+		                      <button href="#" class="btn btn-default btn-fill btn-round"> <i class="fa fa-envelope"></i></button>
+		                   <% end %>  
+		           		  	<small>
+		           		  		<% if is_correct_user_or_business_associated_with_game_line?(game_line) %>
+		           		  		
+		           			  		<% if game_line.accepted != true %>
+		           				  		<%= link_to game_line_path(id: game_line.id), method: "put", class: 'btn btn-default btn-fill btn-round btn-success' do %>
+		           				  			Accept <i class="fa fa-check"></i> 
+		           				  		<% end %>
+		           		  						
+		           	  					<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id, class: 'btn btn-default btn-fill btn-round btn-danger' do%>
+		           	  						Cancel <i class="fa fa-times"></i> 
+		           	  					<% end %>
+		           	  				<% else %>
+		           	  					<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id, class: 'btn btn-default btn-fill btn-round btn-danger' do%>
+		           	  						Cancel <i class="fa fa-times"></i> 
+		           	  					<% end %>
+		           	  				<% end %>	
+
+		             				<% end %>
+		             			</small>   
+		              </span>
+		            </li>
+		            <hr>
+	        	<% end %>
+			<% end %>  	  
+		</div>
+		<div class="col-md-3" style="background: #fafafa; margin-left: 20px;">
+			<h4 class="lead"> Add Players </h4>
+			<% if logged_in? || (@game.is_player_involved?(current_user)) %>
+			    <%= render '/game_lines/new_game_line' %>
+			<% elsif signed_in? %>
+			    <%= render '/game_lines/add_yourself' %>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+
+
+			  	
+	  		
+
+
+
+

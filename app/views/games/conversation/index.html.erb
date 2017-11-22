@@ -12,7 +12,7 @@
 </div> 
 <ul class="nav nav-tabs game-sd-tabs" style="background-color: #fafafa; padding-left: 3%">
           <li class=""><%= link_to 'Info', game_path(@game) %></li>
-          <li><a href="">Players</a></li>
+          <li><%= link_to 'Players', players_path(@game) %></li>
           <li class="active"><%= link_to 'Comments', conversation_index_path(@game) %></li>
 </ul>
 
