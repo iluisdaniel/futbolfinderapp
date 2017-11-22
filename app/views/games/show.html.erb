@@ -9,7 +9,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-8 game-content">
+    <div class="col-md-offset-1 col-md-9 game-content">
 
         <% if signed_in? || (@game.user_id.nil? && @game.business_id.present?) %>
           <p class="lead game-description"><%= @game.description %></p>
@@ -69,24 +69,6 @@
             <% end %>
         </div>
     </div><!-- col-8 main content-->
-
-    <div class="col-md-3">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title lead"><i class="fa fa-users"></i> Players List</h3>
-        </div>
-        <div class="panel-body">
-          <% if @game.players_confirmed.count != @game.number_players %>
-            <%= render partial: "/games/shared/tab_invitation_players" %>
-          <% else %>
-            <div class="alert alert-success" >
-                Players are completed!   
-            </div>
-            <%= render @game.players_confirmed %>
-          <% end %>  
-        </div><!-- panel body -->      
-      </div><!-- panel -->
-    </div><!-- col-3 side-bar-->
 
   </div><!-- row -->
 </div><!-- container -->
