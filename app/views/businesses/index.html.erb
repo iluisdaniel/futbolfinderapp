@@ -7,9 +7,9 @@
 	<div class="row business-list">
 		<% @businesses.each do |business| %>	
 			<div class="col-sm-6 col-md-4">
-			    <div class="thumbnail">
+			    <div class="card">
 			      <%= image_tag("300x200.png", :alt => "rss feed") %>
-			      <div class="caption">
+			      <div class="content">
 			        <h3><%= business.id %>, <%= link_to business.name, business %></h3>
 			          <address>
 			            <strong><i class="fa fa-map-marker"></i> <%= business.address %></strong><br>
