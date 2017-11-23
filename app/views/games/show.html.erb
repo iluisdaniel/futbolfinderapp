@@ -1,11 +1,7 @@
 <% provide(:title, 'My Games') %>
 <% provide(:htitle, @game.title) %>
 <% provide(:secondaryTitle, @game.id.to_s)%>
-<ul class="nav nav-tabs game-sd-tabs" style="background-color: #fafafa; padding-left: 3%">
-          <li class="active"><%= link_to 'Info', game_path(@game) %></li>
-          <li><%= link_to 'Players', players_path(@game) %></li>
-          <li><%= link_to 'Comments', conversation_index_path(@game) %></li>
-</ul>
+<%= render "/games/shared/menu_bar" %>
 
 <div class="container">
   <div class="row">
