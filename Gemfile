@@ -30,6 +30,12 @@ gem 'friendly_id', '~> 5.1.0'
 
 gem "font-awesome-rails"
 
+gem 'faker', '1.1.2'
+
+gem 'will_paginate', '3.0.4'
+
+gem 'bootstrap-will_paginate'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

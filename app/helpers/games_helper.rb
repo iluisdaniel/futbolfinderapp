@@ -96,7 +96,7 @@ module GamesHelper
         return "Unknown"
         else
             user = User.find(id)
-            return user.name
+            return user.first_name
         end
     end
 

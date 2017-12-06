@@ -29,7 +29,7 @@
 	            
 		            <li>
 		              <%= image_tag("64x64.png", :alt => "rss feed", class: "img-circle") %>        
-		              <span style="font-size: 1.2em; margin-left: 10px;"><%= link_to game_line.user.name, game_line.user %></span>
+		              <span style="font-size: 1.2em; margin-left: 10px;"><%= link_to game_line.user.first_name, game_line.user %></span>
 		              <span class="pull-right" style="padding-top: 7px;">
 		                  <% if signed_in? && current_user != game_line.user%>
 		                      <%= render partial: '/shared/friendship_buttons', locals: {user: game_line.user } %>

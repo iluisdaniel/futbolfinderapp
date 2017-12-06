@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: [:edit, :update]
 
   def index
-    @users = User.all
+    @users = User.paginate(page: params[:page], per_page:  15)
     if signed_in?
       @fRequested = Friendship.where(friend_id: current_user.id, accepted: false)
     end
