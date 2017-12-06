@@ -14,8 +14,21 @@ class User < ActiveRecord::Base
     has_many :pending_friends, -> { where(friendships: { accepted: false}) }, through: :friendships, source: :friend
     has_many :requested_friendships, -> { where(friendships: { accepted: false}) }, through: :received_friendships, source: :user
 
+	extend FriendlyId
+	friendly_id :slug_candidates, use: :slugged
+
+	#TODO VALID_WORD_REGEX = /[a-zA-Z]+/
+
 	validate :check_email_in_business
-	validates :name, presence: true, length: { maximum: 50 }
+	validates :first_name, presence: true, length: { maximum: 25 }#, format: { with: VALID_WORD_REGEX }	
+	validates :last_name, presence: true, length: { maximum: 25 }
+	validates :location, length: { maximum: 30}
+	validates :gender, presence: true, length: { maximum: 1 }
+	VALID_PHONE_REGEX = /\d{10}/
+	validates :phone, presence: true, length: {maximum: 10, minimum: 10},
+						format: { with: VALID_PHONE_REGEX }, uniqueness: true
+	validates :dob, presence: true
+
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 	validates :email, presence: true, length: {maximum: 255}, 
 			format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
@@ -45,12 +58,24 @@ class User < ActiveRecord::Base
     end
 
     def games_involved
-    	Game.joins(game_lines: :user).where(game_lines: {user_id: id})
+    	Game.joins(game_lines: :user).where(game_lines: {user_id: id, accepted: true})
     end
 
     def invited_games
         Game.joins(game_lines: :user).where(game_lines: {user_id: id, accepted: false })   
     end
+
+     def slug_candidates
+	    [
+	      :first_name,
+	      [:first_name, :last_name],
+	      [:first_name, :last_name, :rand_number]
+	    ]
+  	end
+
+  	def rand_number
+  		rand(100)
+  	end
 
 	private
 

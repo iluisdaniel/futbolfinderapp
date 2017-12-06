@@ -9,10 +9,10 @@ class RoutesTest < ActionDispatch::IntegrationTest
     @business = businesses(:canchita)
   end
 
-  test "route test" do
-    assert_generates @business.slug, { :controller => "businesses", :action => "show", :id => "la-canchita" }
-    assert_generates "/help", :controller => "static_pages", :action => "help"
-  end
+  # test "route test" do
+  #   assert_generates @business.slug, { :controller => "businesses", :action => "show", :id => "la-canchita" }
+  #   assert_generates "/help", :controller => "static_pages", :action => "help"
+  # end
 
   
 end

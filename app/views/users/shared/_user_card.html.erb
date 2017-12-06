@@ -3,36 +3,33 @@
                     	<img src="<%= get_random_background_image %>" alt="...">
                     </div>
 
-			        <div class="content">
+			        <div class="content" style="min-height: 0px;">
 
 			            <div class="author">
-			            	<a href="#">
 			                <%= image_tag("300x200.png", :alt => "rss feed", class: "avatar") %>
-			                  <h4 class="title"><%= @user.name %><br />
-			                     <small>Foward</small>
+			                  <h4 class="title"><%= @user.name %> Fonseca<br />
+			                     <small>@luisfonseca</small><br>
+			                     <!--<small>Goalkeeper</small>-->
 			                  </h4>
-			                </a>
+			                
 			            </div>
 
 			            <p class="description text-center">
-
-			                Get Shit Done Kit PRO, the most wanted bootstrap kit is here
-			                Get Shit Done Kit PRO, the most wanted bootstrap kit is here
-			                Get Shit Done Kit PRO, the most wanted bootstrap kit is here
-			                <br>
-			                <br>
-		                	<i class="fa fa-users text-muted"></i> Friends <span class="badge"><%= @user.friends.count %></span> <i class="fa fa-soccer-ball-o text-muted" style="padding-left: 2%;"></i>Games <span class="badge">1K</span><br>
-
+			               
+		                	 Friends <span style="color:#337ab7;font-weight:700; padding-right: 5%;"><%= @user.friends.count %></span> Games <span style="color:#337ab7;font-weight:700; padding-right: 5%;">1K</span>
+		                	Friends <span style="color:#337ab7;font-weight:700; padding-right: 5%;"><%= @user.friends.count %></span> 
+		                	<br>		                	
 		                    <i class="fa fa-map-marker text-muted"></i> Venezuela <br>
 
 			            </p>
 
 			        </div>
 
-			        <hr>
+			     
 
 			        <div class="text-center" style="padding-top: 10px; padding-bottom: 10px;">
 			        	<% if signed_in? && current_user != @user %>
+			        		   <hr>
 			        		<%= render partial: '/shared/friendship_buttons', locals: {user: @user}%>
 			        	<% end %>	
 			            <% if current_user != @user %>

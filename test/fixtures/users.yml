@@ -1,13 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-luis:
+jose:
   id: 1
-  name: Luis Daniel
   email: luis@example.com
   password_digest: 123456lg
-
-Maria:
-  id: 2
-  name: Maria Del Mar
-  email: Maria@example.com
-  password_digest: 123456lk
+  location: Miami
+  first_name: Luis
+  last_name: Fonseca
+  gender: M
+  dob: 2017-08-23
+  slug: luisdaniel
+  games_played: nil
+  phone: "5555555555"

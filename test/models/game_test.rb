@@ -7,69 +7,67 @@ class GameTest < ActiveSupport::TestCase
   def setup
   	@user = users(:luis)
   	@business = businesses(:canchita)
-  	@field = fields(:one)
-    @field2 = fields(:two)
   	#@game = games(:one)
     #@schedule = schedules(:one)
     @schedule = Schedule.new(day: "Monday", open_time: "10:00:00", close_time: "22:00:00", business_id: @business.id)
   	
-    @game = Game.new(date: "2017-12-18", time: "13:30:05", user_id: 1, 
-  		business_id: 1, field_id: 1, end_time: "14:30:05")
+    @game = Game.new( user_id: 1, 
+  		business_id: 1)
 
   end
 
-  test "game should be valid" do
-  	assert @game.valid?
-  end
+  # test "game should be valid" do
+  # 	assert @game.valid?
+  # end
 
-  test "user id should be present" do 
-  	@game.user_id = nil
-    assert_not @game.valid?
-  end
+  # test "user id should be present" do 
+  # 	@game.user_id = nil
+  #   assert_not @game.valid?
+  # end
 
-  test "business id should be present" do 
-  	@game.business_id = nil
-  	assert_not @game.valid?
-  end
+  # test "business id should be present" do 
+  # 	@game.business_id = nil
+  # 	assert_not @game.valid?
+  # end
 
-  test "field id should be present" do 
-  	@game.field_id  = nil
-  	assert_not @game.valid?
-  end
+  # test "field id should be present" do 
+  # 	@game.field_id  = nil
+  # 	assert_not @game.valid?
+  # end
 
   
   #### test date
 
-  test "Game Date should be today or later" do 
-    @game.date = 2.day.ago
-    assert_not @game.valid?
-  end
+  # test "Game Date should be today or later" do 
+  #   @game.date = 2.day.ago
+  #   assert_not @game.valid?
+  # end
 
-  test "Game Date should't be greater than one year from now" do
-    @game.date = Date.current + 365
-    assert_not @game.valid?
-  end
+  # test "Game Date should't be greater than one year from now" do
+  #   @game.date = Date.current + 365
+  #   assert_not @game.valid?
+  # end
 
 ### Test Time
-  test "Game should be at least one hour" do 
-    @game.time = Time.current
-    @game.end_time = Time.current + 50*60
-    assert_not @game.valid?
-  end
+  # test "Game should be at least one hour" do 
+  #   @game.time = Time.current
+  #   @game.end_time = Time.current + 50*60
+  #   assert_not @game.valid?
+  # end
 
-  test "Time should be greater than time now if date is equal today" do
-    @game.date = Date.today
-    @game.time = Time.now - 10 * 60
-    @game.end_time = Time.now + 1 * 60 * 60
-    assert_not @game.valid? 
-  end
+  # test "Time should be greater than time now if date is equal today" do
+  #   @game.date = Date.today
+  #   @game.time = Time.now - 10 * 60
+  #   @game.end_time = Time.now + 1 * 60 * 60
+  #   assert_not @game.valid? 
+  # end
 
-  test "End time should be greater than time" do 
-    now = Time.now
-    @game.time = now
-    @game.end_time = now - 10 * 60 * 60
-    assert_not @game.valid?
-  end
+  # test "End time should be greater than time" do 
+  #   now = Time.now
+  #   @game.time = now
+  #   @game.end_time = now - 10 * 60 * 60
+  #   assert_not @game.valid?
+  # end
 
   #### Test Business Schedule
   # check in console --sandbox if you can make a game in a date where there is not day schdule
