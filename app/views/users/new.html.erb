@@ -6,11 +6,29 @@
     <%= form_for(@user) do |f| %>
     <%= render 'shared/error_messages', object: f.object %>	
 
-      <%= f.label :name %>
-      <%= f.text_field :name, class: 'form-control' %>
+      <%= f.label :slug %>
+      <%= f.text_field :slug, class: 'form-control' %>
+
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name, class: 'form-control' %>
+
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name, class: 'form-control' %>
+
+      <%= f.label :gender %>
+      <%= f.text_field :gender, class: 'form-control' %>
+
+      <%= f.label :dob %>
+      <%= f.date_field :dob, class: 'form-control' %>
 
       <%= f.label :email %>
       <%= f.text_field :email, class: 'form-control' %>
+
+      <%= f.label :location %>
+      <%= f.text_field :location, class: 'form-control' %>
+
+      <%= f.label :phone %>
+      <%= f.text_field :phone, class: 'form-control' %>
 
       <%= f.label :password %>
       <%= f.password_field :password, class: 'form-control' %>

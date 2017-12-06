@@ -30,11 +30,6 @@ class UserTest < ActiveSupport::TestCase
   	assert_not @user.valid?
   end
 
-  test "phone should be present" do 
-    @user.phone = ""
-    assert_not @user.valid?
-  end
-
   test "gender should be present" do 
     @user.gender = ""
     assert_not @user.valid?
@@ -74,7 +69,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "phone should not be too short" do
     @user.phone = "2" 
-    assert_not @user.valid?
+      assert_not @user.valid?
   end
 
   test "email should not be too long" do

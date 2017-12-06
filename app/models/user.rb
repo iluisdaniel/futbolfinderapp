@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
 	validates :gender, presence: true, length: { maximum: 1 }
 	VALID_PHONE_REGEX = /\d{10}/
 	validates :phone, presence: true, length: {maximum: 10, minimum: 10},
-						format: { with: VALID_PHONE_REGEX }, uniqueness: true
+						format: { with: VALID_PHONE_REGEX }, uniqueness: true, allow_blank: true
 	validates :dob, presence: true
 
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
