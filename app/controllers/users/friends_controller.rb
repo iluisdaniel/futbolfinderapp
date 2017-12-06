@@ -2,7 +2,7 @@ class Users::FriendsController < ApplicationController
 	before_action :signed_in?, only: :index
 	
 	def index
-		@user = User.find(params[:id])
+		@user = User.friendly.find(params[:id])
 		@friends = @user.friends
 	end
 

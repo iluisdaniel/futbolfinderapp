@@ -192,11 +192,11 @@ module GamesHelper
 
     def get_game_creator(game)
         if !game.user.nil?
-            return game.user
+            return game.user.first_name
         end
 
         if !game.business.nil?
-            return game.business
+            return game.business.name
         end
 
         return

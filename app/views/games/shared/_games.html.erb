@@ -34,7 +34,7 @@
                 
                 <td><%= get_number_of_players_ready(game.id)%> / <%= game.number_players %></td>
                 <td><%= public_or_private(game.public) %></td>
-                <td><%= link_to get_game_creator(game).name, get_game_creator(game) %></td>
+                <td><%= link_to get_game_creator(game), get_game_creator(game) %></td>
               </tr>
 
             <% end %>  
