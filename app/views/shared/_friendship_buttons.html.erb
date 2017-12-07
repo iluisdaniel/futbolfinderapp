@@ -14,7 +14,7 @@
 				 <i class="fa fa-clock-o"></i> Pending
 			<% end %>
 		<% else %>
-			<%= link_to friendships_path(friend_id: user), method: :post, class: "btn btn-primary btn-fill btn-round " do %>
+			<%= link_to friendships_path(friend_id: user.id), method: :post, class: "btn btn-primary btn-fill btn-round " do %>
 				 <i class="fa fa-plus"></i> Add Friend
 			<% end %>
 		<% end %>

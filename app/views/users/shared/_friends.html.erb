@@ -11,7 +11,6 @@
       <span class="pull-right" style="padding-top: 7px;">
           <% if signed_in? && current_user != user%>
               <%= render partial: '/shared/friendship_buttons', locals: {user: user } %>
-              <button href="#" class="btn btn-default btn-fill btn-round"> <i class="fa fa-envelope"></i></button>
           <% end %>     
       </span>
     </li>

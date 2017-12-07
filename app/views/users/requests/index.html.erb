@@ -1,17 +1,14 @@
 <% provide(:title, @user.slug) %>
 
 <div class="container">
-  <div class="row" >
-    <div class="col-md-4" style="margin-top: 30px;">
-      <%= render '/users/shared/user_card' %>  
-    </div><!-- end of column -->
+   <div class="row" >
+     <div class="col-md-offset-2 col-md-8" style="margin-top: 30px;">
+       <%= render '/users/shared/user_card' %>
+       <%= render '/users/shared/nav_bar' %>
+       <%= render '/users/shared/requests' %>
+     </div><!-- end of col md 8 -->
+   </div><!--end of row-->
 
-    <div class="col-md-8">
-      <%= render '/users/shared/nav_bar' %>
-      <%= render '/users/shared/requests' %>
-    </div><!-- end of col md 4 -->
-  </div><!--end of row-->
-
-</div><!-- end container -->
+ </div><!-- end container -->
 
 

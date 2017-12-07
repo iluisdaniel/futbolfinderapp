@@ -12,6 +12,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.friendly.find(params[:id])
+    @games = Game.this_week_public_games_with_reservation(@user)
   end
 
   def new
