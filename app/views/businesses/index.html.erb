@@ -6,20 +6,21 @@
 
 	<div class="row business-list">
 		<% @businesses.each do |business| %>	
-			<div class="col-sm-6 col-md-4">
+			<div class="col-md-4">
 			    <div class="card">
 			      <%= image_tag("300x200.png", :alt => "rss feed") %>
 			      <div class="content">
-			        <h3><%= business.id %>, <%= link_to business.name, business %></h3>
+			        <h3><%= link_to business.name, business %></h3>
 			          <address>
-			            <strong><i class="fa fa-map-marker"></i> <%= business.address %></strong><br>
-			            <%= business.city %>, <%= business.state %> <%= business.zipcode %>
-			            <br>
+			            <strong><i class="fa fa-map-marker"></i> <%= business.city %>, <%= business.state %></strong><br>
 			        </address>
 			        <p><a href="#" class="btn btn-primary btn-fill btn-round" role="button">Check Availability</a> <a href="#" class="btn btn-default btn-round" role="button">Contact</a></p>
 			      </div>
 			    </div>
 			</div>
 		<% end %>
+		<div class="text-center">
+		    <%= will_paginate @businesses %>  
+		</div>
 	</div>
 </div>

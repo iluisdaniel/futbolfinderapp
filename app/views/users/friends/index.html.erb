@@ -6,6 +6,9 @@
       <%= render '/users/shared/user_card' %>
       <%= render '/users/shared/nav_bar' %>
       <%= render '/users/shared/friends' %>
+      <div class="text-center">
+          <%= will_paginate %>  
+      </div>
       <% if @friends.empty?%>
           <p class="lead">You don't have friends yet.</p>
       <%end%>

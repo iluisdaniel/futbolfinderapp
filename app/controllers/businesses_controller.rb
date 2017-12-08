@@ -4,7 +4,7 @@ class BusinessesController < ApplicationController
   before_action :correct_business,   only: [:edit, :update]
   
   def index
-    @businesses = Business.all
+    @businesses = Business.paginate(page: params[:page], per_page:  15)
   end
 
   def show

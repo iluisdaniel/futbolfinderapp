@@ -7,7 +7,10 @@
 
 			            <div class="author">
 			                <%= image_tag("300x200.png", :alt => "rss feed", class: "avatar") %>
-			                  <h4 class="title"><%= user.first_name %> <%= user.last_name %><br />
+			                  <h4 class="title">
+			                  	<%= link_to user_path(user) do %>
+			                  		<%= user.first_name %> <%= user.last_name %><br />
+			                  	<% end %>
 			                     <small><%= user.slug %></small><br>
 			                     <!--<small>Goalkeeper</small>-->
 			                  </h4>
