@@ -3,7 +3,7 @@
 <div class="container">
 	<div class="row" >
 		<div class="col-md-offset-2 col-md-8" style="margin-top: 30px;">
-			<%= render '/users/shared/user_card' %>
+			<%= render partial: '/users/shared/user_card2', locals: {user: @user } %>
 			<%= render '/users/shared/nav_bar' %>
 			<% if !@games.empty? %>
 			    <%= render partial: "games/shared/games_cards", locals: {games: @games, subtitle: 'This week'} %>

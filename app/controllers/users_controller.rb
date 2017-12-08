@@ -5,9 +5,6 @@ class UsersController < ApplicationController
 
   def index
     @users = User.paginate(page: params[:page], per_page:  15)
-    if signed_in?
-      @fRequested = Friendship.where(friend_id: current_user.id, accepted: false)
-    end
   end
 
   def show

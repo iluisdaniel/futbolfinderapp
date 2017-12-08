@@ -10,7 +10,7 @@
 	          <% notifications.each do |n| %>
 	            <tr>
 	              <td><i class="fa fa-<%= get_right_icon_name(n) %>"></i> 
-	              	<%= link_to n.actorable.name, get_actorable_path(n) %> 
+	              	<%= link_to get_name_from_actionable(n), get_actorable_path(n) %> 
 	              	<%= n.action.downcase %>
 	              	<%= get_rest_of_the_setence(n) %>
 	              	<% if n.notifiable.class.to_s == "Friendship" %>

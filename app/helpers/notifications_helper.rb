@@ -1,5 +1,14 @@
 module NotificationsHelper
 
+    def get_name_from_actionable(n)
+        if n.actorable.class.to_s == "Business"
+            return n.actorable.name
+        elsif n.actorable.class.to_s == "User"
+            return n.actorable.first_name
+        end
+                
+    end
+
 	def get_right_icon_name(n)
         if n.notifiable.class.to_s == "Game"
             if n.action == "Commented"
