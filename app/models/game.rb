@@ -3,6 +3,7 @@ class Game < ActiveRecord::Base
   belongs_to :business
 
   #BUG: it doesnt work for users. only for businesses for some reason.
+  before_create :randomize_id
   before_save :set_defaults, if: :new_record?
 
   has_one :reservation, :dependent => :destroy
@@ -16,6 +17,7 @@ class Game < ActiveRecord::Base
 
   #validate public 
   validate :check_public_is_presence
+  
 
     ####### validate public presence
     def check_public_is_presence
@@ -124,6 +126,12 @@ class Game < ActiveRecord::Base
     end
 
     private
+
+      def randomize_id
+        begin
+          self.id = SecureRandom.random_number(1_000_000)
+        end while Game.where(id: self.id).exists?
+      end
 
       def self.get_games(u_biz)
         if u_biz.instance_of? Business

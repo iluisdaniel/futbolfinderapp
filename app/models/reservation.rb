@@ -1,6 +1,8 @@
 class Reservation < ActiveRecord::Base
 	belongs_to :game
 	belongs_to :business
+
+  before_create :randomize_id
   
   validates :date, presence: true
 	validates :time, presence: true
@@ -93,6 +95,12 @@ class Reservation < ActiveRecord::Base
 
   
   	private
+
+    def randomize_id
+        begin
+          self.id = SecureRandom.random_number(1_000_000)
+        end while Game.where(id: self.id).exists?
+    end
 
   #aybe user can reserved only a game each day
 

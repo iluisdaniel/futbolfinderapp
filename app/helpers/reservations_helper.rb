@@ -14,7 +14,7 @@ module ReservationsHelper
             return current_business.name
         end
 
-    	return reservation.game.user.name
+    	return reservation.game.user.first_name + reservation.game.user.last_name
     end
 
      def is_at_one_of_index_reservations?
