@@ -10,8 +10,6 @@
 </head>
 <body> 
     <%= render 'layouts/header' %>
-    
-    <%= show_title_page_header(yield(:htitle), yield(:secondaryTitle)) %>
 
     <% flash.each do |message_type, message| %>       
       <div class="alert alert-<%= message_type %>">
@@ -20,6 +18,8 @@
         </div>   
       </div>
     <% end %>
+    
+    <%= show_title_page_header(yield(:htitle), yield(:secondaryTitle)) %>
 
     <%= yield %>
 

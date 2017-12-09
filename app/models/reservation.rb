@@ -3,6 +3,7 @@ class Reservation < ActiveRecord::Base
 	belongs_to :business
 
   before_create :randomize_id
+  validates :date, uniqueness: {scope: [ :time, :end_time, :field_id ]}
   
   validates :date, presence: true
 	validates :time, presence: true

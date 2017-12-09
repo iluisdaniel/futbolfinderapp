@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171206034021) do
+ActiveRecord::Schema.define(version: 20171209073812) do
 
   create_table "businesses", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -143,6 +143,7 @@ ActiveRecord::Schema.define(version: 20171206034021) do
     t.datetime "updated_at",            null: false
   end
 
+  add_index "reservations", ["date", "time", "end_time", "field_id"], name: "index_reservations_on_date_and_time_and_end_time_and_field_id", unique: true, using: :btree
   add_index "reservations", ["game_id", "business_id", "field_id"], name: "index_reservations_on_game_id_and_business_id_and_field_id", using: :btree
 
   create_table "schedules", force: :cascade do |t|
