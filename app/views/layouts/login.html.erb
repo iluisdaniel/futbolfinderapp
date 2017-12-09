@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= csrf_meta_tags %>
+ <%= render 'layouts/shim' %>
+</head>
+<body class="login-page"> 
+    <%= render 'layouts/header' %>
+
+    <% flash.each do |message_type, message| %>       
+      <div class="alert alert-<%= message_type %>">
+        <div class="container">
+          <%= message %>
+        </div>   
+      </div>
+    <% end %>
+
+    <div class="container" style=" " >
+      <div class="row">
+        <div class="col-md-offset-3 col-md-5" style="">
+          <div class="card">
+            <div class="login-form">
+              <h1>Login</h1>
+              <%= form_for(:session, url: login_path) do |f| %>
+
+                <%= f.label :email %>
+                <%= f.email_field :email, class: 'form-control' %>
+
+                <%= f.label :password %>
+                <%= f.password_field :password, class: 'form-control' %>
+
+                <%= f.label :remember_me, class: "checkbox inline" do %>
+                  <%= f.check_box :remember_me %>
+                  <span>Remember me on this computer</span>
+                <% end %>
+
+                <%= f.submit "Log in", class: "btn btn-primary btn-round btn-fill" %>
+              <% end %>
+
+              <p style="">
+                New user? <%= link_to "Sign up now!", signup_path %></p>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </body>
+</html>

@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController
+  before_action :redirect_back_when_is_already_logged_in?, only: :new
   
   def new
+    render :layout =>'login'
   end
 
   def create

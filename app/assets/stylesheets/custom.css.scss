@@ -1223,3 +1223,33 @@ ul.alert-dropdown {
   .pagination .next_page {
     margin-left: 1em; }
 
+
+/****** LOGIN PAGE *****/
+
+.login-page{
+    background: url(/assets/soccer-field.png) no-repeat;
+    background-size: cover;
+
+    label{
+        margin-top:10px;
+    }
+
+    .login-form{
+        padding: 40px 50px 10px 50px;
+        margin-top:20%; 
+        margin-bottom: 20%;
+    }
+
+    .checkbox{
+        margin-top: 30px;
+        margin-left: 20px;
+    }
+    .btn{
+        padding-right: 30px;
+        padding-left: 30px;
+    }
+    p{
+        padding-top: 20px;
+        text-align: center;
+    }
+}
