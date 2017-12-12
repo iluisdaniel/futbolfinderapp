@@ -6,8 +6,9 @@
 
 html{ height: 100%; }
 body { 
-    padding-top: 50px; height:100%; 
-    font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif;
+        padding-top: 50px; height:100%; 
+        font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif;
+        background-color: #fafafa;
     }
 
 h1,h2,h3,h4,h5,h6{
@@ -559,10 +560,14 @@ ul.alert-dropdown {
 /************ Page title header ***************************/
 
 .page-header{
-    background-color:#fafafa;
+    background-color:#ff9800;
     margin:0;
     padding: 20px 0 20px;
     border-bottom: none !important;
+
+    h1{
+        color:#fff;
+    }
 }
 
 @media only screen and (max-width: 768px) {
@@ -573,6 +578,29 @@ ul.alert-dropdown {
 }
 
 /*************** GAMES *****************/
+@media only screen and (max-width: 600px){
+    .games{
+        h3{
+            font-size:1.5em;
+        }
+    }
+}
+@media only screen and (max-width: 800px){
+  .games{
+    h3{
+            font-size:1.5em;
+        }
+  }
+}
+
+@media only screen and (max-width: 1000px){
+   .games{
+        h3{
+            font-size:1.5em;
+        }
+   }
+}
+
 .date-picker{
   
 
@@ -622,12 +650,27 @@ ul.alert-dropdown {
         border:none !important;       
     }
 }
+
 .game-sd-tabs{
     margin-bottom: 20px;
+    background-color: #ff9800;
+    a {
+        color:#fff;
+    }
+
 }
+
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
-    border-top: 3px solid #000;
+    background-color: #fafafa;
+    border-top:3px solid #000;
 }
+
+.nav-tabs > li.active > a, .nav-tabs > li > a:hover{
+    color:#000;
+    background-color: #fafafa;
+
+}
+
 .game-content{
     margin-right: 30px;
 
@@ -660,11 +703,43 @@ ul.alert-dropdown {
 
 
 /************ BUSINESSES *****************/
+@media only screen and (max-width: 600px){
+    .business-list{
+        img{
+            display:none;
+        }
+        .btn-default{
+        }
+        h3{
+            font-size: 1.1em;
+        }
+        address{
+            font-size: 1em;
+        }
+        
+    }
+}
+@media only screen and (max-width: 800px){
+    .business-list{
+        img{
+            display: none;
+        }
+   }
+}
+
+@media only screen and (max-width: 1000px){
+    .btn-default{
+    }
+    .btn-primary{
+        font-style: 12px;
+    }
+}
 
 .business-list{
     margin-top: 20px;
     h3{
         font-size: 1.5em;
+        font-weight: 300;
     }
     img{
         width:100%;
@@ -699,6 +774,7 @@ ul.alert-dropdown {
 
 .users{
     list-style: none;
+    padding-left: 0px;
 
     li{
         margin-bottom: 20px;

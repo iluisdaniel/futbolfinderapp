@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs game-sd-tabs" style="background-color: #fafafa; padding-left: 3%">
+<ul class="nav nav-tabs game-sd-tabs" style="padding-left: 3%">
           <li class="<%= 'active' if current_page?(controller: 'games', action: 'show') %>"><%= link_to 'Info', game_path(@game) %></li>
           <li><%= link_to 'Players', players_path(@game) %></li>
           <li><%= link_to 'Comments', conversation_index_path(@game) %></li>

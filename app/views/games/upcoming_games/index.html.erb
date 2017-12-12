@@ -3,7 +3,7 @@
 <% provide(:secondaryTitle, 'Upcoming')%>
 <%= render partial: "shared/menu_bar" %>
 
-<div class="container" style="margin-top:20px;">
+<div class="container games" style="margin-top:20px;">
   <% if !are_there_games?%>
     <%= render partial: "games/shared/no_games_message" %>
   <% else %>  
