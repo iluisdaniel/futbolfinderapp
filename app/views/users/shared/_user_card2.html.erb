@@ -29,7 +29,7 @@
 
 			     
 
-			        <div class="text-center" style="padding-top: 10px; padding-bottom: 10px;">
+			        <div class="text-center" style="padding-bottom: 15px;">
 			        	<% if signed_in? && current_user != user %>
 			        		<%= render partial: '/shared/friendship_buttons', locals: {user: user} %>
 			        	<% end %>	
