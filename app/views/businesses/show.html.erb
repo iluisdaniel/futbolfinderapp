@@ -2,7 +2,7 @@
 
 <div class="container">
   <div class="row biz-page">
-    <div class="col-md-4 biz-sidebar">
+    <div class="col-sm-5 col-md-4 biz-sidebar">
           <div class="card">
             <%= image_tag("300x200.png", :alt => "rss feed") %>
             <div class="content">
@@ -21,106 +21,117 @@
             </div>
           </div><!-- end info -->
 
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title lead"><i class="fa fa-calendar"></i> Schedule</h3>
-            </div>
-            <div class="panel-body">
-              <table class="schedules">
-                <%= render @business.schedules.all %>
-              </table>
-            </div>
-          </div><!-- schedule -->
-
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title lead"><i class="fa fa-soccer-ball-o"></i> Fields</h3>
-            </div>
-            <div class="panel-body">
-              <%= render @business.fields.all %>
-            </div>
-          </div><!-- end info -->
-
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title lead"><i class="fa fa-map-marker"></i> Location</h3>
-            </div>
-            <div class="panel-body">
-              <address>
-                  <strong><i class="fa fa-map-marker"></i> <%= @business.name %></strong><br>
-                 <%= @business.address %><br>
-                  <%= @business.city %>, <%= @business.state %> <%= @business.zipcode %>
-                  <br>
-                  <i class="fa fa-phone"></i> <%= @business.phone %> 
-              </address>
-            </div>
-          </div><!-- Location -->
-
     </div>
-    <div class="col-md-8">
-
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title lead"><i class="fa fa-photo"></i> Gallery</h3>
-        </div>
-        <div class="panel-body">
-         <div class="row">
-           <div class="col-xs-6 col-md-3">
-             <a href="#" class="thumbnail">
-                <%= image_tag("171x180.png", :alt => "rss feed") %>
-             </a>
-           </div>
-           <div class="col-xs-6 col-md-3">
-             <a href="#" class="thumbnail">
-                <%= image_tag("171x180.png", :alt => "rss feed") %>
-             </a>
-           </div>
-           <div class="col-xs-6 col-md-3">
-             <a href="#" class="thumbnail">
-                <%= image_tag("171x180.png", :alt => "rss feed") %>
-             </a>
-           </div>
-           <div class="col-xs-6 col-md-3">
-             <a href="#" class="thumbnail">
-                <%= image_tag("171x180.png", :alt => "rss feed") %>
-             </a>
-           </div>
-         </div>
-         <a href="#">View Gallery</a>
-        </div>
-      </div>
+    <div class="col-sm-7 col-md-8">
       
 
-       <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title lead"><i class="fa fa-star"></i> Reviews</h3>
+      <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 20px;">
+          <li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Info</a></li>
+          <li role="presentation"><a href="#availability" aria-controls="availability" role="tab" data-toggle="tab">Availability</a></li>
+          <li role="presentation"><a href="#photos" aria-controls="photos" role="tab" data-toggle="tab">Photos</a></li>
+          <li role="presentation"><a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">Reviews</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="info">
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title lead"><i class="fa fa-map-marker"></i> Location</h3>
+              </div>
+              <div class="panel-body">
+                <address>
+                    <strong><i class="fa fa-map-marker"></i> <%= @business.name %></strong><br>
+                   <%= @business.address %><br>
+                    <%= @business.city %>, <%= @business.state %> <%= @business.zipcode %>
+                    <br>
+                    <i class="fa fa-phone"></i> <%= @business.phone %> 
+                </address>
+              </div>
+            </div><!-- Location -->
+              
+            <div class="row">  
+              <div class="col-md-6">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h3 class="panel-title lead"><i class="fa fa-calendar"></i> Schedule</h3>
+                    </div>
+                    <div class="panel-body">
+                      <table class="schedules">
+                        <%= render @business.schedules.all %>
+                      </table>
+                    </div>
+                  </div><!-- schedule -->
+              </div>    
+
+              <div class="col-md-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title lead"><i class="fa fa-soccer-ball-o"></i> Fields</h3>
+                  </div>
+                  <div class="panel-body">
+                    <%= render @business.fields.all %>
+                  </div>
+                </div><!-- end info -->
+              </div>  
             </div>
-            <div class="panel-body">
-              Panel content
-            </div>
-        </div><!-- Reviews -->
+
+          </div>
+          <div role="tabpanel" class="tab-pane" id="availability">
+              <%= render '/businesses/availability' %>
+          </div>
+
+
+          <div role="tabpanel" class="tab-pane" id="photos">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title lead"><i class="fa fa-photo"></i> Gallery</h3>
+                </div>
+                <div class="panel-body">
+                 <div class="row">
+                   <div class="col-xs-6 col-md-3">
+                     <a href="#" class="thumbnail">
+                        <%= image_tag("171x180.png", :alt => "rss feed") %>
+                     </a>
+                   </div>
+                   <div class="col-xs-6 col-md-3">
+                     <a href="#" class="thumbnail">
+                        <%= image_tag("171x180.png", :alt => "rss feed") %>
+                     </a>
+                   </div>
+                   <div class="col-xs-6 col-md-3">
+                     <a href="#" class="thumbnail">
+                        <%= image_tag("171x180.png", :alt => "rss feed") %>
+                     </a>
+                   </div>
+                   <div class="col-xs-6 col-md-3">
+                     <a href="#" class="thumbnail">
+                        <%= image_tag("171x180.png", :alt => "rss feed") %>
+                     </a>
+                   </div>
+                 </div>
+                 <a href="#">View Gallery</a>
+                </div>
+              </div>
+          </div>
+
+
+          <div role="tabpanel" class="tab-pane" id="reviews">
+              <div class="panel panel-default">
+                   <div class="panel-heading">
+                     <h3 class="panel-title lead"><i class="fa fa-star"></i> Reviews</h3>
+                   </div>
+                   <div class="panel-body">
+                     Panel content
+                   </div>
+               </div><!-- Reviews -->
+
+          </div>
+        </div>
     </div>
 
   </div>  
 </div>
 
-
-
-
- <div class="span8">
-    <% if @business.schedules.any? %>
-      <h3>Schedules (<%= @business.schedules.count %>)</h3>
-      <table class="schedules">
-        <%= render @business.schedules.all %>
-      </table>
-    <% end %>
-  </div>
-
-   <div class="span8">
-    <% if @business.fields.any? %>
-      <h3>Fields (<%= @business.fields.count %>)</h3>
-      <table class="schedules">
-        <%= render @business.fields.all %>
-      </table>
-    <% end %>
-  </div>
