@@ -1,10 +1,27 @@
 <% provide(:title, 'Reservations') %>
-<% provide(:htitle, 'My Reservations') %>
-<% provide(:secondaryTitle, 'Past')%>
-<%= render partial: "shared/menu_bar" %>
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+    	<div class="col-md-10 col-sm-12">
+    		<h1>
+    			My Reservations
+    		  <small>Past</small>
+    		</h1>
+    	</div>
+    	<div class="col-md-2 col-sm-12">
+    		<%= link_to 'New Reservation', new_reservation_path, class: "btn btn-large btn-primary btn-round btn-fill " %>
+    	</div>
+    </div>
+  </div>
+</div> 
+<%= render partial: "reservations/shared/menu_bar" %>
 
 <div class="container" style="margin-top:20px;">
   <div class="row">
-    <!-- Tab panes -->
-        <%= render partial: "reservations/reservations", locals: {reservations: @reservations} %>
+  	<% if @reservations.empty?%>
+  	    <p class="lead">No past reservations at the moment</p>
+  	    <%= link_to 'New Reservation', new_reservation_path, class: "btn btn-large btn-primary btn-round btn-fill " %>
+  	<% else %>  
+  	  <%= render partial: "reservations/reservations", locals: {reservations: @reservations} %>
+  	<% end %>  
 </div>

@@ -1,0 +1,4 @@
+<ul class="nav nav-tabs game-sd-tabs" style="padding-left: 3%">
+          <li class="<%= 'active' if current_page?( controller: '/reservations', action: 'index')%>"><%= link_to 'Current', reservations_path %></li>
+          <li class="<%= 'active' if current_page?( controller: '/reservations/past', action: 'index')%>"><%= link_to 'Past', reservations_past_index_path %></li>
+</ul>

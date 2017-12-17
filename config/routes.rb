@@ -23,7 +23,6 @@ Rails.application.routes.draw do
   resources :notifications, only: :index
 
   namespace "reservations" do
-    resources :day, only: :index
     resources :past, only: :index
   end
 

@@ -1,21 +1,33 @@
-<div class="row game-header">
+<div class="page-header">
   <div class="container">
-    <div class="col-md-12">
-      <h1 style="margin-bottom:0px; float:left;" >Reservation <small><%= @reservation.id%></small></h1>
-      <%= link_to edit_reservation_path(@reservation.id), class: "btn btn-primary pull-right" do %>
-          <i class="fa fa-gear"></i> Settings
-        <% end %>        
-    </div>  
+    <div class="row">
+      <div class="col-md-10 col-sm-12">
+        <h1>
+          Reservation
+          <small><%= @reservation.id%></small>
+        </h1>
+      </div>
+      <div class="col-md-2 col-sm-12">
+        <%= link_to edit_reservation_path(@reservation.id), class: "btn btn-primary btn-fill pull-right" do %>
+            <i class="fa fa-gear"></i> Settings
+          <% end %>        
+      </div>
+    </div>
   </div>
-</div>
-<hr>
-<div class="container">
+</div> 
+
+
+<div class="container" style="margin-top:20px;">
     <div class="row">
         <div class="col-md-7">
             <div class="panel panel-default">
               <!-- Default panel contents -->
               <div class="panel-heading">
-                 <h3 class="panel-title lead"><i class="fa fa-info-circle"></i> Information</h3>
+                 <h3 class="panel-title lead"><i class="fa fa-info-circle"></i> Information
+                 <%= link_to edit_reservation_path(@reservation.id), class: "pull-right" do %>
+                     <i class="fa fa-gear"></i>
+                   <% end %>  
+                 </h3>
               </div>
             
 

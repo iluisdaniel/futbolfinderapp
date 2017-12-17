@@ -578,13 +578,26 @@ ul.alert-dropdown {
     h1{
         color:#b5ef3a;
     }
+
+    .btn{
+        margin-top: 1em;
+    }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 500px) {
     /* For mobile phones: */
-    .t-header h1{
-        margin-left: 10px;
+    .page-header {
+        h1, .btn{ 
+            text-align: center;
+        }
+        .btn{
+            width:50%;
+            margin-left: 25%;
+
+        }
     }
+
+    
 }
 
 /*************** GAMES *****************/

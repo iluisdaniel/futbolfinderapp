@@ -13,8 +13,4 @@
            <li class="<%= 'active' if current_page?(controller: '/games', action: 'index') %>"><%= link_to 'All Games', games_path, class: "" %></li>
           <li class="<%= 'active' if current_page?(controller: '/games/old_games', action: 'index') %>"><%= link_to 'Past Games', games_old_games_path, class: "" %></li>
 </ul>
-<% elsif is_at_one_of_index_reservations? %>
-     <ul class="nav nav-tabs game-sd-tabs" style="padding-left: 3%">
-          <li class="<%= 'active' if current_page?( controller: '/reservations/past', action: 'index')%>"><%= link_to 'Past', reservations_past_index_path %></li>
-     </ul>
 <% end %>
