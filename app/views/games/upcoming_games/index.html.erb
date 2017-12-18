@@ -8,7 +8,7 @@
     <%= render partial: "games/shared/no_games_message" %>
   <% else %>  
 
-    <div class="row">
+    
       <% if @games.empty? && @tomorrow_games.empty? && @today_games.empty? %>
       	<div>
       	  <P class="lead">No upcoming games to display.</P>
@@ -17,22 +17,27 @@
       <% else %>
 
       	<% if !@today_games.empty? %>
+        <div class="row">
       		<%= render partial: "games/shared/games_cards", locals: {games: @today_games, subtitle: 'Today'} %>
+        </div>  
       	<% end %>
 
       	<% if !@tomorrow_games.empty? %>
-	      	<%= render partial: "games/shared/games_cards", locals: {games: @tomorrow_games, subtitle: 'Tomorrow'} %>
+          <div class="row">
+	      	  <%= render partial: "games/shared/games_cards", locals: {games: @tomorrow_games, subtitle: 'Tomorrow'} %>
+          </div>
 	      	<hr>
 	    <% end %>  	
 
       	<% if !@games.empty? %>
+        <div class="row">
 	      	<%= render partial: "games/shared/games_cards", locals: {games: @games, subtitle: 'This Week'} %>
+        </div>  
 	      	<hr>
-      	<% end %>
+      	<% end %> 	
 
-      	
+        
       <% end %>
-
-    </div>
+ 
   <% end %>  
 </div>
