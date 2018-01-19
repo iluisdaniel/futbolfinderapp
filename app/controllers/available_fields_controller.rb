@@ -1,4 +1,5 @@
 class AvailableFieldsController < ApplicationController
+	before_action :signed_in_user_but_not_business?, only: :index
 
 	def index
 		if params[:date]
