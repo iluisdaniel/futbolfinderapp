@@ -1,0 +1,85 @@
+<!-- Button trigger modal -->
+
+  <a class="" data-toggle="modal" data-target="#myModal1">
+
+   Create New Game
+
+  </a>
+
+  <!-- Modal Core -->
+
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+      <div class="modal-dialog">
+
+        <div class="modal-content">
+          <%= form_for(@reservation) do |f| %>
+          <div class="modal-header">
+
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+            <h4 class="modal-title" id="myModalLabel">New Reservation</h4>
+
+          </div>
+
+          <div class="modal-body">
+
+           <div class="row">
+           <%= render 'shared/error_messages', object: f.object %>
+           </div> 
+           
+             <div class="row">
+               <div class="form-group">
+                 <div class="col-md-2">
+                   <%= f.label :date, 'Date' %>
+                 </div>
+                 <div class="col-md-8">
+                   <div class="col-md-4">
+                      <%= f.date_select :date, {prompt: { day: 'Day', month: 'Month' }, start_year: Date.today.year, end_year: Date.today.year,  with_css_classes: true, date_separator: "</div><div class='col-md-4'>"}, { class: 'form-control'} %>
+                   </div>
+                 </div>
+               </div>   
+             </div>
+             
+             <div class="row">
+               <div class="form-group">
+                 <div class="col-md-2">
+                   <%= f.label :time, 'Time' %>
+                 </div>
+                 <div class="col-md-8">
+                   <div class="col-md-6">
+                       <%= f.time_select :time, {prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 6, time_separator: "</div><div class='col-md-6'>"}, {class: 'form-control'} %> 
+                   </div>
+                 </div>
+               </div>   
+             </div>
+
+             <div class="row">
+               <div class="form-group">
+                 <div class="col-md-2">
+                  <%= f.label :end_time, 'End Time' %>
+                 </div>
+                 <div class="col-md-8">
+                   <div class="col-md-6">
+                       <%= f.time_select :end_time, {prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 10, time_separator: "</div><div class='col-md-6'>"}, {class: 'form-control'} %>
+                   </div>
+                 </div>
+               </div>   
+             </div>
+
+          </div>
+
+          <div class="modal-footer">
+
+            <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Close</button>
+
+            <%= f.submit "Create Reservation", class: "btn btn-large btn-primary btn-fill btn-round pull-right" %>
+
+          </div>
+          <% end %>
+        </div>
+
+      </div>
+
+    </div>
+

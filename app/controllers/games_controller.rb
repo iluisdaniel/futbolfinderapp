@@ -6,6 +6,8 @@ class GamesController < ApplicationController
 	before_action :set_businesses_collection, only: [:show]
 	before_action :set_fields_collection, only: [:show]
 
+	@@res = Hash.new
+
 	def index
 		# add field id
 		#FIX displaying same day games in games and not in old games
@@ -28,16 +30,19 @@ class GamesController < ApplicationController
 		#use bootstrap h1 predertemined header
 		@game = Game.find(params[:id])
 		@game_line = GameLine.new
-		@reservation = Reservation.new
 		#Bug - when a field is erased from a business, and the show action is called it fails because it cannot find field to show field info into the show page
 		# Make impossible to erase a field in the case there are open games. Or it has to erased all of them. 
-
+		@reservation = Reservation.new
 		
 	end
 
 	def new
 		#TODO: How to choose businesses field. 
 		@game = Game.new
+		if params[:date]
+			@@res = {date: params[:date], time: params[:time].to_time, end_time: params[:time].to_time + 1.hour, 
+				business: params[:business], field: params[:field]}
+		end
 	end
 
 	def create
@@ -70,6 +75,18 @@ class GamesController < ApplicationController
 			flash[:success] = "Your Game Was Created"		
 			if !@game.user_id.nil?
 				GameLine.create(user_id: @game.user_id, game_id: @game.id, accepted: true)
+			end
+
+			if !@@res.empty?
+				reservation = Reservation.create(date: @@res[:date], time: @@res[:time], end_time: @@res[:end_time],
+					business: Business.find(@@res[:business].to_i), field_id: @@res[:field].to_i, game: @game)
+				if reservation.save
+					flash[:success] = "Game and Reservation created"
+				else
+					#TODO: Show error message. Why is failing?
+					flash[:warning] = "could't make reservation"
+				end
+				@@res.clear
 			end
 		else
 			render 'new'

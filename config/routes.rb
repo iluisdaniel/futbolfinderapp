@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get 'u/signup' => 'users#new'
   get 'u/users' => 'users#index'
 
-  get 'search' => 'games#search'
+  get 'available_fields' => 'available_fields#index'
 
   resources :notifications, only: :index
 

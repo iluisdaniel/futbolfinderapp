@@ -47,6 +47,7 @@
                 </div>
 
                 <div style="">
+                  <%= @game.reservation.id %>
                   <strong><i class="fa fa-soccer-ball-o"></i> <%= get_field(@game.reservation.field_id).name %></strong><br>
                   <i class="fa fa-users"></i> <%= get_field(@game.reservation.field_id).number_players %> Players Field<br>
                   <strong><i class="fa fa-calendar"></i> <%= @game.reservation.date %></strong><br>

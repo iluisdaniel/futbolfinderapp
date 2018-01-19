@@ -1,0 +1,63 @@
+<% provide(:title, 'Available Fields') %>
+<div class="page-header">
+  <div class="container">
+    <div class="row" style="padding-bottom: 20px;">
+    	<h1>Find Fields</h1>
+    	
+      <%= form_tag(available_fields_path, :method => "get", id: "search-form") do %>
+      	<div class="col-md-4">
+      		<%= date_field_tag :date, params[:date], placeholder: "Date", class: "form-control" %>
+      	</div>
+      	<div class="col-md-4">
+      		<%= time_field_tag :time, params[:time], placeholder: "Time", class: "form-control" %>
+      	</div>
+      	<div class="col-md-1">
+      		<%= submit_tag "Search", class: "btn-primary btn-round btn-fill" %>
+      	</div>
+      <% end %>
+
+    </div>
+  </div>
+</div> 
+
+<div class="container" style="margin-top: 20px;">
+	<div class="row">
+
+		<div class="col-md-12" style="margin-top: 40px;">
+			
+				<% if @businesses.present? %>
+					<div class="">
+				 		<% @businesses.each do |key, business| %>
+				 			<div class="col-md-11 col-md-offset-1 col-xs-12 col-sm-12">
+				 				      <div class="col-md-6 col-sm-10 col-xs-9">
+				 				        <h3><%= link_to business[0].name, business[0] %></h3>
+				 				          <address>
+				 				            <i class="fa fa-map-marker"></i> <%= business[0].city %><span><%= business[0].state %></span><br>
+				 				        </address>
+				 				        </div>
+				 				        <div class="col-md-4 col-sm-2 col-xs-3" style="float: right; padding-top: 23px;">
+				 				        	<!-- Single button -->
+				 				        	<div class="btn-group">
+				 				        	  <button type="button" class="btn btn-primary btn-fill btn-round dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				 				        	    Reserve <span class="caret"></span>
+				 				        	  </button>
+				 				        	  <ul class="dropdown-menu">
+				 				        	    <li>
+				 				        	    	<%= link_to "Create New Game", new_game_path(business: business[0].id, date: params[:date], time: params[:time], field: business[1].id) %>
+
+				 				        	    </li>
+				 				        	    <li><a href="#">Add to Game</a></li>
+				 				        	  </ul>
+				 				        	</div>
+				 				      </div>	
+
+				 			</div>
+				 		<% end %>
+				 	</div>
+				<% else %>
+				  <p class="lead">There are no posts containing the term(s) <%= params[:time] %>.</p>
+				<% end %>
+			
+		</div>
+	</div>
+</div>
