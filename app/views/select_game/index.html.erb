@@ -1,0 +1,43 @@
+<% provide(:title, 'Select Game') %>
+<% provide(:htitle, 'Select Game') %>
+
+<div class="container select-game" style="margin-top: 20px;">
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10">
+			<h2 class="lead">Planning Games</h2>
+			<% if @games_no_res.empty? %>
+
+	        <% else %>
+	        	<table class="table table-hover">
+	        		<thead>
+	        			<tr>
+	        				<th>
+	        					Id
+	        				</th>
+	        				<th>
+	        					Title
+	        				</th>
+	        			</tr>
+	        		</thead>
+	        		<tbody >		
+			              <% @games_no_res.each do |g| %>
+			              	
+			              			<tr>
+			              				<td>
+											<%= g.id %>
+			              				</td>
+			              				<td>
+					              			<%= link_to g do %>
+						               	 		<%= link_to g.title , game_path( g , business: params[:business], date: params[:date], time: params[:time], field: params[:field]) %> 
+						                	<% end %>
+			              				</td>
+			              			</tr> 	
+			              		
+			              <% end %>
+                	</tbody>
+  	            </table>
+
+	        <% end %>
+	    </div>   
+	</div>	
+</div>

@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get 'u/users' => 'users#index'
 
   get 'available_fields' => 'available_fields#index'
+  get 'select_game' => 'select_game#index'
 
   resources :notifications, only: :index
 

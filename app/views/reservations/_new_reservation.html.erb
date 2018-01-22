@@ -1,3 +1,6 @@
+<% if signed_in? %>
+  <%= link_to "Make New Reservation", available_fields_path(game: @game), class: "btn btn-primary" %>
+<% else %>
 <!-- Button trigger modal -->
 
   <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
@@ -115,3 +118,4 @@
 
     </div>
 
+<% end %>

@@ -7,6 +7,7 @@ class GamesController < ApplicationController
 	before_action :set_fields_collection, only: [:show]
 
 	@@res = Hash.new
+	@@reservation_creation_message = ""
 
 	def index
 		# add field id
@@ -33,6 +34,13 @@ class GamesController < ApplicationController
 		#Bug - when a field is erased from a business, and the show action is called it fails because it cannot find field to show field info into the show page
 		# Make impossible to erase a field in the case there are open games. Or it has to erased all of them. 
 		@reservation = Reservation.new
+
+		if params[:date]
+			@@res = {date: params[:date], time: params[:time].to_time, end_time: params[:time].to_time + 1.hour, 
+				business: params[:business].to_i, field: params[:field].to_i}
+			@@reservation_creation_message = "Reservation created"
+			check_reservation	
+		end
 		
 	end
 
@@ -41,7 +49,8 @@ class GamesController < ApplicationController
 		@game = Game.new
 		if params[:date]
 			@@res = {date: params[:date], time: params[:time].to_time, end_time: params[:time].to_time + 1.hour, 
-				business: params[:business], field: params[:field]}
+				business: params[:business].to_i, field: params[:field].to_i}
+				@@reservation_creation_message = "Game and Reservation created"
 		end
 	end
 
@@ -76,18 +85,7 @@ class GamesController < ApplicationController
 			if !@game.user_id.nil?
 				GameLine.create(user_id: @game.user_id, game_id: @game.id, accepted: true)
 			end
-
-			if !@@res.empty?
-				reservation = Reservation.create(date: @@res[:date], time: @@res[:time], end_time: @@res[:end_time],
-					business: Business.find(@@res[:business].to_i), field_id: @@res[:field].to_i, game: @game)
-				if reservation.save
-					flash[:success] = "Game and Reservation created"
-				else
-					#TODO: Show error message. Why is failing?
-					flash[:warning] = "could't make reservation"
-				end
-				@@res.clear
-			end
+			check_reservation
 		else
 			render 'new'
 		end
@@ -146,6 +144,24 @@ class GamesController < ApplicationController
 	def game_params
 		params.require(:game).permit(:user_id, :business_id, :number_players, :title, 
 			:description, :public)
+	end
+
+	def check_reservation
+		if !@@res.empty?
+				reservation = Reservation.create(date: @@res[:date], time: @@res[:time], end_time: @@res[:end_time],
+					business: Business.find(@@res[:business]), field_id: @@res[:field], game: @game)
+				if reservation.save
+					redirect_to @game
+					flash[:success] = @@reservation_creation_message
+					Notification.create(recipientable: reservation.business, actorable: current_user, 
+					                action: "Made", notifiable: reservation)
+				else
+					#TODO: Show error message. Why is failing?
+					flash[:warning] = "could't make reservation"
+				end
+				@@res.clear
+				@@reservation_creation_message = ""
+		end
 	end
 
 end
