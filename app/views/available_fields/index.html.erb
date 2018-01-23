@@ -26,30 +26,37 @@
 				<% if @businesses.present? %>
 					<div class="">
 				 		<% @businesses.each do |key, business| %>
+
 				 			<div class="col-md-11 col-md-offset-1 col-xs-12 col-sm-12">
-				 				      <div class="col-md-6 col-sm-10 col-xs-9">
+			 				      <div class="col-md-6 col-sm-10 col-xs-9">
 				 				        <h3><%= link_to business[0].name, business[0] %></h3>
 				 				          <address>
 				 				            <i class="fa fa-map-marker"></i> <%= business[0].city %><span><%= business[0].state %></span><br>
 				 				        </address>
-				 				        </div>
-				 				        <div class="col-md-4 col-sm-2 col-xs-3" style="float: right; padding-top: 23px;">
-					 				        	<!-- Single button -->
-					 				        	<div class="btn-group">
-					 				        	  <button type="button" class="btn btn-primary btn-fill btn-round dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					 				        	    Reserve <span class="caret"></span>
-					 				        	  </button>
-					 				        	  <ul class="dropdown-menu">
-					 				        	    <li>
-					 				        	    	<%= link_to "Create New Game", new_game_path(business: business[0].id, date: params[:date], time: params[:time], field: business[1].id) %>
+			 				        </div>
 
-					 				        	    </li>
-					 				        	    <li>
-					 				        	    	<%= link_to "Add To Game", select_game_path(business: business[0].id, date: params[:date], time: params[:time], field: business[1].id) %>
-					 				        	    </li>
-					 				        	  </ul>
-					 				        	</div>
-				 				      </div>	
+			 				        <div class="col-md-4 col-sm-2 col-xs-3" style="float: right; padding-top: 23px;">
+			 				        	<%if !business[2].nil? %>
+											<%= link_to "Add To Game", game_path( business[2] , business: business[0].id, date: params[:date], time: params[:time], field: business[1].id), class: "btn btn-primary btn-round btn-fill" %> 
+										<% else %>
+
+				 				        	<!-- Single button -->
+				 				        	<div class="btn-group">
+				 				        	  <button type="button" class="btn btn-primary btn-fill btn-round dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				 				        	    Reserve <span class="caret"></span>
+				 				        	  </button>
+				 				        	  <ul class="dropdown-menu">
+				 				        	    <li>
+				 				        	    	<%= link_to "Create New Game", new_game_path(business: business[0].id, date: params[:date], time: params[:time], field: business[1].id) %>
+
+				 				        	    </li>
+				 				        	    <li>
+				 				        	    	<%= link_to "Add To Game", select_game_path(business: business[0].id, date: params[:date], time: params[:time], field: business[1].id) %>
+				 				        	    </li>
+				 				        	  </ul>
+				 				        	</div>
+				 				        <% end %>
+			 				     	</div>	
 
 				 			</div>
 				 		<% end %>

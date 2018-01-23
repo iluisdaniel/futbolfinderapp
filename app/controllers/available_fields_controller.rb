@@ -1,6 +1,7 @@
 class AvailableFieldsController < ApplicationController
 	before_action :signed_in_user_but_not_business?, only: :index
 
+	@@game = nil
 
 	def index
 		#flash[:warning] = "var @@game " + @@game.to_s 
@@ -9,6 +10,12 @@ class AvailableFieldsController < ApplicationController
 			#TODO: change variable name to something else. the hash has businesses and field.
 			@businesses = get_available_businesses(Business.get_open_businesses_at(params[:date], params[:time]),
 				params[:date], params[:time])
+		else
+			@@game = nil
+		end
+
+		if params[:game]
+			@@game = params[:game]	
 		end
 
 		#flash[:info] = "var @@game " + @@game.to_s 
@@ -27,6 +34,7 @@ class AvailableFieldsController < ApplicationController
 					bs[b.name] = Array.new
 					bs[b.name] << b
 					bs[b.name] << f
+					bs[b.name] << @@game
 				end
 			end
 		end
