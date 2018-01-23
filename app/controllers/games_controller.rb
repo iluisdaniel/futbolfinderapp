@@ -148,7 +148,7 @@ class GamesController < ApplicationController
 
 	def check_reservation
 		if !@@res.empty?
-				reservation = Reservation.create(date: @@res[:date], time: @@res[:time], end_time: @@res[:end_time],
+				reservation = Reservation.new(date: @@res[:date], time: @@res[:time], end_time: @@res[:end_time],
 					business: Business.find(@@res[:business]), field_id: @@res[:field], game: @game)
 				if reservation.save
 					redirect_to @game
