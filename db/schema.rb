@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171209191444) do
+ActiveRecord::Schema.define(version: 20180124075828) do
 
   create_table "businesses", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -158,19 +158,23 @@ ActiveRecord::Schema.define(version: 20171209191444) do
   add_index "schedules", ["business_id"], name: "index_schedules_on_business_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",           limit: 255
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.string   "password_digest", limit: 255
-    t.string   "remember_token",  limit: 255
-    t.string   "location",        limit: 255
-    t.string   "slug",            limit: 255
-    t.integer  "games_played",    limit: 4
-    t.string   "first_name",      limit: 255
-    t.string   "last_name",       limit: 255
-    t.string   "gender",          limit: 255
+    t.string   "email",               limit: 255
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.string   "password_digest",     limit: 255
+    t.string   "remember_token",      limit: 255
+    t.string   "location",            limit: 255
+    t.string   "slug",                limit: 255
+    t.integer  "games_played",        limit: 4
+    t.string   "first_name",          limit: 255
+    t.string   "last_name",           limit: 255
+    t.string   "gender",              limit: 255
     t.date     "dob"
-    t.string   "phone",           limit: 255
+    t.string   "phone",               limit: 255
+    t.string   "avatar_file_name",    limit: 255
+    t.string   "avatar_content_type", limit: 255
+    t.integer  "avatar_file_size",    limit: 4
+    t.datetime "avatar_updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

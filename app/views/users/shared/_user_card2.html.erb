@@ -6,7 +6,8 @@
 			        <div class="content" style="min-height: 0px;">
 
 			            <div class="author">
-			                <%= image_tag("300x200.png", :alt => "rss feed", class: "avatar") %>
+			                <%= image_tag user.avatar.url(:thumb) %>
+
 			                  <h4 class="title">
 			                  	<%= link_to user_path(user) do %>
 			                  		<%= user.first_name %> <%= user.last_name %><br />
