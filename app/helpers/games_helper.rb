@@ -237,5 +237,18 @@ module GamesHelper
         end
     end
 
+    def get_user_from_comment(user_id)
+        u = User.find(user_id)
+        return u
+    end
+
+    def user_has_avatar?(user_id)
+         u = User.find(user_id)
+
+         if u.avatar_file_name.nil? 
+            return false
+         end
+         return true
+    end
 
 end

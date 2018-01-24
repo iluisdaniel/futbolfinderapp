@@ -17,11 +17,16 @@
 					<div class="media">
 				          <a class="pull-left" href="#">
 				           <div class="avatar">
-				                <%= image_tag("64x64.png", :alt => "rss feed", class: "media-object img-circle") %>
+				                
+				                	<% if !user_has_avatar?(comment.user_id) %>
+				                    	<%= image_tag("64x64.png", :alt => "rss feed", class: "media-object img-circle") %>
+				                    <% else %>
+				                   		 <%= image_tag get_user_from_comment(comment.user_id).avatar.url(:thumb), class: "media-object img-circle comments-img" %>
+				                    <% end %>
 				           </div>
 				          </a>
 				          <div class="media-body">
-				            <h4 class="media-heading"><%= get_user_name_for_comment(comment.user_id) %></h4>
+				            <h4 class="media-heading"><%= link_to get_user_name_for_comment(comment.user_id), user_path(get_user_from_comment(comment.user_id)) %></h4>
 				            
 
 				            <p> <%= comment.body %></p>
