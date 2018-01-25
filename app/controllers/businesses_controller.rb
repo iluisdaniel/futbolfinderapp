@@ -52,7 +52,7 @@ class BusinessesController < ApplicationController
 
     def business_params
     	params.require(:business).permit(:name, :email, :phone, :address, :city, :state, :zipcode, :password, 
-    										:password_confirmation)
+    										:password_confirmation,:avatar)
     end
 
     # Confirms the correct user.
