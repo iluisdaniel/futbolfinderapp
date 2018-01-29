@@ -6,14 +6,20 @@
 <div class="container">
   <div class="row">
     <div class="col-md-offset-1 col-md-9 game-content">
-
+        
         <% if signed_in? || (@game.user_id.nil? && @game.business_id.present?) %>
           <p class="lead game-description"><%= @game.description %></p>
         <% end %>
 
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title lead"><i class="fa fa-info-circle"></i> Information</h3>
+            <h3 class="panel-title lead"><i class="fa fa-info-circle"></i> Information
+            <%= link_to edit_game_path(@game.id), class: "pull-right" do %>
+                <% if correct_business_or_user_to_edit_page %>
+                    <i class="fa fa-gear"></i>
+                <% end %>
+              <% end %>  
+            </h3>
           </div>
           <div class="panel-body">
            <ul class="list-unstyled list-inline">

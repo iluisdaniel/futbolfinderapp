@@ -31,6 +31,23 @@ module GamesHelper
     	end
     end
 
+    def correct_business_or_user_to_edit_page
+        if logged_in?
+            g = current_business.games.find_by(id: params[:id])
+            if !g.nil?
+                return true
+            end
+        elsif signed_in?
+             game = current_user.games.find_by(id: params[:id])
+
+             if !game.nil?
+              return true
+            end 
+        else
+            return false
+        end
+    end
+
     def correct_business_or_user_to_see
     	if logged_in?
     		correct_business
