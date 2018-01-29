@@ -6,7 +6,11 @@
   <% @requests.each do |req| %>
     
     <li>
-      <%= image_tag("64x64.png", :alt => "rss feed", class: "img-circle") %>        
+      <% if req.user.avatar_file_name.nil? %>
+          <%= image_tag("64x64.png", :alt => "rss feed", class: "img-circle") %>  
+        <% else %>
+           <%= image_tag req.user.avatar.url(:thumb), class: "img-circle" %>
+        <% end %>         
       <span style="font-size: 1.2em; margin-left: 10px;"><%= link_to req.user.name, req.user %></span>
       <span class="pull-right" style="padding-top: 7px;">
           <%= render partial: '/shared/friendship_buttons', locals: {user: req.user } %>

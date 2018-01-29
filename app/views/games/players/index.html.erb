@@ -5,7 +5,7 @@
 
       <h1>
         <%= @game.title %>
-        <small>Players</small>
+        <small><%= @game.id %></small>
       </h1>
     </div>
   </div>
@@ -16,7 +16,7 @@
           <li class=""><%= link_to 'Comments', conversation_index_path(@game) %></li>
 </ul>
 
-<div class="container games">
+<div class="container  players-list">
 	<div class="row">
 		<div class="col-md-offset-1 col-md-7">
 			<h2 class="lead"> Players </h2>
@@ -26,37 +26,37 @@
 			<% else %>
 			  
 				<% @game.game_lines.each do |game_line| %>
-	            
-		            <li>
-		              <%= image_tag("64x64.png", :alt => "rss feed", class: "img-circle") %>        
-		              <span style="font-size: 1.2em; margin-left: 10px;"><%= link_to game_line.user.first_name, game_line.user %></span>
-		              <span class="pull-right" style="padding-top: 7px;">
-		                  <% if signed_in? && current_user != game_line.user%>
-		                      <%= render partial: '/shared/friendship_buttons', locals: {user: game_line.user } %>
-		                      <button href="#" class="btn btn-default btn-fill btn-round"> <i class="fa fa-envelope"></i></button>
-		                   <% end %>  
-		           		  	<small>
-		           		  		<% if is_correct_user_or_business_associated_with_game_line?(game_line) %>
-		           		  		
-		           			  		<% if game_line.accepted != true %>
-		           				  		<%= link_to game_line_path(id: game_line.id), method: "put", class: 'btn btn-default btn-fill btn-round btn-success' do %>
-		           				  			Accept <i class="fa fa-check"></i> 
-		           				  		<% end %>
-		           		  						
-		           	  					<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id, class: 'btn btn-default btn-fill btn-round btn-danger' do%>
-		           	  						Cancel <i class="fa fa-times"></i> 
-		           	  					<% end %>
-		           	  				<% else %>
-		           	  					<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id, class: 'btn btn-default btn-fill btn-round btn-danger' do%>
-		           	  						Cancel <i class="fa fa-times"></i> 
-		           	  					<% end %>
-		           	  				<% end %>	
+		            <div style="margin-bottom: 30px;">
+		              <% if !user_has_avatar?(game_line.user.id) %>
+		              	<%= image_tag("64x64.png", :alt => "rss feed", class: "img-circle") %>
+		              <% else %>
+		             		 <%= image_tag game_line.user.avatar.url(:thumb), class: "img-circle comments-img" %>
+		              <% end %>
 
-		             				<% end %>
-		             			</small>   
-		              </span>
-		            </li>
-		            <hr>
+	              		<span style="font-size: 1.2em; margin-left: 10px;"><%= link_to game_line.user.first_name, game_line.user %></span>
+
+			              <span class="pull-right" style="padding-top: 7px;"> 
+			           		  	<small>
+			           		  		<% if is_correct_user_or_business_associated_with_game_line?(game_line) %>
+			           		  		
+			           			  		<% if game_line.accepted != true %>
+			           				  		<%= link_to game_line_path(id: game_line.id), method: "put", class: 'btn btn-default btn-fill btn-round btn-success' do %>
+			           				  			Accept <i class="fa fa-check"></i> 
+			           				  		<% end %>
+			           		  						
+			           	  					<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id, class: 'btn btn-default btn-fill btn-round btn-danger' do%>
+			           	  						Cancel <i class="fa fa-times"></i> 
+			           	  					<% end %>
+			           	  				<% else %>
+			           	  					<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id, class: 'btn btn-default btn-fill btn-round btn-danger' do%>
+			           	  						Cancel <i class="fa fa-times"></i> 
+			           	  					<% end %>
+			           	  				<% end %>	
+
+			             			<% end %>
+			             		</small>   
+			              </span>
+		            </div>
 	        	<% end %>
 			<% end %>  	  
 		</div>
