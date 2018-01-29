@@ -1,12 +1,11 @@
 <% provide(:title, 'My Games') %>
-<% provide(:htitle, @game.title) %>
-<% provide(:secondaryTitle, @game.id.to_s)%>
+<%= render "/games/shared/game_header"%>
 <%= render "/games/shared/menu_bar" %>
 
 <div class="container">
   <div class="row">
     <div class="col-md-offset-1 col-md-9 game-content">
-        
+
         <% if signed_in? || (@game.user_id.nil? && @game.business_id.present?) %>
           <p class="lead game-description"><%= @game.description %></p>
         <% end %>
