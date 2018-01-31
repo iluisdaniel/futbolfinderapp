@@ -13,6 +13,24 @@ class ActiveSupport::TestCase
   	!session[:business_id].nil?
   end
 
+  def get_next_monday_date
+    d = Date.today
+    if d.strftime("%A") == "Monday"
+      d = d + 7.days
+    else
+      found = false
+      while !found do 
+        if d.strftime("%A") == "Monday"
+          found = true
+        else
+          d = d + 1.days
+        end
+      end
+    end
+
+    return d
+  end
+
    # Logs in a test user.
   def log_in_as(business, options = {})
     password    = options[:password]    || 'password'

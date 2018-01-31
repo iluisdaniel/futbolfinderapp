@@ -668,6 +668,7 @@ ul.alert-dropdown {
         .btn-success:hover{
             background-color: #027708 !important;
         }
+
     }
     .btn-round{
         padding:2px 7px !important; 
@@ -717,6 +718,16 @@ ul.alert-dropdown {
     }
 }
 
+
+/**** Game Players *****/
+
+    .players-list{
+        .btn-group{
+            button.btn{
+                width: 100px;
+            }
+        }
+    }
 /* game index */
 
 .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td{

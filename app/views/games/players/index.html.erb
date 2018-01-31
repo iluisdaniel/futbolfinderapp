@@ -39,18 +39,70 @@
 			           		  	<small>
 			           		  		<% if is_correct_user_or_business_associated_with_game_line?(game_line) %>
 			           		  		
-			           			  		<% if game_line.accepted != true %>
-			           				  		<%= link_to game_line_path(id: game_line.id), method: "put", class: 'btn btn-default btn-fill btn-round btn-success' do %>
-			           				  			Accept <i class="fa fa-check"></i> 
-			           				  		<% end %>
-			           		  						
-			           	  					<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id, class: 'btn btn-default btn-fill btn-round btn-danger' do%>
-			           	  						Cancel <i class="fa fa-times"></i> 
-			           	  					<% end %>
+			           			  		<% if game_line.accepted == "Declined" %>	
+   				  					  		<div class="btn-group" role="group">
+   				  					  		    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   				  					  		      Declined 
+   				  					  		      <span class="caret"></span>
+   				  					  		    </button>
+   				  					  		    <ul class="dropdown-menu">
+   				  					  		      <li>
+				  		      	  					<%= link_to game_line_path(id: game_line.id, accepted: "Accepted"), method: "put", class: '' do %>
+				  		      				  			Accept
+				  		      				  		<% end %>
+   				  					  		      </li>
+   				  					  		      <li>
+   				  					  		      	<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id do%>
+      				           	  						Remove 
+      				           	  					<% end %>
+   				  					  		      </li>
+   				  					  		    </ul>
+   				  					  		  </div>
+
+			           				  	<% elsif game_line.accepted == "Accepted"%>
+   				  					  		<div class="btn-group" role="group">
+   				  					  		    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   				  					  		      Accepted
+   				  					  		      <span class="caret"></span>
+   				  					  		    </button>
+   				  					  		    <ul class="dropdown-menu">
+   				  					  		      <li>
+				  		      	  					<%= link_to game_line_path(id: game_line.id, accepted: "Declined"), method: "put", class: '' do %>
+				  		      				  			Decline
+				  		      				  		<% end %>
+   				  					  		      </li>
+  				  					  		      <li>
+  				  					  		      	<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id do%>
+     				           	  						Remove 
+     				           	  					<% end %>
+  				  					  		      </li>
+   				  					  		    </ul>
+   				  					  		  </div>
 			           	  				<% else %>
-			           	  					<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id, class: 'btn btn-default btn-fill btn-round btn-danger' do%>
-			           	  						Cancel <i class="fa fa-times"></i> 
-			           	  					<% end %>
+   				  					  		<div class="btn-group" role="group">
+   				  					  		    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   				  					  		      Pending
+   				  					  		      <span class="caret"></span>
+   				  					  		    </button>
+   				  					  		    <ul class="dropdown-menu">
+   				  					  		      <li>
+				  		      	  					<%= link_to game_line_path(id: game_line.id, accepted: "Accepted"), method: "put", class: '' do %>
+				  		      				  			Accept
+				  		      				  		<% end %>
+   				  					  		      </li>
+   				  					  		      <li>
+				  		      	  					<%= link_to game_line_path(id: game_line.id, accepted: "Declined"), method: "put", class: '' do %>
+				  		      				  			Decline
+				  		      				  		<% end %>
+   				  					  		      </li>
+  				  					  		      <li>
+  				  					  		      	<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id do%>
+     				           	  						Remove 
+     				           	  					<% end %>
+  				  					  		      </li>
+   				  					  		    </ul>
+   				  					  		  </div>
+
 			           	  				<% end %>	
 
 			             			<% end %>

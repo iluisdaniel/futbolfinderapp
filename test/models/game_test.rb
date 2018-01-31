@@ -5,18 +5,53 @@ class GameTest < ActiveSupport::TestCase
   #   assert true
   # end
   def setup
-  	@user = users(:luis)
+  	@user = users(:jose)
   	@business = businesses(:canchita)
-  	#@game = games(:one)
-    #@schedule = schedules(:one)
-    @schedule = Schedule.new(day: "Monday", open_time: "10:00:00", close_time: "22:00:00", business_id: @business.id)
   	
-    @game = Game.new( user_id: 1, 
-  		business_id: 1)
-
+    @game = Game.new( user_id: 1, title: "Esto es una prueba", description: "This is the description", 
+      number_players: 10, public: true)
   end
 
-  # test "game should be valid" do
+  test "game should be valid" do 
+      assert @game.valid?
+  end
+
+  test "game should be valid with business and without user" do 
+    @game.user_id = nil
+    @game.business_id = @business.id
+    assert @game.valid?
+  end
+
+  test "user or business should be present" do 
+    @game.public = nil
+    assert_not @game.valid?
+  end
+
+  test "Number of players should be a number" do
+    @game.number_players = "a"
+    assert_not @game.valid?
+  end
+
+  test "Title shuold be greater than 4" do
+    @game.title = "aa"
+    assert_not @game.valid?
+  end
+
+  test "title should minimum than 60" do 
+    @game.title = "a" * 61
+    assert_not @game.valid?
+  end
+
+  test "desc should be greater than 6" do
+    @game.description = "aa"
+    assert_not @game.valid?
+  end
+
+  test "des should be less than 500" do 
+    @game.description = "a" * 501
+    assert_not @game.valid?
+  end
+  # test "game should be valid" do*
   # 	assert @game.valid?
   # end
 

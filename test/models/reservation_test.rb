@@ -7,9 +7,10 @@ class ReservationTest < ActiveSupport::TestCase
   def setup
   	@business = businesses(:canchita)
   	@field = fields(:one)
-  	@schedule = schedules(:one)
-  	@reservation = Reservation.new(date: "2017-12-11", time: "13:00:00", 
+  	@schedule = Schedule.new(day: "Monday", open_time: "10:00:00", close_time: "22:00:00", business_id: @business.id)
+  	@reservation = Reservation.new(time: "13:00:00", 
   		end_time: "14:00:00", business_id: @business.id, field_id: @field.id)
+    @reservation.date = get_next_monday_date
   end
 
   test "should be valid" do 
@@ -50,8 +51,8 @@ class ReservationTest < ActiveSupport::TestCase
   ############### Business
 
   test "Business should be open" do 
-  	@reservation.time = "06:00:00"
-  	@reservation.end_time = "07:00:00"
+  	@reservation.time = "01:00:00"
+    @reservation.end_time = "02:00:00"
   	assert_not @reservation.valid?
   end
 

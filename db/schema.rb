@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180125072351) do
+ActiveRecord::Schema.define(version: 20180130205105) do
 
   create_table "businesses", force: :cascade do |t|
     t.string   "name",                limit: 255
@@ -80,9 +80,9 @@ ActiveRecord::Schema.define(version: 20180125072351) do
   create_table "game_lines", force: :cascade do |t|
     t.integer  "game_id",    limit: 4
     t.integer  "user_id",    limit: 4
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.boolean  "accepted",             default: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "accepted",   limit: 255
   end
 
   add_index "game_lines", ["game_id"], name: "index_game_lines_on_game_id", using: :btree

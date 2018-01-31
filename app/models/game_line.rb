@@ -37,7 +37,7 @@ class GameLine < ActiveRecord::Base
   			return true
   		else
 
-        if accepted == true
+        if !accepted.nil?
           return true
         else
           return false
