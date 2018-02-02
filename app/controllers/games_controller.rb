@@ -83,7 +83,9 @@ class GamesController < ApplicationController
 			redirect_to @game
 			flash[:success] = "Your Game Was Created"		
 			if !@game.user_id.nil?
-				GameLine.create(user_id: @game.user_id, game_id: @game.id, accepted: true)
+				gl = GameLine.new(user_id: @game.user_id, game_id: @game.id)
+				gl.save
+				gl = @game.game_lines.first.update(accepted: "Accepted")
 			end
 			check_reservation
 		else

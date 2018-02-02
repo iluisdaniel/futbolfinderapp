@@ -4,7 +4,6 @@
           
           <%= f.hidden_field :user_id, :value => current_user.id %> 
           <%= f.hidden_field :game_id, :value => @game.id %>
-          <%= f.hidden_field :accepted, :value => "Accepted" %>
           <%= f.submit "Add Yourself", readonly: true,class: "btn btn-primary btn-fill btn-round" %>
       <% end %>
 </div>

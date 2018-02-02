@@ -92,11 +92,11 @@ class Game < ActiveRecord::Base
 
 
     def players_confirmed 
-      self.game_lines.where(accepted: true)
+      self.game_lines.where(accepted: "Accepted")
     end
 
     def players_invited
-      self.game_lines.where(accepted: false)
+      self.game_lines.where(accepted: "Pending")
     end
 
     def is_player_involved?(user)
@@ -137,7 +137,7 @@ class Game < ActiveRecord::Base
         if u_biz.instance_of? Business
           gs = u_biz.games
         else
-          gs = Game.joins(game_lines: :user).where(game_lines: {user_id: u_biz.id, accepted: true })
+          gs = Game.joins(game_lines: :user).where(game_lines: {user_id: u_biz.id, accepted: "Accepted" })
         end
         return gs
       end
@@ -146,13 +146,13 @@ class Game < ActiveRecord::Base
         if u_biz.instance_of? Business
           gs = u_biz.games.where(public: true)
         else
-          gs = Game.joins(game_lines: :user).where(game_lines: {user_id: u_biz.id, accepted: true }, public: true)
+          gs = Game.joins(game_lines: :user).where(game_lines: {user_id: u_biz.id, accepted: "Accepted" }, public: true)
         end
         return gs
       end
 
       def self.get_invited_games(user)
-        return Game.joins(game_lines: :user).where(game_lines: {user_id: user.id, accepted: false })   
+        return Game.joins(game_lines: :user).where(game_lines: {user_id: user.id, accepted: "Pending" }) 
       end
     
 

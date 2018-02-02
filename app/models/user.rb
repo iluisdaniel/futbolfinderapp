@@ -68,11 +68,11 @@ class User < ActiveRecord::Base
     end
 
     def games_involved
-    	Game.joins(game_lines: :user).where(game_lines: {user_id: id, accepted: true})
+    	Game.joins(game_lines: :user).where(game_lines: {user_id: id, accepted: "Accepted"})
     end
 
     def invited_games
-        Game.joins(game_lines: :user).where(game_lines: {user_id: id, accepted: false })   
+        Game.joins(game_lines: :user).where(game_lines: {user_id: id, accepted: "Pending" })   
     end
 
      def slug_candidates

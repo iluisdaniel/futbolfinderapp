@@ -2,11 +2,17 @@ class GameLine < ActiveRecord::Base
   belongs_to :game
   belongs_to :user 
 
+  before_save :set_defaults, if: :new_record?
+
   validate :validate_user_exists
   validate :validate_user_is_not_duplicate
   # validate :validate_user_is_not_game_creator
 
-  	def validate_user_exists
+  	def set_defaults
+        self.accepted = "Pending"
+    end
+
+    def validate_user_exists
   		errors.add(:user_id, "User doesn't exist") unless does_user_exist?
   	end
 

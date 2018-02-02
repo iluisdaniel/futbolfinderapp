@@ -23,6 +23,10 @@ class GameLinesController < ApplicationController
 	      # 	Notification.create(recipientable: @game_line.game.business, actorable: current_user, 
 	      # 				action: "Confirmed You", notifiable: @game_line.game)
 	      # end
+	      if @game_line.user == current_user
+	      	@game_line.update(accepted: "Accepted")
+	      	@game_line.save
+	      end
 	    else
 	    	flash[:danger] = "Unable to add player"
 	    	redirect_to :back
