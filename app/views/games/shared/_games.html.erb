@@ -33,7 +33,7 @@
                 <td><%= get_reservation_time_from_game(game.id) %> - <%= get_reservation_end_time_from_game(game.id) %></td>
                 
                 <td><%= get_number_of_players_ready(game.id)%> / <%= game.number_players %></td>
-                <td><%= public_or_private(game.public) %></td>
+                <td><%= game.public %></td>
                 <td><%= link_to get_game_creator(game), get_game_creator(game) %></td>
               </tr>
 

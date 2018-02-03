@@ -67,6 +67,19 @@ class User < ActiveRecord::Base
         pending_friends | requested_friendships
     end
 
+    def is_a_friend?(user)
+    	friends.include?(user)
+    end
+
+    def is_a_friend_of_a_friend?(user)
+    	friends.each do |friend|
+    		if friend.is_a_friend?(user)
+    			return true
+    		end
+    	end
+    	return false
+    end
+
     def games_involved
     	Game.joins(game_lines: :user).where(game_lines: {user_id: id, accepted: "Accepted"})
     end

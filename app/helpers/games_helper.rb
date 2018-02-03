@@ -8,9 +8,25 @@ module GamesHelper
 	    game = Game.find_by(id: params[:id])
     	game_line = current_user.game_lines.find_by(game_id: params[:id])
 
-		if (game.user_id != current_user.id && game_line.nil?) && game.public == false
+        # Check if current user is  admin, is on the game list, or is allow to see by public setting.
+		if (game.user_id != current_user.id && game_line.nil?) && !is_allow_to_see_from_game_public_setting?(game)
 	      redirect_to root_url 
 	  	end	
+    end
+
+    def is_allow_to_see_from_game_public_setting?(game)
+        if game.public == "Public"
+            return true
+        elsif game.public == "Friends"
+            if game.user.is_a_friend?(current_user)
+                return true
+            end
+        elsif game.public == "Friends of friends"
+            if game.user.is_a_friend?(current_user) || game.user.is_a_friend_of_a_friend?(current_user)
+                return true
+            end
+        end
+        return false               
     end
 
     def correct_user_to_delete
@@ -31,6 +47,7 @@ module GamesHelper
     	end
     end
 
+    #simplify this method. 
     def correct_business_or_user_to_edit_page
         if logged_in?
             g = current_business.games.find_by(id: params[:id])

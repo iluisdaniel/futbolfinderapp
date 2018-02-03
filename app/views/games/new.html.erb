@@ -15,7 +15,7 @@
             <%= f.label :public, 'Public' %>
           </div>
           <div class="col-md-8">
-            <%= f.select :public, [['Yes', true], ['No', false]], {prompt: "Select"}, { class: 'form-control'} %>
+            <%= f.select :public, ['Private', 'Friends', 'Friends of friends', 'Public'], {prompt: "Select"}, { class: 'form-control'} %>
           </div>
         </div>
       </div>
