@@ -41,7 +41,7 @@
 			           		  		
 			           			  		<% if game_line.accepted == "Declined" %>	
    				  					  		<div class="btn-group" role="group">
-   				  					  		    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   				  					  		    <button type="button" class="btn btn-danger btn-fill dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
    				  					  		      Declined 
    				  					  		      <span class="caret"></span>
    				  					  		    </button>
@@ -61,7 +61,7 @@
 
 			           				  	<% elsif game_line.accepted == "Accepted"%>
    				  					  		<div class="btn-group" role="group">
-   				  					  		    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   				  					  		    <button type="button" class="btn btn-success btn-fill dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
    				  					  		      Accepted
    				  					  		      <span class="caret"></span>
    				  					  		    </button>
@@ -78,34 +78,74 @@
   				  					  		      </li>
    				  					  		    </ul>
    				  					  		  </div>
+                            <% elsif game_line.accepted == "Requested"%>
+                              
+                                  <div class="btn-group" role="group">
+                                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Requested
+                                        <span class="caret"></span>
+                                      </button>
+                                      <ul class="dropdown-menu">
+                                        <% if game_line.user != current_user %>
+                                              <li>
+                                              <%= link_to game_line_path(id: game_line.id, accepted: "Accepted"), method: "put", class: '' do %>
+                                                Accept
+                                              <% end %>
+                                              </li>
+                                              <li>
+                                              <%= link_to game_line_path(id: game_line.id, accepted: "Declined"), method: "put", class: '' do %>
+                                                Decline
+                                              <% end %>
+                                              </li>
+                                        <% end %>
+                                        <li>
+                                          <%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id do%>
+                                            Remove 
+                                          <% end %>
+                                        </li>
+                                      </ul>
+                                    </div>
+
 			           	  				<% else %>
-   				  					  		<div class="btn-group" role="group">
-   				  					  		    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-   				  					  		      Pending
-   				  					  		      <span class="caret"></span>
-   				  					  		    </button>
-   				  					  		    <ul class="dropdown-menu">
-   				  					  		      <li>
-				  		      	  					<%= link_to game_line_path(id: game_line.id, accepted: "Accepted"), method: "put", class: '' do %>
-				  		      				  			Accept
-				  		      				  		<% end %>
-   				  					  		      </li>
-   				  					  		      <li>
-				  		      	  					<%= link_to game_line_path(id: game_line.id, accepted: "Declined"), method: "put", class: '' do %>
-				  		      				  			Decline
-				  		      				  		<% end %>
-   				  					  		      </li>
-  				  					  		      <li>
-  				  					  		      	<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id do%>
-     				           	  						Remove 
-     				           	  					<% end %>
-  				  					  		      </li>
-   				  					  		    </ul>
-   				  					  		  </div>
+       				  					  		<div class="btn-group" role="group">
+       				  					  		    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+       				  					  		      Pending
+       				  					  		      <span class="caret"></span>
+       				  					  		    </button>
+       				  					  		    <ul class="dropdown-menu">
+       				  					  		      <li>
+    				  		      	  					<%= link_to game_line_path(id: game_line.id, accepted: "Accepted"), method: "put", class: '' do %>
+    				  		      				  			Accept
+    				  		      				  		<% end %>
+       				  					  		      </li>
+       				  					  		      <li>
+    				  		      	  					<%= link_to game_line_path(id: game_line.id, accepted: "Declined"), method: "put", class: '' do %>
+    				  		      				  			Decline
+    				  		      				  		<% end %>
+       				  					  		      </li>
+      				  					  		      <li>
+      				  					  		      	<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id do%>
+         				           	  						Remove 
+         				           	  					<% end %>
+      				  					  		      </li>
+       				  					  		    </ul>
+       				  					  		  </div>
 
 			           	  				<% end %>	
 
-			             			<% end %>
+			             			<%else%>
+                          <div class="btn-group">
+                            <% if game_line.accepted == "Declined" %>
+                                <button class="btn btn-danger btn-fill">Declined <i class="fa fa-times"></i></button>
+                            <% elsif game_line.accepted == "Accepted" %>
+                                <button class="btn btn-success btn-fill">Accepted <i class="fa fa-check"></i></button>
+                            <% elsif game_line.accepted == "Pending" %>
+                              <button class="btn btn-warning">Pending <i class="fa fa-clock-o"></i></button>
+                            <% elsif game_line.accepted == "Requested" %>
+                                <button class="btn btn-default">Requested <i class="fa fa-circle-o"></i></button>
+                            <%end%>
+                          </div>    
+                        <% end %>
 			             		</small>   
 			              </span>
 		            </div>
@@ -113,10 +153,11 @@
 			<% end %>  	  
 		</div>
 		<div class="col-md-3" style="background: #fafafa; margin-left: 20px;">
-			<h4 class="lead"> Add Players </h4>
-			<% if logged_in? || (@game.is_player_involved?(current_user)) %>
+			<% if @game.is_player_involved?(current_user) && @game.invite_allowed == true %>
 			    <%= render '/game_lines/new_game_line' %>
-			<% elsif signed_in? %>
+      <% elsif logged_in? || @game.user == current_user %>
+          <%= render '/game_lines/new_game_line' %>
+			<% elsif  !@game.is_player_involved?(current_user)%>
 			    <%= render '/game_lines/add_yourself' %>
 			<% end %>
 		</div>

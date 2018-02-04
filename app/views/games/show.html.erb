@@ -22,6 +22,7 @@
           </div>
           <div class="panel-body">
            <ul class="list-unstyled list-inline">
+                  <li><i class="fa fa-circle-o"></i>Invites: <%= @game.invite_allowed %> </li>
                   <li><i class="fa fa-futbol-o"></i>View: <%= @game.public %> </li> 
                   <li><i class="fa fa-user"></i> Admin: <%= link_to get_game_creator(@game), get_game_creator(@game) %></li>
                   <li><i class="fa fa-users"></i> Players Wanted: <%= @game.number_players %></li>

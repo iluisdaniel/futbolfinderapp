@@ -40,17 +40,16 @@ class GameLine < ActiveRecord::Base
   		game_line = GameLine.where(game_id: game_id, user_id: user_id)
 
   		if game_line.empty?
-  			return true
+  			 return true
   		else
-
-        if !accepted.nil?
-          return true
-        else
-          return false
-        end
+          if !accepted.nil?
+            return true
+          else
+            return false
+          end
       end
-
   	end
+
 
   	# def is_the_user_the_game_creator?
   	# 	game = Game.find_by(id: game_id)

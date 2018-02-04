@@ -7,6 +7,17 @@
     <div class="row">
     <%= render 'shared/error_messages', object: f.object %>
     </div>	
+
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-2">
+            <%= f.label :invite_allowed, 'Allow Invites' %>
+          </div>
+          <div class="col-md-8">
+            <%= f.select :invite_allowed, [['Yes', true], ['No', false]], {prompt: "Select"}, { class: 'form-control'} %>
+          </div>
+        </div>
+      </div>
     
       <div class="row">
         <div class="form-group">

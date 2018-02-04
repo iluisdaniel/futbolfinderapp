@@ -14,14 +14,16 @@ class Game < ActiveRecord::Base
   validates :description, length: { maximum: 500, minimum: 6 }, allow_blank: true
   validates :title, length: { minimum: 4, maximum: 60}, allow_blank: true
   validates :number_players, presence: true, numericality: {only_integer: true}
+  validates :public, presence: true, length: {minimum:3, maximum:20}
 
   #validate public 
-  validate :check_public_is_presence
+  validate :check_invite_allowed_presence
   
 
     ####### validate public presence
-    def check_public_is_presence
-      errors.add(:public, " should be presence") unless !public.nil?
+
+    def check_invite_allowed_presence
+      errors.add(:invite_allowed, " should present") unless !invite_allowed.nil?
     end
 
     def self.with_reservation(user_business)
@@ -100,8 +102,13 @@ class Game < ActiveRecord::Base
     end
 
     def is_player_involved?(user)
-      if self.game_lines.where(user_id: user.id).empty?
+      gl = self.game_lines.where(user_id: user.id)
+      if gl.empty?
         return false
+      else
+          if gl.first.accepted == "Requested"
+            return false
+          end
       end
       return true
     end

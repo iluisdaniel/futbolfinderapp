@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180202084222) do
+ActiveRecord::Schema.define(version: 20180203231445) do
 
   create_table "businesses", force: :cascade do |t|
     t.string   "name",                limit: 255
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20180202084222) do
     t.string   "title",          limit: 255
     t.text     "description",    limit: 65535
     t.string   "public",         limit: 255
+    t.boolean  "invite_allowed"
   end
 
   add_index "games", ["business_id"], name: "index_games_on_business_id", using: :btree

@@ -114,38 +114,13 @@ class GamesController < ApplicationController
 		flash[:success] = "Game destroyed"
 		redirect_to games_path
 	end
-
-	def search
-		# Search on business index
-		# <div class="row">
-		# 	<div class="">
-		# 	</div>
-		# 	<div class="col-md-5">
-		# 	<%= form_tag search_path, action: "search", method: :get, class: "form-group pull-right" do %>
-		# 		<div class="input-group">
-		# 			<%= text_field_tag :city, params[:city], placeholder: "Search",  class: "form-control pull-left" %>
-		# 			<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span>
-		# 		</div>	
-		# 		<%= submit_tag "Search",name: nil, class: "btn btn-primary btn-fill pull-right" %>
-		# 	<% end %>
-		# 	</div>
-		# </div>
-		# <hr>
-
-		# results = Array.new
-		# results = find_available_fields(params[:city], params[:time], params[:number])
-		@businesses = find_available_fields(params[:city], params[:time], params[:number])
-
-		if @businesses.empty?
-			flash.now[:warning] = @message
-		end
-	end
+	
 
 	private
 
 	def game_params
 		params.require(:game).permit(:user_id, :business_id, :number_players, :title, 
-			:description, :public)
+			:description, :public, :invite_allowed)
 	end
 
 	def check_reservation

@@ -9,21 +9,34 @@ class GameTest < ActiveSupport::TestCase
   	@business = businesses(:canchita)
   	
     @game = Game.new( user_id: 1, title: "Esto es una prueba", description: "This is the description", 
-      number_players: 10, public: true)
+      number_players: 10, public: "Public", invite_allowed: true)
   end
 
   test "game should be valid" do 
       assert @game.valid?
   end
 
-  test "game should be valid with business and without user" do 
-    @game.user_id = nil
-    @game.business_id = @business.id
-    assert @game.valid?
+  # test "game should be valid with business and without user" do 
+  #   #need to validate this
+  # end
+
+  test "public should be present" do 
+    @game.public = ""
+    assert_not @game.valid?
   end
 
-  test "user or business should be present" do 
-    @game.public = nil
+  test "public should be greater than 3" do
+    @game.public = "aa"
+    assert_not @game.valid?
+  end
+
+  test "public sohuld be less than 20" do 
+    @game.public = "a" * 21
+    assert_not @game.valid?
+  end
+
+  test "invite allowed should be present" do 
+    @game.invite_allowed = nil
     assert_not @game.valid?
   end
 

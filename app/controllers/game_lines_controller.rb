@@ -24,7 +24,7 @@ class GameLinesController < ApplicationController
 	      # 				action: "Confirmed You", notifiable: @game_line.game)
 	      # end
 	      if @game_line.user == current_user
-	      	@game_line.update(accepted: "Accepted")
+	      	@game_line.update(accepted: "Requested")
 	      	@game_line.save
 	      end
 	    else
