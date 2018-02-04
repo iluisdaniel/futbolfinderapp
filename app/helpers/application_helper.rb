@@ -20,4 +20,11 @@ module ApplicationHelper
       return Notification.where(recipientable: current_business_or_user).unread.count
   end
 
+  def is_a_valid_email?(email)
+      if (email =~ /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i).nil?
+        return false
+      end
+      return true
+  end
+
 end

@@ -2,11 +2,10 @@ class GameLinesController < ApplicationController
 	include GamesHelper
 	before_action :signed_in_business_or_user?, only: [:create, :update, :destroy]
 
-
 	def create
 		# todo- sanitize inputs
+		user = User.friendly.find(game_line_params[:user_id])
 	  	@game_line = GameLine.new(game_line_params)
-	  	user =  find_user_with_email(game_line_params[:user_id])
 	  	
 	  	if !user.nil?
 			@game_line[:user_id] = user.id
@@ -73,7 +72,7 @@ class GameLinesController < ApplicationController
   	end
 
 
-	private 
+	private
 
 	def choose_flash_message(accepted_value, gl)
 		user_pronoun = ""
@@ -102,7 +101,7 @@ class GameLinesController < ApplicationController
 	end
 
 	def game_line_params
-  		params.require(:game_line).permit(:user_id, :game_id, :accepted)
+  		params.require(:game_line).permit(:user_id, :game_id, :accepted, :invited_by)
 	end
 	
 end
