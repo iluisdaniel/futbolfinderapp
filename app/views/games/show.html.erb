@@ -10,25 +10,26 @@
           <p class="lead game-description"><%= @game.description %></p>
         <% end %>
 
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title lead"><i class="fa fa-info-circle"></i> Information
-            <%= link_to edit_game_path(@game.id), class: "pull-right" do %>
-                <% if correct_business_or_user_to_edit_page %>
-                    <i class="fa fa-gear"></i>
-                <% end %>
-              <% end %>  
-            </h3>
-          </div>
-          <div class="panel-body">
-           <ul class="list-unstyled list-inline">
-                  <li><i class="fa fa-circle-o"></i>Invites: <%= @game.invite_allowed %> </li>
-                  <li><i class="fa fa-futbol-o"></i>View: <%= @game.public %> </li> 
-                  <li><i class="fa fa-user"></i> Admin: <%= link_to get_game_creator(@game), get_game_creator(@game) %></li>
-                  <li><i class="fa fa-users"></i> Players Wanted: <%= @game.number_players %></li>
-                  <li><i class="fa fa-calendar"></i> Created: <%= @game.created_at.strftime("%b/%d") %></li>
-                  <li><i class="fa fa-clock-o"></i> Updated: <%= @game.updated_at.strftime("%b/%d") %></li>
-                </ul>
+        <strong class="lead"><i class="fa fa-info-circle"></i> Information</strong>
+        <div class="card">
+          <div class="content">
+
+          <div class="row card-info-content">
+            
+            <div class="col-sm-4 col-xs-4 info"><div class="icon"><i class="fa fa-plus"></i></div><div class="description"><span class="title"> Invites</span><span class="value"> <%= @game.invite_allowed %> </span></div></div>
+
+            <div class="col-sm-4 col-xs-4 info"><div class="icon"><i class="fa fa-eye"></i></div><div class="description"><span class="title"> View</span><span class="value"> <%= @game.public %> </span></div></div>
+
+            <div class="col-sm-4 col-xs-4 info"><div class="icon"><i class="fa fa-user"></i></div><div class="description"><span class="title"> Admin</span><span class="value"> <%= link_to get_game_creator(@game), get_game_creator(@game) %> </span></div></div>
+
+            <div class="col-sm-4 col-xs-4 info"><div class="icon"><i class="fa fa-users"></i></div><div class="description"><span class="title"> Players Desired</span><span class="value"> <%= @game.number_players %> </span></div></div>
+
+            <div class="col-sm-4 col-xs-4 info"><div class="icon"><i class="fa fa-calendar"></i></div><div class="description"><span class="title"> Created</span><span class="value"> <%= @game.created_at.strftime("%b/%d") %> </span></div></div>
+
+            <div class="col-sm-4 col-xs-4 info"><div class="icon"><i class="fa fa-clock-o"></i></div><div class="description"><span class="title"> Last Updated</span><span class="value"> <%= @game.updated_at.strftime("%b/%d") %> </span></div></div>
+
+          </div>   
+
           </div>
         </div>
 

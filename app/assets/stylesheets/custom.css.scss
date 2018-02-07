@@ -697,10 +697,40 @@ ul.alert-dropdown {
 }
 
 .game-content{
-    margin-right: 30px;
 
     h4{
         margin-top: 40px;
+    }
+
+    .card{
+        .content{
+            .category{
+                a{
+                    color:#201a50;
+                }
+            }
+            .card-info-content{
+                margin-bottom: 20px;
+
+                .info{
+                    text-align: center;
+                    margin-bottom: 20px;
+                    .icon{
+                        font-size: 2em;
+                    }
+                    .description{
+                        font-size: 1.6rem;
+                        .title{
+                            color:#c72166;
+                            font-weight: 600;
+                        }
+                        .value{
+                            color:#777777;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 .game-header{
@@ -717,6 +747,9 @@ ul.alert-dropdown {
         margin-top: 10px;
     }
 }
+
+
+
 
 
 /**** Game Players *****/
