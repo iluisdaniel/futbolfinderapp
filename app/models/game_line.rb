@@ -6,7 +6,7 @@ class GameLine < ActiveRecord::Base
 
   validate :validate_user_exists
   validate :validate_user_is_not_duplicate
-  validate :check_users_are_friends_at_invitation
+  validate :check_users_are_friends_at_invitation, on: :create
   # validate :validate_user_is_not_game_creator
 
   	# TODO -  Fix how to handle exception out of range for ActiveRecord::Type::Integer when you input a lonng integer in the invite players
@@ -59,7 +59,13 @@ class GameLine < ActiveRecord::Base
 
     def are_users_friends?
       user = User.friendly.find(user_id)
-      user2 = User.find(invited_by)
+      
+
+      if invited_by.nil?
+        return true
+      else
+        user2 = User.find(invited_by) 
+      end
 
       if user2.is_a_friend?(user)
         return true
