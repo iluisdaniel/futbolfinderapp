@@ -1,6 +1,6 @@
 
 <div class="row" style="margin-bottom: 20px;">
-	<h2 class="lead"> Comments <span class="badge pull-left" style="margin-right:5px;"><%= commentable.comments.count %></span></h2>
+	<h3 class="lead"> Comments <span class="badge" style="margin-right:5px;"><%= commentable.comments.count %></span></h3>
 
 	<%= form_for [commentable, Comment.new] do |f| %>
 	    <div class="form-group">

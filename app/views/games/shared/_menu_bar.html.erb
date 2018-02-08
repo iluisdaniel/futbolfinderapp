@@ -1,5 +1,10 @@
-<ul class="nav nav-tabs game-sd-tabs" style="padding-left: 3%">
+<div class="row">
+	<div class="">
+		<ul class="nav nav-tabs game-sd-tabs" style="padding-left: 14%">
           <li class="<%= 'active' if current_page?(controller: 'games', action: 'show') %>"><%= link_to 'Info', game_path(@game) %></li>
           <li><%= link_to 'Players', players_path(@game) %></li>
           <li><%= link_to 'Comments', conversation_index_path(@game) %></li>
-</ul>
+		</ul>
+	</div>
+	
+</div>

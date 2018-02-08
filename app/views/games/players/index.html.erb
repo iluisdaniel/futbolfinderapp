@@ -1,25 +1,19 @@
 <% provide(:title, 'Game') %>
-<div class="page-header">
-  <div class="container">
-    <div class="row">
-
-      <h1>
-        <%= @game.title %>
-        <small><%= @game.id %></small>
-      </h1>
-    </div>
-  </div>
-</div> 
-<ul class="nav nav-tabs game-sd-tabs" style=" padding-left: 3%">
-          <li class=""><%= link_to 'Info', game_path(@game) %></li>
+<%= render "/games/shared/game_header"%>  
+<div class="row">
+  <div class="">
+    <ul class="nav nav-tabs game-sd-tabs" style="padding-left: 14%">
+           <li class=""><%= link_to 'Info', game_path(@game) %></li>
           <li class="active"><a href="">Players</a></li>
           <li class=""><%= link_to 'Comments', conversation_index_path(@game) %></li>
-</ul>
+    </ul>
+  </div>
+</div>
 
-<div class="container  players-list">
+<div class="container players-list">
 	<div class="row">
 		<div class="col-md-offset-1 col-md-7">
-			<h2 class="lead"> Players </h2>
+			<h3 class="lead"> Players </h3>
 
 			<% if @game.game_lines.empty? %>
 			  <p>There are no players invited yet.</p>
