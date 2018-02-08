@@ -285,4 +285,12 @@ module GamesHelper
          return true
     end
 
+    def get_invites_real_string(invites)
+        if invites 
+            return "Allowed"
+        else
+            return "Not Allowed"
+        end
+    end
+
 end

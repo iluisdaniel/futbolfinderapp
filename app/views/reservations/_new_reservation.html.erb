@@ -1,5 +1,7 @@
 <% if signed_in? %>
-    <%= link_to "Make New Reservation", available_fields_path(game: @game), class: "btn btn-primary" %>
+    <%= link_to "New Reservation", available_fields_path(game: @game), class: "btn btn-primary btn-fill" %>
+    or
+    <a href="#" class="btn btn-primary btn-fill">Add Venue and Time</a>
 <% else %>
 <!-- Button trigger modal -->
 

@@ -584,7 +584,7 @@ ul.alert-dropdown {
     }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 800px) {
     /* For mobile phones: */
     .page-header {
         h1, .btn{ 
@@ -608,6 +608,15 @@ ul.alert-dropdown {
             font-size:1.5em;
         }
     }
+    .game-content{
+        .game-description{
+            font-size: 2rem;
+        }
+        strong.lead{
+            font-size: 2rem;
+        }
+    }
+
 }
 @media only screen and (max-width: 800px){
   .games{
@@ -615,6 +624,19 @@ ul.alert-dropdown {
             font-size:1.5em;
         }
   }
+
+  .game-content{
+        .game-description{
+            font-size: 2rem;
+        }   
+    }
+    .game-content h4{
+        font-size: 2rem;
+        text-align: center;
+    }
+    .game-content .card-venue-content .venue-buttons .col-xs-12{
+        margin-bottom: 10px;
+    }
 }
 
 @media only screen and (max-width: 1000px){
@@ -623,6 +645,9 @@ ul.alert-dropdown {
             font-size:1.5em;
         }
    }
+   .game-content .card-venue-content .cancel-res{
+            margin-bottom: 20px;
+    }
 }
 
 .date-picker{
@@ -699,7 +724,7 @@ ul.alert-dropdown {
 .game-content{
 
     h4{
-        margin-top: 40px;
+        color:#201a50;
     }
 
     .card{
@@ -709,6 +734,26 @@ ul.alert-dropdown {
                     color:#201a50;
                 }
             }
+            .card-venue-content{
+                
+                font-size: 1.6rem;
+                text-align: center;
+                padding-bottom: 20px;
+                .icon{
+                    font-size: 1.7em;
+                }
+                strong{
+                    color:#c72166;
+                    font-weight: 700;
+                }
+                .row{
+                    padding-top: 20px;
+                }
+                .date-time{
+                    margin-top: 20px;
+                }
+        
+            }
             .card-info-content{
                 margin-bottom: 20px;
 
@@ -716,13 +761,13 @@ ul.alert-dropdown {
                     text-align: center;
                     margin-bottom: 20px;
                     .icon{
-                        font-size: 2em;
+                        font-size: 1.7em;
                     }
                     .description{
                         font-size: 1.6rem;
                         .title{
                             color:#c72166;
-                            font-weight: 600;
+                            font-weight: 700;
                         }
                         .value{
                             color:#777777;
