@@ -91,7 +91,7 @@
 
           <div class="row card-info-content">
             
-            <div class="col-sm-4 col-xs-4 info"><div class="icon"><i class="fa fa-plus"></i></div><div class="description"><span class="title"> Invites</span><br><span class="value"> <%= get_invites_real_string(@game.invite_allowed) %> </span></div></div>
+            <div class="col-sm-4 col-xs-4 info info-invites"><div class="icon"><i class="fa fa-plus"></i></div><div class="description"><span class="title"> Invites</span><br><span class="value"> <%= get_invites_real_string(@game.invite_allowed) %> </span></div></div>
 
             <div class="col-sm-4 col-xs-4 info"><div class="icon"><i class="fa fa-user"></i></div><div class="description"><span class="title"> Admin</span><br><span class="value"> <%= link_to get_game_creator(@game), get_game_creator(@game) %> </span></div></div>
             
@@ -101,7 +101,7 @@
 
             <div class="col-sm-4 col-xs-4 info"><div class="icon"><i class="fa fa-users"></i></div><div class="description"><span class="title"> Players Desired</span><br><span class="value"> <%= @game.number_players %> </span></div></div>
 
-            <div class="col-sm-4 col-xs-4 info info-view"><div class="icon"><i class="fa fa-eye"></i></div><div class="description"><span class="title"> View</span><br><span class="value"> <%= @game.public %> </span></div></div>
+            <div class="col-sm-4 col-xs-4 info"><div class="icon"><i class="fa fa-eye"></i></div><div class="description"><span class="title"> View</span><br><span class="value"> <%= @game.public %> </span></div></div>
 
             <div class="col-sm-4 col-xs-4 info"><div class="icon"><i class="fa fa-clock-o"></i></div><div class="description"><span class="title"> Last Updated</span><br><span class="value"> <%= @game.updated_at.strftime("%b/%d") %> </span></div></div>
 
