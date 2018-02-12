@@ -261,13 +261,13 @@ module GamesHelper
         random = rand(4)
         case random
         when 0
-            return "http://assets.futfinder.com/soccer-game.png"
+            return "https://s3-us-east-2.amazonaws.com/futfinder.com/soccer-game.png"
         when 1 
-            return "http://assets.futfinder.com/soccer-field-background.png"
+            return "https://s3-us-east-2.amazonaws.com/futfinder.com/soccer-field-background.png"
         when 2
-            return "http://assets.futfinder.com/soccer-field.png"
+            return "https://s3-us-east-2.amazonaws.com/futfinder.com/soccer-field.png"
         else    
-            return "http://assets.futfinder.com/soccer-ball-field.png"
+            return "https://s3-us-east-2.amazonaws.com/futfinder.com/soccer-ball-field.png"
         end
     end
 
