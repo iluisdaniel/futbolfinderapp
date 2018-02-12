@@ -5,12 +5,12 @@ class FriendshipsController < ApplicationController
      @friendship = current_user.friendships.build(friend_id: params[:friend_id])
       if @friendship.save
         flash[:success] = "Friend requested."
-        redirect_to :back
+        redirect_back fallback_location: root_path
         Notification.create(recipientable: @friendship.friend, actorable: current_user, 
             action: "Added You", notifiable: @friendship)
       else
         flash[:error] = "Unable to request friendship."
-        redirect_to :back
+        redirect_back fallback_location: root_path
       end
     end
 
@@ -32,6 +32,6 @@ class FriendshipsController < ApplicationController
       @friendship = Friendship.find_by(id: params[:id])
       @friendship.destroy
       flash[:success] = "Removed friendship."
-      redirect_to :back
+      redirect_back fallback_location: root_path
     end
 end

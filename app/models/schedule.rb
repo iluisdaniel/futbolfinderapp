@@ -1,4 +1,4 @@
-class Schedule < ActiveRecord::Base
+class Schedule < ApplicationRecord
 	belongs_to :business
 	validates :business_id, presence: true
 	validates :day, presence: true

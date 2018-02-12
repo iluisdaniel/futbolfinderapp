@@ -19,6 +19,7 @@ class AvailableFieldsController < ApplicationController
 		end
 
 		#flash[:info] = "var @@game " + @@game.to_s 
+		flash[:info] = "Date params: " + params[:date].to_s + "  Time: " + params[:time].to_s
 	end
 
 	private 

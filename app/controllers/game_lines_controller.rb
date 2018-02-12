@@ -28,7 +28,7 @@ class GameLinesController < ApplicationController
 	      end
 	    else
 	    	flash[:danger] = "Unable to add player"
-	    	redirect_to :back
+	    	redirect_back fallback_location: root_path
 	    end
 	end
 
@@ -42,7 +42,7 @@ class GameLinesController < ApplicationController
   		
 		if @game_line.save
 			flash[:success] = flash_msg
-			redirect_to :back
+			redirect_back fallback_location: root_path
 			if @game_line.user != current_business_or_user
 				Notification.create(recipientable: @game_line.user, actorable: current_business_or_user, 
 	      				action: get_update_notification_message(params[:accepted], @game_line), notifiable: @game_line.game)
@@ -53,7 +53,7 @@ class GameLinesController < ApplicationController
 			end
 		else
 			flash[:danger] = "Error, please try refresh and try again"
-			redirect_to :back
+			redirect_back fallback_location: root_path
 		end	  			
   	end
 
@@ -68,7 +68,7 @@ class GameLinesController < ApplicationController
 	      				action: "Removed You", notifiable: @game_line.game)
 		  	end
 		end
-		redirect_to :back
+		redirect_back fallback_location: root_path
   	end
 
 

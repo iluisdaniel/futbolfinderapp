@@ -1,4 +1,4 @@
-class Group < ActiveRecord::Base
+class Group < ApplicationRecord
 	belongs_to :user 
 	has_many :group_lines, dependent: :destroy
 	has_many :comments, as: :commentable

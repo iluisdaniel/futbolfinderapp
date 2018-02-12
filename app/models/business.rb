@@ -1,4 +1,4 @@
-class Business < ActiveRecord::Base
+class Business < ApplicationRecord
 	attr_accessor :remember_token
 
   has_many :notifications, as: :recipientable

@@ -1,5 +1,5 @@
-class Reservation < ActiveRecord::Base
-	belongs_to :game
+class Reservation < ApplicationRecord
+	belongs_to :game, optional: true
 	belongs_to :business
 
   before_create :randomize_id

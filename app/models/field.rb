@@ -1,4 +1,4 @@
-class Field < ActiveRecord::Base
+class Field < ApplicationRecord
 	belongs_to :business
 	validates :business_id, presence: true
 	validates :name, presence: true, length: {maximum: 50}

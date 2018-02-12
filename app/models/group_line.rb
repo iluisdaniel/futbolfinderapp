@@ -1,4 +1,4 @@
-class GroupLine < ActiveRecord::Base
+class GroupLine < ApplicationRecord
   belongs_to :group
   belongs_to :user
 

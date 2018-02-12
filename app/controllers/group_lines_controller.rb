@@ -10,7 +10,7 @@ class GroupLinesController < ApplicationController
 	      redirect_to group_path(@group_line.group_id)
 	    else
 	    	flash[:error] = "Unable to add player"
-	    	redirect_to :back
+	    	redirect_back fallback_location: root_path
 	    end
 	end
 
@@ -21,7 +21,7 @@ class GroupLinesController < ApplicationController
 		  	@group_line.destroy
 		  	flash[:success] = "Player were deleted"
 		end
-		redirect_to :back
+		redirect_back fallback_location: root_path
   	end
 
 
