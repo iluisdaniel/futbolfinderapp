@@ -128,6 +128,7 @@ class GamesController < ApplicationController
 				reservation = Reservation.new(date: @@res[:date], time: @@res[:time], end_time: @@res[:end_time],
 					business: Business.find(@@res[:business]), field_id: @@res[:field], game: @game)
 				if reservation.save
+					redirect_to @game
 					flash[:success] = @@reservation_creation_message
 					Notification.create(recipientable: reservation.business, actorable: current_user, 
 					                action: "Made", notifiable: reservation)
