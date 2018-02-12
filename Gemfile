@@ -34,7 +34,7 @@ gem 'friendly_id', '~> 5.1.0'
 
 gem "font-awesome-rails"
 
-gem 'faker', '1.1.2'
+gem 'faker', '1.7.3'
 
 gem 'will_paginate', '3.1.5'
 
