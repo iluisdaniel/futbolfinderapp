@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby '2.5.0'
 gem 'bcrypt',               '3.1.11'
 gem 'normalize-rails'
 gem 'bootstrap-sass', '~> 3.3.6'
