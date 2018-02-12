@@ -8,8 +8,8 @@ class AvailableFieldsController < ApplicationController
 
 		if params[:date]
 			#TODO: change variable name to something else. the hash has businesses and field.
-			@businesses = get_available_businesses(Business.get_open_businesses_at(params[:date], params[:time]),
-				params[:date], params[:time])
+			@businesses = get_available_businesses(Business.get_open_businesses_at(params[:date], Time.zone.parse(params[:time])),
+				params[:date], Time.zone.parse(params[:time]))
 		else
 			@@game = nil
 		end

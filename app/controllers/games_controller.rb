@@ -36,7 +36,7 @@ class GamesController < ApplicationController
 		@reservation = Reservation.new
 
 		if params[:date]
-			@@res = {date: params[:date], time: params[:time].to_time, end_time: params[:time].to_time + 1.hour, 
+			@@res = {date: params[:date], time: Time.zone.parse(params[:time]), end_time: Time.zone.parse(params[:time]) + 1.hour, 
 				business: params[:business].to_i, field: params[:field].to_i}
 			@@reservation_creation_message = "Reservation created"
 			check_reservation	
@@ -48,7 +48,7 @@ class GamesController < ApplicationController
 		#TODO: How to choose businesses field. 
 		@game = Game.new
 		if params[:date]
-			@@res = {date: params[:date], time: params[:time].to_time, end_time: params[:time].to_time + 1.hour, 
+			@@res = {date: params[:date], time: Time.zone.parse(params[:time]), end_time: Time.zone.parse(params[:time]) + 1.hour, 
 				business: params[:business].to_i, field: params[:field].to_i}
 				@@reservation_creation_message = "Game and Reservation created"
 		end
