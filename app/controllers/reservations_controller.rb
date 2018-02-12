@@ -79,7 +79,7 @@ class ReservationsController < ApplicationController
 		game = @reservation.game
 		@reservation.destroy
 		flash[:success] = "Reservation was deleted"
-		define_redirection
+		define_redirection(game)
 		# TODO - figure out a way to show res cancellations from users
 		if !game.nil? 
 			game.game_lines.uniq.each do |gl|
@@ -130,11 +130,11 @@ class ReservationsController < ApplicationController
     	redirect_to root_url if current_user != user
     end
 
-    def define_redirection
+    def define_redirection(game)
     	if logged_in?
     		redirect_to reservations_path
-    	elsif signed_in?
-    		redirect_to games_path
+    	elsif !game.nil?
+    		redirect_to game_path(game)
     	else
     		redirect_to root_path
     	end
