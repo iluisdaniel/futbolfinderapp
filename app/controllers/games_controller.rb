@@ -39,7 +39,7 @@ class GamesController < ApplicationController
 			@@res = {date: params[:date], time: Time.zone.parse(params[:time]), end_time: Time.zone.parse(params[:time]) + 1.hour, 
 				business: params[:business].to_i, field: params[:field].to_i}
 			@@reservation_creation_message = "Reservation created"
-			check_reservation	
+			check_reservation(true)	
 		end
 		
 	end
@@ -87,7 +87,7 @@ class GamesController < ApplicationController
 				gl.save
 				gl = @game.game_lines.first.update(accepted: "Accepted")
 			end
-			check_reservation
+			check_reservation(false)
 		else
 			render 'new'
 		end
@@ -123,12 +123,14 @@ class GamesController < ApplicationController
 			:description, :public, :invite_allowed)
 	end
 
-	def check_reservation
+	def check_reservation(redirect)
 		if !@@res.empty?
 				reservation = Reservation.new(date: @@res[:date], time: @@res[:time], end_time: @@res[:end_time],
 					business: Business.find(@@res[:business]), field_id: @@res[:field], game: @game)
 				if reservation.save
-					redirect_to @game
+					if redirect == true
+						redirect_to @game
+					end
 					flash[:success] = @@reservation_creation_message
 					Notification.create(recipientable: reservation.business, actorable: current_user, 
 					                action: "Made", notifiable: reservation)
