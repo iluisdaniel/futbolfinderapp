@@ -40,6 +40,8 @@ gem 'will_paginate', '3.1.5'
 
 gem 'bootstrap-will_paginate'
 
+gem 'bootstrap-datepicker-rails'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

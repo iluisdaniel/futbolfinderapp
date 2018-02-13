@@ -6,7 +6,7 @@
     	
       <%= form_tag(available_fields_path, :method => "get", id: "search-form") do %>
       	<div class="col-md-4">
-      		<%= date_field_tag :date, params[:date], placeholder: "Date", class: "form-control" %>
+      		<%= text_field_tag :date, params[:date], data:{ provide:'datepicker', 'date-format' => 'dd-mm-yyyy', 'date-autoclose' => 'true' }, placeholder: "DD-MM-YYYY", class: "form-control" %>
       	</div>
       	<div class="col-md-4">
       		<%= time_field_tag :time, params[:time], placeholder: "Time", class: "form-control" %>
@@ -62,15 +62,9 @@
 				 		<% end %>
 				 	</div>
 				<% else %>
-				  <p class="lead">There are no posts containing the term(s) <%= params[:time] %>.</p>
+				  <p class="lead"> <%= @message %></p>
 				<% end %>
 			
 		</div>
 	</div>
 </div>
-<strong>params</strong><br>
-<strong><%= params[:date] %></strong><br>
-<strong><%= params[:time] %></strong><br>
-<br>
-<br>
-

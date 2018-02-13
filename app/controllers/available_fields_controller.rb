@@ -5,21 +5,28 @@ class AvailableFieldsController < ApplicationController
 
 	def index
 		#flash[:warning] = "var @@game " + @@game.to_s 
+		@message = ""
 
-		if params[:date]
+		if params[:date] && !params[:date].empty?
 			#TODO: change variable name to something else. the hash has businesses and field.
 			@businesses = get_available_businesses(Business.get_open_businesses_at(params[:date], Time.zone.parse(params[:time])),
 				params[:date], Time.zone.parse(params[:time]))
+
+			if @businesses.empty?
+				@message = "We couldn't find a business available that date."
+			end
 		else
 			@@game = nil
 		end
+
+		
 
 		if params[:game]
 			@@game = params[:game]	
 		end
 
 		#flash[:info] = "var @@game " + @@game.to_s 
-		flash[:info] = "Date params: " + params[:date].to_s + "  Time: " + params[:time].to_s
+		#flash[:info] = "Date params: " + params[:date].to_s + "  Time: " + params[:time].to_s
 	end
 
 	private 
