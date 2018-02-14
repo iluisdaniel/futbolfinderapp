@@ -42,6 +42,8 @@ gem 'bootstrap-will_paginate'
 
 gem 'bootstrap-datepicker-rails'
 
+gem 'stripe', '~> 3.9', '>= 3.9.2'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
