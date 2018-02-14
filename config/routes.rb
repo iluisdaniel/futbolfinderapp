@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   get 'available_fields' => 'available_fields#index'
   get 'select_game' => 'select_game#index'
 
+  resource :subscription
+
   resources :notifications, only: :index
 
   namespace "reservations" do
