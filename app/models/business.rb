@@ -35,7 +35,21 @@ class Business < ApplicationRecord
     # Validate the attached image is image/jpg, image/png, etc
     validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
-	# Return the hash digest of the given string
+	def stripe_customer
+    if stripe_id?
+      Stripe::Customer.retrieve(stripe_id)
+    else
+      stripe_customer = Stripe::Customer.create(email: email)
+      update(stripe_id: stripe_customer.id)
+      stripe_customer
+    end
+  end
+
+  def subscribed?
+    stripe_subscription_id? || (expires_at? && Time.zone.now < expires_at)
+  end
+
+  # Return the hash digest of the given string
 	def Business.digest(string)
 	    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
 	                                                  BCrypt::Engine.cost

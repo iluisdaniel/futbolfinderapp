@@ -9,6 +9,7 @@
           <li role="presentation" class="active"><a href="#info" aria-controls="home" role="tab" data-toggle="tab">Account<span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span></a></li>
           <li role="presentation"><a href="#schedule" aria-controls="profile" role="tab" data-toggle="tab">Schedule<span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span></a></li>
           <li role="presentation"><a href="#fields" aria-controls="messages" role="tab" data-toggle="tab">Fields and Prices<span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span></a></li>
+          <li role="presentation"><a href="#billing" aria-controls="billing" role="tab" data-toggle="tab">Billing<span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span></a></li>
         </ul>
     </div><!-- End col-md-4 -->
     <div class="col-xs-12 col-md-7">
@@ -288,6 +289,32 @@
                   </div>
                 <% end %>
             </div><!-- end fields tab -->
+
+
+
+
+            <div role="tabpanel" class="tab-pane" id="billing">
+              <h3 class="lead"><span class="text-uppercase">BIlling</span><small> <br>Billing Information</small></h3>
+              <hr>
+              <% if current_business.subscribed? %>
+                  <% if current_business.expires_at?%>
+                      <p>Your access expires in <%= distance_of_time_in_words current_business.expires_at - Time.zone.now %></p>
+                  <% else %>
+                      <div><strong>Card on File:</strong> <%= current_business.card_brand %> (**** **** **** <%= current_business.card_last4 %>)</div>
+                      <div style="margin-bottom: 20px;"><strong>Expiration:</strong> <%= current_business.card_exp_month %> / <%= current_business.card_exp_year %></div>
+
+                      <%= link_to "Update your card", subscription_path, class: "btn btn-primary btn-fill" %>
+                      <br>
+                      <br>
+                      <hr>
+                      <%= link_to "Cancel Subscription", subscription_path,method: :delete, data: {confirm: "Are you sure you want to cancel your Subscription?"}, class: "btn btn-danger" %>
+                  <% end %>
+              <%end%>
+
+
+             
+            </div><!-- end billing tab -->
+
           </div><!-- end tabs -->
     </div><!-- End col-md-8 -->
   </div><!--End row -->  

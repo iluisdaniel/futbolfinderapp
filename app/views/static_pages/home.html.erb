@@ -7,7 +7,9 @@
 </div>
 
 <% else %>
-	
+	<%if logged_in? && !current_business.subscribed? %>
+		<%= link_to "Subscribe", new_subscription_path(plan: "monthly19"), class: "btn btn-primary" %>
+	<% end %>
 	<%= link_to "Make a new game", new_game_path, class: "btn btn-lg btn-primary" %>
 	<hr>
 	<h3>Games for this week</h3>
