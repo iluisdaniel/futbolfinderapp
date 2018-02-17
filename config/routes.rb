@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-
-  
+  mount StripeEvent::Engine, at: '/webhooks/stripe'
 
   get 'sessions/new'
 
@@ -22,6 +21,7 @@ Rails.application.routes.draw do
   get 'select_game' => 'select_game#index'
 
   resource :subscription
+  resources :charges
 
   resources :notifications, only: :index
 

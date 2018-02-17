@@ -311,6 +311,30 @@
                   <% end %>
               <%end%>
 
+              <% if current_business.charges.any? %>
+                <h4>Charges</h4>
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Amount</th>
+                      <th>Download</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% current_business.charges.each do |charge| %>
+                        <tr>
+                          <td><%= charge.created_at.to_date %></td>
+                          <td><%= number_to_currency charge.amount / 100%></td>
+                          <td><%= link_to "Download" , charge_path(charge, format: :pdf) %></td>
+                        </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+
+              <% end %>
+
 
              
             </div><!-- end billing tab -->

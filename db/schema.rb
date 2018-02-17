@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180215154221) do
+ActiveRecord::Schema.define(version: 20180217094445) do
 
   create_table "businesses", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string "name"
@@ -38,6 +38,19 @@ ActiveRecord::Schema.define(version: 20180215154221) do
     t.string "card_exp_year"
     t.datetime "expires_at"
     t.index ["email"], name: "index_businesses_on_email", unique: true
+  end
+
+  create_table "charges", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "business_id"
+    t.string "stripe_id"
+    t.integer "amount"
+    t.string "card_brand"
+    t.string "card_last4"
+    t.string "card_exp_month"
+    t.string "card_exp_year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["business_id"], name: "index_charges_on_business_id"
   end
 
   create_table "comments", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
@@ -184,6 +197,7 @@ ActiveRecord::Schema.define(version: 20180215154221) do
     t.index ["slug"], name: "index_users_on_slug"
   end
 
+  add_foreign_key "charges", "businesses"
   add_foreign_key "game_lines", "games"
   add_foreign_key "game_lines", "users"
   add_foreign_key "games", "businesses"

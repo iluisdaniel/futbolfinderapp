@@ -6,6 +6,7 @@ class Business < ApplicationRecord
   has_many :fields, dependent: :destroy
   has_many :games, dependent: :destroy
   has_many :reservations, dependent: :destroy
+  has_many :charges
 
 	extend FriendlyId
 	friendly_id :slug_candidates, use: :slugged
