@@ -299,7 +299,10 @@
               <% if current_business.subscribed? %>
                   <% if current_business.expires_at?%>
                       <p>Your access expires in <%= distance_of_time_in_words current_business.expires_at - Time.zone.now %></p>
+                      <%= link_to "Subscribe", new_subscription_path(plan: "monthly19"), class: "btn btn-primary btn-fill" %>
+                      <hr>
                   <% else %>
+                      <h4 class="lead">Card On File</h4>
                       <div><strong>Card on File:</strong> <%= current_business.card_brand %> (**** **** **** <%= current_business.card_last4 %>)</div>
                       <div style="margin-bottom: 20px;"><strong>Expiration:</strong> <%= current_business.card_exp_month %> / <%= current_business.card_exp_year %></div>
 
@@ -307,12 +310,11 @@
                       <br>
                       <br>
                       <hr>
-                      <%= link_to "Cancel Subscription", subscription_path,method: :delete, data: {confirm: "Are you sure you want to cancel your Subscription?"}, class: "btn btn-danger" %>
                   <% end %>
               <%end%>
 
               <% if current_business.charges.any? %>
-                <h4>Charges</h4>
+                <h4 class="lead">Charges</h4>
 
                 <table class="table">
                   <thead>
@@ -332,9 +334,17 @@
                     <% end %>
                   </tbody>
                 </table>
-
+                
               <% end %>
-
+              <% if current_business.subscribed? && !current_business.canceled? %>
+              <hr>
+                <h4 class="lead">Cancel Subscription</h4>
+                <%= link_to "Unsuscribe", subscription_path,method: :delete, data: {confirm: "Are you sure you want to cancel your Subscription?"}, class: "btn btn-danger btn-round" %>
+              <% else %>
+                <hr>
+                <h4 class="lead">Subscribe Again!</h4>
+                <%= link_to "Subscribe", new_subscription_path(plan: "monthly19"), class: "btn btn-primary btn-fill" %>
+              <% end %>
 
              
             </div><!-- end billing tab -->

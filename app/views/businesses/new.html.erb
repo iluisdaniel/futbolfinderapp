@@ -1,39 +1,120 @@
 <% provide(:title, 'Sign up') %>
-<h1>Business Sign up</h1>
+<% provide(:htitle, 'Business Sign up') %>
+<% provide(:secondaryTitle, '')%>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_for(@business) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>	
 
-      <%= f.label :name %>
-      <%= f.text_field :name, class: 'form-control' %>
+     
+      <h3 class="lead">Basic Info</h3>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-2">
+            <%= f.label :name, 'Name' %>
+          </div>
+          <div class="col-md-8">
+            <%= f.text_field :name, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
 
-      <%= f.label :email %>
-      <%= f.email_field :email, class: 'form-control' %>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-2">
+            <%= f.label :email %>
+          </div>
+          <div class="col-md-8">
+            <%= f.email_field :email, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
 
-      <%= f.label :phone %>
-      <%= f.text_field :phone, class: 'form-control' %>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-2">
+            <%= f.label :phone %>
+          </div>
+          <div class="col-md-8">
+            <%= f.text_field :phone, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
 
-      <%= f.label :address %>
-      <%= f.text_field :address, class: 'form-control' %>
+      <hr>
+      <h3 class="lead">Business Address</h3>
 
-      <%= f.label :city %>
-      <%= f.text_field :city, class: 'form-control' %>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-2">
+            <%= f.label :address, "St Address" %>
+          </div>
+          <div class="col-md-8">
+            <%= f.text_field :address, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
 
-      <%= f.label :state %>
-      <%= f.text_field :state, class: 'form-control' %>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-2">
+            <%= f.label :city %>
+          </div>
+          <div class="col-md-8">
+            <%= f.text_field :city, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
 
-      <%= f.label :zipcode %>
-      <%= f.text_field :zipcode, class: 'form-control' %>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-2">
+            <%= f.label :state %>
+          </div>
+          <div class="col-md-8">
+            <%= f.text_field :state, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
 
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control' %>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-2">
+            <%= f.label :zipcode %>
+          </div>
+          <div class="col-md-8">
+            <%= f.text_field :zipcode, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
 
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation, class: 'form-control' %>
+      <hr>
+      <h3 class="lead"> Password</h3>
 
-      <%= f.submit "Create my account", class: "btn btn-primary" %>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-2">
+            <%= f.label :password %>
+          </div>
+          <div class="col-md-8">
+            <%= f.password_field  :password, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-2">
+            <%= f.label :password_confirmation, "Confirmation" %>
+          </div>
+          <div class="col-md-8">
+            <%= f.password_field :password_confirmation, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+      <%= f.submit "Create my account", class: "btn btn-primary btn-fill btn-round pull-right" %>
     <% end %>
   </div>
 </div>

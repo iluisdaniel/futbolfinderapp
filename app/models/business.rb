@@ -50,6 +50,10 @@ class Business < ApplicationRecord
     stripe_subscription_id? || (expires_at? && Time.zone.now < expires_at)
   end
 
+  def canceled?
+    (expires_at? && Time.zone.now < expires_at)
+  end
+
   # Return the hash digest of the given string
 	def Business.digest(string)
 	    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :

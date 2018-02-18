@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get 'about'   => 'static_pages#about'
   
   get 'b/businesses' => 'businesses#index'
-  get 'signup'  => 'businesses#new'
+  get 'b/signup'  => 'businesses#new'
 
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'

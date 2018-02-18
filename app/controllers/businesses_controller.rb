@@ -20,7 +20,7 @@ class BusinessesController < ApplicationController
   	if@business.save
   		log_in @business
       flash[:success] = "Welcome to Futbol Finder!"
-  		redirect_to @business
+  		redirect_to new_subscription_path(plan: "monthly19")
   	else
   		render 'new'
   	end

@@ -1,4 +1,6 @@
 class SubscriptionsController < ApplicationController
+	before_action :signed_in_business
+	before_action :is_not_subscribed?, only: [:new, :create]
 	
 	def new
 	end
@@ -70,6 +72,14 @@ class SubscriptionsController < ApplicationController
 
 		flash[:warning] = "You have canceled your subscription. You will have access until #{current_business.expires_at.to_date}"
 		redirect_to root_path
+	end
 
+	private
+
+	def is_not_subscribed?
+		if current_business.subscribed? && !current_business.canceled?
+			redirect_to root_path
+		end
+		
 	end
 end
