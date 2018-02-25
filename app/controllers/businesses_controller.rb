@@ -1,5 +1,6 @@
 class BusinessesController < ApplicationController
-  before_action :signed_in_business, only: [:edit, :update]
+  
+
   before_action :redirect_back_when_is_already_logged_in?, only: [:new, :create]
   before_action :correct_business,   only: [:edit, :update]
   
@@ -20,7 +21,8 @@ class BusinessesController < ApplicationController
   	if@business.save
   		log_in @business
       flash[:success] = "Welcome to Futbol Finder!"
-  		redirect_to new_subscription_path(plan: "monthly19")
+  		# redirect_to new_subscription_path(plan: "monthly19")
+      redirect_to @business
   	else
   		render 'new'
   	end
