@@ -10,8 +10,16 @@
   <%= csrf_meta_tags %>
  <%= render 'layouts/shim' %>
 </head>
-<body> 
-    <%= render 'layouts/header' %>
+<body>
+
+    <% if logged_in? %>
+      <%= render 'layouts/header_businesses' %>
+    <% elsif signed_in?%>
+      <%= render 'layouts/header' %>
+    <% else %>
+      <%= render 'layouts/header_no_user'%>
+    <% end %> 
+    
 
     <% flash.each do |message_type, message| %>       
       <div class="alert alert-<%= message_type %>">

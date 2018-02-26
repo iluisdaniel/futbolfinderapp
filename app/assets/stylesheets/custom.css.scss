@@ -30,23 +30,7 @@ h1,h2,h3,h4,h5,h6{
   @include box_sizing;
 }
 
-#logo {
-  float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  padding-top: 9px;
-  font-weight: bold;
-  &:hover {
-    color: white;
-    text-decoration: none;
-  }
-  @media(max-width: 767px){
-        margin-left: 1rem;
-      }
-}
+
 
 @media only screen and (max-width: 800px){
     h3.lead{
@@ -452,12 +436,47 @@ h1{
     }
 }
 
-/* Top Navigation */
-
-.logo-biz{
-  margin-left: 15px;
+/******* Top Navigation *************/
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus{
+    border-color: #c72166;
+}
+.navbar-inverse .navbar-nav > li > a:hover{
+    border-bottom: 2px solid #c72166;
+}
+.navbar {
+    a{
+        font-size: 1.4rem;
+        font-weight: 700;
+    }
+    .fa{
+        font-size: 1.6rem;
+    }
+    .active{
+        border-bottom: 2px solid #c72166;
+    }
 }
 
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+
+  .fa{
+    font-size: 2.4rem;
+  }
+  @media(max-width: 767px){
+        margin-left: 1rem;
+      }
+}
 .top-nav {
     padding: 0 15px;
 }
