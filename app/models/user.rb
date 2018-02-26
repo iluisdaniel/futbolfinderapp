@@ -23,7 +23,7 @@ class User < ApplicationRecord
 	validates :first_name, presence: true, length: { maximum: 25 }#, format: { with: VALID_WORD_REGEX }	
 	validates :last_name, presence: true, length: { maximum: 25 }
 	validates :location, length: { maximum: 30}
-	validates :gender, presence: true, length: { maximum: 1 }
+	validates :gender, presence: true, length: { maximum: 6 }
 	VALID_PHONE_REGEX = /\d{10}/
 	validates :phone, presence: true, length: {maximum: 10, minimum: 10},
 						format: { with: VALID_PHONE_REGEX }, uniqueness: true, allow_blank: true

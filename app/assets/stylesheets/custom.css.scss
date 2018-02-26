@@ -1446,32 +1446,83 @@ ul.alert-dropdown {
     margin-left: 1em; }
 
 
+/********* USER SIGN UP *************/
+
+.user-signup{
+    .row{
+        margin-top: 5%;
+    }
+    h1{
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    .card{
+        padding: 20px;
+        p{
+            font-size: 1.8rem;
+        }
+    }
+
+    .form-control,
+    input::-webkit-input-placeholder {
+        font-size: 18px;
+        line-height: 3;
+    }
+
+    select, 
+    input::-webkit-input-placeholder {
+        color: silver;
+    }
+    
+
+    .form-control{
+        margin-bottom: 10px;
+    }
+
+    .btn{
+        width: 100%;
+    }
+    p{
+        text-align: center;
+    }
+}
+
 /****** LOGIN PAGE *****/
 
 .login-page{
-    background: url(http://assets.futfinder.com/soccer-field.png) no-repeat;
-    background-size: cover;
 
-    label{
-        margin-top:10px;
+    h1{
+        text-align: center;
+        padding-bottom: 10px;
+    }
+    span{
+        font-weight: normal;
     }
 
-    .login-form{
-        padding: 40px 50px 10px 50px;
-        margin-top:20%; 
-        margin-bottom: 20%;
+    .form-control,
+    input::-webkit-input-placeholder {
+        font-size: 18px;
+    }
+
+    input{
+        margin-bottom: 10px;
+    }
+
+    .card{
+        padding: 20px;
+        p{
+            font-size: 1.8rem;
+        }
     }
 
     .checkbox{
-        margin-top: 30px;
-        margin-left: 20px;
+        padding-left: 5%;
     }
     .btn{
-        padding-right: 30px;
-        padding-left: 30px;
+        width: 100%;
     }
     p{
-        padding-top: 20px;
         text-align: center;
     }
 }
