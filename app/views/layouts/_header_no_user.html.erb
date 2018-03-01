@@ -13,7 +13,11 @@
             <% end %>
         </div><!-- end div navbar-header -->           
             <ul class="nav navbar-nav navbar-right">
+              <% if current_page_login? %>  
+                <li><%= link_to "Sign up", u_signup_path %></li>
+              <% elsif current_page_user_sign_up? %>
                 <li><%= link_to "Log in", login_path %></li>
+              <% end %>
                 
             </ul><!-- end ul nav -->
       </div><!-- End div container fluid -->

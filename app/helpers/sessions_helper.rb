@@ -150,4 +150,11 @@ module SessionsHelper
   def redirect_back_home
     redirect_to root_path
   end
+
+  def current_page_login?
+    if current_page?(controller: '/sessions', action: 'new') || current_page?(controller: '/sessions', action: 'create')
+      return true
+    end
+    return false
+  end
 end

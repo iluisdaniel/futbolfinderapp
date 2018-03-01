@@ -14,4 +14,11 @@ module UsersHelper
 		end
 		return nil
 	end
+
+	def current_page_user_sign_up?
+	  if current_page?(controller: '/users', action: 'new')
+	    return true
+	  end
+	  return false
+	end
 end
