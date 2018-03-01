@@ -1,14 +1,12 @@
 <% provide(:title, 'Game') %>
 <%= render "/games/shared/game_header"%>  
-<div class="row">
-  <div class="">
+
     <ul class="nav nav-tabs game-sd-tabs" style="padding-left: 14%">
           <li class=""><%= link_to 'Info', game_path(@game) %></li>
           <li><%= link_to 'Players', players_path(@game) %></li>
           <li class="active"><%= link_to 'Comments', conversation_index_path(@game) %></li>
     </ul>
-  </div>
-</div>
+
 <div class="container games-comments">
 		<div class="col-md-offset-1 col-md-9">
 
