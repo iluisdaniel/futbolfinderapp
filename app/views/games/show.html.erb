@@ -7,9 +7,10 @@
     <div class="col-md-offset-1 col-md-9 game-content">
 
         <% if signed_in? || (@game.user_id.nil? && @game.business_id.present?) %>
-        <h4 class="lead"> Information</h4>
           <div class="card">
-            <div class="content">
+            <h4> Information</h4>
+            <hr>
+            <div class="content game-information-content">
               <p class="lead game-description"><%= @game.description %></p>
             </div>
           </div>
@@ -17,8 +18,10 @@
         <% end %>
 
 
-        <h4 class="lead">Venue and Time</h4>
+        
         <div class="card">
+          <h4>Venue and Time</h4>
+          <hr>
           <div class="content">
            <div class="row card-venue-content">
                 <% if @game.reservation.nil? %>
@@ -30,7 +33,7 @@
                   </div>
                   
                 <% else %>
-                  <div class="col-md-offset-1 col-md-3">
+                  <div class=" col-md-4">
                     <div class="icon"><i class="fa fa-map-marker"></i></div>
                     <address>
                       <strong>Location </strong><br>
@@ -85,8 +88,10 @@
           </div><!-- end content -->
         </div><!-- end card -->
 
-        <h4 class="lead">Game Settings</h4>
+        
         <div class="card">
+          <h4>Game Settings</h4>
+          <hr>
           <div class="content">
 
           <div class="row card-info-content">

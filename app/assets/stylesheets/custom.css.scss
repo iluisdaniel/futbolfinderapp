@@ -659,9 +659,10 @@ ul.alert-dropdown {
             font-size: 2rem;
         }   
     }
-    .game-content h4{
+    .game-content .card h4{
         font-size: 2rem;
         text-align: center;
+        padding-left: 0px !important;
     }
     .game-content .card-venue-content .venue-buttons .col-xs-12{
         margin-bottom: 10px;
@@ -710,10 +711,10 @@ ul.alert-dropdown {
         width:40px;
     }
 }
-.game-description{
+/*.game-description{
     margin-bottom: 30px;
     margin-top: 10px;
-}
+}*/
 .game-sb-players{
     img{
         width:40px;
@@ -766,7 +767,21 @@ ul.alert-dropdown {
     }
 
     .card{
+        /*padding-top: 5px;*/
+
+        h4{
+            margin-bottom: 0px;
+            /*border-left: 5px solid #c72166;*/
+            padding-left: 20px;
+            padding-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+        }
+        .game-information-content{
+            padding: 0px 15px 1px 20px;
+        }
         .content{
+            padding-top: 0px;
             .category{
                 a{
                     color:#201a50;
