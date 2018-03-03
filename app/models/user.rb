@@ -1,6 +1,7 @@
 class User < ApplicationRecord
 	before_save { self.email = email.downcase }
 	before_create :create_remember_token
+	before_create :randomize_id
 
 	has_many :notifications, as: :recipientable
 	has_many :groups
@@ -101,6 +102,12 @@ class User < ApplicationRecord
   	end
 
 	private
+
+		def randomize_id
+		  begin
+		    self.id = SecureRandom.random_number(1_000_000)
+		  end while User.where(id: self.id).exists?
+		end
 
 		def create_remember_token
 	      self.remember_token = User.digest(User.new_remember_token)
