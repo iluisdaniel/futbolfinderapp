@@ -11,8 +11,8 @@ class Game < ApplicationRecord
   has_many :game_lines, dependent: :destroy
   has_many :comments, as: :commentable
 
-  validates :description, length: { maximum: 500, minimum: 6 }, allow_blank: true
-  validates :title, length: { minimum: 4, maximum: 60}, allow_blank: true
+  validates :description, presence: true, length: { maximum: 500, minimum: 6 }
+  validates :title, presence: true, length: { minimum: 4, maximum: 60}
   validates :number_players, presence: true, numericality: {only_integer: true}
   validates :public, presence: true, length: {minimum:3, maximum:20}
 
