@@ -14,7 +14,7 @@
           <div class="row">
             <div class="form-group">
               <div class="col-md-2">
-                <%= f.label :avatar %>
+                <%= f.label :avatar, "Profile Picture" %>
               </div>
                 <div class="col-md-8">
                   <%= f.file_field :avatar %>
@@ -25,7 +25,7 @@
           <div class="row">
             <div class="form-group">
               <div class="col-md-2">
-                <%= f.label :slug %>
+                <%= f.label :slug, "Username" %>
               </div>
               <div class="col-md-8">
                 <%= f.text_field :slug, class: 'form-control' %>
@@ -64,7 +64,7 @@
                 <%= f.label :gender %>
               </div>
               <div class="col-md-8">
-                <%= f.text_field :gender, class: 'form-control' %>
+                <%= f.select :gender, ['Male','Female'], {prompt: "Gender"}, { class: 'form-control'} %>
               </div>
             </div>
           </div>  
@@ -72,10 +72,10 @@
           <div class="row">
             <div class="form-group">
               <div class="col-md-2">
-                <%= f.label :dob %>
+                <%= f.label :dob, "Birthday" %>
               </div>
               <div class="col-md-8">
-                <%= f.date_field :dob, class: 'form-control' %>
+                <%= f.text_field :dob, data:{ provide:'datepicker', 'date-format' => 'dd-mm-yyyy', 'date-autoclose' => 'true' }, placeholder: "DD-MM-YYYY", class: "form-control" %>
               </div>
             </div>
           </div> 

@@ -32,13 +32,13 @@ class UserTest < ActiveSupport::TestCase
 
   test "gender should be present" do 
     @user.gender = ""
-    assert_not @user.valid?
+    assert @user.valid?
   end
 
-  test "Date of Birth should be present" do 
-    @user.dob = nil
-    assert_not @user.valid?
-  end
+  # test "Date of Birth should be present" do 
+  #   @user.dob = nil
+  #   assert @user.valid?
+  # end
 
   ######### Length #######################
 
@@ -58,7 +58,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
    test "gender should not be too long" do
-    @user.gender = "aa"
+    @user.gender = "aaaaaaa"
     assert_not @user.valid?
   end
 
@@ -115,6 +115,12 @@ class UserTest < ActiveSupport::TestCase
       assert_not @user.valid?, "#{invalid_phones.inspect} should be invalid"
     end
 
+  end
+
+  test "Date of birth should be at least 13 years old" do
+    @user.dob = Date.today - 12.years
+    
+    assert_not @user.valid?
   end
 
   # test "First name validatioion should reject invalid names" do 

@@ -7,8 +7,8 @@ jose:
   location: Miami
   first_name: Luis
   last_name: Fonseca
-  gender: M
-  dob: 2017-08-23
+  gender: Male
+  dob: 1991-08-23
   slug: luisdaniel
   games_played: nil
   phone: "5555555555"

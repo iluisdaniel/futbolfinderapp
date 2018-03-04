@@ -24,11 +24,11 @@ class User < ApplicationRecord
 	validates :first_name, presence: true, length: { maximum: 25 }#, format: { with: VALID_WORD_REGEX }	
 	validates :last_name, presence: true, length: { maximum: 25 }
 	validates :location, length: { maximum: 30}
-	validates :gender, presence: true, length: { maximum: 6 }
+	validates :gender, length: { maximum: 6 }
 	VALID_PHONE_REGEX = /\d{10}/
 	validates :phone, presence: true, length: {maximum: 10, minimum: 10},
-						format: { with: VALID_PHONE_REGEX }, uniqueness: true, allow_blank: true
-	validates :dob, presence: true
+						format: { with: VALID_PHONE_REGEX }, uniqueness: true
+	validate :check_date_of_birth
 
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 	validates :email, presence: true, length: {maximum: 255}, 
@@ -100,6 +100,12 @@ class User < ApplicationRecord
   	def rand_number
   		rand(100)
   	end
+
+  	def check_date_of_birth
+  		if !dob.nil? 
+			errors.add(:dob, "User should have at least 13 years old") unless dob < Date.today - 13.years	
+		end
+	end
 
 	private
 
