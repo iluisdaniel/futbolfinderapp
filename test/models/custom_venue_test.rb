@@ -27,12 +27,6 @@ class CustomVenueTest < ActiveSupport::TestCase
   	assert @cv.valid?
   end
 
-  test "should just one venue be related to game" do 
-  	cv2 = @cv.dup
-  	@cv.save
-  	assert_not cv2.valid?
-  end
-
   # Presence
 
   # test "date should be present" do 
