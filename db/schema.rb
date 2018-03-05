@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180217094445) do
+ActiveRecord::Schema.define(version: 20180304072509) do
 
   create_table "businesses", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string "name"
@@ -60,6 +60,22 @@ ActiveRecord::Schema.define(version: 20180217094445) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "custom_venues", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "number_players"
+    t.string "ground"
+    t.string "field_type"
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "zipcode"
+    t.date "date"
+    t.time "time"
+    t.time "end_time"
+    t.integer "game_id"
+    t.index ["date", "time"], name: "index_custom_venues_on_date_and_time"
+    t.index ["game_id"], name: "index_custom_venues_on_game_id"
   end
 
   create_table "fields", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|

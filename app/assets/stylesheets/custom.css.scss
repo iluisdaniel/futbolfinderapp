@@ -805,6 +805,9 @@ ul.alert-dropdown {
                 .date-time{
                     margin-top: 20px;
                 }
+                .modal-body{
+                    text-align: left;
+                }
         
             }
             .card-info-content{
@@ -845,6 +848,11 @@ ul.alert-dropdown {
         margin-top: 10px;
     }
 }
+
+.game-content .card .content .card-venue-content .row{
+    padding-top: 0px;
+}
+
 
 
 

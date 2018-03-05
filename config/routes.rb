@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   end
 
   resources :reservations
+  resources :custom_venues, only: [:create, :destroy]
 
   namespace "games" do
     resources :old_games, only: :index

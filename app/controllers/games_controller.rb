@@ -34,6 +34,7 @@ class GamesController < ApplicationController
 		#Bug - when a field is erased from a business, and the show action is called it fails because it cannot find field to show field info into the show page
 		# Make impossible to erase a field in the case there are open games. Or it has to erased all of them. 
 		@reservation = Reservation.new
+		@custom_venue = CustomVenue.new
 
 		if params[:date]
 			@@res = {date: params[:date], time: Time.zone.parse(params[:time]), end_time: Time.zone.parse(params[:time]) + 1.hour, 

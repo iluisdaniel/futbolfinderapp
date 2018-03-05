@@ -1,0 +1,49 @@
+<div class=" col-md-4">
+                    <div class="icon"><i class="fa fa-map-marker"></i></div>
+                    <address>
+                      <strong>Location </strong><br>
+                      <%= @game.reservation.business.name %><br>
+                     <%= @game.reservation.business.address %><br>
+                      <%= @game.reservation.business.city %>, <%= @game.reservation.business.state %> 
+                      <%= @game.reservation.business.zipcode %>
+                  </address>
+                      <% if !@game.reservation.nil? && @game.user == current_user %>
+                       <div class="cancel-res">
+                               <%= link_to "Cancel Reservation", @game.reservation, method: :delete,
+                                data: { confirm: "Are you sure you want to delete this reservation?" },
+                                title: @game.reservation, class: "btn" %>
+                       </div>
+                    <% end %>
+                  </div>
+
+                  <div class="col-md-8">
+                    <div class="  col-md-3 col-sm-4 col-xs-6">
+                      <div class="icon"><i class="fa fa-info-circle"></i></div>
+                      <strong>Reservation</strong><br>
+                      <%= @game.reservation.id %>
+                      
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-6">
+                        <div class="icon"><i class="fa fa-soccer-ball-o"></i></div>
+                        <strong>Field</strong><br>
+                        <%= get_field(@game.reservation.field_id).name %>
+
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                      <div class="icon"><i class="fa fa-users"></i></div>
+                       <strong>Type of Field</strong><br>
+                        <%= get_field(@game.reservation.field_id).number_players %> players
+                    </div> 
+
+                    <div class=" col-md-5 col-sm-6 col-xs-6 date-time">
+                      <div class="icon"><i class="fa fa-calendar"></i></div>
+                     <strong>Date</strong><br>
+                     <%= @game.reservation.date %>
+                    </div>
+                    <div class="col-md-5 col-sm-6 col-xs-6 date-time">
+                       <div class="icon"><i class="fa fa-clock-o"></i></div>
+                       <strong>Time</strong><br>
+                        <%= @game.reservation.time.strftime("%I:%M %p") %> - <%= @game.reservation.end_time.strftime("%I:%M %p") %> 
+                    </div>
+                    
+                  </div>
