@@ -226,7 +226,7 @@ form{
     }
     
     .form-control{
-        height: 60px !important;
+        height: 40px !important;
         margin-left: 10px;
         width: 96%;
         margin-right: 30px !important;
@@ -647,11 +647,21 @@ ul.alert-dropdown {
     }
 
 }
+@media only screen and (max-width: 600px){
+    .navbar .btn{
+        width: 100%;
+        margin-top: 10px;
+    }
+}
 @media only screen and (max-width: 800px){
   .games{
     h3{
             font-size:1.5em;
-        }
+    }
+    .col-md-12{
+        margin-bottom: 30px;
+        margin-top: 10px;
+    }
   }
 
   .game-content{
@@ -676,6 +686,7 @@ ul.alert-dropdown {
         font-size: 2rem;
         text-align: center;
     }
+    
 }
 
 @media only screen and (max-width: 1000px){
@@ -689,18 +700,13 @@ ul.alert-dropdown {
     }
 }
 
-.date-picker{
-  
-
-}
-.year{
-  
-}
-.month{
-  
-}
-.day{
-  
+.games{
+    .navbar-default .navbar-form{
+        border:none !important;
+    }
+    .col-md-12{
+        margin-bottom: 20px;
+    }
 }
 .comments{
     max-height:550px !important;

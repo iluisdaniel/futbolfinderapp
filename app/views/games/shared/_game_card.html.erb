@@ -7,19 +7,24 @@
 		<p class="category">
 		<span class="label label-success"><%= game.public %></span>
 
-		<%= link_to get_game_creator(game), class: "pull-right" do %>
+		<%= link_to game.get_admin_name, class: "pull-right" do %>
 			<i class="fa fa-user"></i> <%= get_game_creator(game) %>
 		<% end %>
 		</p>
 
 		<%= link_to game do %><br>
-			<h4 class="title">Game at <%= get_reservation_location_from_game(game.id).name %><br>
-			<small> <i class="fa fa-calendar"></i> <%= get_reservation_month_and_day_from_game(game.id)%> <i class="fa fa-clock-o"></i><%= get_reservation_time_from_game(game.id) %> - <%= get_reservation_end_time_from_game(game.id) %></small>
+			<h4 class="title" style="text-align: center;"><%= game.title %><br>
 			</h4>
 		<% end %>
+		<p style="text-align: center; color: white;"> <i class="fa fa-calendar"></i> <%=  game.get_date.strftime("%^b %d")%> <i class="fa fa-clock-o"></i><%= game.get_time.strftime("%l:%M %p") %> - <%= game.get_end_time.strftime("%l:%M %p") %></p>
 	</div>
 	<div class="footer">
-		<i class="fa fa-map-marker"></i> <%= link_to get_reservation_location_from_game(game.id).name, get_reservation_location_from_game(game.id) %>
+		<i class="fa fa-map-marker"></i> 
+		<% if game.reservation %>
+			<%= link_to game.reservation.business.name, game.reservation.business %>
+		<% else %>
+		<%= game.custom_venue.address %>
+		<% end %>	
 
 		<div class="author pull-right">
 		<i class="fa fa-users"></i> <%= get_number_of_players_ready(game.id)%> / <%= game.number_players %>  <i class="fa fa-comment"></i> <%= game.comments.count %> 

@@ -27,12 +27,38 @@ class Game < ApplicationRecord
       errors.add(:invite_allowed, " should present") unless !invite_allowed.nil?
     end
 
-    def self.with_reservation(user_business)
+
+    def self.withReservationOrVenue(user_business)
       gs = get_games(user_business)
 
-      gs.includes(:reservation).references(:reservation)
+      if user_business.instance_of? Business
+        gs.includes(:reservation).references(:reservation)
           .where('reservations.id IS NOT NULL AND reservations.date >= ?', Date.today)
           .order("reservations.date asc")
+      else
+        gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
+            .where('reservations.id IS NOT NULL OR custom_venues.id IS NOT NULL')
+            .where('reservations.date >= ? OR custom_venues.date >= ?', Date.current, Date.current)
+            .order("reservations.date asc", "custom_venues.date asc")
+      end
+
+      # gs.includes(:reservation).references(:reservation)
+      #     .where('reservations.id IS NOT NULL AND reservations.date >= ?', Date.today)
+      #     .order("reservations.date asc")
+    end
+
+    def self.searchWithReservationOrVenue(user_business, date)
+      gs = get_games(user_business)
+      if user_business.instance_of? Business
+          gs.includes(:reservation).references(:reservation)
+          .where('reservations.id IS NOT NULL AND reservations.date = ?', date)
+          .order("reservations.date asc")
+      else
+        gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
+            .where('reservations.id IS NOT NULL OR custom_venues.id IS NOT NULL')
+            .where('reservations.date = ? OR custom_venues.date = ?', date.to_date, date.to_date)
+            .order("reservations.date asc", "custom_venues.date asc")
+      end
     end
 
     def self.this_week_games_with_reservation(user_business)
@@ -56,12 +82,19 @@ class Game < ApplicationRecord
         gs.includes(:reservation).references(:reservation).where('reservations.id IS NULL')
     end
 
-    def self.old_reservations(user_business)
+    def self.old_reservations_or_custom_venues(user_business)
        gs = get_games(user_business)
 
-      gs.includes(:reservation).references(:reservation)
-          .where('reservations.id IS NOT NULL AND reservations.date < ?', Date.today)
-          .order("reservations.date desc")
+          if user_business.instance_of? Business
+              gs.includes(:reservation).references(:reservation)
+                .where('reservations.id IS NOT NULL AND reservations.date < ?', Date.today)
+                .order("reservations.date desc")
+          else
+            gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
+                .where('reservations.id IS NOT NULL OR custom_venues.id IS NOT NULL')
+                .where('reservations.date < ? OR custom_venues.date < ?', Date.current, Date.current)
+                .order("reservations.date desc", "custom_venues.date desc")
+          end
     end
 
     def self.today_games_with_reservations(user_business)
@@ -131,6 +164,34 @@ class Game < ApplicationRecord
       gs.includes(:reservation).references(:reservation)
           .where('reservations.id IS NOT NULL AND reservations.date >= ?', Date.today)
           .order("reservations.date asc").first
+    end
+
+    def get_admin_name
+      if self.user
+        self.user.first_name
+      elsif self.business
+          self.business.name
+      end
+    end
+
+    def get_date
+      self.get_venue.date
+    end
+
+    def get_time
+      self.get_venue.time 
+    end
+
+    def get_end_time
+      self.get_venue.end_time 
+    end
+
+    def get_venue
+      if self.reservation
+        self.reservation
+      elsif self.custom_venue
+        self.custom_venue
+      end  
     end
 
     private

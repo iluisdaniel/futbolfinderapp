@@ -13,8 +13,12 @@ class GamesController < ApplicationController
 		# add field id
 		#FIX displaying same day games in games and not in old games
 		# TODO: Maybe, include game status ex: planning, ready, complete?
-		@games = Game.with_reservation(current_business_or_user)
-		@games_no_reservation = Game.without_reservation(current_business_or_user)	
+		@games = Game.withReservationOrVenue(current_business_or_user)
+		if params[:date] && !params[:date].empty?
+			@games = Game.searchWithReservationOrVenue(current_business_or_user, params[:date])
+		else
+			@games = Game.withReservationOrVenue(current_business_or_user)
+		end
 	end
 
 	def show

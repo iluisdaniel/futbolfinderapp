@@ -4,12 +4,38 @@
 <%= render partial: "shared/menu_bar" %>
 
 <div class="container games" style="margin-top:20px;">
-  <% if !are_there_games?%>
+  <% if !are_there_games? %>
     <%= render partial: "games/shared/no_games_message" %>
   <% else %>  
 
     <div class="row">
-      <%= render partial: "games/shared/games", locals: {games: @games, subtitle: 'Past Games'} %>
+    	<div class="col-md-12 col-sm-12">
+	    	<nav class="navbar navbar-default">
+	    		<div class="container-fluid">
+			    	<%= form_tag(games_path, :method => "get", class: "navbar-form navbar-left") do %>
+			    		<div class="form-group">
+			    			<%= text_field_tag :date, params[:date], data:{ provide:'datepicker', 'date-format' => 'dd-mm-yyyy', 'date-autoclose' => 'true' }, placeholder: "DD-MM-YYYY", class: "form-control" %>
+			    		</div>
+			    			<%= submit_tag "Search", class: "btn btn-primary btn-round btn-fill" %>
+			    	<% end %>
+	    	</div>
+	    </nav>
+
+    	</div>
+	</div>
+	<div class="row">
+    	<div class="col-md-12 col-sm-12">
+    		<% if @games.empty?%>
+    			<p class="lead"> Sorry, we couldn't find a game at <%= params[:date]%>. Please, try again</p>
+    		<% end %>
+			<% @games.each do |game| %>
+				<div class="col-md-4 col-sm-6">
+					<%= render partial: '/games/shared/game_card', locals: {game: game} %>
+				</div><!-- end col -->
+			<% end %>
+      </div>
     </div>
+      
+    
   <% end %>  
 </div>

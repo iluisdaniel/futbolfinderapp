@@ -124,5 +124,16 @@ class CustomVenueTest < ActiveSupport::TestCase
   	assert_not @cv.valid?
   end
 
+  #this goes to _games.html
+  # <!-- <td><%=  link_to get_reservation_month_and_day_from_game(game.id), game %></td>
+  #  <td><%= link_to get_reservation_location_from_game(game.id).#name, get_reservation_location_from_game(game.id) %></td>
+  
+  
+  # <td><%= get_reservation_time_from_game(game.id) %> - <%= get_reservation_end_time_from_game(game.id) %></td>
+  
+  # <td><%= get_number_of_players_ready(game.id)%> / <%= game.number_players %></td>
+  # <td><%= game.#public %></td>
+  # <td><%= link_to get_game_creator(game), get_game_creator(game) %></td> -->
+
 
 end
