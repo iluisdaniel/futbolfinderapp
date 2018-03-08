@@ -437,6 +437,18 @@ h1{
 }
 
 /******* Top Navigation *************/
+@media only screen and (max-width: 800px){
+    .nav .open > a, .nav .open > a:hover, .nav .open > a:focus{
+        border-color: none !important;
+     }
+    .navbar-inverse .navbar-nav > li > a:hover{
+        border-bottom: none !important;
+    }
+    .navbar .active{
+        border-bottom: none !important;
+    }
+
+}
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus{
     border-color: #c72166;
 }
@@ -453,6 +465,10 @@ h1{
     }
     .active{
         border-bottom: 2px solid #c72166;
+    }
+    .menu-drop{
+        font-weight: 600;
+        color: white;
     }
 }
 
@@ -651,6 +667,12 @@ ul.alert-dropdown {
     .navbar .btn{
         width: 100%;
         margin-top: 10px;
+    }   
+    .game-sd-tabs{
+        padding-left: 0 !important;
+    }
+    .game-sd-tabs.nav-tabs > li > a{
+        margin-right: 0!important;
     }
 }
 @media only screen and (max-width: 800px){
@@ -707,6 +729,13 @@ ul.alert-dropdown {
     .col-md-12{
         margin-bottom: 20px;
     }
+    .input-group .form-control:last-child{
+        margin-left: 0 !important;
+    }
+    nav {
+        margin-bottom: 20px;
+        margin-top: 20px;
+    }
 }
 .comments{
     max-height:550px !important;
@@ -749,6 +778,7 @@ ul.alert-dropdown {
 .game-sd-tabs{
     margin-bottom: 20px;
     background-color: #201a50;
+    padding-left: 5%;
     a {
         color:#fff;
     }
@@ -1498,7 +1528,7 @@ ul.alert-dropdown {
 
 .user-signup{
     .row{
-        margin-top: 5%;
+        margin-top: 0;
     }
     h1{
         text-align: center;

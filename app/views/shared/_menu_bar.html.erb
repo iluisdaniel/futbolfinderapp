@@ -1,5 +1,5 @@
 <% if is_at_one_of_index_games? %>
-<ul class="nav nav-tabs game-sd-tabs" style="padding-left: 3%">
+<ul class="nav nav-tabs game-sd-tabs" style="">
 
           <li class="<%= 'active' if current_page?(controller: '/games', action: 'index') %>"><%= link_to 'All Games', games_path, class: "" %></li>
           <%if signed_in? %>
