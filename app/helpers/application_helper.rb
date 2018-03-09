@@ -27,4 +27,18 @@ module ApplicationHelper
       return true
   end
 
+  def is_login_or_sign_up_been_shown?
+    if current_page?(controller: '/users', action: 'new') || 
+      current_page?(controller: '/sessions', action: 'create') ||
+      current_page?(controller: '/sessions', action: 'new')
+          true
+    end
+  end
+
+  def is_current_page_business_sign_up?
+    if current_page?(controller: '/businesses', action: 'new')
+          true
+    end
+  end
+
 end

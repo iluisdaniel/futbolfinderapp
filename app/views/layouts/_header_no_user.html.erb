@@ -1,24 +1,24 @@
-<div>
-<header class="navbar navbar-fixed-top navbar-inverse">
+<% if !is_login_or_sign_up_been_shown? %>
+    <header class="navbar navbar-fixed-top navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
               <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
+              <span class="menu-drop">Menu</span>
             </button>
             <%= link_to root_path, :id => "logo" do %>
                <span style="font-size: 1.0em;"><i class="fa fa-soccer-ball-o"></i></span> FutFinder  
             <% end %>
         </div><!-- end div navbar-header -->           
-            <ul class="nav navbar-nav navbar-right">
-              <% if current_page_login? %>  
-                <li><%= link_to "Sign up", u_signup_path %></li>
-              <% elsif current_page_user_sign_up? %>
-                <li><%= link_to "Log in", login_path %></li>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <% if !is_current_page_business_sign_up? %>       
+                <ul class="nav navbar-nav navbar-right">
+                    <li><%= link_to "Businesses", businesses_path %></li>
+                    <li><%= link_to "Log in", login_path %></li>
+                    
+                </ul><!-- end ul nav -->
               <% end %>
-                
-            </ul><!-- end ul nav -->
+        </div><!-- end div collapse -->
       </div><!-- End div container fluid -->
   </header>
+<% end %>
