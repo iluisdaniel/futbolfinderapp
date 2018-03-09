@@ -737,6 +737,7 @@ ul.alert-dropdown {
         margin-top: 20px;
     }
 }
+
 .comments{
     max-height:550px !important;
     padding-right: 20px;
@@ -923,6 +924,28 @@ ul.alert-dropdown {
         border-top: none;
     }
 
+}
+
+/*********** FIND AVIALBLE FIELDS **********/
+
+.select-field-nav{
+    .input-group .form-control:last-child{
+        margin-left: 0 !important;
+    }
+}
+
+@media only screen and (max-width: 800px){
+    .select-field-nav{
+        .col-xs-12{
+            margin-bottom:10px;
+        }
+        .btn{
+            float:right;
+        }
+    }
+    .select-businesses .dropdown-menu{
+        left: -70% !important;
+    }
 }
 
 
