@@ -145,11 +145,11 @@
 			<% end %>  	  
 		</div>
 		<div class="col-md-3" style="background: #fafafa; margin-left: 20px;">
-			<% if @game.is_player_involved?(current_user) && @game.invite_allowed == true %>
+			<% if signed_in? && @game.is_player_involved?(current_user) && @game.invite_allowed == true %>
 			    <%= render '/game_lines/new_game_line' %>
       <% elsif logged_in? || @game.user == current_user %>
           <%= render '/game_lines/new_game_line' %>
-			<% elsif  !@game.is_player_involved?(current_user)%>
+			<% elsif  signed_in? && !@game.is_player_involved?(current_user)%>
 			    <%= render '/game_lines/add_yourself' %>
 			<% end %>
 		</div>

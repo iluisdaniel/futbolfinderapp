@@ -1,5 +1,5 @@
 class AvailableFieldsController < ApplicationController
-	before_action :signed_in_user_but_not_business?, only: :index
+	before_action :is_not_a_business?, only: :index
 
 	@@game = nil
 
@@ -47,6 +47,13 @@ class AvailableFieldsController < ApplicationController
 			end
 		end
 		return bs
+	end
+
+	def is_not_a_business?
+		if logged_in?
+			return false
+		end
+		return true
 	end
 
 end

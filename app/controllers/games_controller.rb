@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
 	include GamesHelper
-	before_action :signed_in_business_or_user?, only: [:index, :show, :new, :create,:edit, :update, :destroy]
+	before_action :signed_in_business_or_user?, only: [:index, :new, :create,:edit, :update, :destroy]
 	before_action :correct_business_or_user_to_see,   only: [:show]
 	before_action :correct_business_or_user_to_delete, only: [:edit, :update,:destroy]
 	before_action :set_businesses_collection, only: [:show]

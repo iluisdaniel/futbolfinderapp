@@ -4,8 +4,7 @@ module GamesHelper
           redirect_to root_url if game.nil?
     end
 
-    def correct_user_to_see
-	    game = Game.find_by(id: params[:id])
+    def correct_user_to_see(game)
     	game_line = current_user.game_lines.find_by(game_id: params[:id])
 
         # Check if current user is  admin, is on the game list, or is allow to see by public setting.
@@ -66,13 +65,19 @@ module GamesHelper
     end
 
     def correct_business_or_user_to_see
-    	if logged_in?
-    		correct_business
-    	elsif signed_in?
-    		correct_user_to_see
-    	else
-    		return false
-    	end  		
+    	game = Game.find_by(id: params[:id])
+
+        if game.public == "Public"
+            return true
+        else
+            if logged_in?
+        		correct_business
+        	elsif signed_in?
+        		correct_user_to_see(game)
+        	else
+        		return false
+        	end  
+        end		
     end
 
     def correct_user_for_game_line
@@ -90,13 +95,15 @@ module GamesHelper
 		
 		if logged_in?
 			game = current_business.games.find_by(id: game_line.game_id)		
-    	else
+    	elsif signed_in?
+            
     		game = current_user.games.find_by(id: game_line.game_id)
 
     		if game_line.user_id == current_user.id
     			correct_user = true
     		end
-
+        else
+            return false
     	end
 
     	if correct_user || !game.nil? 
