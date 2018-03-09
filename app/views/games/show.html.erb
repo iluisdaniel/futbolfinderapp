@@ -2,9 +2,12 @@
 <%= render "/games/shared/game_header"%>
 <%= render "/games/shared/menu_bar" %>
 
-<div class="container">
+<div class="container game-content">
   <div class="row">
-    <div class="col-md-offset-1 col-md-9 game-content">
+    <div class="col-md-7 col-sm-7 games-comments">
+      <%= render partial: "comments/comments", locals: {commentable: @game }%>
+    </div>
+    <div class="col-md-4 col-md-offset-1 col-sm-5" style="padding-left: 30px;">
 
         <% if signed_in? || (@game.user_id.nil? && @game.business_id.present?) %>
           <div class="card">

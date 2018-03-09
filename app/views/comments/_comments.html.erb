@@ -1,15 +1,20 @@
 
-<div class="row" style="margin-bottom: 20px;">
+<div style="margin-bottom: 30px;">
 	<h3 class="lead"> Comments <span class="badge" style="margin-right:5px;"><%= commentable.comments.count %></span></h3>
 
 	<%= form_for [commentable, Comment.new] do |f| %>
-	    <div class="form-group">
+
+
+	    <div class="">
 	        <%= f.text_area :body, cols: "30", rows: "20", class: "form-control text-area", placeholder: "Add a comment" %>
+	    
+	    <%= f.submit class: "btn btn-primary btn-fill" %>
 	    </div>
-	    <%= f.submit class: "btn btn-primary btn-fill btn-round pull-right" %> 
 	<% end %> 
 </div>
-<div class="row"> 
+
+<div style="display: inline-block;">
+	<hr>
 		<% if commentable.comments.count == 0 %>
 			<span class="lead">No comments</span>
 		<% end %>
@@ -38,10 +43,10 @@
 				    </div>
 				    
 		<% end %>
-</div>
 
 
 	
 
 
   
+</div>
