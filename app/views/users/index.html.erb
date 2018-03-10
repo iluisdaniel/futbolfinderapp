@@ -6,7 +6,7 @@
   <div class="row">
       <ul class="users">
           <% @users.each do |user| %>
-            <div class="col-md-4 col-xs-12 col-sm-6">
+            <div class="col-md-3 col-xs-12 col-sm-4">
               <%= render partial: '/users/shared/user_card2', locals: {user: user } %>
             </div>
              
