@@ -3,7 +3,7 @@
 jose:
   id: 1
   email: luis@example.com
-  password_digest: 123456lg
+  password_digest: <%= User.digest_two('password') %>
   location: Miami
   first_name: Luis
   last_name: Fonseca

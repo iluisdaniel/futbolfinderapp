@@ -63,6 +63,12 @@ class User < ApplicationRecord
 	    Digest::SHA1.hexdigest(token.to_s)
 	end
 
+	def User.digest_two(string)
+   	 	cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+    	                                              BCrypt::Engine.cost
+    	BCrypt::Password.create(string, cost: cost)
+  	end
+
 	# to call all your friends
 
     def friends
