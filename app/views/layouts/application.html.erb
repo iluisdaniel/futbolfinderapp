@@ -12,13 +12,7 @@
 </head>
 <body>
 
-    <% if logged_in? %>
-      <%= render 'layouts/header_businesses' %>
-    <% elsif signed_in?%>
-      <%= render 'layouts/header' %>
-    <% else %>
-      <%= render 'layouts/header_no_user'%>
-    <% end %> 
+    <%= include_menu_bar(yield(:include_menu)) %>
     
 
     <% flash.each do |message_type, message| %>       

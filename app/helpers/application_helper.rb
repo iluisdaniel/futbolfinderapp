@@ -10,6 +10,19 @@ module ApplicationHelper
     end
   end
 
+
+  def include_menu_bar(include_menu)
+    if include_menu.empty?
+      if logged_in?
+        render 'layouts/header_businesses' 
+      elsif signed_in?
+        render 'layouts/header'
+      else
+        render 'layouts/header_no_user'
+      end     
+    end
+  end
+
   def show_title_page_header(title, secondaryTitle)
   	if !title.empty?
   		render partial: "layouts/title_page_header", locals: {title: title, secondaryTitle: secondaryTitle}
@@ -27,18 +40,9 @@ module ApplicationHelper
       return true
   end
 
-  def is_login_or_sign_up_been_shown?
-    if current_page?(controller: '/users', action: 'new') || 
-      current_page?(controller: '/sessions', action: 'create') ||
-      current_page?(controller: '/sessions', action: 'new')
-          true
-    end
-  end
-
-  def is_current_page_business_sign_up?
-    if current_page?(controller: '/businesses', action: 'new')
-          true
-    end
+  def get_stripe_connect_url
+    "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=" + 
+    Rails.application.secrets.stripe_client_id + "&scope=read_write"
   end
 
 end

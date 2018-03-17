@@ -1,4 +1,4 @@
-<% if !is_login_or_sign_up_been_shown? %>
+
     <header class="navbar navbar-fixed-top navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -10,15 +10,12 @@
                <span style="font-size: 1.0em;"><i class="fa fa-soccer-ball-o"></i></span> FutFinder  
             <% end %>
         </div><!-- end div navbar-header -->           
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <% if !is_current_page_business_sign_up? %>       
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">     
                 <ul class="nav navbar-nav navbar-right">
                     <li><%= link_to "Businesses", businesses_path %></li>
                     <li><%= link_to "Log in", login_path %></li>
                     
                 </ul><!-- end ul nav -->
-              <% end %>
         </div><!-- end div collapse -->
       </div><!-- End div container fluid -->
   </header>
-<% end %>
