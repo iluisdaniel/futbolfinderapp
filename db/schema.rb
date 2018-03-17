@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180304072509) do
+ActiveRecord::Schema.define(version: 20180316032536) do
 
   create_table "businesses", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string "name"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20180304072509) do
     t.string "card_exp_month"
     t.string "card_exp_year"
     t.datetime "expires_at"
+    t.string "stripe_user_id"
     t.index ["email"], name: "index_businesses_on_email", unique: true
   end
 

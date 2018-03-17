@@ -1,0 +1,34 @@
+<% provide(:title, 'Confirmation') %>
+<% provide(:include_menu, 'false') %>
+
+
+<div class="container business-signup">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<h1 id="logo-black"><i class="fa fa-soccer-ball-o"></i> FUTFINDER</h1>
+			<div class="card">
+				<p class="welcome">Welcome to the FUTFINDER family!</p>
+				  <ul class="pager">
+				    <li>1</li>
+				    <li>2</li>
+				    <li class="active">3</li>
+				  </ul>
+				<hr>
+				<p>Your account is ready!  <br>
+				<i class="fa fa-check-circle"></i></p>
+				<strong>Next Steps</strong>
+				<ul>
+					<li>See our tutorial <a href="">See tutorial</a></li>
+					<li>
+						Go to your <%= link_to "account settings", edit_business_path(current_business) %> and complete your profile.
+						<ul>
+							<li>Add profile picture. </li>
+							<li>Add your work schedule.</li>
+							<li>Add your fields.</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

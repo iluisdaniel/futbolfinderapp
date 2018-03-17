@@ -1,0 +1,24 @@
+<% provide(:title, 'Stripe Connect') %>
+<% provide(:include_menu, 'false') %>
+
+
+<div class="container business-signup">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<h1 id="logo-black"><i class="fa fa-soccer-ball-o"></i> FUTFINDER</h1>
+			<div class="card">
+				<p class="welcome">Join FUTFINDER today!</p>
+				  <ul class="pager">
+				    <li>1</li>
+				    <li class="active">2</li>
+				    <li>3</li>
+				  </ul>
+				<hr>
+				<p>Sing up with Stripe and get ready to get paid!</p>  
+				<%= link_to get_stripe_connect_url do %>
+					<%= image_tag 'stripe-button3.png', class: "center-block" %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>

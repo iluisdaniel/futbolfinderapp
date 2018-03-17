@@ -1043,6 +1043,8 @@ ul.alert-dropdown {
     }
 }
 
+
+
 /****************** USERs **************************************/
 
 .users{
@@ -1573,6 +1575,49 @@ ul.alert-dropdown {
     margin-left: 1em; }
 
 
+/********* BUSINESS SIGN UP *************/
+.business-signup{
+    h1{
+        text-align: center;
+    }
+    .card{
+        padding: 40px;
+        .welcome{
+            font-size: 1.8rem;
+        }
+        .fa-check-circle{
+            font-size: 8rem;
+            color: green;
+            text-align: center;
+        }
+    }
+    .pager{
+        margin: 0;
+        margin-bottom: 10px;
+        li{
+            display: inline-block;
+            padding: 5px 14px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+        }
+        .active{
+            background-color: #f1f1f1;
+        }
+    }
+    .btn{
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+    p{
+        text-align: center;
+    }
+    img{
+
+    }
+
+}
 /********* USER SIGN UP *************/
 
 .user-signup{

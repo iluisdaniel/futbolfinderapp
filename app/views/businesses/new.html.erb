@@ -1,11 +1,20 @@
-<% provide(:title, 'Sign up') %>
-<% provide(:htitle, 'Business Sign up') %>
-<% provide(:secondaryTitle, '')%>
+<% provide(:title, 'Business Sign up') %>
+<% provide(:include_menu, 'false') %>
 
+<div class="container business-signup">
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-8 col-md-offset-2">
+    <h1 id="logo-black"><i class="fa fa-soccer-ball-o"></i> FUTFINDER</h1>
+    <div class="card">
     <%= form_for(@business) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>	
+      <p class="welcome">Join FUTFINDER today!</p>
+        <ul class="pager">
+          <li class="active">1</li>
+          <li>2</li>
+          <li>3</li>
+        </ul>
+      <hr>  
 
      
       <h3 class="lead">Basic Info</h3>
@@ -14,7 +23,7 @@
           <div class="col-md-2">
             <%= f.label :name, 'Name' %>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-10">
             <%= f.text_field :name, class: 'form-control' %>
           </div>
         </div>
@@ -25,7 +34,7 @@
           <div class="col-md-2">
             <%= f.label :email %>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-10">
             <%= f.email_field :email, class: 'form-control' %>
           </div>
         </div>
@@ -36,21 +45,21 @@
           <div class="col-md-2">
             <%= f.label :phone %>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-10">
             <%= f.text_field :phone, class: 'form-control' %>
           </div>
         </div>
       </div>
 
       <hr>
-      <h3 class="lead">Business Address</h3>
+      <h3 class="lead">Address</h3>
 
       <div class="row">
         <div class="form-group">
           <div class="col-md-2">
-            <%= f.label :address, "St Address" %>
+            <%= f.label :address, "Line" %>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-10">
             <%= f.text_field :address, class: 'form-control' %>
           </div>
         </div>
@@ -61,7 +70,7 @@
           <div class="col-md-2">
             <%= f.label :city %>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-10">
             <%= f.text_field :city, class: 'form-control' %>
           </div>
         </div>
@@ -72,7 +81,7 @@
           <div class="col-md-2">
             <%= f.label :state %>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-10">
             <%= f.text_field :state, class: 'form-control' %>
           </div>
         </div>
@@ -83,7 +92,7 @@
           <div class="col-md-2">
             <%= f.label :zipcode %>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-10">
             <%= f.text_field :zipcode, class: 'form-control' %>
           </div>
         </div>
@@ -97,7 +106,7 @@
           <div class="col-md-2">
             <%= f.label :password %>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-10">
             <%= f.password_field  :password, class: 'form-control' %>
           </div>
         </div>
@@ -108,7 +117,7 @@
           <div class="col-md-2">
             <%= f.label :password_confirmation, "Confirmation" %>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-10">
             <%= f.password_field :password_confirmation, class: 'form-control' %>
           </div>
         </div>
@@ -116,5 +125,8 @@
 
       <%= f.submit "Create my account", class: "btn btn-primary btn-fill btn-round pull-right" %>
     <% end %>
+    </div>
+    <p>Already user? <%= link_to "Sign in", login_path %></p>
   </div>
+</div>
 </div>

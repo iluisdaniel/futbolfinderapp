@@ -36,7 +36,15 @@ class Business < ApplicationRecord
     # Validate the attached image is image/jpg, image/png, etc
     validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
-	def stripe_customer
+	## Account ID for connect
+  def save_stripe_acct_id(acct_id)
+    if !acct_id.nil?
+      update(stripe_user_id: acct_id)
+    end
+  end
+
+  ## Customer ID for Subcriptions
+  def stripe_customer
     if stripe_id?
       Stripe::Customer.retrieve(stripe_id)
     else
