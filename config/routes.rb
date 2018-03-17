@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get 'select_game' => 'select_game#index'
 
   resource :subscription
+  resource :payment_method
   resources :charges
 
   resources :notifications, only: :index
