@@ -18,7 +18,7 @@ class AvailableFieldsController < ApplicationController
 				@message = "We couldn't find a business available that date."
 			end
 		else
-			flash[:info] = "params date empty"
+			# flash[:info] = "params date empty"
 			@@game = nil
 		end
 
