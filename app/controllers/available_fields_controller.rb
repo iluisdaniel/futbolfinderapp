@@ -8,6 +8,8 @@ class AvailableFieldsController < ApplicationController
 		@message = ""
 
 		if params[:date] && !params[:date].empty?
+			# for debugging
+			# flash[:info] = params[:date] + "  " + params[:time]
 			#TODO: change variable name to something else. the hash has businesses and field.
 			@businesses = get_available_businesses(Business.get_open_businesses_at(params[:date], Time.zone.parse(params[:time])),
 				params[:date], Time.zone.parse(params[:time]))
@@ -16,6 +18,7 @@ class AvailableFieldsController < ApplicationController
 				@message = "We couldn't find a business available that date."
 			end
 		else
+			flash[:info] = "params date empty"
 			@@game = nil
 		end
 
@@ -35,14 +38,20 @@ class AvailableFieldsController < ApplicationController
 		bs = Hash.new
 		biz.each do |b|
 			b.fields.each do |f|
-				t = time.to_time + 1.hour
-				res = Reservation.new(date: date, time: time, end_time: t.to_s, business_id: b.id,
+				t = time + 1.hour
+				res = Reservation.new(date: date, time: time, end_time: t, business_id: b.id,
 					field_id: f.id)
 				if res.valid?
+					# for debuggin
+					# flash[:info] = "found a res valid"
 					bs[b.name] = Array.new
 					bs[b.name] << b
 					bs[b.name] << f
 					bs[b.name] << @@game
+				else
+					# FOr debugging
+					# res.valid?
+					# flash[:warning] = res.errors.full_messages
 				end
 			end
 		end
