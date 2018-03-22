@@ -1,0 +1,124 @@
+<% provide(:title, 'Confirmation') %>
+<% provide(:include_menu, 'false') %>
+
+
+<div class="container ngf ngf3">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 col-sm-12">
+      <h1 id="logo-black"><i class="fa fa-soccer-ball-o"></i> FUTFINDER <br><small>New Game</small></h1>
+
+      <div style="text-align:center;margin-top:20px; margin-bottom:30px;">
+        <span class="step finish"></span>
+        <span class="step finish"></span>
+        <% if params[:source] %>
+          <span class="step finish"></span>
+        <% end %>
+        <span class="step active"></span>
+      </div>
+      <div class="card">
+        <div class="header">
+          <h4>Confirmation</h4>
+        </div>
+        <div class="content">
+            <div class="row">
+               
+            </div>
+
+           <div class="row">
+              <div class="col-md-6 col-xs-7">
+                   <div class="col-md-12">
+                      <strong>Date</strong>
+                      <%= get_venue_date %>
+                   </div>
+                   <div class="col-md-7">
+                      <strong>Time</strong>
+                      <%= get_venue_time %>
+                   </div>
+                   <div class="col-md-5">
+                      <strong>Duration</strong>
+                      1 hour<br>
+                   </div>
+                   <div class="col-md-12">
+                    <br>
+                      <strong>Location</strong><br>
+                      <%= get_venue_name %><br>
+                      <%= get_venue_address %><br>
+                      <%= get_venue_city %>, <%= get_venue_state %> <br>
+                      <%= get_venue_zipcode %>
+                  </div>
+              </div>
+              <div class="col-md-6 col-xs-5">
+                <div class="col-md-7">
+                  <br>
+                    <strong>Price</strong>
+                </div>
+                <div class="col-md-5">
+                  <br>
+                      $<%= get_field_venue.price %>
+                </div>
+                <div class="col-md-7">
+                    <strong>Field</strong>
+                </div>
+                <div class="col-md-5">
+                      <%= get_field_venue.name %>
+                </div>
+                <div class="col-md-7">
+                    <strong>Field Size</strong>
+                </div>
+                <div class="col-md-5">
+                      <%= get_field_venue.number_players %>
+                </div>
+                <div class="col-md-7">
+                    <strong>Reserved by</strong>
+                </div>
+                <div class="col-md-5">
+                      <%= get_game_from_params.user.first_name %>
+                      <%= get_game_from_params.user.last_name %>
+                </div>
+                <div class="col-md-7">
+                    <strong>Players Desired</strong>
+                </div>
+                <div class="col-md-5">
+                      <%= get_game_from_params.number_players %>
+                </div>
+              </div>
+           </div>
+           <hr>
+           <div class="row">
+             <div class="col-md-offset-1 col-md-8">
+               Total
+             </div>
+              <div class="col-md-offset-2">
+                $<%= get_field_venue.price/get_game_from_params.number_players %> / By player
+             </div>
+           </div>
+           <hr>
+           <div class="row">
+             <h3>Remember</h3>
+             <ul>
+               <li>Check In at least 15 minutes before the game starts.</li>
+               <li>All the players involved in the game will be charged automateclly after check in</li>
+               <li>The total charged will be divided by the number of players that confirm to be part of the game.</li>
+               <li>Organizer is responsible to check after the game with the field, to make sure all payments were accepted in case a card gets declined and a player has to pay at the business.</li>
+             </ul>
+           </div>
+           <hr>
+             <div class="row"> 
+               <%= form_for(@reservation) do |f| %>
+                <%= f.hidden_field :business_id, value: params[:business].to_i %>
+                <%= f.hidden_field :date,  value: params[:date] %>
+                <%= f.hidden_field :time,  value: params[:time] %>
+                <%= f.hidden_field :end_time,  value: params[:time] %>
+                <%= f.hidden_field :field_id,  value: params[:field] %>
+                <%= f.hidden_field :game_id,  value: params[:game] %>
+                <%= hidden_field :source,  value: "confirmation_reservation" %>
+                Do you accept terms and services?
+                <%= f.submit "Confirm", class: "btn btn-large btn-primary btn-fill pull-right" %>
+                <%= link_to 'Back', url_for(:back), class: "btn btn-large btn-default pull-right" %> 
+             <% end %>
+           </div>
+         </div>
+      </div><!-- card -->
+    </div><!-- col-6--> 
+  </div>
+</div><!-- container -->

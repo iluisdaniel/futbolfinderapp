@@ -28,7 +28,6 @@ class Reservation < ApplicationRecord
   #Validate Business
   validate :check_if_business_exists
 
-
     ### Validate Date
   	def check_date_later_than_today
   		errors.add(:date, "Date should be today or later") unless date >= Date.today

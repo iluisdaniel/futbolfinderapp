@@ -1,83 +1,116 @@
 <% provide(:title, 'New Game') %>
-<% provide(:htitle, 'New Game') %>
-<% provide(:secondaryTitle, 'Create a Game!')%>
+<% provide(:include_menu, 'false') %>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-2">
-    <%= form_for(@game) do |f| %>
-    <div class="row">
-      <%= render 'shared/error_messages', object: f.object %>
-    </div>	
+<div class="container ngf">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 col-sm-12">
+      <%= render 'shared/logo' %>
 
-      <div class="row">
-        <div class="form-group">
-          <div class="col-md-2">
-            <%= f.label :invite_allowed, 'Allow Invites' %>
-          </div>
-          <div class="col-md-8">
-            <%= f.select :invite_allowed, [['Yes', true], ['No', false]], {prompt: "Select"}, { class: 'form-control'} %>
-          </div>
-        </div>
+      <div style="text-align:center;margin-top:20px; margin-bottom:30px;">
+        <span class="step active"></span>
+        <span class="step"></span>
+        <span class="step"></span>
+        <% if current_user.card_last4.nil? %>
+          <span class="step"></span>
+        <% end %>
       </div>
-
-      <div class="row">
-        <div class="form-group">
-          <div class="col-md-2">
-            <%= f.label :public, 'Public' %>
-          </div>
-          <div class="col-md-8">
-            <% if logged_in? %>
-              <%= f.select :public, ['Private', 'Public'], {prompt: "Select"}, { class: 'form-control'} %>
-            <% else %>
-              <%= f.select :public, ['Private', 'Friends', 'Friends of friends', 'Public'], {prompt: "Select"}, { class: 'form-control'} %>
-            <% end %>
-          </div>
-        </div>
+      <div class="card">
+      <div class="header">
+        <h4>New Game Settings</h4>
       </div>
+      <div class="content">
+        <%= form_for(@game) do |f| %>
+        <div class="row">
+          <%= render 'shared/error_messages', object: f.object %>
+        </div>	
 
-      <hr>
-
-      <div class="row">
-        <div class="form-group">
-          <div class="col-md-2">
-            <%= f.label :title, 'Title' %>
-          </div>
-          <div class="col-md-8">
-            <%= f.text_field :title, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="form-group">
-          <div class="col-md-2">
-            <%= f.label :description, 'Description'%>
-          </div>
-          <div class="col-md-8">
-            <%= f.text_area :description, cols: "30", rows: "10", class: 'form-control text-area' %>
-          </div>
-        </div>
-      </div>
-
-      <hr>
-
-      <div class="row">
-        <div class="form-group">
-          <div class="col-md-2">
-          <%= f.label :number_players, '#Players' %>
-          </div>
-          <div class="col-md-10">
-            <div class="col-md-8">
-              <%= f.text_field :number_players, class: 'form-control' %>      
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-2">
+              <%= f.label :title, 'Title' %>
             </div>
-          </div>   
+            <div class="col-md-8">
+              <%= f.text_field :title, class: 'form-control' %>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <hr>
-     
-      <%= f.submit "Create game", class: "btn btn-large btn-primary btn-fill btn-round pull-right" %>
-       <%= link_to 'Cancel', url_for(:back), class: "btn btn-large btn-default btn-round pull-right" %> 
-    <% end %>
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-2">
+              <%= f.label :description, 'Description'%>
+            </div>
+            <div class="col-md-8">
+              <%= f.text_area :description, cols: "30", rows: "10", class: 'form-control text-area' %>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+          <div class="row">
+            <div class="form-group">
+              <div class="col-md-2">
+                <%= f.label :invite_allowed, 'Allow Invites' %>
+              </div>
+              <div class="col-md-8">
+                <%= f.select :invite_allowed, [['Yes', true], ['No', false]], {prompt: "Select"}, { class: 'form-control'} %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <div class="col-md-2">
+                <%= f.label :public, 'Public' %>
+              </div>
+              <div class="col-md-8">
+                <% if logged_in? %>
+                  <%= f.select :public, ['Private', 'Public'], {prompt: "Select"}, { class: 'form-control'} %>
+                <% else %>
+                  <%= f.select :public, ['Private', 'Friends', 'Friends of friends', 'Public'], {prompt: "Select"}, { class: 'form-control'} %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="form-group">
+              <div class="col-md-2">
+              <%= f.label :number_players, '#Players' %>
+              </div>
+              <div class="col-md-10">
+                <div class="col-md-8">
+                  <%= f.text_field :number_players, class: 'form-control' %>      
+                </div>
+              </div>   
+            </div>
+          </div>
+          <hr>
+
+          <%= hidden_field :business, params[:business] %>
+          <%= hidden_field :field, params[:field] %>
+          <%= hidden_field :date, params[:date] %>
+          <%= hidden_field :time, params[:time] %>
+
+          <div class="row">
+            <div class="col-md-10">
+              <%= f.submit "Create Game", class: "btn btn-large btn-primary btn-fill pull-right" %> 
+               <%= link_to 'Cancel', url_for(:back), class: "btn btn-large btn-default pull-right" %> 
+            </div>
+          </div>
+
+        <% end %>
+        </div>
+      </div><!-- end card -->
+    </div>
   </div>
 </div>
+
+
+
+
+
+ 

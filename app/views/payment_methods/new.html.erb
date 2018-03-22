@@ -1,27 +1,55 @@
 <% provide(:title, 'New Payment Method') %>
-<% provide(:htitle, 'New Payment Method') %>
+<% provide(:include_menu, 'false') %>
 
-<div class="container">
+
+
+<div class="container ngf ngf-pay">
 	<div class="row">
 		<div class="col-md-offset-2 col-md-7 subscription-form-page">
 
+			<%= render 'shared/logo' %>
+
+			<% if params[:date] && params[:game] %>
+				<div style="text-align:center;margin-top:20px; margin-bottom:30px;">
+				  <span class="step finish"></span>
+				  <span class="step finish"></span>
+				  <span class="step active"></span>
+				  <span class="step"></span>
+				</div>
+			<% end %>
+
 			<div class="card">
-				<%= form_tag payment_method_path, id: "payment-form" do |form| %>
-					<h3 class="lead">New Payment Method</h3>
-				  <div class="form-row">
-				    <label for="card-element">
-				      Credit or debit card
-				    </label>
-				    <div id="card-element">
-				      <!-- a Stripe Element will be inserted here. -->
-				    </div>
+				<div class="header">
+				  <h4>New Payment Method</h4>
+				</div>
+				<div class="content">
+					<%= form_tag payment_method_path, id: "payment-form" do |form| %>
+					  <div class="form-row">
+					    <label for="card-element">
+					      Credit or debit card
+					    </label>
+					    <div id="card-element">
+					      <!-- a Stripe Element will be inserted here. -->
+					    </div>
 
-				    <!-- Used to display Element errors -->
-				    <div id="card-errors" role="alert"></div>
-				  </div>
+					    <!-- Used to display Element errors -->
+					    <div id="card-errors" role="alert"></div>
+					  </div>
+					  <% if params[:date] %>
+						  <%= hidden_field_tag :business, params[:business] %>
+						  <%= hidden_field_tag :field, params[:field] %>
+						  <%= hidden_field_tag :date, params[:date] %>
+						  <%= hidden_field_tag :time, params[:time] %>
+						  <%= hidden_field_tag :game, params[:game] %>
+						<% end %>	  
 
-				  <button class="btn btn-primary btn-fill">Submit Payment</button>
-				<% end %>
+					  <button class="btn btn-primary btn-fill pull-right">Submit Payment</button>
+					  <%= link_to 'Back', url_for(:back), class: "btn btn-large btn-default pull-right" %> 
+					<% end %>
+					<div class="row">
+						<%= image_tag("powered_by_stripe.png", :alt => "rss feed", class: "pwr-stripe")  %>
+					</div>		
+				</div>
 			</div>
 		</div>
 	</div>

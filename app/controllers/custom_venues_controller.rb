@@ -2,14 +2,24 @@ class CustomVenuesController < ApplicationController
 	before_action :signed_in_user_but_not_business?, only: :create
 	before_action :correct_user, only: :destroy
 
+	def new
+		@custom_venue = CustomVenue.new
+		if params[:game]
+			session[:cv_game] = params[:game]
+		end
+	end
+
 	def create
 		@custom_venue = CustomVenue.new(custom_venue_params)
-		if @custom_venue.save
-			flash[:success] = "Venue and time created"
-			redirect_to @custom_venue.game
-		else
-
-			flash[:danger] = "Error, Venue and Time was not created. Please, try again."
+		if @custom_venue.save		
+				flash[:success] = "Venue and time created"
+				if session[:cv_game]
+					@custom_venue.update(game_id: (session[:cv_game].to_s).to_i)
+					session[:cv_game] = nil
+				end
+				redirect_to @custom_venue.game
+		else	
+			flash[:danger] = "Error, Venue and Time was not created. Please, try again." + @custom_venue.errors.full_messages.to_s
 			redirect_to root_path
 		end
 	end

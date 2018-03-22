@@ -1,8 +1,8 @@
-<button class="btn btn-primary btn-fill btn-round" data-toggle="modal" data-target="#myModal">
+<a class="btn btn-primary btn-fill btn-round" data-toggle="modal" data-target="#myModal">
 
    Add Custom Venue and Time
 
-  </button>
+  </a>
 
   <!-- Modal Core -->
 
@@ -138,8 +138,9 @@
                </div>   
              </div>
 
-
-             <%= f.hidden_field :game_id, :value => @game.id %>
+             <% if @game %>
+                <%= f.hidden_field :game_id, :value => @game.id %>
+                <% end %>
 
           </div>
 

@@ -33,9 +33,7 @@
                       There is no venue and date planned yet.
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                      <%= render partial: 'reservations/new_reservation' %>
-                      or
-                      <%= render partial: 'custom_venue/new_custom_venue' %>
+                      <%= link_to "New Venue", available_fields_path(game: @game) %>
                     </div>
                   </div>
                   
@@ -86,3 +84,6 @@
 
 
 
+
+
+<%= session.inspect %>

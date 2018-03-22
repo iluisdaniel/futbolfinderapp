@@ -1,11 +1,11 @@
 class AvailableFieldsController < ApplicationController
 	before_action :is_not_a_business?, only: :index
-
-	@@game = nil
+	before_action :clear_session_variables, only: :index
 
 	def index
 		#flash[:warning] = "var @@game " + @@game.to_s 
 		@message = ""
+		@custom_venue = CustomVenue.new
 
 		if params[:date] && !params[:date].empty?
 			# for debugging
@@ -15,17 +15,16 @@ class AvailableFieldsController < ApplicationController
 				params[:date], Time.zone.parse(params[:time]))
 
 			if @businesses.empty?
-				@message = "We couldn't find a business available that date."
+				@message = "We couldn't find a business available at " + '"' + params[:date] + ", " + params[:time] + '"'
 			end
 		else
 			# flash[:info] = "params date empty"
-			@@game = nil
+			session[:from_game] = nil
 		end
 
-		
-
+	
 		if params[:game]
-			@@game = params[:game]	
+			session[:from_game] = params[:game]	
 		end
 
 		#flash[:info] = "var @@game " + @@game.to_s 
@@ -47,7 +46,7 @@ class AvailableFieldsController < ApplicationController
 					bs[b.name] = Array.new
 					bs[b.name] << b
 					bs[b.name] << f
-					bs[b.name] << @@game
+					bs[b.name] << session[:from_game]
 				else
 					# FOr debugging
 					# res.valid?
@@ -63,6 +62,16 @@ class AvailableFieldsController < ApplicationController
 			return false
 		end
 		return true
+	end
+
+	def clear_session_variables
+		if !session[:res_business_id].nil?
+				session[:res_business_id] = nil
+				session[:res_field_id] = nil
+				session[:res_date] = nil
+				session[:res_time] = nil
+				session[:res_end_time] = nil
+		end
 	end
 
 end

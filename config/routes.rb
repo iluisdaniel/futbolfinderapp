@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 
   get 'available_fields' => 'available_fields#index'
   get 'select_game' => 'select_game#index'
+  get 'confirmation' => 'reservations#confirmation'
+  # post 'confirmed' => 'reservations#confirmed'
 
   resource :subscription
   resource :payment_method
@@ -33,7 +35,7 @@ Rails.application.routes.draw do
   end
 
   resources :reservations
-  resources :custom_venues, only: [:create, :destroy]
+  resources :custom_venues, only: [:new, :create, :destroy]
 
   namespace "games" do
     resources :old_games, only: :index

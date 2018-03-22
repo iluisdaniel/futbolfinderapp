@@ -512,6 +512,13 @@ ul.nav.navbar-nav.navbar-right{
     text-decoration: none;
   }
 
+  a{
+    color: black;
+  }
+  a:hover{
+    text-decoration: none;
+  }
+
   .fa{
     font-size: 2.8rem;
   }
@@ -918,7 +925,103 @@ ul.alert-dropdown {
 
 
 
+/******************* NEW GAME **************************/
+/* ngf (new game glow) */
+.ngf{
+    h1{
+        text-align: center;
+    }
+    h4{
+        color:#201a50;
+    }
 
+    .card{
+        /*padding-top: 5px;*/
+        .header{
+            background-color: #f5f5f5;
+            padding-bottom: 18px;
+        }
+
+        h4{
+            margin-bottom: 0px;
+            /*border-left: 5px solid #c72166;*/
+            padding-left: 20px;
+            padding-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+        }
+        .btn{
+            margin-left: 5px;
+        }
+    }
+    .content{
+        padding: 20px;
+        padding-left: 5% !important;
+    }
+}
+.ngf2{
+    .lead{
+        text-align: center;
+    }
+    .srch-msg{
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 30px;
+    }
+    hr{
+        margin-bottom: 0;
+    }
+    h3{
+        font-size: 2rem;
+    }
+    .select{
+        font-size: 2.2rem;
+    }
+    .content{
+        padding: 15px 15px 10px 15px !important;
+        .btn-srch{
+            margin-top: 27px;
+        }
+        td{
+            vertical-align: middle;
+        }
+        .select{
+            color:$primary-color;
+        }
+    }
+    .table th:first-child{
+        padding-left: 20px;
+    }
+    .table{
+        thead{
+            border-top: 1px solid #dddddd;
+        }
+    }
+    .card-btns{
+        margin-right: 30px;
+        padding-bottom: 40px;
+        margin-top: 20px;
+    }
+    .lnk-cancel{
+        padding-top: 10px;
+    }
+}
+.ngf-pay{
+    .pwr-stripe{
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+}
+@media only screen and (max-width: 600px){
+    .ngf2{
+        img{
+            width:90%;
+        }
+        .btn-srch{
+            margin-top: 0px !important;
+        }
+    }
+}
 
 
 /**** Game Players *****/
@@ -969,7 +1072,7 @@ ul.alert-dropdown {
             float:right;
         }
     }
-    .select-businesses .dropdown-menu{
+    .ngf2 .dropdown-menu{
         left: -70% !important;
     }
 }
@@ -1576,6 +1679,42 @@ ul.alert-dropdown {
 
 
 /********* BUSINESS SIGN UP *************/
+.pager{
+        margin: 0;
+        margin-bottom: 10px;
+        li{
+            display: inline-block;
+            padding: 5px 14px;
+            background-color: #9E9E9E;
+            border: 1px solid #9E9E9E;
+            border-radius: 15px;
+        }
+        .active{
+            background-color: #fff !important;
+        }
+    }
+
+    .step {
+      height: 15px;
+      width: 15px;
+      margin: 0 2px;
+      background-color: #bbbbbb;
+      border: none; 
+      border-radius: 50%;
+      display: inline-block;
+      opacity: 0.5;
+    }
+
+    /* Mark the active step: */
+    .step.active {
+      opacity: 1;
+    }
+
+    /* Mark the steps that are finished and valid: */
+    .step.finish {
+      background-color: #4CAF50;
+    }
+
 .business-signup{
     h1{
         text-align: center;
@@ -1589,20 +1728,6 @@ ul.alert-dropdown {
             font-size: 8rem;
             color: green;
             text-align: center;
-        }
-    }
-    .pager{
-        margin: 0;
-        margin-bottom: 10px;
-        li{
-            display: inline-block;
-            padding: 5px 14px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 15px;
-        }
-        .active{
-            background-color: #f1f1f1;
         }
     }
     .btn{
@@ -1725,12 +1850,6 @@ ul.alert-dropdown {
 
 .subscription-form-page{
     margin-top: 30px;
-    .card{
-        h3{
-            margin-top: 0px;
-        }
-        padding: 20px;
-    }
     .btn{
         margin-top: 10px;
     }

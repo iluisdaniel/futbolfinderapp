@@ -243,6 +243,92 @@ module GamesHelper
         return
     end
 
+    def get_game_from_params
+        Game.find(params[:game])
+    end
+
+    
+    def get_venue_date
+        if session[:res_date]
+            session[:res_date]
+        elsif params[:date]
+                params[:date]
+        elsif params[:custom_venue]
+            CustomVenue.find(params[:custom_venue]).date
+        end 
+    end
+
+    def get_venue_time
+        if session[:res_time]
+            session[:res_time]
+        elsif params[:time]
+                params[:time]
+        elsif params[:custom_venue]
+            CustomVenue.find(params[:custom_venue]).time.strftime("%H:%M")
+        end 
+    end
+
+    def get_venue_name
+        if session[:res_business_id]
+            Business.find(session[:res_business_id]).name
+        elsif params[:business]
+            Business.find(params[:business].to_i).name
+        end
+    end
+
+    def get_venue_address
+        # if id.is_a? String
+        #     Business.find(session[:res_business_id])
+        # else
+        #     Business.find(params[:business].keys[0].to_i)
+        # end
+        if session[:res_business_id]
+            Business.find(session[:res_business_id]).address
+        elsif params[:custom_venue]
+            CustomVenue.find(params[:custom_venue]).address
+            elsif params[:business]
+            Business.find(params[:business]).address
+        end       
+    end
+
+    def get_venue_city
+        if session[:res_business_id]
+            Business.find(session[:res_business_id]).city
+        elsif params[:custom_venue]
+            CustomVenue.find(params[:custom_venue]).city
+            elsif params[:business]
+            Business.find(params[:business]).city
+        end  
+    end
+
+    def get_venue_state
+        if session[:res_business_id]
+            Business.find(session[:res_business_id]).state
+        elsif params[:custom_venue]
+            CustomVenue.find(params[:custom_venue]).state
+            elsif params[:business]
+            Business.find(params[:business]).state
+        end  
+    end
+
+    def get_venue_zipcode
+        if session[:res_business_id]
+            Business.find(session[:res_business_id]).zipcode
+        elsif params[:custom_venue]
+            CustomVenue.find(params[:custom_venue]).zipcode
+            elsif params[:business]
+            Business.find(params[:business]).zipcode
+        end  
+    end
+
+    def get_field_venue
+        if session[:res_field_id]
+            Field.find(session[:res_field_id])
+        elsif params[:field]
+            Field.find(params[:field])
+        end
+    end
+
     def get_public_or_private_string_from_game
         if @game.public == true
             return "Public"

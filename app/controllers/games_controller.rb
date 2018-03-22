@@ -6,9 +6,6 @@ class GamesController < ApplicationController
 	before_action :set_businesses_collection, only: [:show]
 	before_action :set_fields_collection, only: [:show]
 
-	@@res = Hash.new
-	@@reservation_creation_message = ""
-
 	def index
 		# add field id
 		#FIX displaying same day games in games and not in old games
@@ -41,9 +38,10 @@ class GamesController < ApplicationController
 		@custom_venue = CustomVenue.new
 
 		if params[:date]
-			@@res = {date: params[:date], time: Time.zone.parse(params[:time]), end_time: Time.zone.parse(params[:time]) + 1.hour, 
-				business: params[:business].to_i, field: params[:field].to_i}
-			@@reservation_creation_message = "Reservation created"
+			session[:res_business_id] = params[:business]
+			session[:res_field_id] = params[:field]
+			session[:res_date] = params[:date]
+			session[:res_time] = params[:time].to_s
 			check_reservation(true)	
 		end
 		
@@ -52,14 +50,23 @@ class GamesController < ApplicationController
 	def new
 		#TODO: How to choose businesses field. 
 		@game = Game.new
-		if params[:date]
-			@@res = {date: params[:date], time: Time.zone.parse(params[:time]), end_time: Time.zone.parse(params[:time]) + 1.hour, 
-				business: params[:business].to_i, field: params[:field].to_i}
-				@@reservation_creation_message = "Game and Reservation created"
-		end
+		# if params[:date]
+		# 		session[:res_business_id] = params[:business]
+		# 		session[:res_field_id] = params[:field]
+		# 		session[:res_date] = params[:date]
+		# 		session[:res_time] = params[:time].to_s
+		# 		session[:create_cv] = nil
+		# elsif params[:create_cv]
+		# 	session[:create_cv] = params[:create_cv]
+		# 	session[:res_business_id] = nil
+		# 	session[:res_field_id] = nil
+		# 	session[:res_date] = nil
+		# 	session[:res_time] = nil
+		# end
 	end
 
 	def create
+
 		#TODO
 		#- look user with phone as well. 
 		#- Improve showing validation of email or phone 
@@ -71,6 +78,7 @@ class GamesController < ApplicationController
 		# add button to create games from modal
 		#  show notes when business is going to create the game 
 		# user cannot reserve two games at the same date
+
 
 		if logged_in?
 			@game = current_business.games.build(game_params)
@@ -84,15 +92,19 @@ class GamesController < ApplicationController
 			@game = current_user.games.build(game_params)
 		end
 
-		if @game.save				
-			redirect_to @game
-			flash[:success] = "Your Game Was Created"		
-			if !@game.user_id.nil?
-				gl = GameLine.new(user_id: @game.user_id, game_id: @game.id, invited_by: nil)
-				gl.save
-				gl = @game.game_lines.first.update(accepted: "Accepted")
-			end
-			check_reservation(false)
+		if @game.save
+			# if session[:create_cv]				
+			# 	redirect_to new_custom_venue_path(game: @game)
+			# else
+				redirect_to available_fields_path(game: @game)
+				# flash[:success] = "Your Game Was Created"		
+				if !@game.user_id.nil?
+					gl = GameLine.new(user_id: @game.user_id, game_id: @game.id, invited_by: nil)
+					gl.save
+					gl = @game.game_lines.first.update(accepted: "Accepted")
+				end
+				check_reservation(false)
+			# end
 		else
 			render 'new'
 		end
@@ -129,23 +141,39 @@ class GamesController < ApplicationController
 	end
 
 	def check_reservation(redirect)
-		if !@@res.empty?
-				reservation = Reservation.new(date: @@res[:date], time: @@res[:time], end_time: @@res[:end_time],
-					business: Business.find(@@res[:business]), field_id: @@res[:field], game: @game)
+		if session[:res_business_id]
+				
+				reservation = Reservation.new(date: session[:res_date].to_s, time: Time.zone.parse(session[:res_time]), end_time: Time.zone.parse(session[:res_time]) + 1.hour,
+					business: Business.find((session[:res_business_id].to_s).to_i), field_id: session[:res_field_id].to_i, game: @game)
+				# flash[:info] = reservation
+
+				# if reservation.valid?
+				# 	reservation.errors.full_messages.each do |e|
+				# 		flash[:warning] = e.to_s
+				# 	end 
+				# end
+
 				if reservation.save
 					if redirect == true
+						flash[:success] = "Reservation created"
 						redirect_to @game
+					else
+						flash[:success] = "Game and Reservation created"
 					end
-					flash[:success] = @@reservation_creation_message
+					
 					Notification.create(recipientable: reservation.business, actorable: current_user, 
 					                action: "Made", notifiable: reservation)
 				else
 					#TODO: Show error message. Why is failing?
 					flash[:warning] = "could't make reservation"
 				end
-				@@res.clear
-				@@reservation_creation_message = ""
+				session[:res_business_id] = nil
+				session[:res_field_id] = nil
+				session[:res_date] = nil
+				session[:res_time] = nil
+				session[:res_end_time] = nil
 		end
+
 	end
 
 end

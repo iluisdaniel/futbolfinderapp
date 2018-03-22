@@ -27,4 +27,8 @@ module ReservationsHelper
 
     end
 
+    def get_end_time_for_Res
+        Time.zone.parse(params[:time].to_s) + 1.hours
+    end
+
 end

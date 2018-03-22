@@ -1,7 +1,8 @@
 class ReservationsController < ApplicationController
 	include GamesHelper
 	include ReservationsHelper
-	before_action :signed_in_business, only: [:index, :show, :new, :edit, :update]
+	before_action :signed_in_user, only: :confirmation
+	before_action :signed_in_business, only: [:index, :show, :edit, :update]
 	before_action :signed_in_business_or_user?, only: [:create, :destroy]
 	before_action :correct_user_or_business_to_destroy, only: [:destroy]
 	before_action :correct_business_res, only: [:show, :edit, :update]
@@ -32,7 +33,12 @@ class ReservationsController < ApplicationController
 			@reservation = current_business.reservations.build(reservation_params)
 		elsif signed_in?
 			@reservation = Reservation.new(reservation_params)
-			@reservation[:field_id] = get_available_field(@reservation[:business_id], @reservation)
+			# @reservation[:field_id] = get_available_field(@reservation[:business_id], @reservation)
+			@reservation[:end_time] =  @reservation[:time] + 1.hour
+		end
+
+		if params[:source]
+
 		end
 			
 
@@ -55,6 +61,7 @@ class ReservationsController < ApplicationController
 			flash[:success] = "Reservation created succesfully"
 		else
 			render 'new'
+			flash[:danger] = @reservation.errors.full_messages.to_s
 		end
 	end
 
@@ -92,6 +99,42 @@ class ReservationsController < ApplicationController
 			# 	                action: "Cancelled", notifiable: @reservation)
 		end
 	end
+
+	def confirmation
+		@reservation = Reservation.new
+	end
+
+	# def confirmed
+	# 	if params[:date]
+	# 		b = params[:business].to_
+	# 		d = params[:date].to_s
+	# 		t = Time.zone.parse(params[:time].to_s)
+	# 		et = Time.zone.parse(params[:time].to_s) + 1.hour
+	# 		f = (params[:field].to_s).to_i
+	# 		g = (params[:games].to_s).to_i
+	# 		params = ActionController::Parameters.new({ 
+	# 				res: {
+	# 					business_id: b, 
+	# 					date: d, 
+	# 					time: t, 
+	# 					end_time: et, 
+	# 					field_id: f, 
+	# 					game_id: g
+	# 				} 
+	# 			})
+	# 		permitted = params.require(:res).permit(:date, :time, :end_time, :business_id, 
+	# 		:field_id, :game_id)
+	# 		res = Reservation.new(permitted)
+	# 		if res.save	
+	# 			flash[:success] = "Game and Reservation created"
+	# 			redirect_to res.game
+	# 		else
+	# 			flash[:danger] = "error" + res.errors.full_messages.to_s + "5555"+params.to_s
+	# 			redirect_to available_fields_path(game: params[:game])
+	# 		end
+	# 	end
+	# end
+
 
 	private
 

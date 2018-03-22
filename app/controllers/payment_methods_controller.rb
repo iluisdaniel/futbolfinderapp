@@ -22,8 +22,15 @@ class PaymentMethodsController < ApplicationController
 
 			current_user.save
 
-			flash[:success] = "Card Added!"
-			redirect_to root_path
+			if params[:date]
+				redirect_to confirmation_path(game: params[:game], business: params[:business], field: params[:field],
+					date: params[:date], time: params[:time], source: "card")
+			else
+				flash[:success] = "Card Added!"
+				redirect_to root_path
+			end
+
+			
 		rescue Stripe::CardError => e
 			flash[:danger] = e.message
 			render 'new'
