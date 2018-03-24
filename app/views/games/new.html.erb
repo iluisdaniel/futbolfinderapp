@@ -6,14 +6,16 @@
     <div class="col-md-8 col-md-offset-2 col-sm-12">
       <%= render 'shared/logo' %>
 
-      <div style="text-align:center;margin-top:20px; margin-bottom:30px;">
-        <span class="step active"></span>
-        <span class="step"></span>
-        <span class="step"></span>
-        <% if current_user.card_last4.nil? %>
+      <% if signed_in? %>
+        <div style="text-align:center;margin-top:20px; margin-bottom:30px;">
+          <span class="step active"></span>
           <span class="step"></span>
-        <% end %>
-      </div>
+          <span class="step"></span>
+          <% if current_user.card_last4.nil? %>
+            <span class="step"></span>
+          <% end %>
+        </div>
+      <% end %>  
       <div class="card">
       <div class="header">
         <h4>New Game Settings</h4>

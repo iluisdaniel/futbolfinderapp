@@ -16,12 +16,6 @@
 			<div class="header">
 				<h4>Choose Venue and time</h4>		
 			</div>
-			<div class="row">
-				<div class="col-md-6 col-md-offset-3" style="padding-top: 20px;">
-					<h3 class="lead"><%= link_to "Create Custom Venue", new_custom_venue_path(game: params[:game]), class: "lead" %></h3>
-				</div>
-			</div>
-			<hr>
 			<div class="content">
 				<div class="row">
 					<div class="col-md-6 col-md-offset-3" style="margin-bottom: 10px;">
@@ -104,6 +98,7 @@
 					<% end %>
 					<hr>
 					<div class="card-btns">
+						<%= link_to "Create Custom Venue", new_custom_venue_path(game: params[:game]), class: "cv-lnk" %>
 						<%= link_to 'Cancel', root_path, class: "btn btn-large btn-default pull-right" %> 
 					</div>
 				</div>

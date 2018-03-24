@@ -7,8 +7,8 @@
 		<p class="category">
 		<span class="label label-success"><%= game.public %></span>
 
-		<%= link_to game.get_admin_name, class: "pull-right" do %>
-			<i class="fa fa-user"></i> <%= get_game_creator(game) %>
+		<%= link_to get_game_creator(game), class: "pull-right" do %>
+			<i class="fa fa-user"></i> <%= get_game_creator_name(game) %>
 		<% end %>
 		</p>
 

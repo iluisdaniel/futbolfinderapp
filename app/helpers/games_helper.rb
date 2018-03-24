@@ -14,9 +14,7 @@ module GamesHelper
     end
 
     def is_allow_to_see_from_game_public_setting?(game)
-        if game.public == "Public"
-            return true
-        elsif game.public == "Friends"
+       if game.public == "Friends"
             if game.user.is_a_friend?(current_user)
                 return true
             end
@@ -231,7 +229,7 @@ module GamesHelper
         return "Private"
     end
 
-    def get_game_creator(game)
+    def get_game_creator_name(game)
         if !game.user.nil?
             return game.user.first_name
         end
@@ -239,8 +237,16 @@ module GamesHelper
         if !game.business.nil?
             return game.business.name
         end
+    end
 
-        return
+    def get_game_creator(game)
+        if !game.user.nil?
+            return game.user
+        end
+
+        if !game.business.nil?
+            return game.business
+        end
     end
 
     def get_game_from_params

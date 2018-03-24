@@ -166,14 +166,6 @@ class Game < ApplicationRecord
           .order("reservations.date asc").first
     end
 
-    def get_admin_name
-      if self.user
-        self.user.first_name
-      elsif self.business
-          self.business.name
-      end
-    end
-
     def get_date
       self.get_venue.date
     end
