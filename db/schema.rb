@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180317224137) do
+ActiveRecord::Schema.define(version: 20180326060241) do
 
   create_table "businesses", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string "name"
@@ -176,6 +176,7 @@ ActiveRecord::Schema.define(version: 20180317224137) do
     t.integer "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "check_in_time"
     t.index ["date", "time", "end_time", "field_id"], name: "index_reservations_on_date_and_time_and_end_time_and_field_id", unique: true
     t.index ["game_id", "business_id", "field_id"], name: "index_reservations_on_game_id_and_business_id_and_field_id"
   end

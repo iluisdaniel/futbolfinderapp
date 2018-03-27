@@ -104,6 +104,18 @@ class ReservationsController < ApplicationController
 		@reservation = Reservation.new
 	end
 
+	def check_in
+		@reservation = Reservation.find(params[:id])
+		if @reservation.update(check_in_time: DateTime.current)
+			flash[:success] = "Reservation updated"
+		  redirect_to @reservation
+		else
+		  flash[:warning] = "Please try again"
+		  redirect_to @reservation
+		end
+
+	end
+
 	# def confirmed
 	# 	if params[:date]
 	# 		b = params[:business].to_

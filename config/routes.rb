@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   get 'available_fields' => 'available_fields#index'
   get 'select_game' => 'select_game#index'
   get 'confirmation' => 'reservations#confirmation'
+  get 'check_in' => 'reservations#check_in'
   # post 'confirmed' => 'reservations#confirmed'
 
   resource :subscription

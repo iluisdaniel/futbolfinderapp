@@ -33,3 +33,5 @@ caimanera:
  state: Florida
  zipcode: '33178'
  password_digest: <%= Business.digest('password') %>
+ slug: la-caimaneta
+ stripe_user_id: stripe_id-2

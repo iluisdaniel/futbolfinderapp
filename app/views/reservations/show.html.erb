@@ -37,6 +37,13 @@
                 <li class="list-group-item"><i class="fa fa-calendar"></i> <%= @reservation.date %></li>
                 <li class="list-group-item"> <i class="fa fa-clock-o"></i> <%= @reservation.time.strftime("%I:%M %p") %> - <%= @reservation.end_time.strftime("%I:%M %p") %></li>
                 <li class="list-group-item"><i class="fa fa-user"></i> Created by <%= get_reservation_user(@reservation) %> at <%= @reservation.created_at.strftime("%b/%d - %I:%M %p") %></li>
+                <li class="list-group-item">
+                  <% if @reservation.check_in_time.nil? %>
+                      <%= link_to "Check In", check_in_path(id: @reservation), class: "btn btn-primary btn-fill" %>
+                  <% else %>
+                    
+                  <% end %>
+                </li>
               </ul>
             </div>  
         </div>
