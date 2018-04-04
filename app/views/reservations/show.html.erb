@@ -41,14 +41,46 @@
                   <% if @reservation.check_in_time.nil? %>
                       <%= link_to "Check In", check_in_path(id: @reservation), class: "btn btn-primary btn-fill" %>
                   <% else %>
-                    
+                    Check in Time: <%= @reservation.check_in_time %>
                   <% end %>
                 </li>
               </ul>
             </div>  
         </div>
         <div class="col-md-4">
-          
+          <% if !@charges.empty? %>
+            <div class="card">
+                <h4>Charges</h4>
+                <div class="content">
+                <table class="table table-responsive">
+                    <thead>
+                      <tr>
+                        <td></td>
+                        <th>user</th>
+                        <th>Status</th>
+                        <th>Amount</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @charges.each do |charge| %>
+                          <tr>
+                            <td><%= charge.id %></td>
+                            <td><%= charge.user.first_name %></td>
+                            <td><%= charge.status %></td>
+                            <td><%= number_to_currency charge.amount / 100%></td>
+                            <td>
+                              <% if charge.status != "Refunded" %>
+                              <%= link_to "Refund", refund_path(charge_id: charge.id), method: "put" %>
+                                <% end %>
+                              </td>
+                          </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+              </div>
+            </div>
+          <% end %>
         </div>
 
 

@@ -23,6 +23,9 @@ Rails.application.routes.draw do
   get 'select_game' => 'select_game#index'
   get 'confirmation' => 'reservations#confirmation'
   get 'check_in' => 'reservations#check_in'
+
+  put 'refund' => 'charges#refund'
+  # post 'record_charge' => 'charges#record_charge'
   # post 'confirmed' => 'reservations#confirmed'
 
   resource :subscription

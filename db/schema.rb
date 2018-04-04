@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180326060241) do
+ActiveRecord::Schema.define(version: 20180329081525) do
 
   create_table "businesses", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string "name"
@@ -51,7 +51,16 @@ ActiveRecord::Schema.define(version: 20180326060241) do
     t.string "card_exp_year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "application_fee"
+    t.integer "user_id"
+    t.integer "reservation_id"
+    t.string "status"
+    t.string "name"
+    t.string "email"
+    t.string "error_msg"
     t.index ["business_id"], name: "index_charges_on_business_id"
+    t.index ["reservation_id"], name: "index_charges_on_reservation_id"
+    t.index ["user_id"], name: "index_charges_on_user_id"
   end
 
   create_table "comments", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
@@ -221,6 +230,7 @@ ActiveRecord::Schema.define(version: 20180326060241) do
   end
 
   add_foreign_key "charges", "businesses"
+  add_foreign_key "charges", "reservations"
   add_foreign_key "game_lines", "games"
   add_foreign_key "game_lines", "users"
   add_foreign_key "games", "businesses"

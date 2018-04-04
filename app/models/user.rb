@@ -3,6 +3,7 @@ class User < ApplicationRecord
 	before_create :create_remember_token
 	before_create :randomize_id
 
+	has_many :charges
 	has_many :notifications, as: :recipientable
 	has_many :groups
 	has_many :group_lines, dependent: :destroy

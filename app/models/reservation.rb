@@ -1,6 +1,7 @@
 class Reservation < ApplicationRecord
 	belongs_to :game, optional: true
 	belongs_to :business
+  has_many :charges
 
   before_create :randomize_id
   validates :date, uniqueness: {scope: [ :time, :end_time, :field_id ]}
@@ -23,18 +24,66 @@ class Reservation < ApplicationRecord
   #Validate Field 
   validate :check_if_the_business_has_fields
   validate :check_if_field_belongs_to_business
-  validate :check_if_field_is_reserved_on_this_time
+  # validate :check_if_field_is_reserved_on_this_time
 
   #Validate Business
   validate :check_if_business_exists
 
+  def charge_players
+    if self.game.nil?
+      nil
+    else
+      gls = self.game.game_lines.where(accepted: "Accepted")
+      field = Field.find(self.field_id)
+      application_fee = 100 #1dolar
+      amount_by_player = (field.price / gls.count)
+
+      gls.each do |gl|
+        if check_there_is_no_charge(gl.user).empty?
+          charge_player(gl.user, amount_by_player, application_fee)
+        end
+      end
+      
+    end
+  end
+
+  def check_there_is_no_charge(player)
+    self.charges.where(user: player)
+  end
+
+  def charge_player(player, amount, fee)
+    begin
+      token = Stripe::Token.create({
+        customer: player.stripe_id
+        }, {stripe_account: self.business.stripe_user_id})
+
+      charge = Stripe::Charge.create({
+        :amount => amount,
+        :currency => "usd",
+        :source => token,
+        :application_fee => fee,
+      }, :stripe_account => self.business.stripe_user_id)
+
+      # if created save charge on charges table. Save charge id, amount, 
+      c = self.charges.build(stripe_id: charge.id, business: self.business, user: player, 
+        status: "Success", amount: amount, application_fee: fee, card_brand: charge.source.brand,
+        card_last4: charge.source.last4, card_exp_month: charge.source.exp_month, card_exp_year: charge.source.exp_year)
+      c.save
+    rescue Stripe::InvalidRequestError, Stripe::CardError => e
+      # update charge with error
+      c = self.charges.build(business: self.business, user: player, 
+        status: "Error", amount: amount, error_msg: e.to_s)
+      c.save
+    end
+  end
+
     ### Validate Date
   	def check_date_later_than_today
-  		errors.add(:date, "Date should be today or later") unless date >= Date.today
+  		errors.add(:date, "Date should be today or later") unless date >= Date.current
   	end
 
     def check_year_not_greater_than_a_year
-      errors.add(:date, "Date should not be greater than a year") unless date < Date.today + 1.year
+      errors.add(:date, "Date should not be greater than a year") unless date < Date.current + 1.year
     end
 
     ### Validate Time
@@ -78,11 +127,11 @@ class Reservation < ApplicationRecord
     end
 
     def self.current
-      where("date > ?", Date.today).order(date: :asc)
+      where("date > ?", Date.current).order(date: :asc)
     end
 
     def self.past
-      where("date < ?", Date.today).order(date: :desc)
+      where("date < ?", Date.current).order(date: :desc)
     end
 
     def start_time
@@ -152,10 +201,10 @@ class Reservation < ApplicationRecord
   end
 
   def game_time_greater_than_time_now?
-    today = Date.today
+    today = Date.current
 
     if date == today
-      d = Time.now
+      d = Time.current
 
       if (time.hour <= d.hour)
         return false

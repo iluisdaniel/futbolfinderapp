@@ -21,6 +21,7 @@ class ReservationsController < ApplicationController
 
 	def show
 		@reservation = Reservation.find(params[:id])
+		@charges = @reservation.charges
 	end
 
 	def new 
@@ -106,14 +107,14 @@ class ReservationsController < ApplicationController
 
 	def check_in
 		@reservation = Reservation.find(params[:id])
+		@reservation.charge_players
 		if @reservation.update(check_in_time: DateTime.current)
 			flash[:success] = "Reservation updated"
 		  redirect_to @reservation
 		else
-		  flash[:warning] = "Please try again"
+		  flash[:warning] = "Please try again" + @reservation.errors.full_messages.to_s
 		  redirect_to @reservation
 		end
-
 	end
 
 	# def confirmed
