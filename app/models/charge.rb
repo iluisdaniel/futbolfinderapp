@@ -1,5 +1,5 @@
 class Charge < ApplicationRecord
-  belongs_to :business
+  belongs_to :business, dependent: :destroy
 
   def receipt
     Receipts::Receipt.new(

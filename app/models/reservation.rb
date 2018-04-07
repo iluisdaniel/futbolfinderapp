@@ -1,6 +1,6 @@
 class Reservation < ApplicationRecord
 	belongs_to :game, optional: true
-	belongs_to :business
+	belongs_to :business, dependent: :destroy
 
   before_create :randomize_id
   validates :date, uniqueness: {scope: [ :time, :end_time, :field_id ]}
