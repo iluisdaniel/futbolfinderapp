@@ -1,5 +1,5 @@
 class Charge < ApplicationRecord
-  belongs_to :business
+  belongs_to :business, dependent: :destroy
   belongs_to :user, optional: true
   belongs_to :reservation, optional: true
 

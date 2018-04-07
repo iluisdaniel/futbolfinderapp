@@ -231,6 +231,7 @@ ActiveRecord::Schema.define(version: 20180329081525) do
 
   add_foreign_key "charges", "businesses"
   add_foreign_key "charges", "reservations"
+  add_foreign_key "charges", "users"
   add_foreign_key "game_lines", "games"
   add_foreign_key "game_lines", "users"
   add_foreign_key "games", "businesses"
