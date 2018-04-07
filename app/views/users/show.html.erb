@@ -3,13 +3,21 @@
 <div class="container">
 	<div class="row" >
 		<div class="col-md-offset-2 col-md-8" style="margin-top: 30px;">
-			<%= render partial: '/users/shared/user_card2', locals: {user: @user } %>
+			<%= render partial: '/users/shared/user_card', locals: {user: @user } %>
 			<%= render '/users/shared/nav_bar' %>
 			<% if !@games.empty? %>
 			    <%= render partial: "games/shared/games_cards", locals: {games: @games, subtitle: 'This week'} %>
 			    <hr>
 			<% else %>
-			  <p class="lead">No game to display</p>    
+			  
+				<% if @user == current_user %>
+					<p class="lead">
+						No game to display. Create a game 
+					<%= link_to "New Game", new_game_path, class: "btn btn-primary btn-fill"%>
+					</p>
+				<% else %>		
+					<p class="lead">No game to display.</p>
+				<% end %>
 			<% end %>
 		</div><!-- end of col md 4 -->
 	</div><!--end of row-->

@@ -1,44 +1,31 @@
 <div class="card card-user">
-			        <div class="image">
-                    	<!-- <img src="<%= get_random_background_image %>" alt="..."> -->
-                    </div>
+    <div class="image">
+    	<img src="https://s3-us-east-2.amazonaws.com/futfinder.com/soccer-game.png" alt="...">
+    </div>
 
-			        <div class="content" style="min-height: 0px;">
+    <div class="content" style="min-height: 0px;">
 
-			            <div class="author">
-			            	<% if user.avatar_file_name.nil? %>
-			                	<%= image_tag("300x200.png", :alt => "rss feed", class: "avatar") %>
-			                <% else %>
-			               		 <%= image_tag user.avatar.url(:square), class: "avatar" %>
-			                <% end %>
+        <div class="author">
+        	<% if user.avatar_file_name.nil? %>
+            	<%= image_tag("300x200.png", :alt => "rss feed", class: "avatar") %>
+            <% else %>
+           		 <%= image_tag user.avatar.url(:square), class: "avatar" %>
+            <% end %>
 
-			                  <h4 class="title">
-			                  	<%= link_to user_path(user) do %>
-			                  		<%= user.first_name %> <%= user.last_name %><br />
-			                  	<% end %>
-			                     <small><%= user.slug %></small><br>
-			                     <%= user.stripe_id %>
-			                     <!--<small>Goalkeeper</small>-->
-			                  </h4>
-			                
-			            </div>
+              <h3 class="title">
+              	<%= link_to user_path(user) do %>
+              		<%= user.first_name %> <%= user.last_name %><br />
+              	<% end %>
+                 <small>@<%= user.slug %></small><br>
+                 <!--<small>Goalkeeper</small>-->
+              </h3>
+            
+        </div>
 
-			            <p class="description text-center">
-			               
-		                	 Friends <span style="color:#337ab7;font-weight:700; padding-right: 5%;"><%= user.friends.count %></span> Games <span style="color:#337ab7;font-weight:700; padding-right: ;"><%= user.games_played %></span>
-		                	<br>		                	
-		                    <i class="fa fa-map-marker text-muted"></i> <%= user.location %> <br>
+        <!-- <p class="description text-center">
+        	 Games Played <span style="color:#337ab7;font-weight:700; padding-right: ;"><%= user.games_played %></span>
+        </p> -->
 
-			            </p>
-
-			        </div>
-
-			     
-
-			        <div class="text-center" style="padding-bottom: 15px;">
-			        	<% if signed_in? && current_user != user %>
-			        		<%= render partial: '/shared/friendship_buttons', locals: {user: user} %>
-			        	<% end %>	
-			        </div>
+    </div>
 
 </div> <!-- end card -->
