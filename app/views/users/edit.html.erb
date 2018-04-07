@@ -1,12 +1,10 @@
 <% provide(:title, "Edit user") %>
-<% provide(:htitle, 'Settings') %>
-<% provide(:secondaryTitle, '')%>
 
 <dir class="container">
     <div class="row">
-      <div class="col-md-7 col-md-offset-3">
+      <div class="col-md-8 col-md-offset-2">
 
-        <h3 class="lead"><span class="text-uppercase">Information</span><small><br> Change your basic settings</small></h3>
+        <h3 class="lead"><span class="text-uppercase">Settings</span><small><br> Change your basic settings</small></h3>
         <hr>
         <%= form_for(@user) do |f| %>
           <%= render 'shared/error_messages', object: f.object %> 
@@ -33,7 +31,6 @@
             </div>
           </div>  
 
-
           <div class="row">
             <div class="form-group">
               <div class="col-md-2">
@@ -44,7 +41,6 @@
               </div>
             </div>
           </div>  
-
 
           <div class="row">
             <div class="form-group">
@@ -57,29 +53,6 @@
             </div>
           </div>  
           
-          
-          <div class="row">
-            <div class="form-group">
-              <div class="col-md-2">
-                <%= f.label :gender %>
-              </div>
-              <div class="col-md-8">
-                <%= f.select :gender, ['Male','Female'], {prompt: "Gender"}, { class: 'form-control'} %>
-              </div>
-            </div>
-          </div>  
-          
-          <div class="row">
-            <div class="form-group">
-              <div class="col-md-2">
-                <%= f.label :dob, "Birthday" %>
-              </div>
-              <div class="col-md-8">
-                <%= f.text_field :dob, data:{ provide:'datepicker', 'date-format' => 'dd-mm-yyyy', 'date-autoclose' => 'true' }, placeholder: "DD-MM-YYYY", class: "form-control" %>
-              </div>
-            </div>
-          </div> 
-
           <div class="row">
             <div class="form-group">
               <div class="col-md-2">
@@ -87,18 +60,6 @@
               </div>
               <div class="col-md-8">
                 <%= f.text_field :email, class: 'form-control' %>
-              </div>
-            </div>
-          </div>  
-
-
-          <div class="row">
-            <div class="form-group">
-              <div class="col-md-2">
-                <%= f.label :location %>
-              </div>
-              <div class="col-md-8">
-                <%= f.text_field :location, class: 'form-control' %>
               </div>
             </div>
           </div>  
@@ -139,7 +100,7 @@
 
           <div class="form-group">
             <div class="col-sm-offset-1 col-sm-10">
-          <%= f.submit "Save changes", class: "btn btn-fill btn-round btn-primary pull-right" %>
+          <%= f.submit "Save changes", class: "btn btn-fill btn-primary pull-right" %>
             </div>
           </div>
           
