@@ -24,7 +24,7 @@ class Reservation < ApplicationRecord
   #Validate Field 
   validate :check_if_the_business_has_fields
   validate :check_if_field_belongs_to_business
-  # validate :check_if_field_is_reserved_on_this_time
+  validate :check_if_field_is_reserved_on_this_time
 
   #Validate Business
   validate :check_if_business_exists
@@ -123,7 +123,7 @@ class Reservation < ApplicationRecord
     end
 
     def check_if_field_is_reserved_on_this_time
-      errors.add(:field_id, " this field is reserved at this time") unless is_the_field_reserved_at_this_time?
+      errors.add(:field_id, " this field is reserved at this time") unless is_the_field_available_at_this_time?
     end
 
     def self.current
@@ -174,16 +174,14 @@ class Reservation < ApplicationRecord
     return true
   end
 
-  def is_the_field_reserved_at_this_time?
-
-    rss = Reservation.where(date: date, time: time, business_id: business_id)
+  def is_the_field_available_at_this_time?
+    rss = Reservation.where(date: date, business_id: business_id, field_id: field_id)
 
     rss.each do |rs|
-        if rs.field_id == field_id
+        if !((end_time <= rs.time) || (time >= rs.end_time)) 
           return false
         end
     end
-
     return true
   end
 
