@@ -12,7 +12,11 @@ class AvailableFieldsController < ApplicationController
 			# for debugging
 			# flash[:info] = params[:date] + "  " + params[:time]
 			#TODO: change variable name to something else. the hash has businesses and field.
-			time = params[:hour] + ":" + params[:minute] + " " + params[:ampm]
+			if !params[:time]
+				time = params[:hour] + ":" + params[:minute] + " " + params[:ampm]
+			else
+				time = params[:time]
+			end
 			@businesses = get_available_businesses(Business.get_open_businesses_at(params[:date], Time.zone.parse(time)), 
 				time)
 

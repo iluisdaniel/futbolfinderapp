@@ -350,6 +350,12 @@ module GamesHelper
         end
     end
 
+    def get_field_size_on_words
+        np = get_field_venue.number_players
+        n = np/2
+        n.to_s + "vs" + n.to_s
+    end
+
     def get_end_time_from_time_and_duration
         Time.zone.parse(params[:time]) + (params[:duration].to_f).hour 
     end
