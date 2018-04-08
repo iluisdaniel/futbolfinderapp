@@ -35,7 +35,6 @@ class ReservationsController < ApplicationController
 		elsif signed_in?
 			@reservation = Reservation.new(reservation_params)
 			# @reservation[:field_id] = get_available_field(@reservation[:business_id], @reservation)
-			@reservation[:end_time] =  @reservation[:time] + 1.hour
 		end
 
 		if params[:source]

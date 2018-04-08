@@ -40,11 +40,18 @@
 						  <%= hidden_field_tag :field, params[:field] %>
 						  <%= hidden_field_tag :date, params[:date] %>
 						  <%= hidden_field_tag :time, params[:time] %>
+						  <%= hidden_field_tag :duration, params[:duration] %>
 						  <%= hidden_field_tag :game, params[:game] %>
 						<% end %>	  
 
 					  <button class="btn btn-primary btn-fill pull-right">Submit Payment</button>
-					  <%= link_to 'Back', url_for(:back), class: "btn btn-large btn-default pull-right" %> 
+					  <% if params[:date] && params[:game] %>
+					  		<%= link_to 'Back', available_fields_path(game: params[:game]), class: "btn btn-large btn-default pull-right" %>
+					  <% else %>
+					  	<%= link_to 'Back', url_for(:back), class: "btn btn-large btn-default pull-right" %> 
+					  <% end %>
+
+					  
 					<% end %>
 					<div class="row">
 						<%= image_tag("powered_by_stripe.png", :alt => "rss feed", class: "pwr-stripe")  %>

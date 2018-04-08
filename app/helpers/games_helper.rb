@@ -274,6 +274,21 @@ module GamesHelper
         end 
     end
 
+    def get_venue_total(field, game, duration, fee)
+        if fee.nil?
+            amount = field.price * duration / game.number_players
+        else
+            amount = (field.price * duration / game.number_players) + fee
+        end
+
+        ActionController::Base.helpers.number_to_currency(amount)
+    end
+
+    def get_duration_from_time_and_endtime
+        # (Time.zone.parse(params[:end_time]) - Time.zone.parse(params[:time])) / 1.hours
+        1
+    end
+
     def get_venue_name
         if session[:res_business_id]
             Business.find(session[:res_business_id]).name
@@ -333,6 +348,10 @@ module GamesHelper
         elsif params[:field]
             Field.find(params[:field])
         end
+    end
+
+    def get_end_time_from_time_and_duration
+        Time.zone.parse(params[:time]) + (params[:duration].to_f).hour 
     end
 
     def get_public_or_private_string_from_game
