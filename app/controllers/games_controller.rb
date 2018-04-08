@@ -9,11 +9,33 @@ class GamesController < ApplicationController
 		# add field id
 		#FIX displaying same day games in games and not in old games
 		# TODO: Maybe, include game status ex: planning, ready, complete?
-		@games = Game.withReservationOrVenue(current_business_or_user)
-		if params[:date] && !params[:date].empty?
-			@games = Game.searchWithReservationOrVenue(current_business_or_user, params[:date])
+		@games = Game.withReservationOrVenue(current_business_or_user, params[:page])
+		if (params[:date] && !params[:date].empty?) || 
+			(params[:public] && !params[:public].empty?) || 
+			(params[:current] && !params[:current].empty?)
+			@games = Game.FindGames(current_business_or_user, params[:date], params[:public], params[:current],  params[:page])
+
+			if !params[:date].empty?
+				params[:current] = "Current"
+			end
+		elsif params[:invited] && !params[:invited].empty?
+			@games = Game.get_invited_ones(current_user, params[:page])
+		elsif params[:planning] && !params[:planning].empty?
+			@games = Game.without_reservation(current_business_or_user, params[:page])
 		else
-			@games = Game.withReservationOrVenue(current_business_or_user)
+			@games = Game.withReservationOrVenue(current_business_or_user, params[:page])
+		end
+
+		if @games.empty?
+			if params[:invited]
+				@msg = "You don't have any invitations pending at the moment."
+			elsif !params[:date].empty?
+				@msg = "Sorry, we couldn't find any game with " + '"'+ params[:date] + '"'
+			elsif params[:current]
+				@msg = "Sorry, you don't have a completed game yet."
+			else
+				@msg = "Sorry, we couldn't find any game with " + '"'+ params[:public] + '"'
+			end
 		end
 	end
 

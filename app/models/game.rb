@@ -28,36 +28,87 @@ class Game < ApplicationRecord
     end
 
 
-    def self.withReservationOrVenue(user_business)
+    def self.withReservationOrVenue(user_business, page)
       gs = get_games(user_business)
 
       if user_business.instance_of? Business
         gs.includes(:reservation).references(:reservation)
-          .where('reservations.id IS NOT NULL AND reservations.date >= ?', Date.today)
+          .where('reservations.id IS NOT NULL AND reservations.date >= ?', Date.current)
           .order("reservations.date asc")
+          .paginate(page: page, per_page: 10)
       else
         gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
             .where('reservations.id IS NOT NULL OR custom_venues.id IS NOT NULL')
             .where('reservations.date >= ? OR custom_venues.date >= ?', Date.current, Date.current)
             .order("reservations.date asc", "custom_venues.date asc")
+            .paginate(page: page, per_page: 10)
       end
 
       # gs.includes(:reservation).references(:reservation)
-      #     .where('reservations.id IS NOT NULL AND reservations.date >= ?', Date.today)
+      #     .where('reservations.id IS NOT NULL AND reservations.date >= ?', Date.current)
       #     .order("reservations.date asc")
     end
 
-    def self.searchWithReservationOrVenue(user_business, date)
+    def self.FindGames(user_business, date, public_or_private, current_or_completed, page)
+    	if date.empty? && current_or_completed.empty? && !public_or_private.empty? 
+    		searchPublicOrPrivateWithReservationOrVenue(user_business, public_or_private, page)
+		elsif public_or_private.empty? && date.empty? && !current_or_completed.empty?
+			old_reservations_or_custom_venues(user_business, page)
+		elsif date.empty? && !public_or_private.empty? && !current_or_completed.empty?
+			old_reservations_or_custom_venues_with_private_or_public(user_business, public_or_private, page)
+    	elsif public_or_private.empty? && !date.empty?
+			searchWithReservationOrVenue(user_business, date, page)
+    	elsif !public_or_private.empty? && !date.empty?
+    		searchWithReservationOrVenueAndPublicOrPrivate(user_business, date, public_or_private, page)
+    	end		
+    end
+    def self.searchWithReservationOrVenueAndPublicOrPrivate(user_business, date, public_or_private, page)
+      gs = get_games(user_business)
+      if user_business.instance_of? Business
+          gs.includes(:reservation).references(:reservation)
+          .where('reservations.id IS NOT NULL AND reservations.date = ?', date)
+          .where('games.public = ?', public_or_private)
+          .order("reservations.date asc")
+          .paginate(page: page, per_page: 10)
+      else
+        gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
+            .where('reservations.id IS NOT NULL OR custom_venues.id IS NOT NULL')
+            .where('reservations.date = ? OR custom_venues.date = ?', date.to_date, date.to_date)
+            .where('games.public = ?', public_or_private)
+            .order("reservations.date asc", "custom_venues.date asc")
+            .paginate(page: page, per_page: 10)
+      end
+    end
+
+    def self.searchPublicOrPrivateWithReservationOrVenue(user_business, public_or_private, page)
+      gs = get_games(user_business)
+      if user_business.instance_of? Business
+          gs.includes(:reservation).references(:reservation)
+          .where('games.public = ?', public_or_private)
+          .order("reservations.date asc")
+          .paginate(page: page, per_page: 10)
+      else
+        gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
+            .where('reservations.id IS NOT NULL OR custom_venues.id IS NOT NULL')
+            .where('games.public = ?', public_or_private)
+            .order("reservations.date asc", "custom_venues.date asc")
+            .paginate(page: page, per_page: 10)
+      end
+    end
+
+    def self.searchWithReservationOrVenue(user_business, date, page)
       gs = get_games(user_business)
       if user_business.instance_of? Business
           gs.includes(:reservation).references(:reservation)
           .where('reservations.id IS NOT NULL AND reservations.date = ?', date)
           .order("reservations.date asc")
+          .paginate(page: page, per_page: 10)
       else
         gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
             .where('reservations.id IS NOT NULL OR custom_venues.id IS NOT NULL')
             .where('reservations.date = ? OR custom_venues.date = ?', date.to_date, date.to_date)
             .order("reservations.date asc", "custom_venues.date asc")
+            .paginate(page: page, per_page: 10)
       end
     end
 
@@ -65,7 +116,7 @@ class Game < ApplicationRecord
       gs = get_games(user_business)
 
       gs.includes(:reservation).references(:reservation)
-          .where('reservations.id IS NOT NULL AND reservations.date > ? AND reservations.date < ?', Date.today, Date.today + 7.days )
+          .where('reservations.id IS NOT NULL AND reservations.date > ? AND reservations.date < ?', Date.current, Date.current + 7.days )
           .order("reservations.date asc")
     end
 
@@ -73,27 +124,50 @@ class Game < ApplicationRecord
       gs = get_public_games(user_business)
 
       gs.includes(:reservation).references(:reservation)
-          .where('reservations.id IS NOT NULL AND reservations.date > ? AND reservations.date < ?', Date.today, Date.today + 7.days )
+          .where('reservations.id IS NOT NULL AND reservations.date > ? AND reservations.date < ?', Date.current, Date.current + 7.days )
           .order("reservations.date asc")
     end
 
-    def self.without_reservation(user_business)
+    def self.without_reservation(user_business, page)
         gs = get_games(user_business)
-        gs.includes(:reservation).references(:reservation).where('reservations.id IS NULL')
+        gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
+        .where('reservations.id IS NULL AND custom_venues.id IS NULL')
+        .paginate(page: page, per_page: 10)
     end
 
-    def self.old_reservations_or_custom_venues(user_business)
+    def self.old_reservations_or_custom_venues(user_business, page)
        gs = get_games(user_business)
 
           if user_business.instance_of? Business
               gs.includes(:reservation).references(:reservation)
-                .where('reservations.id IS NOT NULL AND reservations.date < ?', Date.today)
+                .where('reservations.id IS NOT NULL AND reservations.date < ?', Date.current)
                 .order("reservations.date desc")
+                .paginate(page: page, per_page: 10)
           else
             gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
                 .where('reservations.id IS NOT NULL OR custom_venues.id IS NOT NULL')
                 .where('reservations.date < ? OR custom_venues.date < ?', Date.current, Date.current)
                 .order("reservations.date desc", "custom_venues.date desc")
+                .paginate(page: page, per_page: 10)
+          end
+    end
+
+    def self.old_reservations_or_custom_venues_with_private_or_public(user_business, public_or_private, page)
+       gs = get_games(user_business)
+
+          if user_business.instance_of? Business
+              gs.includes(:reservation).references(:reservation)
+                .where('reservations.id IS NOT NULL AND reservations.date < ?', Date.current)
+                .where('games.public = ?', public_or_private)
+                .order("reservations.date desc")
+                .paginate(page: page, per_page: 10)
+          else
+            gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
+                .where('reservations.id IS NOT NULL OR custom_venues.id IS NOT NULL')
+                .where('reservations.date < ? OR custom_venues.date < ?', Date.current, Date.current)
+                .where('games.public = ?', public_or_private)
+                .order("reservations.date desc", "custom_venues.date desc")
+                .paginate(page: page, per_page: 10)
           end
     end
 
@@ -101,7 +175,7 @@ class Game < ApplicationRecord
       gs = get_games(user_business)
 
       gs.includes(:reservation).references(:reservation)
-          .where('reservations.id IS NOT NULL AND reservations.date = ?', Date.today)
+          .where('reservations.id IS NOT NULL AND reservations.date = ?', Date.current)
           .order("reservations.date asc")
     end
 
@@ -109,8 +183,17 @@ class Game < ApplicationRecord
       gs = get_games(user_business)
 
       gs.includes(:reservation).references(:reservation)
-          .where('reservations.id IS NOT NULL AND reservations.date = ?', Date.today + 1.days )
+          .where('reservations.id IS NOT NULL AND reservations.date = ?', Date.current + 1.days )
           .order("reservations.date asc")
+    end
+
+    def self.get_invited_ones(user, page)
+      gs = get_invited_games(user)
+      gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
+      .where('reservations.date <= ? OR custom_venues.date <= ? OR 
+      			(reservations.id IS NULL AND custom_venues.id IS NULL)', 
+      			Date.current, Date.current)
+      .paginate(page: page, per_page: 10)	
     end
 
     def self.get_invited_ones_with_res(user)
@@ -162,7 +245,7 @@ class Game < ApplicationRecord
       gs = get_games(user_business)
 
       gs.includes(:reservation).references(:reservation)
-          .where('reservations.id IS NOT NULL AND reservations.date >= ?', Date.today)
+          .where('reservations.id IS NOT NULL AND reservations.date >= ?', Date.current)
           .order("reservations.date asc").first
     end
 
