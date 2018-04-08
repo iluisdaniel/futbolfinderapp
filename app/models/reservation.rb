@@ -1,6 +1,6 @@
 class Reservation < ApplicationRecord
 	belongs_to :game, optional: true
-	belongs_to :business, dependent: :destroy
+	belongs_to :business
   has_many :charges
 
   before_create :randomize_id

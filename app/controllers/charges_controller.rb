@@ -33,7 +33,7 @@ class ChargesController < ApplicationController
 
 			charge.update(status: "Refunded")
 
-			flash[:success] "Charge for " + charge.user.first_name + " was refunded succesfully!"
+			flash[:success] = "Charge for " + charge.user.first_name + " was refunded succesfully!"
 			redirect_to charge.reservation
 
 		rescue Stripe::InvalidRequestError => e

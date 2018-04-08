@@ -53,6 +53,7 @@ class BusinessesController < ApplicationController
   end
 
   def stripe_connect
+    require 'net/http'
 
     if params[:code]
       # flash[:success] = params[:code]
