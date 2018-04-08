@@ -90,6 +90,7 @@ class Game < ApplicationRecord
       else
         gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
             .where('reservations.id IS NOT NULL OR custom_venues.id IS NOT NULL')
+            .where('reservations.date >= ? OR custom_venues.date >= ?', Date.current, Date.current)
             .where('games.public = ?', public_or_private)
             .order("reservations.date asc", "custom_venues.date asc")
             .paginate(page: page, per_page: 10)
