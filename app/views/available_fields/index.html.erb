@@ -24,21 +24,14 @@
 					<nav class="navbar select-field-nav" style="margin-top: 20px;">
 						<div class="container-fluid">
 					    	<%= form_tag(available_fields_path, :method => "get", class: "") do %>
-					    		<div class="col-md-3 col-md-offset-1 col-sm-3 col-xs-12">
+					    		<div class="col-md-5 col-md-offset-1 col-sm-3 col-xs-12">
 					    			<%= label_tag :date%>
 					    			<div class="input-group">
 					    			  <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
 					    			  <%= text_field_tag :date, params[:date], data:{ provide:'datepicker', 'date-format' => 'dd-mm-yyyy', 'date-autoclose' => 'true' }, placeholder: "DD-MM-YYYY", class: "form-control" %>
 					    			</div>
 					    		</div>
-					    		<div class="col-md-3 col-sm-3 col-xs-12">
-					    			<%= label_tag :time %>
-					    			<div class="input-group">
-					    			  <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
-					    			  <%= text_field_tag :time, params[:time], placeholder: "HH:MM AM/PM", class: "form-control" %>
-					    			</div>
-					    		</div>
-					    		<div class="col-md-3 col-sm-3 col-xs-12">
+					    		<div class="col-md-4 col-sm-3 col-xs-12">
 					    			<%= label_tag :duration %>
 					    			<div class="input-group">
 					    			  <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
@@ -54,9 +47,31 @@
 			    			  						params[:duration]),  class: "form-control" %>
 					    			</div>
 					    		</div>
+					    		<div class=" col-md-offset-1 col-md-8 col-sm-12 col-xs-12" style="margin-top: 20px">
+					    			
+					    			<div class="col-md-2"><%= label_tag :time %></div>
+					    			<div class="col-md-3"><%= select_tag :hour, 
+				    			  				options_for_select((1..12), 
+			    			  						params[:hour]),  class: "form-control" %></div>
+					    			<div class="col-md-3">
+					    				<%= select_tag :minute, 
+				    			  				options_for_select([
+	    			  									['00', '00'],
+	    			  									['30', '30'],
+    			  									], 
+			    			  						params[:duration]),  class: "form-control" %>
+					    			</div>
+					    			<div class="col-md-3"><%= select_tag :ampm, 
+				    			  				options_for_select(['AM','PM'], 
+			    			  						params[:ampm]),  class: "form-control" %></div>
+					    			<!-- <div class="input-group">
+					    			  <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>						  						
+					    			</div> -->
+					    		</div>
+					    		
 					    		<%= hidden_field_tag :game, params[:game] %>
 
-					    		<div class="col-md-2 col-sm-2">
+					    		<div class="col-md-3 col-sm-2">
 					    			<%= submit_tag "Search", class: "btn btn-primary btn-fill btn-srch" %>
 					    		</div>
 					    			
@@ -97,11 +112,11 @@
 						 			<td>
 					 					<%if !business[2].nil? %>
 					 						<% if current_user.card_last4.nil? %>
-					 							<%= link_to new_payment_method_path(game: business[2],business: business[0].id, date: params[:date], time: params[:time], duration: business[3], field: business[1].id), class: "select" do %>
+					 							<%= link_to new_payment_method_path(game: business[2],business: business[0].id, date: params[:date], time: business[4], duration: business[3], field: business[1].id), class: "select" do %>
 					 								<i class="fa fa-chevron-circle-right"></i>
 					 							<% end %>
 					 						<%else%>
-					 							<%= link_to confirmation_path(game: business[2] , business: business[0].id, date: params[:date], time: params[:time], duration: business[3], field: business[1].id), class: "select" do %>
+					 							<%= link_to confirmation_path(game: business[2] , business: business[0].id, date: params[:date], time: business[4], duration: business[3], field: business[1].id), class: "select" do %>
 					 								<i class="fa fa-chevron-circle-right"></i>
 					 							<% end %> 
 					 						<% end %>

@@ -7,16 +7,17 @@ class AvailableFieldsController < ApplicationController
 		@message = ""
 		@custom_venue = CustomVenue.new
 
-		if  params[:date] && !params[:date].empty? && !params[:time].empty? && !params[:duration].empty?
+		if  params[:date] && !params[:date].empty? && !params[:duration].empty?
 			
 			# for debugging
 			# flash[:info] = params[:date] + "  " + params[:time]
 			#TODO: change variable name to something else. the hash has businesses and field.
-			@businesses = get_available_businesses(Business.get_open_businesses_at(params[:date], Time.zone.parse(params[:time]))
-				 )
+			time = params[:hour] + ":" + params[:minute] + " " + params[:ampm]
+			@businesses = get_available_businesses(Business.get_open_businesses_at(params[:date], Time.zone.parse(time)), 
+				time)
 
 			if @businesses.empty?
-				@message = "We couldn't find a business available at " + '"' + params[:date] + ", " + params[:time] + '"'
+				@message = "We couldn't find a business available at " + '"' + params[:date] + ", " + time + '"'
 			end
 		else
 			if params[:game] && (params[:date].nil?)
@@ -38,12 +39,12 @@ class AvailableFieldsController < ApplicationController
 
 	private 
 
-	def get_available_businesses(businesses)
+	def get_available_businesses(businesses, time)
 		bs = Hash.new
 		businesses.each do |b|
 			b.fields.each do |f|
-				end_time = Time.zone.parse(params[:time]) + (params[:duration].to_f).hour 
-				res = Reservation.new(date: params[:date], time: Time.zone.parse(params[:time]), 
+				end_time = Time.zone.parse(time) + (params[:duration].to_f).hour 
+				res = Reservation.new(date: params[:date], time: Time.zone.parse(time), 
 					end_time: end_time, business_id: b.id, field_id: f.id)
 				if res.valid?
 					# for debuggin
@@ -53,6 +54,7 @@ class AvailableFieldsController < ApplicationController
 					bs[b.name] << f
 					bs[b.name] << params[:game]
 					bs[b.name] << params[:duration]
+					bs[b.name] << time
 				else
 					# FOr debugging
 					# res.valid?
