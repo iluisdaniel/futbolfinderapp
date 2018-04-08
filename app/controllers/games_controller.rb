@@ -29,12 +29,14 @@ class GamesController < ApplicationController
 		if @games.empty?
 			if params[:invited]
 				@msg = "You don't have any invitations pending at the moment."
-			elsif !params[:date].empty?
+			elsif params[:date] 
 				@msg = "Sorry, we couldn't find any game with " + '"'+ params[:date] + '"'
 			elsif params[:current]
 				@msg = "Sorry, you don't have a completed game yet."
-			else
+			elsif params[:public]
 				@msg = "Sorry, we couldn't find any game with " + '"'+ params[:public] + '"'
+			else
+				@msg = "You don't have any games at this moment"
 			end
 		end
 	end

@@ -34,9 +34,7 @@
 	        	</div>
 	        	
 	        	<%= submit_tag "Search", class: "btn btn-primary btn-fill" %>
-	        
 	        		<%= link_to "Clear", games_path, class: "pull-left"%>
-	        	
 	        <% end %>
 	      
 	    </div><!-- /.navbar-collapse -->
@@ -51,7 +49,7 @@
 	<div class="row">
     	<div class="col-md-12 col-sm-12">
     		<% if @games.empty? %>
-    			<p class="lead"> <%= @msg %></p>
+    			<p class="lead"> <%= @msg %> <%= link_to "Create Game", new_game_path, class: "btn btn-primary btn-fill" %></p>
     		<% end %>
 			<% @games.each do |game| %>
 				<div class="col-md-4 col-sm-6">
