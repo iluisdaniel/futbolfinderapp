@@ -155,6 +155,11 @@ module GamesHelper
         return 
     end
 
+    def get_field_size(n)
+        n2 = (n/2).to_s
+        n2 + "vs" + n2
+    end
+
     def set_fields_collection
         if logged_in?
             @fields = current_business.fields
@@ -366,6 +371,16 @@ module GamesHelper
         else
             return "Private"
         end 
+    end
+
+    def are_there_any_details_on_custom_venue?
+        if @game.custom_venue.ground.empty? && 
+            @game.custom_venue.number_players.nil? &&
+            @game.custom_venue.field_type.empty?
+            false
+        else
+            true
+        end
     end
 
     def is_at_one_of_index_games?

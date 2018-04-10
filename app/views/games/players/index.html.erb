@@ -1,95 +1,87 @@
-<% provide(:title, 'Game') %>
-<%= render "/games/shared/game_header"%>  
+<% provide(:title, 'Players') %>
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9 col-sm-8 col-xs-12">
+        <h1>
+          <%= @game.title%>
+          <small><%= @game.id%></small>
+        </h1>
+      </div>
+      <div class="col-md-3 col-sm-4 col-xs-12">
+          <% if correct_business_or_user_to_edit_page %>
+                <%= link_to edit_game_path(@game.id), class: "btn btn-primary btn-fill pull-right" do %>
+                    <i class="fa fa-gear"></i> Settings
+                  <% end %>
+          <% end %>        
+      </div>
+    </div>
+  </div>
+</div> 
 
-    <ul class="nav nav-tabs game-sd-tabs" style="padding-left: 14%">
-           <li class=""><%= link_to 'Info', game_path(@game) %></li>
-          <li class="active"><a href="">Players</a></li>
-          <li class=""><%= link_to 'Comments', conversation_index_path(@game) %></li>
-    </ul>
+   
 
+<div class="container game-content">
+    <ul class="nav nav-tabs" style="">
+            <li><%= link_to 'Info', game_path(@game) %></li>
+            <li class="active"><%= link_to 'Players', players_path(@game) %></li>
+  </ul>
+  <div class="row">
+    <div class="col-md-7 col-sm-7 games-comments">
 
-<div class="container players-list">
-	<div class="row">
-		<div class="col-md-offset-1 col-md-7">
-			<h3 class="lead"> Players </h3>
+      <div class="players-list">
+            <h3 class="lead"> Players </h3>
 
-			<% if @game.game_lines.empty? %>
-			  <p>There are no players invited yet.</p>
-			<% else %>
-			  
-				<% @game.game_lines.each do |game_line| %>
-		            <div style="margin-bottom: 30px;">
-		              <% if !user_has_avatar?(game_line.user.id) %>
-		              	<%= image_tag("64x64.png", :alt => "rss feed", class: "img-circle") %>
-		              <% else %>
-		             		 <%= image_tag game_line.user.avatar.url(:thumb), class: "img-circle comments-img" %>
-		              <% end %>
+            <% if @game.game_lines.empty? %>
+              <p>There are no players invited yet.</p>
+            <% else %>
+              
+              <% @game.game_lines.each do |game_line| %>
+                      <div style="margin-bottom: 30px;">
+                        <% if !user_has_avatar?(game_line.user.id) %>
+                          <%= image_tag("64x64.png", :alt => "rss feed", class: "img-circle") %>
+                        <% else %>
+                           <%= image_tag game_line.user.avatar.url(:thumb), class: "img-circle comments-img" %>
+                        <% end %>
 
-	              		<span style="font-size: 1.2em; margin-left: 10px;"><%= link_to game_line.user.first_name, game_line.user %></span>
+                          <span style="font-size: 1.2em; margin-left: 10px;"><%= link_to game_line.user.first_name, game_line.user %></span>
 
-			              <span class="pull-right" style="padding-top: 7px;"> 
-			           		  	<small>
-			           		  		<% if is_correct_user_or_business_associated_with_game_line?(game_line) %>
-			           		  		
-			           			  		<% if game_line.accepted == "Declined" %>	
-   				  					  		<div class="btn-group" role="group">
-   				  					  		    <button type="button" class="btn btn-danger btn-fill dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-   				  					  		      Declined 
-   				  					  		      <span class="caret"></span>
-   				  					  		    </button>
-   				  					  		    <ul class="dropdown-menu">
-   				  					  		      <li>
-				  		      	  					<%= link_to game_line_path(id: game_line.id, accepted: "Accepted"), method: "put", class: '' do %>
-				  		      				  			Accept
-				  		      				  		<% end %>
-   				  					  		      </li>
-   				  					  		      <li>
-   				  					  		      	<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id do%>
-      				           	  						Remove 
-      				           	  					<% end %>
-   				  					  		      </li>
-   				  					  		    </ul>
-   				  					  		  </div>
-
-			           				  	<% elsif game_line.accepted == "Accepted"%>
-   				  					  		<div class="btn-group" role="group">
-   				  					  		    <button type="button" class="btn btn-success btn-fill dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-   				  					  		      Accepted
-   				  					  		      <span class="caret"></span>
-   				  					  		    </button>
-   				  					  		    <ul class="dropdown-menu">
-   				  					  		      <li>
-				  		      	  					<%= link_to game_line_path(id: game_line.id, accepted: "Declined"), method: "put", class: '' do %>
-				  		      				  			Decline
-				  		      				  		<% end %>
-   				  					  		      </li>
-  				  					  		      <li>
-  				  					  		      	<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id do%>
-     				           	  						Remove 
-     				           	  					<% end %>
-  				  					  		      </li>
-   				  					  		    </ul>
-   				  					  		  </div>
-                            <% elsif game_line.accepted == "Requested"%>
-                              
+                          <span class="pull-right" style="padding-top: 7px;"> 
+                              <small>
+                                <% if is_correct_user_or_business_associated_with_game_line?(game_line) %>
+                                
+                                  <% if game_line.accepted == "Declined" %> 
                                   <div class="btn-group" role="group">
-                                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Requested
+                                      <button type="button" class="btn btn-danger btn-fill dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Declined 
                                         <span class="caret"></span>
                                       </button>
                                       <ul class="dropdown-menu">
-                                        <% if game_line.user != current_user %>
-                                              <li>
-                                              <%= link_to game_line_path(id: game_line.id, accepted: "Accepted"), method: "put", class: '' do %>
-                                                Accept
-                                              <% end %>
-                                              </li>
-                                              <li>
-                                              <%= link_to game_line_path(id: game_line.id, accepted: "Declined"), method: "put", class: '' do %>
-                                                Decline
-                                              <% end %>
-                                              </li>
+                                        <li>
+                                        <%= link_to game_line_path(id: game_line.id, accepted: "Accepted"), method: "put", class: '' do %>
+                                          Accept
                                         <% end %>
+                                        </li>
+                                        <li>
+                                          <%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id do%>
+                                              Remove 
+                                            <% end %>
+                                        </li>
+                                      </ul>
+                                    </div>
+
+                                  <% elsif game_line.accepted == "Accepted"%>
+                                  <div class="btn-group" role="group">
+                                      <button type="button" class="btn btn-success btn-fill dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Accepted
+                                        <span class="caret"></span>
+                                      </button>
+                                      <ul class="dropdown-menu">
+                                        <li>
+                                        <%= link_to game_line_path(id: game_line.id, accepted: "Declined"), method: "put", class: '' do %>
+                                          Decline
+                                        <% end %>
+                                        </li>
                                         <li>
                                           <%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id do%>
                                             Remove 
@@ -97,64 +89,268 @@
                                         </li>
                                       </ul>
                                     </div>
+                                  <% elsif game_line.accepted == "Requested"%>
+                                    
+                                        <div class="btn-group" role="group">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                              Requested
+                                              <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                              <% if game_line.user != current_user %>
+                                                    <li>
+                                                    <%= link_to game_line_path(id: game_line.id, accepted: "Accepted"), method: "put", class: '' do %>
+                                                      Accept
+                                                    <% end %>
+                                                    </li>
+                                                    <li>
+                                                    <%= link_to game_line_path(id: game_line.id, accepted: "Declined"), method: "put", class: '' do %>
+                                                      Decline
+                                                    <% end %>
+                                                    </li>
+                                              <% end %>
+                                              <li>
+                                                <%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id do%>
+                                                  Remove 
+                                                <% end %>
+                                              </li>
+                                            </ul>
+                                          </div>
 
-			           	  				<% else %>
-       				  					  		<div class="btn-group" role="group">
-       				  					  		    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-       				  					  		      Pending
-       				  					  		      <span class="caret"></span>
-       				  					  		    </button>
-       				  					  		    <ul class="dropdown-menu">
-       				  					  		      <li>
-    				  		      	  					<%= link_to game_line_path(id: game_line.id, accepted: "Accepted"), method: "put", class: '' do %>
-    				  		      				  			Accept
-    				  		      				  		<% end %>
-       				  					  		      </li>
-       				  					  		      <li>
-    				  		      	  					<%= link_to game_line_path(id: game_line.id, accepted: "Declined"), method: "put", class: '' do %>
-    				  		      				  			Decline
-    				  		      				  		<% end %>
-       				  					  		      </li>
-      				  					  		      <li>
-      				  					  		      	<%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id do%>
-         				           	  						Remove 
-         				           	  					<% end %>
-      				  					  		      </li>
-       				  					  		    </ul>
-       				  					  		  </div>
+                                  <% else %>
+                                      <div class="btn-group" role="group">
+                                          <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Pending
+                                            <span class="caret"></span>
+                                          </button>
+                                          <ul class="dropdown-menu">
+                                            <li>
+                                            <%= link_to game_line_path(id: game_line.id, accepted: "Accepted"), method: "put", class: '' do %>
+                                              Accept
+                                            <% end %>
+                                            </li>
+                                            <li>
+                                            <%= link_to game_line_path(id: game_line.id, accepted: "Declined"), method: "put", class: '' do %>
+                                              Decline
+                                            <% end %>
+                                            </li>
+                                            <li>
+                                              <%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id do%>
+                                                Remove 
+                                              <% end %>
+                                            </li>
+                                          </ul>
+                                        </div>
 
-			           	  				<% end %>	
+                                  <% end %> 
 
-			             			<%else%>
-                          <div class="btn-group">
-                            <% if game_line.accepted == "Declined" %>
-                                <button class="btn btn-danger btn-fill">Declined <i class="fa fa-times"></i></button>
-                            <% elsif game_line.accepted == "Accepted" %>
-                                <button class="btn btn-success btn-fill">Accepted <i class="fa fa-check"></i></button>
-                            <% elsif game_line.accepted == "Pending" %>
-                              <button class="btn btn-warning">Pending <i class="fa fa-clock-o"></i></button>
-                            <% elsif game_line.accepted == "Requested" %>
-                                <button class="btn btn-default">Requested <i class="fa fa-circle-o"></i></button>
-                            <%end%>
-                          </div>    
-                        <% end %>
-			             		</small>   
-			              </span>
-		            </div>
-	        	<% end %>
-			<% end %>  	  
-		</div>
-		<div class="col-md-3" style="background: #fafafa; margin-left: 20px;">
-			<% if signed_in? && @game.is_player_involved?(current_user) && @game.invite_allowed == true %>
-			    <%= render '/game_lines/new_game_line' %>
-      <% elsif logged_in? || @game.user == current_user %>
-          <%= render '/game_lines/new_game_line' %>
-			<% elsif  signed_in? && !@game.is_player_involved?(current_user)%>
-			    <%= render '/game_lines/add_yourself' %>
-			<% end %>
-		</div>
-	</div>
-</div>
+                              <%else%>
+                                <div class="btn-group">
+                                  <% if game_line.accepted == "Declined" %>
+                                      <button class="btn btn-danger btn-fill">Declined <i class="fa fa-times"></i></button>
+                                  <% elsif game_line.accepted == "Accepted" %>
+                                      <button class="btn btn-success btn-fill">Accepted <i class="fa fa-check"></i></button>
+                                  <% elsif game_line.accepted == "Pending" %>
+                                    <button class="btn btn-warning">Pending <i class="fa fa-clock-o"></i></button>
+                                  <% elsif game_line.accepted == "Requested" %>
+                                      <button class="btn btn-default">Requested <i class="fa fa-circle-o"></i></button>
+                                  <%end%>
+                                </div>    
+                              <% end %>
+                            </small>   
+                          </span>
+                      </div>
+                  <% end %>
+            <% end %>     
+          </div>
+          <hr>
+          <div class="col-md-3" style="background: #fafafa; margin-left: 20px;">
+            <% if signed_in? && @game.is_player_involved?(current_user) && @game.invite_allowed == true %>
+                <%= render '/game_lines/new_game_line' %>
+            <% elsif logged_in? || @game.user == current_user %>
+                <%= render '/game_lines/new_game_line' %>
+            <% elsif  signed_in? && !@game.is_player_involved?(current_user)%>
+                <%= render '/game_lines/add_yourself' %>
+            <% end %>
+          </div>
+
+    </div>
+    <div class="col-md-4 col-md-offset-1 col-sm-5" style="padding-left: 30px;">
+
+
+        <div class="card">
+          <h4>Venue</h4>
+          <hr>
+          <div class="content">
+           <div class="row card-venue-content">
+                <% if !@game.reservation && !@game.custom_venue %>
+                  <div class="row venue-buttons">
+                    <div class="col-md-4 col-md-offset-1 col-sm-6 col-xs-12">
+                      There is no venue and date planned yet.
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <%= link_to "New Venue", available_fields_path(game: @game), class: "btn btn-primary btn-fill" %>
+                    </div>
+                  </div>
+                  
+                <% else %>
+                  <% if @game.reservation %>
+                  <div class="col-md-6 col-xs-6">
+                      <div class="icon"><i class="fa fa-clock-o"></i></div>
+                      <strong>Time</strong><br>
+                      <%= @game.reservation.time.strftime("%I:%M") %> - <%= @game.reservation.end_time.strftime("%I:%M %p") %> 
+                  </div>
+                  <div class="col-md-6 col-sm-4 col-xs-6">
+                      <div class="icon"><i class="fa fa-calendar"></i></div>
+                      <strong>Date</strong><br>
+                      <%= @game.reservation.date %>
+                  </div>
+                      <div class=" col-md-12">
+                            <div class="icon"><i class="fa fa-map-marker"></i></div>
+                            <address>
+                              <strong>Location </strong><br>
+                              <%= link_to @game.reservation.business.name, @game.reservation.business %><br>
+                             <%= @game.reservation.business.address %><br>
+                              <%= @game.reservation.business.city %>, <%= @game.reservation.business.state %> 
+                              <%= @game.reservation.business.zipcode %>
+                          </address>
+                          </div>
+                  <% elsif @game.custom_venue %>
+                      <div class="  col-md-6 col-sm-6 col-xs-6">
+                        <div class="icon"><i class="fa fa-calendar"></i></div>
+                        <strong>Date</strong><br>
+                        <%= @game.custom_venue.date %>
+                        
+                      </div>
+                  <div class="col-md-6 col-sm-6 col-xs-6">
+                      <div class="icon"><i class="fa fa-clock-o"></i></div>
+                      <strong>Time</strong><br>
+                      <%= @game.custom_venue.time.strftime("%I:%M %p") %> - <%= @game.custom_venue.end_time.strftime("%I:%M %p") %> 
+
+                  </div>  
+                    <div class=" col-md-12">
+                      <div class="icon"><i class="fa fa-map-marker"></i></div>
+                      <address>
+                          <strong>Location </strong><br>
+                          <%= @game.custom_venue.address %><br>
+                          <%= @game.custom_venue.city %><br>
+                          <%= @game.custom_venue.state %><br>
+                          <%= @game.custom_venue.zipcode %>
+                      </address>  
+                    </div>
+                     <div class="cancel-res">
+                               <%= link_to "Cancel Venue", @game.custom_venue, method: :delete,
+                                data: { confirm: "Are you sure you want to delete this Venue?" },
+                                title: @game.custom_venue, class: "btn" %>
+                       </div>
+                  <% end %>  
+                <% end %>  
+
+            </div>
+          </div><!-- end content -->
+        </div><!-- end card -->
+
+        <% if @game.reservation || (@game.custom_venue && are_there_any_details_on_custom_venue?) %>
+          <div class="card">
+            <h4> Details</h4>
+            <hr>
+            <div class="row content card-venue-content">
+              <% if @game.reservation %>
+                  <div class="col-md-4 col-sm-4 col-xs-4">
+                    <div class="icon"><i class="fa fa-info-circle"></i></div>
+                    <strong>Reservation</strong><br>
+                    <%= @game.reservation.id %>
+                  </div>
+                  <div class="col-md-4 col-sm-4 col-xs-4">
+                      <div class="icon"><i class="fa fa-soccer-ball-o"></i></div>
+                      <strong>Field</strong><br>
+                      <%= get_field(@game.reservation.field_id).name %>
+
+                  </div>
+
+                  <div class="col-md-4 col-sm-4">
+                    <div class="icon"><i class="fa fa-users"></i></div>
+                     <strong>Field Size</strong><br>
+                      <%= get_field_size(get_field(@game.reservation.field_id).number_players) %> 
+                  </div> 
+                    <% if !@game.reservation.nil? && @game.user == current_user %>
+                     <div class="cancel-res">
+                             <%= link_to "Cancel Reservation", @game.reservation, method: :delete,
+                              data: { confirm: "Are you sure you want to delete this reservation?" },
+                              title: @game.reservation, class: "btn" %>
+                     </div>
+                  <% end %>
+              <% else %>   
+                  <% if !@game.custom_venue.ground.empty? %>
+                    <div class="col-md-4 col-sm-4">
+                      <div class="icon"><i class="fa fa-flag"></i></div>
+                       <strong>Ground</strong><br>
+                        <%= @game.custom_venue.ground %>
+                    </div> 
+                  <% end %>
+
+                  <% if !@game.custom_venue.number_players.nil? %>
+                    <div class=" col-md-4 col-sm-4 col-xs-4">
+                      <div class="icon"><i class="fa fa-users"></i></div>
+                     <strong>Field Size</strong><br>
+                     <%= get_field_size(@game.custom_venue.number_players) %>
+                    </div>
+                  <% end %>
+                  <% if !@game.custom_venue.field_type.empty? %>
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                       <div class="icon"><i class="fa fa-soccer-ball-o"></i></div>
+                       <strong>Field Type</strong><br>
+                        <%= @game.custom_venue.field_type%>
+                    </div>
+                  <% end %>
+              <% end %>    
+            </div>
+          </div>
+          <% end %>
+
+        <% if signed_in? || (@game.user_id.nil? && @game.business_id.present?) %>
+          <div class="card">
+            <h4> Description</h4>
+            <hr>
+            <div class="content game-information-content">
+              <p class="game-description"><%= @game.description %></p>
+            </div>
+          </div>
+          
+        <% end %>
+        
+        <div class="card">
+          <h4>Game Settings</h4>
+          <hr>
+          <div class="content">
+
+          <div class="row card-info-content">
+            
+            <div class="col-sm-4 col-xs-4 info info-invites"><div class="icon"><i class="fa fa-plus"></i></div><div class="description"><span class="title"> Invites</span><br><span class="value"> <%= get_invites_real_string(@game.invite_allowed) %> </span></div></div>
+
+            <div class="col-sm-4 col-xs-4 info"><div class="icon"><i class="fa fa-user"></i></div><div class="description"><span class="title"> Admin</span><br><span class="value"> <%= link_to get_game_creator_name(@game), get_game_creator(@game) %> </span></div></div>
+            
+
+            <div class="col-sm-4 col-xs-4 info"><div class="icon"><i class="fa fa-calendar"></i></div><div class="description"><span class="title"> Created</span><br><span class="value"> <%= @game.created_at.strftime("%b/%d") %> </span></div></div>
+
+
+            <div class="col-sm-4 col-xs-4 info"><div class="icon"><i class="fa fa-users"></i></div><div class="description"><span class="title"> Players Desired</span><br><span class="value"> <%= @game.number_players %> </span></div></div>
+
+            <div class="col-sm-4 col-xs-4 info"><div class="icon"><i class="fa fa-eye"></i></div><div class="description"><span class="title"> View</span><br><span class="value"> <%= @game.public %> </span></div></div>
+
+            <div class="col-sm-4 col-xs-4 info"><div class="icon"><i class="fa fa-clock-o"></i></div><div class="description"><span class="title"> Last Updated</span><br><span class="value"> <%= @game.updated_at.strftime("%b/%d") %> </span></div></div>
+
+          </div>   
+
+          </div>
+        </div><!-- End of card-->
+
+        
+    </div><!-- col-8 main content-->
+
+  </div><!-- row -->
+</div><!-- container -->
+
 
 
 

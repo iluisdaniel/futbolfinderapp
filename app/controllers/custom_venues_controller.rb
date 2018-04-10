@@ -19,8 +19,8 @@ class CustomVenuesController < ApplicationController
 				end
 				redirect_to @custom_venue.game
 		else	
-			flash[:danger] = "Error, Venue and Time was not created. Please, try again." + @custom_venue.errors.full_messages.to_s
-			redirect_to root_path
+			# flash[:danger] = "Error, Venue and Time was not created. Please, try again." + @custom_venue.errors.full_messages.to_s
+			render 'new'
 		end
 	end
 

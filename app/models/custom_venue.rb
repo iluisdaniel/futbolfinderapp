@@ -6,9 +6,9 @@ class CustomVenue < ApplicationRecord
 	validates :time, presence: true
 	validates :end_time, presence: true
 	validates :address, presence: true, length: {maximum: 255}
-	validates :city, length: {maximum: 50}, allow_blank: true
-	validates :state, length: {maximum: 50}, allow_blank: true
-	validates :zipcode, length: {maximum: 5, minimum: 5}, allow_blank: true
+	validates :city, length: {maximum: 50}, presence: true
+	validates :state, length: {maximum: 50}, presence: true
+	validates :zipcode, length: {maximum: 5, minimum: 5}, presence: true
 	validates :ground, length: {maximum: 25}, allow_blank: true
 	validates :number_players, numericality: {only_integer: true, greater_than: 1, less_than: 23}, allow_blank: true
 	validates :field_type, length: {minimum: 6, maximum: 10}, allow_blank: true
@@ -23,11 +23,11 @@ class CustomVenue < ApplicationRecord
 
 	### Validate Date
   	def check_date_later_than_today
-  		errors.add(:date, "Date should be today or later") unless date >= Date.today
+  		errors.add(:date, "Date should be today or later") unless !date.nil? && date >= Date.today
   	end
 
     def check_year_not_greater_than_a_year
-      errors.add(:date, "Date should not be greater than a year") unless date < Date.today + 1.year
+      errors.add(:date, "Date should not be greater than a year") unless !date.nil? && date < Date.today + 1.year
     end
 
  #    ### Validate Time
@@ -44,6 +44,10 @@ class CustomVenue < ApplicationRecord
   	def venue_time_greater_than_time_now?
 	    today = Date.current
 
+	    if date.nil?
+	    	return false
+	    end
+
 	    if date == today
 	      d = Time.zone.now
 
@@ -56,6 +60,10 @@ class CustomVenue < ApplicationRecord
   	end
 
   	def venue_end_time_greater_than_time?
+  		if time.nil?
+  			return false
+  		end
+
   		if end_time <= time
   			return false
   		end

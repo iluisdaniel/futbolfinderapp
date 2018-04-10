@@ -658,14 +658,14 @@ ul.alert-dropdown {
 /************ Page title header ***************************/
 
 .page-header{
-    background-color:#201a50;
+    /*background-color:#fff;*/
     margin:0;
     padding: 20px 0 20px;
     border-bottom: none !important;
 
-    h1{
+   /* h1{
         color:#b5ef3a;
-    }
+    }*/
 
     .btn{
         margin-top: 1em;
@@ -862,6 +862,9 @@ ul.alert-dropdown {
         }
         .game-information-content{
             padding: 0px 15px 1px 20px;
+            p{
+                font-size: 1.6rem;
+            }
         }
         .content{
             padding-top: 0px;
@@ -870,47 +873,47 @@ ul.alert-dropdown {
                     color:#201a50;
                 }
             }
-            .card-venue-content{
-                
-                font-size: 1.6rem;
+        }
+        .card-venue-content{
+            
+            font-size: 1.6rem;
+            text-align: center;
+            padding-bottom: 20px;
+            .icon{
+                font-size: 1.7em;
+            }
+            strong{
+                color:#c72166;
+                font-weight: 700;
+            }
+            .row{
+                padding-top: 20px;
+            }
+            .date-time{
+                margin-top: 20px;
+            }
+            .modal-body{
+                text-align: left;
+            }
+        
+        }
+        .card-info-content{
+            margin-bottom: 20px;
+
+            .info{
                 text-align: center;
-                padding-bottom: 20px;
+                margin-bottom: 20px;
                 .icon{
                     font-size: 1.7em;
                 }
-                strong{
-                    color:#c72166;
-                    font-weight: 700;
-                }
-                .row{
-                    padding-top: 20px;
-                }
-                .date-time{
-                    margin-top: 20px;
-                }
-                .modal-body{
-                    text-align: left;
-                }
-        
-            }
-            .card-info-content{
-                margin-bottom: 20px;
-
-                .info{
-                    text-align: center;
-                    margin-bottom: 20px;
-                    .icon{
-                        font-size: 1.7em;
+                .description{
+                    font-size: 1.6rem;
+                    .title{
+                        color:#c72166;
+                        font-weight: 700;
                     }
-                    .description{
-                        font-size: 1.6rem;
-                        .title{
-                            color:#c72166;
-                            font-weight: 700;
-                        }
-                        .value{
-                            color:#777777;
-                        }
+                    .value{
+                        color:#777777;
                     }
                 }
             }
