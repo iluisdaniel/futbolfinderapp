@@ -184,7 +184,7 @@
                       </div>
                       <div class="col-md-8">
                         <div class="col-md-6">
-                            <%= f.time_select :open_time, {prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 6, time_separator: "</div><div class='col-md-6'>"}, {class: 'form-control'} %> 
+                            <%= f.text_field :open_time,  class: 'form-control' %> 
                         </div>
                       </div>
                     </div>   
@@ -197,7 +197,7 @@
                       </div>
                       <div class="col-md-8">
                         <div class="col-md-6">
-                            <%= f.time_select :close_time, {prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 6, time_separator: "</div><div class='col-md-6'>"}, {class: 'form-control'} %> 
+                            <%= f.text_field :close_time,  class: 'form-control' %> 
                         </div>
                       </div>
                     </div>   

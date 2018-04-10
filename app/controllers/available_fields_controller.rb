@@ -17,8 +17,8 @@ class AvailableFieldsController < ApplicationController
 			else
 				time = params[:time]
 			end
-			@businesses = get_available_businesses(Business.get_open_businesses_at(params[:date], Time.zone.parse(time)), 
-				time)
+			@businesses = get_available_businesses(Business.get_open_businesses_at(params[:date], 
+													Time.zone.parse(time)), time)
 
 			if @businesses.empty?
 				@message = "We couldn't find a business available at " + '"' + params[:date] + ", " + time + '"'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180329081525) do
+ActiveRecord::Schema.define(version: 20180410053247) do
 
   create_table "businesses", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string "name"
@@ -192,8 +192,8 @@ ActiveRecord::Schema.define(version: 20180329081525) do
 
   create_table "schedules", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string "day"
-    t.time "open_time"
-    t.time "close_time"
+    t.string "open_time"
+    t.string "close_time"
     t.integer "business_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

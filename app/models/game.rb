@@ -1,6 +1,6 @@
 class Game < ApplicationRecord
   belongs_to :user, optional: true
-  belongs_to :business, optional: true, dependent: :destroy
+  belongs_to :business, optional: true
 
   #BUG: it doesnt work for users. only for businesses for some reason.
   before_create :randomize_id

@@ -260,8 +260,8 @@ class Reservation < ApplicationRecord
 
 	#returns true if game time is in between the open time and close time
 	def compare_times?(b_open_time,b_close_time, g_time, g_end_time, day)
-		b_open_time = b_open_time.strftime("%H:%M")
-		b_close_time = b_close_time.strftime("%H:%M")
+		b_open_time = b_open_time
+		b_close_time = b_close_time
 		g_time = g_time.strftime("%H:%M")
 		g_end_time = g_end_time.strftime("%H:%M")
 
