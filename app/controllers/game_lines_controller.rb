@@ -4,11 +4,17 @@ class GameLinesController < ApplicationController
 
 	def create
 		# todo- sanitize inputs
-		user = User.friendly.find(game_line_params[:user_id])
+		srch_term = game_line_params[:user_id]
+		user = User.where('slug = ? OR email = ? OR phone = ?', srch_term, 
+			srch_term, srch_term).first
 	  	@game_line = GameLine.new(game_line_params)
+
+	  	msg_error = "Unable to add player"
 	  	
 	  	if !user.nil?
 			@game_line[:user_id] = user.id
+		else
+			msg_error = "I am sorry, we couldn't find a player with " + '"' +srch_term + '"'
 		end
 
 	  	if @game_line.save
@@ -27,7 +33,7 @@ class GameLinesController < ApplicationController
 	      	@game_line.save
 	      end
 	    else
-	    	flash[:danger] = "Unable to add player"
+	    	flash[:danger] = msg_error
 	    	redirect_back fallback_location: root_path
 	    end
 	end

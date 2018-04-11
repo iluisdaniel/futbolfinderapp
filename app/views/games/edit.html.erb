@@ -25,11 +25,7 @@
             <%= f.label :public, 'Public' %>
           </div>
           <div class="col-md-8">
-            <% if logged_in? %>
               <%= f.select :public, ['Private', 'Public'], {prompt: "Select"}, { class: 'form-control'} %>
-            <% else %>
-              <%= f.select :public, ['Private', 'Friends', 'Friends of friends', 'Public'], {prompt: "Select"}, { class: 'form-control'} %>
-            <% end %>
           </div>
         </div>
       </div>
@@ -73,12 +69,12 @@
       <hr>
 
      
-      <%= f.submit "Update game", class: "btn btn-primary btn-fill btn-round pull-right" %>
-       <%= link_to 'Cancel', game_path(@game), class: "btn btn-default btn-round pull-right" %> 
+      <%= f.submit "Update game", class: "btn btn-primary btn-fill pull-right" %>
+       <%= link_to 'Cancel', game_path(@game), class: "btn btn-default pull-right" %> 
     <% end %>
 
      <%= link_to "delete", @game, method: :delete,
                      data: { confirm: "Are you sure you want to delete this game?" },
-                     title: @game.title, class: "btn btn-danger btn-round" %>
+                     title: @game.title, class: "" %>
   </div>
 </div>

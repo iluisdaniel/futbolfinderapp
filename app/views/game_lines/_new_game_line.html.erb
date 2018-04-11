@@ -3,9 +3,11 @@
       <%= form_for(@game_line) do |f| %>
           <%= render 'shared/error_messages', object: f.object %> 
           
-          <%= f.text_field :user_id, placeholder: "Enter Username", class: "form-control" %> 
+          <%= f.text_field :user_id, placeholder: "Username, Email, or Phone", class: "form-control" %> 
           <%= f.hidden_field :game_id, :value => @game.id %>
           <%= f.hidden_field :invited_by, :value => current_user.id %>
-          <%= f.submit "Invite", readonly: true,class: "btn btn-primary btn-fill btn-round" %>
+          <div style="">
+          <%= f.submit "Invite", readonly: true,class: "btn btn-primary btn-fill pull-right" %>
+          </div>
       <% end %>
 </div>
