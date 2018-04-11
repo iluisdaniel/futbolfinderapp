@@ -164,23 +164,51 @@
             <% end %>     
           </div>
           <hr>
-          <div class="" style=" margin-bottom: 80px;">
-            <% if signed_in? && @game.is_player_involved?(current_user) && @game.invite_allowed == true %>
-                <%= render '/game_lines/new_game_line' %>
-            <% elsif logged_in? || @game.user == current_user %>
-                <%= render '/game_lines/new_game_line' %>
-            <% elsif  signed_in? && !@game.is_player_involved?(current_user)%>
-                <%= render '/game_lines/add_yourself' %>
-            <% end %>
-          </div>
+          <% if is_venue_still_current? %>
+              <div class="" style=" margin-bottom: 80px;">
+                <% if signed_in? && @game.is_player_involved?(current_user) && @game.invite_allowed == true %>
+                    <%= render '/game_lines/new_game_line' %>
+                <% elsif logged_in? || @game.user == current_user %>
+                    <%= render '/game_lines/new_game_line' %>
+                <% elsif  signed_in? && !@game.has_player_request?(current_user)%>
+                    <%= render '/game_lines/add_yourself' %>
+                <% end %>
+              </div>
 
-          <div class="well">
-          <p class="lead" style="text-align: center;"> Invite players to FUTFINDER!</p>
-          </div>
+              <div class="well">
+              <p class="lead" style="text-align: center;"> Invite players to FUTFINDER!</p>
+              </div>
+          <% else %>
+              <p>Game invites are closed. Game completed.</p>
+          <% end %>
 
     </div>
     <div class="col-md-4 col-md-offset-1 col-sm-5" style="padding-left: 30px;">
 
+
+        <% if is_venue_still_current? %>
+          <% if @game.user != current_user && @game.is_player_invited?(current_user) %>
+            <div class="well" style="margin-top: 20px;">
+              <p class="lead" style="">You have been invited to this game.<br>
+                <%= link_to game_line_path(id: @game.get_user_game_line(current_user).id, accepted: "Accepted"), method: "put", class: 'btn' do %>
+                                              <span style="color:green;">Accept Invitation</span>
+                <% end %>
+                <%= link_to game_line_path(id: @game.get_user_game_line(current_user).id, accepted: "Declined"), method: "put", class: 'btn' do %>
+                <span style="color:red;">Decline Invitation</span>
+                <% end %>
+              </p>
+            </div>
+          <% end %>
+        <% else %>
+            <div class="well" style="margin-top: 20px;">
+              <p class="lead" style="text-align: center;">Game <strong style="color:green;">completed</strong>
+               <% if @game.reservation %>
+                 <br><small>Checkin Time: <%= @game.reservation.check_in_time.strftime('%H:%M') %></small>
+                 <% end %>
+              </p>
+            </div>
+        <% end %>
+        
 
         <div class="card">
           <h4>Venue</h4>
@@ -277,7 +305,7 @@
                      <strong>Field Size</strong><br>
                       <%= get_field_size(get_field(@game.reservation.field_id).number_players) %> 
                   </div> 
-                    <% if !@game.reservation.nil? && @game.user == current_user %>
+                    <% if !@game.reservation.nil? && @game.user == current_user && @game.reservation.check_in_time.nil? %>
                      <div class="cancel-res">
                              <%= link_to "Cancel Reservation", @game.reservation, method: :delete,
                               data: { confirm: "Are you sure you want to delete this reservation?" },

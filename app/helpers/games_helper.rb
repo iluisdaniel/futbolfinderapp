@@ -383,6 +383,21 @@ module GamesHelper
         end
     end
 
+    def is_venue_still_current?
+        if @game.reservation
+            if !@game.reservation.check_in_time.nil?
+                return false
+            end
+        elsif @game.custom_venue
+            if @game.custom_venue.date < Date.current || 
+                (@game.custom_venue.date == Date.current && 
+                    @game.custom_venue.time.strftime('%H:%M') <= Time.zone.now.strftime('%H:%M'))
+                return false
+            end
+        end
+        return true
+    end
+
     def is_at_one_of_index_games?
         if current_page?(controller: '/games/upcoming_games', action: 'index') ||
             current_page?(controller: '/games/planning', action: 'index')  ||

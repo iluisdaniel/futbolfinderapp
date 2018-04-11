@@ -231,6 +231,26 @@ class Game < ApplicationRecord
       return true
     end
 
+    def has_player_request?(user)
+      gl = self.game_lines.where(user_id: user.id)
+      if gl.empty?
+        return false
+      end
+      return true
+    end
+
+    def is_player_invited?(user)
+      gl = self.game_lines.where(user_id: user.id)
+      if !gl.empty? && gl.first.accepted == "Pending"
+        return true
+      end
+      return false
+    end
+
+    def get_user_game_line(user)
+      self.game_lines.where(user_id: user.id).first
+    end
+
     def set_defaults
       if self.title.nil?
         self.title = 'New Game'
