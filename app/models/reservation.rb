@@ -29,6 +29,10 @@ class Reservation < ApplicationRecord
   #Validate Business
   validate :check_if_business_exists
 
+  def get_user_charge(user)
+    self.charges.where(user: user).first
+  end
+
   def charge_players
     if self.game.nil?
       nil
@@ -36,15 +40,28 @@ class Reservation < ApplicationRecord
       gls = self.game.game_lines.where(accepted: "Accepted")
       field = Field.find(self.field_id)
       application_fee = 100 #1dolar
-      amount_by_player = (field.price / gls.count)
+      convert_to_dollars = 100
+      players_with_card = get_number_of_players_with_card(gls)
+      amount_by_player = ((field.price * convert_to_dollars) / players_with_card) + application_fee
 
       gls.each do |gl|
         if check_there_is_no_charge(gl.user).empty?
-          charge_player(gl.user, amount_by_player, application_fee)
+          if gl.user.card_last4
+            charge_player(gl.user, amount_by_player, application_fee)
+          end
         end
       end
-      
     end
+  end
+
+  def get_number_of_players_with_card(game_lines)
+    n = 0
+    game_lines.each do |gl|
+      if gl.user.card_last4
+        n = n + 1
+      end
+    end
+    return n
   end
 
   def check_there_is_no_charge(player)
@@ -176,6 +193,10 @@ class Reservation < ApplicationRecord
 
   def is_the_field_available_at_this_time?
     rss = Reservation.where(date: date, business_id: business_id, field_id: field_id)
+
+    if self.changed?
+      return true
+    end
 
     rss.each do |rs|
         if !((end_time <= rs.time) || (time >= rs.end_time)) 

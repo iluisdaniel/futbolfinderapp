@@ -44,9 +44,7 @@ class GameLinesController < ApplicationController
 
   		flash_msg = choose_flash_message(params[:accepted], @game_line)
   		
-		@game_line.update(accepted: params[:accepted])
-  		
-		if @game_line.save
+		if @game_line.update(accepted: params[:accepted])
 			flash[:success] = flash_msg
 			redirect_back fallback_location: root_path
 			if @game_line.user != current_business_or_user

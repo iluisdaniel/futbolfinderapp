@@ -37,9 +37,15 @@
           <% if @game.user != current_user && @game.is_player_invited?(current_user) %>
             <div class="well" style="margin-top: 20px;">
               <p class="lead" style="">You have been invited to this game.<br>
-                <%= link_to game_line_path(id: @game.get_user_game_line(current_user).id, accepted: "Accepted"), method: "put", class: 'btn' do %>
-                                              <span style="color:green;">Accept Invitation</span>
-                <% end %>
+               <% if !current_user.card_last4 %>
+                 <%= link_to new_payment_method_path(gl: @game.get_user_game_line(current_user).id), class: 'btn' do %>
+                                               <span style="color:green;">Accept Invitation</span>
+                 <% end %>
+               <% else %>
+                 <%= link_to game_line_path(id: @game.get_user_game_line(current_user).id, accepted: "Accepted"), method: "put", class: 'btn' do %>
+                                               <span style="color:green;">Accept Invitation</span>
+                 <% end %>
+               <% end %>
                 <%= link_to game_line_path(id: @game.get_user_game_line(current_user).id, accepted: "Declined"), method: "put", class: 'btn' do %>
                 <span style="color:red;">Decline Invitation</span>
                 <% end %>
@@ -54,6 +60,14 @@
                 <% end %>
               </p>
             </div>
+
+            <% if @game.reservation.get_user_charge(current_user) %>
+                <div class="well" style="margin-top: 20px;">
+                  <p class="lead" style="text-align: center;"> Your payment was <strong><%= @game.reservation.get_user_charge(current_user).status %></strong>
+                    <br><small>Amount: <%= ActionController::Base.helpers.number_to_currency(@game.reservation.get_user_charge(current_user).amount / 100) %></small>
+                  </p>
+                </div>
+            <% end %>
         <% end %>
 
         

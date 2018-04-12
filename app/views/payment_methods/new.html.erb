@@ -42,6 +42,8 @@
 						  <%= hidden_field_tag :time, params[:time] %>
 						  <%= hidden_field_tag :duration, params[:duration] %>
 						  <%= hidden_field_tag :game, params[:game] %>
+						<% elsif params[:gl] %>
+							<%= hidden_field_tag :game_line, params[:gl] %>
 						<% end %>	  
 
 					  <button class="btn btn-primary btn-fill pull-right">Submit Payment</button>

@@ -90,6 +90,10 @@ module GamesHelper
 
     def is_correct_user_or_business_associated_with_game_line?(game_line)
     	correct_user = false
+
+        if game_line.game.reservation && game_line.game.reservation.check_in_time
+            return false
+        end
 		
 		if logged_in?
 			game = current_business.games.find_by(id: game_line.game_id)		

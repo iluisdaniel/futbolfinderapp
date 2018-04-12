@@ -28,7 +28,7 @@ class ChargesController < ApplicationController
 
 			refund = Stripe::Refund.create({
 			  :charge => charge.stripe_id,
-			  :refund_application_fee => true,
+			  :refund_application_fee => false,
 			}, :stripe_account => current_business.stripe_user_id)
 
 			charge.update(status: "Refunded")

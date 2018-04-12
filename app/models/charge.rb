@@ -18,7 +18,7 @@ class Charge < ApplicationRecord
 	        ["Account Billed", user.email],
 	        ["Item", "Game at " + business.name],
 	        ["Game", reservation.game.id.to_s],
-	        ["Amount", ActionController::Base.helpers.number_to_currency((amount + application_fee) / 100)],
+	        ["Amount", ActionController::Base.helpers.number_to_currency(amount / 100)],
 	        ["Card Charged", "#{card_brand} (**** **** **** #{card_last4})"]
 	      ]
   		)

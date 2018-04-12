@@ -125,9 +125,15 @@
                                           </button>
                                           <ul class="dropdown-menu">
                                             <li>
-                                            <%= link_to game_line_path(id: game_line.id, accepted: "Accepted"), method: "put", class: '' do %>
-                                              Accept
-                                            <% end %>
+                                              <% if current_user == game_line.user && !current_user.card_last4 %>
+                                                  <%= link_to new_payment_method_path(gl: game_line) do %>
+                                                    Accept
+                                                  <% end %>
+                                              <% else %>
+                                                    <%= link_to game_line_path(id: game_line.id, accepted: "Accepted"), method: "put", class: '' do %>
+                                                      Accept
+                                                    <% end %>
+                                                <% end %>
                                             </li>
                                             <li>
                                             <%= link_to game_line_path(id: game_line.id, accepted: "Declined"), method: "put", class: '' do %>
@@ -190,8 +196,14 @@
           <% if @game.user != current_user && @game.is_player_invited?(current_user) %>
             <div class="well" style="margin-top: 20px;">
               <p class="lead" style="">You have been invited to this game.<br>
-                <%= link_to game_line_path(id: @game.get_user_game_line(current_user).id, accepted: "Accepted"), method: "put", class: 'btn' do %>
-                                              <span style="color:green;">Accept Invitation</span>
+                <% if !current_user.card_last4 %>
+                    <%= link_to new_payment_method_path(gl: @game.get_user_game_line(current_user).id), class: 'btn' do %>
+                                                  <span style="color:green;">Accept Invitation</span>
+                    <% end %>
+                <% else %>
+                    <%= link_to game_line_path(id: @game.get_user_game_line(current_user).id, accepted: "Accepted"), method: "put", class: 'btn' do %>
+                                                  <span style="color:green;">Accept Invitation</span>
+                    <% end %>
                 <% end %>
                 <%= link_to game_line_path(id: @game.get_user_game_line(current_user).id, accepted: "Declined"), method: "put", class: 'btn' do %>
                 <span style="color:red;">Decline Invitation</span>
@@ -208,7 +220,7 @@
               </p>
             </div>
         <% end %>
-        
+
 
         <div class="card">
           <h4>Venue</h4>
