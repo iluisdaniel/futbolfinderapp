@@ -29,7 +29,7 @@ class User < ApplicationRecord
 	VALID_PHONE_REGEX = /\d{10}/
 	validates :phone, presence: true, length: {maximum: 10, minimum: 10},
 						format: { with: VALID_PHONE_REGEX }, uniqueness: true
-	validate :check_date_of_birth
+	# validate :check_date_of_birth
 
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 	validates :email, presence: true, length: {maximum: 255}, 
