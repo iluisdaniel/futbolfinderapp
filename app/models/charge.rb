@@ -14,7 +14,8 @@ class Charge < ApplicationRecord
 	        email: "support@example.com"
 	      },
 	       line_items: [
-	        ["Date", created_at.to_s],
+	        ["Status", status],
+          ["Date", created_at.to_s],
 	        ["Account Billed", user.email],
 	        ["Item", "Game at " + business.name],
 	        ["Game", reservation.game.id.to_s],

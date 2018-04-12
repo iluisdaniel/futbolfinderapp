@@ -1,48 +1,52 @@
 <div class="container">
   <div class="col-md-12 col-sm-12">
-  <div class="card">
-      <h4>Charges</h4>
-      <div class="content">
-      <table class="table table-responsive">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Status</th>
-              <th>Issuer</th>
-              <% if signed_in? %>
-                <th>Game</th>
-              <% else %>
-              <th>Reservation</th>
-              <% end %>  
-              <th>Date</th>
-              <th>Amount</th>
-              <th>Download</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @charges.each do |charge| %>
-                <tr>
-                  <td><%= charge.id %></td>
-                  <td><%= charge.status %></td>
-                  <% if signed_in? %>
-                    <td><%= link_to charge.business.name, charge.business %></td>
-                    <td><%= link_to charge.reservation.game.id, charge.reservation.game %></td>
-                  <% else %>
-                    <td><%= link_to charge.user.first_name, charge.user %></td>
-                    <td><%= link_to charge.reservation.id, charge.reservation %></td>
+    <% if @charges.empty? %>
+      <p>There are not currently charges to display at this moment. </p>
+    <% else %>
+        <div class="card" style="margin-top: 30px;">
+            <h4>Charges</h4>
+            <div class="content">
+            <table class="table table-responsive">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Status</th>
+                    <th>Issuer</th>
+                    <% if signed_in? %>
+                      <th>Game</th>
+                    <% else %>
+                    <th>Reservation</th>
+                    <% end %>  
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Download</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @charges.each do |charge| %>
+                      <tr>
+                        <td><%= charge.id %></td>
+                        <td><%= charge.status %></td>
+                        <% if signed_in? %>
+                          <td><%= link_to charge.business.name, charge.business %></td>
+                          <td><%= link_to charge.reservation.game.id, charge.reservation.game %></td>
+                        <% else %>
+                          <td><%= link_to charge.user.first_name, charge.user %></td>
+                          <td><%= link_to charge.reservation.id, charge.reservation %></td>
+                        <% end %>
+                        <td><%= charge.created_at.to_date %></td>
+                        <td><%= number_to_currency charge.amount / 100%></td>
+                        <% if charge.status != "Error" %>
+                          <td><%= link_to "Download" , charge_path(charge, format: :pdf) %></td>
+                        <% else %>
+                        <td><%= charge.error_msg %></td>
+                        <% end %>
+                      </tr>
                   <% end %>
-                  <td><%= charge.created_at.to_date %></td>
-                  <td><%= number_to_currency charge.amount / 100%></td>
-                  <% if charge.status == "Success" %>
-                    <td><%= link_to "Download" , charge_path(charge, format: :pdf) %></td>
-                  <% else %>
-                  <td><%= charge.error_msg%></td>
-                  <% end %>
-                </tr>
-            <% end %>
-          </tbody>
-        </table>
-    </div>
-  </div>
+                </tbody>
+              </table>
+          </div>
+        </div>
+    <% end %>
   </div>
 </div>
