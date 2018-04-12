@@ -6,8 +6,6 @@
     <% end %>  
   </div>
 <% else %> 
-
-		<h3 class="lead" style="padding-left:20px;"><%= subtitle %></h3>
 		<% games.each do |game| %>
 			<div class="col-md-4 col-sm-6">
 				<%= render partial: '/games/shared/game_card', locals: {game: game} %>

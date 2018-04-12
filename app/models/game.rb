@@ -124,9 +124,11 @@ class Game < ApplicationRecord
     def self.this_week_public_games_with_reservation(user_business)
       gs = get_public_games(user_business)
 
-      gs.includes(:reservation).references(:reservation)
-          .where('reservations.id IS NOT NULL AND reservations.date > ? AND reservations.date < ?', Date.current, Date.current + 7.days )
-          .order("reservations.date asc")
+      gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
+          .where('reservations.id IS NOT NULL OR custom_venues.id IS NOT NULL')
+          .where('reservations.date >= ? OR custom_venues.date >= ?', Date.current, Date.current)
+          .order("reservations.date asc", "custom_venues.date desc")
+          .limit(10)
     end
 
     def self.without_reservation(user_business, page)
@@ -290,6 +292,15 @@ class Game < ApplicationRecord
       end  
     end
 
+    def self.get_public_games(u_biz)
+      if u_biz.instance_of? Business
+        gs = u_biz.games.where(public: true)
+      else
+        gs = Game.joins(game_lines: :user).where(game_lines: {user_id: u_biz.id, accepted: "Accepted"}, public: "Public")
+      end
+      return gs
+    end
+
     private
 
       def randomize_id
@@ -307,14 +318,7 @@ class Game < ApplicationRecord
         return gs
       end
 
-       def self.get_public_games(u_biz)
-        if u_biz.instance_of? Business
-          gs = u_biz.games.where(public: true)
-        else
-          gs = Game.joins(game_lines: :user).where(game_lines: {user_id: u_biz.id, accepted: "Accepted" }, public: true)
-        end
-        return gs
-      end
+       
 
       def self.get_invited_games(user)
         return Game.joins(game_lines: :user).where(game_lines: {user_id: user.id, accepted: "Pending" }) 

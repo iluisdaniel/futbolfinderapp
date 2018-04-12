@@ -7,7 +7,6 @@
 			<%= render '/users/shared/nav_bar' %>
 			<% if !@games.empty? %>
 			    <%= render partial: "games/shared/games_cards", locals: {games: @games, subtitle: 'This week'} %>
-			    <hr>
 			<% else %>
 			  
 				<% if @user == current_user %>
