@@ -176,11 +176,6 @@ module GamesHelper
         end
     end
 
-    def get_game(id)
-        g = Game.find(id)
-        return g
-    end
-
     def get_reservation_date_from_game(game_id)
         g = Game.find(game_id)
         if g.reservation.nil?
@@ -258,18 +253,21 @@ module GamesHelper
         end
     end
 
-    def get_game_from_params
-        Game.find(params[:game])
+    def get_game
+        if params[:game]
+            Game.find(params[:game])
+        elsif @game_line
+            @game_line.game
+        end
+        
     end
 
     
-    def get_venue_date
-        if session[:res_date]
-            session[:res_date]
-        elsif params[:date]
-                params[:date]
-        elsif params[:custom_venue]
-            CustomVenue.find(params[:custom_venue]).date
+    def get_venue_date       
+        if params[:date]
+            params[:date]
+        elsif @game_line
+            @game_line.game.reservation.date
         end 
     end
 
@@ -282,6 +280,29 @@ module GamesHelper
             CustomVenue.find(params[:custom_venue]).time.strftime("%H:%M")
         end 
     end
+
+    def get_duration
+        if params[:duration]
+            params[:duration]
+        elsif @game_line
+            (@game_line.game.reservation.end_time - @game_line.game.reservation.time) / 3600
+        end
+                
+    end
+
+    def get_subtotal_amount_to_pay_by_player
+        number_players = get_game.number_players
+        amount = get_field_venue.price * get_duration.to_f / number_players
+        ActionController::Base.helpers.number_to_currency(amount)
+    end
+
+    def get_total_amount_to_pay_by_player
+        number_players = get_game.number_players
+        amount = (get_field_venue.price * get_duration.to_f / number_players) + 1
+        ActionController::Base.helpers.number_to_currency(amount)
+    end
+
+
 
     def get_venue_total(field, game, duration, fee)
         if fee.nil?
@@ -298,71 +319,35 @@ module GamesHelper
         1
     end
 
-    def get_venue_name
-        if session[:res_business_id]
-            Business.find(session[:res_business_id]).name
-        elsif params[:business]
-            Business.find(params[:business].to_i).name
+    def get_business
+        if params[:business]
+            Business.find(params[:business])
+        elsif @game_line
+            @game_line.game.reservation.business
         end
-    end
-
-    def get_venue_address
-        # if id.is_a? String
-        #     Business.find(session[:res_business_id])
-        # else
-        #     Business.find(params[:business].keys[0].to_i)
-        # end
-        if session[:res_business_id]
-            Business.find(session[:res_business_id]).address
-        elsif params[:custom_venue]
-            CustomVenue.find(params[:custom_venue]).address
-            elsif params[:business]
-            Business.find(params[:business]).address
-        end       
-    end
-
-    def get_venue_city
-        if session[:res_business_id]
-            Business.find(session[:res_business_id]).city
-        elsif params[:custom_venue]
-            CustomVenue.find(params[:custom_venue]).city
-            elsif params[:business]
-            Business.find(params[:business]).city
-        end  
-    end
-
-    def get_venue_state
-        if session[:res_business_id]
-            Business.find(session[:res_business_id]).state
-        elsif params[:custom_venue]
-            CustomVenue.find(params[:custom_venue]).state
-            elsif params[:business]
-            Business.find(params[:business]).state
-        end  
-    end
-
-    def get_venue_zipcode
-        if session[:res_business_id]
-            Business.find(session[:res_business_id]).zipcode
-        elsif params[:custom_venue]
-            CustomVenue.find(params[:custom_venue]).zipcode
-            elsif params[:business]
-            Business.find(params[:business]).zipcode
-        end  
     end
 
     def get_field_venue
-        if session[:res_field_id]
-            Field.find(session[:res_field_id])
-        elsif params[:field]
-            Field.find(params[:field])
+        if  params[:field]
+           f = params[:field]
+        elsif @game_line
+            f = @game_line.game.reservation.field_id
         end
+        Field.find(f)
     end
 
     def get_field_size_on_words
         np = get_field_venue.number_players
         n = np/2
         n.to_s + "vs" + n.to_s
+    end
+
+    def get_end_time
+        if params[:time]
+            get_end_time_from_time_and_duration
+        elsif @game_line
+            @game_line.game.reservation.end_time
+        end
     end
 
     def get_end_time_from_time_and_duration

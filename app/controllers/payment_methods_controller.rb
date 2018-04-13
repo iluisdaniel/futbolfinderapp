@@ -24,12 +24,9 @@ class PaymentMethodsController < ApplicationController
 
 			if params[:date]
 				redirect_to confirmation_path(game: params[:game], business: params[:business], field: params[:field],
-					date: params[:date], time: params[:time], duration: params[:duration], source: "card")
+					date: params[:date], time: params[:time], duration: params[:duration], source: "Card")
 			elsif params[:game_line]
-				gl = GameLine.find(params[:game_line])
-				gl.update(accepted: "Accepted")
-				flash[:success] = "You are confirmed for this game!"
-				redirect_to gl.game
+				redirect_to confirmation_path(game_line: params[:game_line])
 			else
 				flash[:success] = "Card Added!"
 				redirect_to root_path

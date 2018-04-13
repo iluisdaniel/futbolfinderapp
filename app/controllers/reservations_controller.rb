@@ -46,12 +46,11 @@ class ReservationsController < ApplicationController
 			if logged_in?
 				redirect_to @reservation
 			elsif signed_in?
-				game = get_game(@reservation.game_id)
-				redirect_to game
-				game.game_lines.uniq.each do |gl|
+				redirect_to @reservation.game
+				@reservation.game.game_lines.uniq.each do |gl|
 				    if gl.user != current_user
 				        Notification.create(recipientable: gl.user, actorable: current_user, 
-				                action: "reserved a field", notifiable: game)
+				                action: "reserved a field", notifiable: @reservation.game)
 				    end
 				end
 				Notification.create(recipientable: @reservation.business, actorable: current_user, 
@@ -102,6 +101,9 @@ class ReservationsController < ApplicationController
 
 	def confirmation
 		@reservation = Reservation.new
+		if params[:game_line]
+			@game_line = GameLine.find(params[:game_line])
+		end
 	end
 
 	def check_in

@@ -58,9 +58,17 @@
                                       </button>
                                       <ul class="dropdown-menu">
                                         <li>
-                                        <%= link_to game_line_path(id: game_line.id, accepted: "Accepted"), method: "put", class: '' do %>
-                                          Accept
-                                        <% end %>
+                                            <% if @game.reservation && @game.user != current_user %>
+                                              <% if current_user == game_line.user && !current_user.card_last4 %>
+                                                  <%= link_to new_payment_method_path(gl: game_line) do %>
+                                                    Accept
+                                                  <% end %>
+                                              <% else %>
+                                                    <%= link_to confirmation_path(game_line: game_line.id) do %>
+                                                      Accept
+                                                    <% end %>
+                                              <% end %>
+                                          <% end %>  
                                         </li>
                                         <li>
                                           <%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id do%>
@@ -99,8 +107,8 @@
                                             <ul class="dropdown-menu">
                                               <% if game_line.user != current_user %>
                                                     <li>
-                                                    <%= link_to game_line_path(id: game_line.id, accepted: "Accepted"), method: "put", class: '' do %>
-                                                      Accept
+                                                    <%= link_to game_line_path(id: game_line.id, accepted: "Approved"), method: "put", class: '' do %>
+                                                      Approve
                                                     <% end %>
                                                     </li>
                                                     <li>
@@ -117,6 +125,39 @@
                                             </ul>
                                           </div>
 
+                                  <% elsif game_line.accepted == "Approved"%>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          Pending
+                                          <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                          <li>
+                                                <% if @game.reservation && @game.user != current_user %>
+                                                  <% if current_user == game_line.user && !current_user.card_last4 %>
+                                                      <%= link_to new_payment_method_path(gl: game_line) do %>
+                                                        Accept
+                                                      <% end %>
+                                                  <% else %>
+                                                        <%= link_to confirmation_path(game_line: game_line.id) do %>
+                                                          Accept
+                                                        <% end %>
+                                                  <% end %>
+                                              <% end %>  
+                                            </li>
+                                            <li>
+                                            <%= link_to game_line_path(id: game_line.id, accepted: "Declined"), method: "put", class: '' do %>
+                                              Decline
+                                            <% end %>
+                                            </li>
+                                          <li>
+                                            <%= link_to game_line, method: :delete, data: {confirm: "You sure?"}, title: game_line.id do%>
+                                              Remove 
+                                            <% end %>
+                                          </li>
+                                        </ul>
+                                      </div>
+
                                   <% else %>
                                       <div class="btn-group" role="group">
                                           <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -125,15 +166,17 @@
                                           </button>
                                           <ul class="dropdown-menu">
                                             <li>
-                                              <% if current_user == game_line.user && !current_user.card_last4 %>
-                                                  <%= link_to new_payment_method_path(gl: game_line) do %>
-                                                    Accept
+                                                <% if @game.reservation && @game.user != current_user %>
+                                                  <% if current_user == game_line.user && !current_user.card_last4 %>
+                                                      <%= link_to new_payment_method_path(gl: game_line) do %>
+                                                        Accept
+                                                      <% end %>
+                                                  <% else %>
+                                                        <%= link_to confirmation_path(game_line: game_line.id) do %>
+                                                          Accept
+                                                        <% end %>
                                                   <% end %>
-                                              <% else %>
-                                                    <%= link_to game_line_path(id: game_line.id, accepted: "Accepted"), method: "put", class: '' do %>
-                                                      Accept
-                                                    <% end %>
-                                                <% end %>
+                                              <% end %>  
                                             </li>
                                             <li>
                                             <%= link_to game_line_path(id: game_line.id, accepted: "Declined"), method: "put", class: '' do %>
@@ -201,8 +244,8 @@
                                                   <span style="color:green;">Accept Invitation</span>
                     <% end %>
                 <% else %>
-                    <%= link_to game_line_path(id: @game.get_user_game_line(current_user).id, accepted: "Accepted"), method: "put", class: 'btn' do %>
-                                                  <span style="color:green;">Accept Invitation</span>
+                    <%= link_to confirmation_path(game_line: @game.get_user_game_line(current_user).id), class: 'btn' do %>
+                      <span style="color:green;">Accept Invitation</span>
                     <% end %>
                 <% end %>
                 <%= link_to game_line_path(id: @game.get_user_game_line(current_user).id, accepted: "Declined"), method: "put", class: 'btn' do %>

@@ -39,11 +39,11 @@
               <p class="lead" style="">You have been invited to this game.<br>
                <% if !current_user.card_last4 %>
                  <%= link_to new_payment_method_path(gl: @game.get_user_game_line(current_user).id), class: 'btn' do %>
-                                               <span style="color:green;">Accept Invitation</span>
+                     <span style="color:green;">Accept Invitation</span>
                  <% end %>
                <% else %>
-                 <%= link_to game_line_path(id: @game.get_user_game_line(current_user).id, accepted: "Accepted"), method: "put", class: 'btn' do %>
-                                               <span style="color:green;">Accept Invitation</span>
+                 <%= link_to confirmation_path(game_line: @game.get_user_game_line(current_user).id), class: 'btn' do %>
+                   <span style="color:green;">Accept Invitation</span>
                  <% end %>
                <% end %>
                 <%= link_to game_line_path(id: @game.get_user_game_line(current_user).id, accepted: "Declined"), method: "put", class: 'btn' do %>
