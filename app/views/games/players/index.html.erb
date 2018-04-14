@@ -258,7 +258,7 @@
             <div class="well" style="margin-top: 20px;">
               <p class="lead" style="text-align: center;">Game <strong style="color:green;">completed</strong>
                <% if @game.reservation %>
-                 <br><small>Checkin Time: <%= @game.reservation.check_in_time.strftime('%H:%M') %></small>
+                 <br><small>Checkin Time: <%= @game.reservation.checkin_time.created_at.strftime('%H:%M') %></small>
                  <% end %>
               </p>
             </div>
@@ -360,7 +360,7 @@
                      <strong>Field Size</strong><br>
                       <%= get_field_size(get_field(@game.reservation.field_id).number_players) %> 
                   </div> 
-                    <% if !@game.reservation.nil? && @game.user == current_user && @game.reservation.check_in_time.nil? %>
+                    <% if !@game.reservation.nil? && @game.user == current_user && @game.reservation.checkin_time.nil? %>
                      <div class="cancel-res">
                              <%= link_to "Cancel Reservation", @game.reservation, method: :delete,
                               data: { confirm: "Are you sure you want to delete this reservation?" },

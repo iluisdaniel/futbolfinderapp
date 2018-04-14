@@ -2,6 +2,7 @@ class Reservation < ApplicationRecord
 	belongs_to :game, optional: true
 	belongs_to :business
   has_many :charges
+  has_one :checkin_time
 
   before_create :randomize_id
   validates :date, uniqueness: {scope: [ :time, :end_time, :field_id ]}
@@ -192,14 +193,10 @@ class Reservation < ApplicationRecord
   end
 
   def is_the_field_available_at_this_time?
-    rss = Reservation.where(date: date, business_id: business_id, field_id: field_id)
-
-    if self.changed?
-      return true
-    end
+  rss = Reservation.where(date: date, business_id: business_id, field_id: field_id)
 
     rss.each do |rs|
-        if !((end_time <= rs.time) || (time >= rs.end_time)) 
+        if !((end_time.strftime("%H:%M") <= rs.time.strftime("%H:%M")) || (time.strftime("%H:%M") >= rs.end_time.strftime("%H:%M"))) 
           return false
         end
     end

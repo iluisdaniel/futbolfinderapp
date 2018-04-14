@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   get 'available_fields' => 'available_fields#index'
   get 'select_game' => 'select_game#index'
   get 'confirmation' => 'reservations#confirmation'
-  get 'check_in' => 'reservations#check_in'
+  # get 'check_in' => 'reservations#check_in'
 
   put 'refund' => 'charges#refund'
   # post 'record_charge' => 'charges#record_charge'
@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
   resources :notifications, only: :index
 
+  resources :checkin_times, only: [:create, :destroy]
   namespace "reservations" do
     resources :past, only: :index
   end

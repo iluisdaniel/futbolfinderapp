@@ -91,7 +91,7 @@ module GamesHelper
     def is_correct_user_or_business_associated_with_game_line?(game_line)
     	correct_user = false
 
-        if game_line.game.reservation && game_line.game.reservation.check_in_time
+        if game_line.game.reservation && game_line.game.reservation.checkin_time
             return false
         end
 		
@@ -374,7 +374,7 @@ module GamesHelper
 
     def is_venue_still_current?
         if @game.reservation
-            if !@game.reservation.check_in_time.nil?
+            if !@game.reservation.checkin_time.nil?
                 return false
             end
         elsif @game.custom_venue
