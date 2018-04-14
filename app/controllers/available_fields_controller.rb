@@ -17,11 +17,22 @@ class AvailableFieldsController < ApplicationController
 			else
 				time = params[:time]
 			end
-			@businesses = get_available_businesses(Business.get_open_businesses_at(params[:date], 
-													Time.zone.parse(time)), time)
 
-			if @businesses.empty?
-				@message = "We couldn't find a business available at " + '"' + params[:date] + ", " + time + '"'
+			today = Date.current
+			date_parsed = Date.parse(params[:date])
+			time_parsed = Time.zone.parse(time).strftime("%H:%M")
+			time_now = Time.zone.now.strftime("%H:%M")
+			hour_from_now = (Time.zone.now + 1.hour).strftime("%H:%M")
+			
+			if (( today == date_parsed ) && (time_parsed <= time_now || time_parsed <= hour_from_now)) || 
+				today > date_parsed
+				@message = "Sorry, reservations should be at least one hour from now."
+			else
+				@businesses = get_available_businesses(Business.get_open_businesses_at(params[:date], 
+														Time.zone.parse(time)), time)
+				if @businesses.empty?
+					@message = "We couldn't find a business available at " + '"' + params[:date] + ", " + time + '"'
+				end
 			end
 		else
 			if params[:game] && (params[:date].nil?)
