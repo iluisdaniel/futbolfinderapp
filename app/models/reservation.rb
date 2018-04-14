@@ -42,8 +42,9 @@ class Reservation < ApplicationRecord
       field = Field.find(self.field_id)
       application_fee = 100 #1dolar
       convert_to_dollars = 100
+      duration = (self.end_time - self.time) / 3600
       players_with_card = get_number_of_players_with_card(gls)
-      amount_by_player = ((field.price * convert_to_dollars) / players_with_card) + application_fee
+      amount_by_player = (((field.price * convert_to_dollars * duration) / players_with_card.to_f) + application_fee).round
 
       gls.each do |gl|
         if check_there_is_no_charge(gl.user).empty?
