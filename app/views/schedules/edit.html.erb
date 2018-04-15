@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+        <h1>Edit Schedule</h1>
+        <%= form_for(@schedule, class: "form-horizontal") do |f| %>
+                          <div class="row">
+                            <%= render 'shared/error_messages', object: f.object %> 
+                          </div>
+
+                          <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                  <%= f.label :day, class: "" %>
+                                </div>
+                            <div class="col-md-8">
+                              <%= f.select(:day, ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], {include_blank: "Select Day"}, { :class => 'form-control' }) %>
+                            </div>
+                          </div>
+                        </div>
+
+                          <div class="row">
+                            <div class="form-group">
+                              <div class="col-md-2">
+                                <%= f.label :open_time, 'Open Time' %>
+                              </div>
+                              <div class="col-md-8">
+                                <div class="col-md-6">
+                                    <%= f.select :open_time, [
+                                      ['05:00 AM', '05:00'], ['06:00 AM', '06:00'], ['07:00 AM', '07:00'], ['08:00 AM', '08:00'], ['09:00 AM', '09:00'], ['10:00 AM', '10:00'], ['11:00 AM', '11:00'], ['12:00 PM', '12:00'], ['01:00 PM', '13:00'], ['02:00 PM', '14:00'], ['03:00 PM', '15:00'], ['04:00 PM', '16:00'], ['05:00 PM', '17:00'], ['06:00 PM', '18:00'], ['07:00 PM', '19:00'], ['08:00 PM', '20:00']
+                                      ], 
+                                    {prompt: "Select"}, { class: 'form-control'} %> 
+                                </div>
+                              </div>
+                            </div>   
+                          </div>
+
+                          <div class="row">
+                            <div class="form-group">
+                              <div class="col-md-2">
+                                <%= f.label :close_time, 'Close Time' %>
+                              </div>
+                              <div class="col-md-8">
+                                <div class="col-md-6">
+                                    <%= f.select :close_time, [
+                                    ['12:00 PM', '12:00'], ['01:00 PM', '13:00'], ['02:00 PM', '14:00'], ['03:00 PM', '15:00'], ['04:00 PM', '16:00'], ['05:00 PM', '17:00'], ['06:00 PM', '18:00'], ['07:00 PM', '19:00'], ['08:00 PM', '20:00'], ['09:00 PM', '21:00'], ['10:00 PM', '22:00'], ['11:00 PM', '23:00']
+                                    ], 
+                                  {prompt: "Select"}, { class: 'form-control'} %>  
+                                </div>
+                              </div>
+                            </div>   
+                          </div>
+
+                          <hr>
+
+                          <div class="form-group">
+                            <div class="col-sm-offset-1 col-sm-10">
+                              <%= f.submit "Update", class: "btn btn-primary btn-fill pull-right" %>
+                              <%= link_to 'Cancel', edit_business_path(@schedule.business), class: "btn btn-default pull-right" %>  
+                            </div>
+                          </div>
+                        <% end %>
+    </div>
+  </div>
+</div>

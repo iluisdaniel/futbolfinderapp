@@ -4,8 +4,9 @@
 	    <th><%= get_monday.day %></th>
 	    <td><%= get_str_time(get_monday.open_time) %></td>
 	    <td><%= get_str_time(get_monday.close_time) %></td>
-	    <td>          
-	    	<%= link_to "delete", get_monday, method: :delete, data: {confirm: "You sure?"}, title: get_monday.day %>
+	    <td>
+	    	<%= link_to "Edit", edit_schedule_path(get_monday) %>          
+	    	<%= link_to "delete", get_monday, method: :delete, data: {confirm: "Are you sure you want to delete this date? Players are not going to be able to find your fields this date."}, title: get_monday.day %>
 	    </td>
  	</tr>
  	<% end %>
@@ -14,8 +15,9 @@
 	    <th><%= get_tuesday.day %></th>
 	    <td><%= get_str_time(get_tuesday.open_time) %></td>
 	    <td><%= get_str_time(get_tuesday.close_time) %></td>
-	    <td>          
-	    	<%= link_to "delete", get_tuesday, method: :delete, data: {confirm: "You sure?"}, title: get_tuesday.day %>
+	    <td> 
+	    <%= link_to "Edit", edit_schedule_path(get_tuesday) %>                   
+	    	<%= link_to "delete", get_tuesday, method: :delete, data: {confirm: "Are you sure you want to delete this date? Players are not going to be able to find your fields this date."}, title: get_tuesday.day %>
 	    </td>
  	</tr>
  	<% end %>
@@ -24,8 +26,9 @@
 	    <th><%= get_wednesday.day %></th>	
 	    <td><%= get_str_time(get_wednesday.open_time) %></td>
 	    <td><%= get_str_time(get_wednesday.close_time) %></td>
-	    <td>          
-	    	<%= link_to "delete", get_wednesday, method: :delete, data: {confirm: "You sure?"}, title: get_wednesday.day %>
+	    <td>  
+	    <%= link_to "Edit", edit_schedule_path(get_wednesday) %>                  
+	    	<%= link_to "delete", get_wednesday, method: :delete, data: {confirm: "Are you sure you want to delete this date? Players are not going to be able to find your fields this date."}, title: get_wednesday.day %>
 	    </td>
  	</tr>
  	<% end %>
@@ -34,8 +37,9 @@
 	    <th><%= get_thursday.day %></th>
 	    <td><%= get_str_time(get_thursday.open_time) %></td>
 	    <td><%= get_str_time(get_thursday.close_time) %></td>
-	    <td>          
-	    	<%= link_to "delete", get_thursday, method: :delete, data: {confirm: "You sure?"}, title: get_thursday.day %>
+	    <td>   
+	    <%= link_to "Edit", edit_schedule_path(get_thursday) %>                 
+	    	<%= link_to "delete", get_thursday, method: :delete, data: {confirm: "Are you sure you want to delete this date? Players are not going to be able to find your fields this date."}, title: get_thursday.day %>
 	    </td>
  	</tr>
  	<% end %>
@@ -44,8 +48,9 @@
 	    <th><%= get_friday.day %></th>
 	    <td><%= get_str_time(get_friday.open_time) %></td>
 	    <td><%= get_str_time(get_friday.close_time) %></td>
-	    <td>          
-	    	<%= link_to "delete", get_friday, method: :delete, data: {confirm: "You sure?"}, title: get_friday.day %>
+	    <td>     
+	    <%= link_to "Edit", edit_schedule_path(get_friday) %>               
+	    	<%= link_to "delete", get_friday, method: :delete, data: {confirm: "Are you sure you want to delete this date? Players are not going to be able to find your fields this date."}, title: get_friday.day %>
 	    </td>
  	</tr>
  	<% end %>
@@ -54,7 +59,8 @@
 	    <th><%= get_saturday.day %></th>
 	    <td><%= get_str_time(get_saturday.open_time) %></td>
 	    <td><%= get_str_time(get_saturday.close_time) %></td>
-	    <td>          
+	    <td>        
+	    <%= link_to "Edit", edit_schedule_path(get_saturday) %>            
 	    	<%= link_to "delete", get_saturday, method: :delete, data: {confirm: "You sure?"}, title: get_saturday.day %>
 	    </td>
  	</tr>
@@ -64,7 +70,8 @@
 	    <th><%= get_sunday.day %></th>
 	    <td><%= get_str_time(get_sunday.open_time) %></td>
 	    <td><%= get_str_time(get_sunday.close_time) %></td>
-	    <td>          
+	    <td>  
+	    <%= link_to "Edit", edit_schedule_path(get_sunday) %>                  
 	    	<%= link_to "delete", get_sunday, method: :delete, data: {confirm: "You sure?"}, title: get_sunday.day %>
 	    </td>
  	</tr>

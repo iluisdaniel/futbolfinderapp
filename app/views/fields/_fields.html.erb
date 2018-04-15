@@ -1,0 +1,8 @@
+<% @fields.each do | field| %>
+<tr>
+    <th><%= field.name %></th>
+    <td><%= get_field_size(field.number_players) %></td>
+    <td><%= number_to_currency field.price %></td>
+    <td><%= link_to "Delete", field, method: :delete, data: {confirm: "Players are not going to be able to find and reserve this field. Are you sure you want to delete this field? "}, title: field.name %></td>
+ </tr>
+<%end%>

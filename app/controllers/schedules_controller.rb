@@ -1,6 +1,6 @@
 class SchedulesController < ApplicationController
-	before_action :signed_in_business, only: [:create, :destroy]
-	before_action :correct_business,   only: :destroy
+	before_action :signed_in_business, only: [:create, :destroy, :edit, :update]
+	before_action :correct_business,   only: [:destroy, :edit, :update]
 
 	def create
 		@schedule = current_business.schedules.build(schedule_params)
@@ -10,6 +10,21 @@ class SchedulesController < ApplicationController
 		else 
 			flash[:danger] = "Error, Schedule was not created. " + @schedule.errors.full_messages.to_s
 			redirect_to edit_business_path(current_business.id) 
+		end
+	end
+
+	def edit
+		@schedule = Schedule.find(params[:id])
+	end
+
+	def update
+		@schedule = Schedule.find(params[:id])
+
+		if @schedule.update_attributes(schedule_params)
+			flash[:success] = "Schedule updated"
+			redirect_to edit_business_path(@schedule.business)
+		else
+			render 'edit'
 		end
 	end
 

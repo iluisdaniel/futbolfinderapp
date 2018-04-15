@@ -59,8 +59,8 @@ Rails.application.routes.draw do
 
   resources :game_lines, only: [:create, :update,:destroy]
 
-  resources :schedules, only: [:create, :destroy]
-  resources :fields, only: [:create, :update, :destroy]
+  resources :schedules, only: [:create, :edit, :update, :destroy]
+  resources :fields, only: [:create, :edit, :update, :destroy]
   resources :businesses, path: '/b/'
   
   resources :users, path: '/u/' do

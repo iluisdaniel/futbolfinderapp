@@ -1166,6 +1166,8 @@ ul.alert-dropdown {
     .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th,
      .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td{
         border: none !important;
+        padding-bottom: 5px  !important;
+        padding-top: 0px !important;
      }
 
     table{
@@ -1181,13 +1183,6 @@ ul.alert-dropdown {
     .location{
         address{
             text-align: center;
-        }
-    }
-    .fld{
-        table{
-            td{
-                padding: 5px 15px 5px 15px  ;
-            }
         }
     }
     .avai{

@@ -18,7 +18,12 @@ class Schedule < ApplicationRecord
 
 	def is_day_already_exists?
 		sc = Schedule.where(business: business_id, day: day)
+
 		if sc.empty?
+			return false
+		end
+
+		if sc.first.id == id
 			return false
 		end
 		return true

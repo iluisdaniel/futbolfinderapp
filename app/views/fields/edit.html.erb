@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+    	<h1>Edit Field</h1>
+    	<%= form_for(@field, class: "form-horizontal") do |f| %>
+    	    <div class="row">
+    	      <%= render 'shared/error_messages', object: f.object %> 
+    	    </div> 
+
+    	   <div class="row">
+    	     <div class="form-group">
+    	        <div class="col-md-2">
+    	            <%= f.label :number_players, class: "" %>
+    	        </div>
+    	        <div class="col-md-8">
+    	            <%= f.number_field :number_players, class: 'form-control', placeholder: "Number Of Players" %>
+    	        </div>
+    	    </div>
+    	  </div>
+
+    	    <div class="row">
+    	        <div class="form-group">
+    	           <div class="col-md-2">
+    	             <%= f.label :name, class: "" %>
+    	           </div>
+    	        <div class="col-md-8">
+    	          <%= f.text_field :name, class: 'form-control', placeholder: "Name" %>
+    	        </div>
+    	      </div>
+    	    </div>
+
+    	   <div class="row">
+    	    <div class="form-group">
+    	      <div class="col-md-2">
+    	          <%= f.label :description, class: "" %>
+    	      </div>
+    	      <div class="col-md-8">
+    	        <%= f.text_field :description, class: 'form-control', placeholder: "Description" %>
+    	      </div>
+    	    </div>
+    	  </div>
+
+    	    <div class="row">
+    	     <div class="form-group">
+    	      <div class="col-md-2">
+    	          <%= f.label :price, class: "" %>
+    	      </div>
+    	      <div class="col-md-8">
+    	        <%= f.text_field :price, class: 'form-control', value: number_to_currency(f.object.price.to_f, delimiter: '', unit: ''), step: :any %>
+    	      </div>
+    	    </div>
+    	  </div>
+
+    	  <hr>
+
+    	    <div class="form-group">
+    	      <div class="col-sm-offset-1 col-sm-10">
+    	        <%= f.submit "Update", class: "btn btn-primary btn-fill pull-right" %>
+    	        <%= link_to 'Cancel', edit_business_path(@field.business), class: "btn btn-default pull-right" %>  
+    	      </div>
+    	    </div>
+    	  <% end %>
+    </div>
+</div>
+</div>

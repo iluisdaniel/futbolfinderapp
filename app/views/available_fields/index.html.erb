@@ -131,8 +131,7 @@
 					<% end %>
 					<hr>
 					<div class="card-btns">
-						<%= link_to 'Cancel', root_path %> 
-						<%= link_to "Create Custom Venue", new_custom_venue_path(game: params[:game]), class: "cv-lnk pull-right" %>
+						<%= link_to 'Cancel', game_path(params[:game]), class: "btn btn-defautl" %> 
 					</div>
 				</div>
 			</div><!-- end content -->
