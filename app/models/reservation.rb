@@ -1,7 +1,7 @@
 class Reservation < ApplicationRecord
 	belongs_to :game, optional: true
 	belongs_to :business
-  has_many :charges
+  has_many :charges, dependent: :nullify
   has_one :checkin_time
 
   before_create :randomize_id
@@ -49,7 +49,7 @@ class Reservation < ApplicationRecord
       gls.each do |gl|
         if check_there_is_no_charge(gl.user).empty?
           if gl.user.card_last4
-            charge_player(gl.user, amount_by_player, application_fee)
+            charge_player(gl.user, amount_by_player, application_fee, "Successful")
           end
         end
       end
@@ -70,7 +70,7 @@ class Reservation < ApplicationRecord
     self.charges.where(user: player)
   end
 
-  def charge_player(player, amount, fee)
+  def charge_player(player, amount, fee, msg)
     begin
       token = Stripe::Token.create({
         customer: player.stripe_id
@@ -85,7 +85,7 @@ class Reservation < ApplicationRecord
 
       # if created save charge on charges table. Save charge id, amount, 
       c = self.charges.build(stripe_id: charge.id, business: self.business, user: player, 
-        status: "Success", amount: amount, application_fee: fee, card_brand: charge.source.brand,
+        status: msg, amount: amount, application_fee: fee, card_brand: charge.source.brand,
         card_last4: charge.source.last4, card_exp_month: charge.source.exp_month, card_exp_year: charge.source.exp_year)
       c.save
     rescue Stripe::InvalidRequestError, Stripe::CardError => e
@@ -94,6 +94,12 @@ class Reservation < ApplicationRecord
         status: "Error", amount: amount, error_msg: e.to_s)
       c.save
     end
+  end
+
+  def charge_penalty
+    amount = 3500
+    application_fee = 100
+    charge_player(self.game.user, amount, application_fee, "Penalty")
   end
 
     ### Validate Date

@@ -29,10 +29,10 @@
                         <td><%= charge.status %></td>
                         <% if signed_in? %>
                           <td><%= link_to charge.business.name, charge.business %></td>
-                          <td><%= link_to charge.reservation.game.id, charge.reservation.game %></td>
+                          <td><%= link_to charge.reservation.game.id, charge.reservation.game unless charge.reservation.nil? %></td>
                         <% else %>
                           <td><%= link_to charge.user.first_name, charge.user %></td>
-                          <td><%= link_to charge.reservation.id, charge.reservation %></td>
+                          <td><%= link_to charge.reservation.id, charge.reservation unless charge.reservation.nil? %></td>
                         <% end %>
                         <td><%= charge.created_at.to_date %></td>
                         <td><%= number_to_currency charge.amount / 100.00 %></td>

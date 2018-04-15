@@ -81,9 +81,15 @@ class ReservationsController < ApplicationController
 	end
 
 	def destroy
-		# improve redirection part for users
 		@reservation = Reservation.find(params[:id])
 		game = @reservation.game
+		# Checks if it is an user that is removing a reservation, and cancelation should be at least 3 hours from now 
+		# if the reservation date is today
+		if signed_in? && (@reservation.date == Date.current && 
+			!(@reservation.time.strftime("%H:%M") >= (Time.zone.now + 3.hours).strftime("%H:%M")))
+			@reservation.charge_penalty
+		end
+
 		@reservation.destroy
 		flash[:success] = "Reservation was deleted"
 		define_redirection(game)

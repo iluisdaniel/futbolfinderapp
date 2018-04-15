@@ -400,6 +400,17 @@ module GamesHelper
         return false
     end
 
+    def is_it_at_least_3_hours_before?
+        if @game.reservation.date == Date.current
+            if @game.reservation.time.strftime("%H:%M") >= (Time.zone.now + 3.hours).strftime("%H:%M")
+                return true
+            end
+        else
+            return true
+        end
+        return false
+    end
+
     def get_random_background_image
         random = rand(4)
         case random

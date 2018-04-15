@@ -24,6 +24,8 @@ class AvailableFieldsController < ApplicationController
 			time_now = Time.zone.now.strftime("%H:%M")
 			hour_from_now = (Time.zone.now + 1.hour).strftime("%H:%M")
 			
+			# checks if reservation is for today, it is at least on hour from now. And, it also checks
+			# that reservation date is not less than today.  
 			if (( today == date_parsed ) && (time_parsed <= time_now || time_parsed <= hour_from_now)) || 
 				today > date_parsed
 				@message = "Sorry, reservations should be at least one hour from now."

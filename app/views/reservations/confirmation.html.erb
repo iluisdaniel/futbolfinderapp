@@ -133,6 +133,9 @@
                  <li>All the players involved in the game will be charged automateclly after check in</li>
                  <li>The total charged will be divided by the number of players that confirm to be part of the game.</li>
                  <li>Organizer is responsible to check after the game with the field, to make sure all payments were accepted in case a card gets declined and a player has to pay at the business.</li>
+                 <% if params[:date] %>
+                 <li>If the reservation is cancel 3 hours before the game starts, you, as creator of the game, will be charged $35. If the reservation is cancel before that, there is no penalty.</li>
+                 <% end %>
                </ul>
               </div>
            </div>

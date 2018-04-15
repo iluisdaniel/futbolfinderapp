@@ -74,7 +74,7 @@
 
 
         <div class="card">
-          <h4>Venue</h4>
+          <h4>Venue and Time</h4>
           <hr>
           <div class="content">
            <div class="row card-venue-content">
@@ -109,6 +109,19 @@
                               <%= @game.reservation.business.city %>, <%= @game.reservation.business.state %> 
                               <%= @game.reservation.business.zipcode %>
                           </address>
+                            <% if (!@game.reservation.nil? && @game.user == current_user) && @game.reservation.checkin_time.nil? %>
+                              <div class="cancel-res">
+                                <% if is_it_at_least_3_hours_before? %>
+                                     <%= link_to "Cancel Reservation", @game.reservation, method: :delete,
+                                      data: { confirm: "Are you sure you want to cancel your reservation?" },
+                                      title: @game.reservation, class: "btn" %>
+                                <% else %>
+                                      <%= link_to "Cancel Reservation", @game.reservation, method: :delete,
+                                       data: { confirm: "Are you sure you want to cancel your reservation? You will be charged $35 if you cancel now." },
+                                       title: @game.reservation, class: "btn" %>
+                                <% end %>
+                             </div>
+                          <% end %>
                           </div>
                   <% elsif @game.custom_venue %>
                       <div class="  col-md-6 col-sm-6 col-xs-6">
@@ -168,13 +181,6 @@
                      <strong>Field Size</strong><br>
                       <%= get_field_size(get_field(@game.reservation.field_id).number_players) %> 
                   </div> 
-                    <% if (!@game.reservation.nil? && @game.user == current_user) && @game.reservation.checkin_time.nil? %>
-                     <div class="cancel-res">
-                             <%= link_to "Cancel Reservation", @game.reservation, method: :delete,
-                              data: { confirm: "Are you sure you want to delete this reservation?" },
-                              title: @game.reservation, class: "btn" %>
-                     </div>
-                  <% end %>
               <% else %>   
                   <% if !@game.custom_venue.ground.empty? %>
                     <div class="col-md-4 col-sm-4">
