@@ -26,41 +26,16 @@
       
 
       <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 20px;">
+<!--         <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 20px;">
           <li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Info</a></li>
         </ul>
-
+ -->
         <!-- Tab panes -->
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="info">
   
               
-            <div class="row">  
-              <div class="col-md-6">
-                  <div class="card avai">
-                      <h4>Availability</h4>
-                      <hr>
-                      <div class="content">
-                        <div>
-                          <input type="" name="">
-                          <input type="" name="">
-                          <button class="btn btn-fill btn-primary">Search</button>  
-                        </div>
-                        <div class="btn-times">
-                          <a href="" class="btn btn-fill btn-primary">11:00</a>
-                          <a href="" class="btn btn-fill btn-primary">11:00</a>
-                          <a href="" class="btn btn-fill btn-primary">11:00</a>
-                          <a href="" class="btn btn-fill btn-primary">11:00</a>
-                          <a href="" class="btn btn-fill btn-primary">11:00</a>
-                          <a href="" class="btn btn-fill btn-primary">11:00</a>
-                          <a href="" class="btn btn-fill btn-primary">11:00</a>
-                          <a href="" class="btn btn-fill btn-primary">11:00</a>  
-                        </div>
-                        
-                      </div>
-                  </div>
-              </div>    
-
+            <div class="row">    
               <div class="col-md-6">
                   <div class="card location">
                     <h4>Location</h4>
@@ -74,6 +49,21 @@
                     </div>
                   </div><!-- Location -->
 
+                  <div class="card fld">
+                    <h4>Fields</h4>
+                    <hr>
+                    <div class="content">
+                      <table>
+                      <%= render @business.fields.all %>
+                      </table>
+                    </div>
+                  </div><!-- end fields-->
+
+              </div> 
+
+              <div class="col-md-6">
+                 
+
                   <div class="card sch">
                     <h4>Schedule</h4>
                     <hr>
@@ -84,15 +74,7 @@
                     </div>
                   </div><!-- schedule -->
 
-                  <div class="card fld">
-                    <h4>Fields</h4>
-                    <hr>
-                    <div class="content">
-                      <table>
-                      <%= render @business.fields.all %>
-                      </table>
-                    </div>
-                  </div><!-- end fields-->
+                  
               </div>
 
             </div><!-- end row-->
