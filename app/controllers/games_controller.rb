@@ -111,9 +111,14 @@ class GamesController < ApplicationController
 
 	def destroy
 		@game = Game.find(params[:id])
-		@game.destroy
-		flash[:success] = "Game destroyed"
-		redirect_to games_path
+		if @game.reservation
+			flash[:danger] = "Please cancel your reservation first."
+			redirect_to @game
+		else
+			@game.destroy
+			flash[:success] = "Game destroyed"
+			redirect_to games_path
+		end
 	end
 	
 

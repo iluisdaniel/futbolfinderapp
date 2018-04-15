@@ -90,19 +90,24 @@ class ReservationsController < ApplicationController
 			@reservation.charge_penalty
 		end
 
-		@reservation.destroy
-		flash[:success] = "Reservation was deleted"
-		define_redirection(game)
-		# TODO - figure out a way to show res cancellations from users
-		if !game.nil? 
-			game.game_lines.uniq.each do |gl|
-				    if gl.user != current_user
-				        Notification.create(recipientable: gl.user, actorable: current_business_or_user, 
-				                action: "cancelled a reservation", notifiable: game)
-				    end
+		if !@reservation.checkin_time 
+				@reservation.destroy
+				flash[:success] = "Reservation was deleted"
+				define_redirection(game)
+				# TODO - figure out a way to show res cancellations from users
+				if !game.nil? 
+					game.game_lines.uniq.each do |gl|
+						    if gl.user != current_user
+						        Notification.create(recipientable: gl.user, actorable: current_business_or_user, 
+						                action: "cancelled a reservation", notifiable: game)
+						    end
+						end
+					# Notification.create(recipientable: @reservation.business, actorable: current_user, 
+					# 	                action: "Cancelled", notifiable: @reservation)
 				end
-			# Notification.create(recipientable: @reservation.business, actorable: current_user, 
-			# 	                action: "Cancelled", notifiable: @reservation)
+		else
+			flash[:danger] = "You can't delete reservations that already checked in."
+			redirect_to reservations_path
 		end
 	end
 

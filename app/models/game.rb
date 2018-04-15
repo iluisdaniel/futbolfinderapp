@@ -6,7 +6,7 @@ class Game < ApplicationRecord
   before_create :randomize_id
   before_save :set_defaults, if: :new_record?
 
-  has_one :reservation, :dependent => :destroy
+  has_one :reservation, dependent: :nullify
   has_one :custom_venue, :dependent => :destroy
   
   has_many :game_lines, dependent: :destroy
