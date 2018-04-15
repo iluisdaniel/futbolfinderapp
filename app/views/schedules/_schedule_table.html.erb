@@ -1,0 +1,51 @@
+<table class="table schedule-table">
+	<% if get_monday %>
+	<tr>
+	    <th><%= get_monday.day %></th>
+	    <td><%= get_str_time(get_monday.open_time) %></td>
+	    <td><%= get_str_time(get_monday.close_time) %></td>
+ 	</tr>
+ 	<% end %>
+ 	<% if get_tuesday %>
+	<tr>
+	    <th><%= get_tuesday.day %></th>
+	    <td><%= get_str_time(get_tuesday.open_time) %></td>
+	    <td><%= get_str_time(get_tuesday.close_time) %></td>
+ 	</tr>
+ 	<% end %>
+ 	<% if get_wednesday %>
+	<tr>
+	    <th><%= get_wednesday.day %></th>	
+	    <td><%= get_str_time(get_wednesday.open_time) %></td>
+	    <td><%= get_str_time(get_wednesday.close_time) %></td>
+ 	</tr>
+ 	<% end %>
+ 	<% if get_thursday %>
+	<tr>
+	    <th><%= get_thursday.day %></th>
+	    <td><%= get_str_time(get_thursday.open_time) %></td>
+	    <td><%= get_str_time(get_thursday.close_time) %></td>
+ 	</tr>
+ 	<% end %>
+ 	<% if get_friday %>
+	<tr>
+	    <th><%= get_friday.day %></th>
+	    <td><%= get_str_time(get_friday.open_time) %></td>
+	    <td><%= get_str_time(get_friday.close_time) %></td>
+ 	</tr>
+ 	<% end %>
+ 	<% if get_saturday %>
+	<tr>
+	    <th><%= get_saturday.day %></th>
+	    <td><%= get_str_time(get_saturday.open_time) %></td>
+	    <td><%= get_str_time(get_saturday.close_time) %></td>
+ 	</tr>
+ 	<% end %>
+ 	<% if get_sunday %>
+	<tr>
+	    <th><%= get_sunday.day %></th>
+	    <td><%= get_str_time(get_sunday.open_time) %></td>
+	    <td><%= get_str_time(get_sunday.close_time) %></td>
+ 	</tr>
+ 	<% end %>
+</table>

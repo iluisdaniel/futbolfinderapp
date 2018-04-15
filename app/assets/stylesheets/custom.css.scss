@@ -1163,8 +1163,13 @@ ul.alert-dropdown {
 .biz-main{
     font-size: 1.5rem;
 
+    .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th,
+     .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td{
+        border: none !important;
+     }
+
     table{
-        margin-left: 20px;
+        
         th{
             color:$primary-color;
         }
