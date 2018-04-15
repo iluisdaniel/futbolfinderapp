@@ -8,13 +8,14 @@ class SchedulesController < ApplicationController
 			flash[:success] = "Schedule created!"
 			redirect_to edit_business_path(current_business.id) 
 		else 
-			flash[:danger] = "Error, Schedule was not created"
+			flash[:danger] = "Error, Schedule was not created. " + @schedule.errors.full_messages.to_s
 			redirect_to edit_business_path(current_business.id) 
 		end
 	end
 
 	def destroy
 		@schedule.destroy
+		flash[:success] = "Schedule destroyed"
 		redirect_to edit_business_path(current_business.id)
 	end
 

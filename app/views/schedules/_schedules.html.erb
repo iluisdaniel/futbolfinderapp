@@ -1,0 +1,72 @@
+<table class="table table-responsive schedule-table">
+	<% if get_monday %>
+	<tr>
+	    <th><%= get_monday.day %></th>
+	    <td><%= get_str_time(get_monday.open_time) %></td>
+	    <td><%= get_str_time(get_monday.close_time) %></td>
+	    <td>          
+	    	<%= link_to "delete", get_monday, method: :delete, data: {confirm: "You sure?"}, title: get_monday.day %>
+	    </td>
+ 	</tr>
+ 	<% end %>
+ 	<% if get_tuesday %>
+	<tr>
+	    <th><%= get_tuesday.day %></th>
+	    <td><%= get_str_time(get_tuesday.open_time) %></td>
+	    <td><%= get_str_time(get_tuesday.close_time) %></td>
+	    <td>          
+	    	<%= link_to "delete", get_tuesday, method: :delete, data: {confirm: "You sure?"}, title: get_tuesday.day %>
+	    </td>
+ 	</tr>
+ 	<% end %>
+ 	<% if get_wednesday %>
+	<tr>
+	    <th><%= get_wednesday.day %></th>	
+	    <td><%= get_str_time(get_wednesday.open_time) %></td>
+	    <td><%= get_str_time(get_wednesday.close_time) %></td>
+	    <td>          
+	    	<%= link_to "delete", get_wednesday, method: :delete, data: {confirm: "You sure?"}, title: get_wednesday.day %>
+	    </td>
+ 	</tr>
+ 	<% end %>
+ 	<% if get_thursday %>
+	<tr>
+	    <th><%= get_thursday.day %></th>
+	    <td><%= get_str_time(get_thursday.open_time) %></td>
+	    <td><%= get_str_time(get_thursday.close_time) %></td>
+	    <td>          
+	    	<%= link_to "delete", get_thursday, method: :delete, data: {confirm: "You sure?"}, title: get_thursday.day %>
+	    </td>
+ 	</tr>
+ 	<% end %>
+ 	<% if get_friday %>
+	<tr>
+	    <th><%= get_friday.day %></th>
+	    <td><%= get_str_time(get_friday.open_time) %></td>
+	    <td><%= get_str_time(get_friday.close_time) %></td>
+	    <td>          
+	    	<%= link_to "delete", get_friday, method: :delete, data: {confirm: "You sure?"}, title: get_friday.day %>
+	    </td>
+ 	</tr>
+ 	<% end %>
+ 	<% if get_saturday %>
+	<tr>
+	    <th><%= get_saturday.day %></th>
+	    <td><%= get_str_time(get_saturday.open_time) %></td>
+	    <td><%= get_str_time(get_saturday.close_time) %></td>
+	    <td>          
+	    	<%= link_to "delete", get_saturday, method: :delete, data: {confirm: "You sure?"}, title: get_saturday.day %>
+	    </td>
+ 	</tr>
+ 	<% end %>
+ 	<% if get_sunday %>
+	<tr>
+	    <th><%= get_sunday.day %></th>
+	    <td><%= get_str_time(get_sunday.open_time) %></td>
+	    <td><%= get_str_time(get_sunday.close_time) %></td>
+	    <td>          
+	    	<%= link_to "delete", get_sunday, method: :delete, data: {confirm: "You sure?"}, title: get_sunday.day %>
+	    </td>
+ 	</tr>
+ 	<% end %>
+</table>
