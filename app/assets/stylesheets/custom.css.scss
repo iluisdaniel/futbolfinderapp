@@ -1148,6 +1148,57 @@ ul.alert-dropdown {
     h1{
         margin-bottom: 0.2em !important;
     }
+
+    i{
+            color:$primary-color;
+            font-size: 1.8rem;
+    }
+    .card{
+        hr{
+            margin-bottom: 5px;
+        }
+    }
+    
+}
+.biz-main{
+    font-size: 1.5rem;
+
+    table{
+        margin: auto;
+        th{
+            color:$primary-color;
+        }
+        td{
+            padding: 5px;
+        }
+    }
+
+    .location{
+        address{
+            text-align: center;
+        }
+    }
+    .fld{
+        table{
+            td{
+                padding: 5px 15px 5px 15px  ;
+            }
+        }
+    }
+    .avai{
+        a{
+            margin-bottom: 5px;
+        }
+        .btn-times{
+            margin-top: 10px;
+        }
+    }
+    .card .avai{
+        .content{
+            margin: auto;
+        }
+    }
+
 }
 .biz-sidebar{
     img{
