@@ -35,7 +35,7 @@
                           <td><%= link_to charge.reservation.id, charge.reservation unless charge.reservation.nil? %></td>
                         <% end %>
                         <td><%= charge.created_at.to_date %></td>
-                        <td><%= number_to_currency charge.amount / 100.00 %></td>
+                        <td><%= number_to_currency get_charge_amount(charge) %></td>
                         <% if charge.status != "Error" %>
                           <td><%= link_to "Download" , charge_path(charge, format: :pdf) %></td>
                         <% else %>
