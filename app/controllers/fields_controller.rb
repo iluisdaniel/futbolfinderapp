@@ -30,6 +30,13 @@ class FieldsController < ApplicationController
 
   def update
     @field = Field.find(params[:id])
+
+    if @field.update_attributes(field_params)
+      flash[:success] = "Field updated"
+      redirect_to edit_business_path(@field.business)
+    else
+      render 'edit'
+    end
   end
 
   private 

@@ -13,7 +13,7 @@
     	            <%= f.label :number_players, class: "" %>
     	        </div>
     	        <div class="col-md-8">
-    	            <%= f.number_field :number_players, class: 'form-control', placeholder: "Number Of Players" %>
+    	            <%= f.select :number_players, [['5vs5',10], ['6vs6', 12],['7vs7',14], ['9vs9',18],['11vs11', 22]], {prompt: "Select"}, { class: 'form-control'} %>
     	        </div>
     	    </div>
     	  </div>
