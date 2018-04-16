@@ -319,7 +319,7 @@
                   <% end %>
               <%end%>
 
-              <% if current_business.charges.any? %>
+              <% if @charges.any? %>
                 <h4 class="lead">Charges</h4>
 
                 <table class="table">
@@ -331,7 +331,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <% current_business.charges.each do |charge| %>
+                    <% @charges.each do |charge| %>
                         <tr>
                           <td><%= charge.created_at.to_date %></td>
                           <td><%= number_to_currency charge.amount / 100%></td>
@@ -347,7 +347,6 @@
                 <h4 class="lead">Cancel Subscription</h4>
                 <%= link_to "Unsuscribe", subscription_path,method: :delete, data: {confirm: "Are you sure you want to cancel your Subscription?"}, class: "btn btn-danger btn-round" %>
               <% else %>
-                <hr>
                 <h4 class="lead">Subscribe Again!</h4>
                 <%= link_to "Subscribe", new_subscription_path(plan: "monthly19"), class: "btn btn-primary btn-fill" %>
               <% end %>

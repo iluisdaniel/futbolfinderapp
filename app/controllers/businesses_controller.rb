@@ -36,6 +36,7 @@ class BusinessesController < ApplicationController
     @fields = @business.fields.all
     @schedule = Schedule.new
     @field = Field.new
+    @charges = current_business.charges.where(reservation_id: nil, user_id: nil)
   end
 
   def update
