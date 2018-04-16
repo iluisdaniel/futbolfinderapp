@@ -345,7 +345,7 @@
               <% if current_business.subscribed? && !current_business.canceled? %>
               <hr>
                 <h4 class="lead">Cancel Subscription</h4>
-                <%= link_to "Unsuscribe", subscription_path,method: :delete, data: {confirm: "Are you sure you want to cancel your Subscription?"}, class: "btn btn-danger btn-round" %>
+                <%= link_to "Unsuscribe", subscription_path,method: :delete, data: {confirm: "Are you sure you want to cancel your Subscription?"}, class: "btn btn-danger" %>
               <% else %>
                 <h4 class="lead">Subscribe Again!</h4>
                 <%= link_to "Subscribe", new_subscription_path(plan: "monthly19"), class: "btn btn-primary btn-fill" %>
