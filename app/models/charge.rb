@@ -5,6 +5,7 @@ class Charge < ApplicationRecord
 
   def receipt
   	if reservation_id && user_id
+      application_fee = 100
   		Receipts::Receipt.new(
   			id: id,
   			product: "Reservation " + reservation_id.to_s,
@@ -19,11 +20,12 @@ class Charge < ApplicationRecord
 	        ["Account Billed", user.email],
 	        ["Item", "Game at " + business.name],
 	        ["Game", reservation.game.id.to_s],
-	        ["Amount", ActionController::Base.helpers.number_to_currency(amount / 100)],
+	        ["Amount", ActionController::Base.helpers.number_to_currency(( amount - application_fee) / 100)],
 	        ["Card Charged", "#{card_brand} (**** **** **** #{card_last4})"]
 	      ]
   		)
   	else
+      
 	    Receipts::Receipt.new(
 	      id: id,
 	      product: "Futfinder Supscription",
@@ -36,7 +38,7 @@ class Charge < ApplicationRecord
 	        ["Date", created_at.to_s],
 	        ["Account Billed", business.email],
 	        ["Product", "Store subscription"],
-	        ["Amount", ActionController::Base.helpers.number_to_currency(amount / 100)],
+	        ["Amount", ActionController::Base.helpers.number_to_currency( amount / 100)],
 	        ["Card Charged", "#{card_brand} (**** **** **** #{card_last4})"]
 	      ]
 	    )

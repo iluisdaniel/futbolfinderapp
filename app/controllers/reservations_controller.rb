@@ -103,7 +103,11 @@ class ReservationsController < ApplicationController
 				end
 		else
 			flash[:danger] = "You can't delete reservations that already checked in."
-			redirect_to reservations_path
+			if current_business
+				redirect_to @reservation
+			else
+				redirect_to game
+			end	
 		end
 	end
 
