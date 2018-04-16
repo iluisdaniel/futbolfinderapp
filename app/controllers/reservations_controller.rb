@@ -37,11 +37,7 @@ class ReservationsController < ApplicationController
 			@reservation = Reservation.new(reservation_params)
 			# @reservation[:field_id] = get_available_field(@reservation[:business_id], @reservation)
 		end
-
-		if params[:source]
-
-		end
-			
+		@reservation[:field_price] = (Field.find(@reservation.field_id).price * 100).round
 
 		if @reservation.save
 			if logged_in?

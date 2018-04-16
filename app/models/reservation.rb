@@ -41,10 +41,17 @@ class Reservation < ApplicationRecord
       gls = self.game.game_lines.where(accepted: "Accepted")
       field = Field.find(self.field_id)
       application_fee = 100 #1dolar
-      convert_to_dollars = 100
+      convert_to_cents = 100
+
+      if self.field_price.nil?
+        price_amount = field.price * convert_to_cents
+      else
+        price_amount = self.field_price
+      end
+
       duration = (self.end_time - self.time) / 3600
       players_with_card = get_number_of_players_with_card(gls)
-      amount_by_player = (((field.price * convert_to_dollars * duration) / players_with_card.to_f) + application_fee).round
+      amount_by_player = ((( price_amount * duration) / players_with_card.to_f) + application_fee).round
 
       gls.each do |gl|
         if check_there_is_no_charge(gl.user).empty?
@@ -152,7 +159,7 @@ class Reservation < ApplicationRecord
     end
 
     def self.current
-      where("date > ?", Date.current).order(date: :asc)
+      where("date >= ?", Date.current).order(date: :asc)
     end
 
     def self.past
