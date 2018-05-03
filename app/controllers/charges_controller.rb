@@ -11,7 +11,10 @@ class ChargesController < ApplicationController
 	end
 
 	def show
+		@charge = Charge.find(params[:id])
+
 	  respond_to do |format|
+	    format.html
 	    format.pdf {
 	      send_data(@charge.receipt.render,
 	                filename: "#{@charge.id}-store-receipt.pdf",

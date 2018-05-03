@@ -258,6 +258,8 @@ module GamesHelper
             Game.find(params[:game])
         elsif @game_line
             @game_line.game
+        elsif @charge
+            @charge.reservation.game
         end
         
     end
@@ -268,6 +270,8 @@ module GamesHelper
             params[:date]
         elsif @game_line
             @game_line.game.reservation.date
+        elsif @charge
+            @charge.reservation.date
         end 
     end
 
@@ -276,8 +280,8 @@ module GamesHelper
             session[:res_time]
         elsif params[:time]
                 params[:time]
-        elsif params[:custom_venue]
-            CustomVenue.find(params[:custom_venue]).time.strftime("%H:%M")
+        elsif @charge
+            @charge.reservation.time
         end 
     end
 
@@ -286,6 +290,8 @@ module GamesHelper
             params[:duration]
         elsif @game_line
             (@game_line.game.reservation.end_time - @game_line.game.reservation.time) / 3600
+        elsif @charge
+            (@charge.reservation.game.reservation.end_time - @charge.reservation.game.reservation.time) / 3600
         end
                 
     end
@@ -299,6 +305,28 @@ module GamesHelper
     def get_total_amount_to_pay_by_player
         number_players = get_game.number_players
         amount = (get_field_venue.price * get_duration.to_f / number_players) + 1
+        ActionController::Base.helpers.number_to_currency(amount)
+    end
+
+    def get_subtotal_charged_each_player
+        number_players = @charge.reservation.charges.count
+        if @charge.reservation.field_price
+            price = @charge.reservation.field_price / 100
+        else
+            price = get_field_venue.price 
+        end
+        amount = (price * get_duration / number_players.to_f)
+        ActionController::Base.helpers.number_to_currency(amount)
+    end
+
+    def get_total_charged_each_player
+        number_players = @charge.reservation.charges.count
+        if @charge.reservation.field_price
+            price = @charge.reservation.field_price / 100
+        else
+            price = get_field_venue.price 
+        end
+        amount = (price * get_duration.to_f / number_players) + 1
         ActionController::Base.helpers.number_to_currency(amount)
     end
 
@@ -327,11 +355,21 @@ module GamesHelper
         end
     end
 
+    def get_field_price
+        if @charge.reservation.field_price
+            @charge.reservation.field_price / 100
+        else
+            get_field_venue.price 
+        end     
+    end
+
     def get_field_venue
         if  params[:field]
            f = params[:field]
         elsif @game_line
             f = @game_line.game.reservation.field_id
+        elsif @charge
+            f = @charge.reservation.field_id
         end
         Field.find(f)
     end
@@ -347,6 +385,8 @@ module GamesHelper
             get_end_time_from_time_and_duration
         elsif @game_line
             @game_line.game.reservation.end_time
+        elsif @charge
+            @charge.reservation.end_time
         end
     end
 

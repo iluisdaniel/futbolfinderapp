@@ -4,7 +4,7 @@
       <p class="lead">There are not currently charges to display at this moment. </p>
     <% else %>
         <div class="card" style="margin-top: 30px;">
-            <h4>Charges</h4>
+            <h4>Payments</h4>
             <div class="content">
             <table class="table table-responsive">
                 <thead>
@@ -19,14 +19,13 @@
                     <% end %>  
                     <th>Date</th>
                     <th>Amount</th>
-                    <th>Download</th>
                   </tr>
                 </thead>
                 <tbody>
                   <% @charges.each do |charge| %>
                       <tr>
                         <td><%= charge.id %></td>
-                        <td><%= charge.status %></td>
+                        <td><%= link_to charge.status, charge %></td>
                         <% if signed_in? %>
                           <td><%= link_to charge.business.name, charge.business %></td>
                           <td><%= link_to charge.reservation.game.id, charge.reservation.game unless charge.reservation.nil? %></td>
@@ -36,11 +35,6 @@
                         <% end %>
                         <td><%= charge.created_at.to_date %></td>
                         <td><%= number_to_currency get_charge_amount(charge) %></td>
-                        <% if charge.status != "Error" %>
-                          <td><%= link_to "Download" , charge_path(charge, format: :pdf) %></td>
-                        <% else %>
-                        <td><%= charge.error_msg %></td>
-                        <% end %>
                       </tr>
                   <% end %>
                 </tbody>

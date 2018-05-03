@@ -30,7 +30,7 @@ Rails.application.routes.draw do
 
   resource :subscription
   resource :payment_method
-  resources :charges
+  resources :charges, path: '/payments'
 
   resources :notifications, only: :index
 
