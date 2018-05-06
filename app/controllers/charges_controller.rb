@@ -4,9 +4,23 @@ class ChargesController < ApplicationController
 
 	def index
 		if signed_in?
-			@charges = current_user.charges
+			if (params[:date] && !params[:date].empty?) || 
+				(params[:game] && !params[:game].empty?) || 
+				(params[:business] && !params[:business].empty?)
+				# @charges = current_user.charges.paginate(page: params[:page], per_page: 15)
+				@charges = Charge.findCharges(params[:date], params[:game], params[:business], current_user, params[:page])
+			else
+				@charges = current_user.charges.paginate(page: params[:page], per_page: 15)
+			end
 		else
-			@charges = current_business.charges
+			if (params[:date] && !params[:date].empty?) || 
+				(params[:reservation] && !params[:reservation].empty?) || 
+				(params[:username] && !params[:username].empty?)
+				# @charges = current_business.charges.paginate(page: params[:page], per_page: 15)
+				@charges = Charge.findCharges(params[:date], params[:reservation], params[:username], current_business, params[:page])
+			else
+				@charges = current_business.charges.paginate(page: params[:page], per_page: 15)
+			end
 		end
 	end
 

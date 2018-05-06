@@ -1,21 +1,78 @@
-<div class="container">
+<div class="container pymnts">
   <div class="col-md-12 col-sm-12">
-    <% if @charges.empty? %>
-      <p class="lead">There are not currently charges to display at this moment. </p>
-    <% else %>
         <div class="card" style="margin-top: 30px;">
-            <h4>Payments</h4>
+            <div class="header">
+                <h4>Payments</h4>
+            </div>
             <div class="content">
+              
+                <%= form_tag(charges_path, :method => "get", class: "") do %>
+                  <div class="col-md-8">
+                      <div class="col-md-3">
+                          <%= label_tag :date%>
+                          <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                            <%= text_field_tag :date, params[:date], data:{ provide:'datepicker', 'date-format' => 'dd-mm-yyyy', 'date-autoclose' => 'true' }, placeholder: "DD-MM-YYYY", class: "form-control" %>
+                          </div>
+
+                      </div>
+                      <% if logged_in? %>
+                          <div class="col-md-3">
+                            <%= label_tag :reservation, "Reservation" %>
+                              <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-info"></i></span>
+                                <%= text_field_tag :reservation, params[:reservation], placeholder: "111111", class: "form-control" %>
+                              </div>
+                          </div>
+
+                          <div class="col-md-3">
+                            <%= label_tag :user, "Username" %>
+                              <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
+                                <%= text_field_tag :username, params[:username], placeholder: "Username", class: "form-control" %>
+                              </div>
+                          </div>
+
+                      <% else %>  
+                          <div class="col-md-3">
+                            <%= label_tag :game, "Game" %>
+                              <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-info"></i></span>
+                                <%= text_field_tag :game, params[:game], placeholder: "111111", class: "form-control" %>
+                              </div>
+                          </div>
+
+                      <% end %>
+                    
+                    <div class="col-md-3 col-xs-6">
+                        <br>
+                       <%= submit_tag "Search", class: "btn btn-primary btn-fill btn-srch" %>
+                    </div>
+                  </div>  
+
+                <div class="col-md-4 col-sm-12">
+                  <!-- new btn-->
+                </div>
+                <% end %>
+
+          <% if @charges.nil? || @charges.empty?  %>
+            <div class="row">
+              <div class="col-md-12">
+                <br>
+              <p class="lead">No charges to display. </p>  
+              </div>
+              
+            </div>
+          <% else %>
             <table class="table table-responsive">
                 <thead>
                   <tr>
                     <th>Id</th>
                     <th>Status</th>
-                    <th>Issuer</th>
                     <% if signed_in? %>
-                      <th>Game</th>
+                      <th>Business</th>
                     <% else %>
-                    <th>Reservation</th>
+                      <th>Client</th>
                     <% end %>  
                     <th>Date</th>
                     <th>Amount</th>
@@ -28,10 +85,13 @@
                         <td><%= link_to charge.status, charge %></td>
                         <% if signed_in? %>
                           <td><%= link_to charge.business.name, charge.business %></td>
-                          <td><%= link_to charge.reservation.game.id, charge.reservation.game unless charge.reservation.nil? %></td>
                         <% else %>
-                          <td><%= link_to charge.user.first_name, charge.user %></td>
-                          <td><%= link_to charge.reservation.id, charge.reservation unless charge.reservation.nil? %></td>
+                          <td>
+                            <%= link_to charge.user do %>
+                              @<%= charge.user.slug %>
+                            <% end %>
+                            
+                          </td>
                         <% end %>
                         <td><%= charge.created_at.to_date %></td>
                         <td><%= number_to_currency get_charge_amount(charge) %></td>
@@ -39,8 +99,11 @@
                   <% end %>
                 </tbody>
               </table>
+              <% end %>
           </div>
         </div>
-    <% end %>
+        <div class="text-center">
+          <%= will_paginate @charges unless @charges.nil? %>  
+      </div>
   </div>
 </div>

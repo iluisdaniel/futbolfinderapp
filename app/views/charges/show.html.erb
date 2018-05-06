@@ -48,9 +48,13 @@
                       <% if signed_in? %>
                         <strong>Game</strong>
                         <%= link_to @charge.reservation.game.id, @charge.reservation.game %>
+                        <strong>Reservation</strong>
+                          <%=  @charge.reservation.id %>
                       <% else %>
                           <strong>Reservation</strong>
                           <%= link_to @charge.reservation.id, @charge.reservation %>
+                          <strong>Game</strong>
+                          <%= @charge.reservation.game.id %>
                       <% end %>
                     </div>
                     <div class="col-md-12">
