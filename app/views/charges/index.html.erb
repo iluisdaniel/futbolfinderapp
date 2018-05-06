@@ -101,9 +101,10 @@
               </table>
               <% end %>
           </div>
+            <div class="text-center">
+              <%= will_paginate @charges unless @charges.nil? %>  
+          </div>
         </div>
-        <div class="text-center">
-          <%= will_paginate @charges unless @charges.nil? %>  
-      </div>
+        
   </div>
 </div>
