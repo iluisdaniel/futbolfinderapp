@@ -15,8 +15,27 @@ class ReservationsController < ApplicationController
 		# todays view and possibility to change to another date
 		# past reservations
 		## Create a view for fields. Where shows the avility of the field on that date. 
-		@reservations = current_business.reservations.current
-		@oldreservations = current_business.reservations.past
+
+		if params[:reservation_id]
+			if Reservation.exists?(id: params[:reservation_id])
+				redirect_to reservation_path(params[:reservation_id])
+			else
+				redirect_to reservations_path
+				flash[:danger] = "Doesn't exist."
+			end
+		end
+
+		@fields = current_business.fields
+		if (params[:date] && !params[:date].empty?) || 
+				(params[:field] && !params[:field][:field_id].empty?) || 
+				(params[:username] && !params[:username].empty?)
+				# flash[:info] = params[:date] + " " +  params[:username] + " " +  params[:field][:field_id].empty?.to_s
+			@reservations = Reservation.filterReservations(current_business, params[:date], params[:field][:field_id],
+															params[:username], params[:page])
+		else
+			@reservations = current_business.reservations.order(date: :desc, time: :desc)
+													 .paginate(page: params[:page], per_page: 10)
+		end
 	end
 
 	def show

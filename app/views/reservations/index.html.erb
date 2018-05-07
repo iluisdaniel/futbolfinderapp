@@ -1,28 +1,74 @@
 <% provide(:title, 'Reservations') %>
-<div class="page-header">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-10 col-sm-12">
-        <h1>
-          My Reservations
-          <small>Current</small>
-        </h1>
-      </div>
-      <div class="col-md-2 col-sm-12">
-        <%= link_to 'New Reservation', new_reservation_path, class: "btn btn-large btn-primary btn-round btn-fill " %>
-      </div>
-    </div>
-  </div>
-</div> 
-<%= render partial: "reservations/shared/menu_bar" %>
 
-<div class="container" style="margin-top:20px;">
-  <div class="row">
-        <% if @reservations.empty?%>
-            <p class="lead">No current reservations at the moment</p>
-            <%= link_to 'New Reservation', new_reservation_path, class: "btn btn-large btn-primary btn-round btn-fill " %>
-        <% else %>  
-          <%= render partial: "reservations/reservations", locals: {reservations: @reservations} %>
-        <% end %>  
-  </div>
+<div class="container rsvs" style="margin-top:20px;">
+      <div class="row">
+        <%= form_tag(reservations_path, :method => "get", class: "form-inline") do %>
+          <div class="col-md-6">
+
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-search"></i></span>
+                <%= text_field_tag :reservation_id, params[:reservation_id], placeholder: "Reservation ex '111111'", class: "form-control" %>
+              </div>
+
+              <%= submit_tag "Search", class: "btn btn-primary btn-fill btn-srch" %>
+          </div>
+          
+        <% end %>
+      </div>
+      <div class="card">
+        <div class="header">
+              <h4>Reservations</h4>
+        </div>
+          <div class="content">
+                  
+                  <div class="row">
+                    <%= form_tag(reservations_path, :method => "get", class: "") do %>
+                      <div class="col-md-8">
+                        <div class="col-md-3">
+                          <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                            <%= text_field_tag :date, params[:date], data:{ provide:'datepicker', 'date-format' => 'dd-mm-yyyy', 'date-autoclose' => 'true' }, placeholder: "DD-MM-YYYY", class: "form-control" %>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          
+                          <%= collection_select :field, :field_id, @fields, :id, :name, {prompt: "Select Field"},  {:class => 'form-control'} %> 
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                              <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
+                              <%= text_field_tag :username, params[:username], placeholder: "Username", class: "form-control" %>
+                            </div>
+                        </div>
+                        <div class="col-md-3"><%= submit_tag "Filter", class: "btn btn-primary btn-fill btn-srch" %>
+                           <%= link_to "Clear", reservations_path %>
+                        </div>
+
+                      </div>
+                      <div class="col-md-4"> 
+                        <%= link_to new_reservation_path, class: "btn btn-primary btn-fill pull-right"  do %>
+                          <i class="fa fa-plus"></i> New
+                        <% end %>
+                          
+                        </div>
+                    <% end %>
+                    </div>
+                    <div class="row">
+                    <% if @reservations.nil? || @reservations.empty?%>
+                        <div class="col-md-12">
+                          <br>
+                        <p class="lead">No reservations to display.</p>
+                        </div>
+                    <% else %>
+                        <%= render partial: "reservations/reservations", locals: {reservations: @reservations} %>
+                    
+                    </div>
+                    <div class="row">
+                      <div class="text-center">
+                          <%= will_paginate @reservation %>
+                      </div>
+                    </div>
+                    <% end %>
+          </div>
+      </div>
 </div>

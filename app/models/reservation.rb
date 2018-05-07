@@ -30,6 +30,8 @@ class Reservation < ApplicationRecord
   #Validate Business
   validate :check_if_business_exists
 
+  # CHARGES
+
   def get_user_charge(user)
     self.charges.where(user: user).first
   end
@@ -108,6 +110,101 @@ class Reservation < ApplicationRecord
     application_fee = 100
     charge_player(self.game.user, amount, application_fee, "Penalty")
   end
+
+  #FILTER
+
+  def self.filterReservations(business, date, field, username, page)
+    # all empty
+    if date.empty? && field.empty? && username.empty?
+      Reservation.where(business:business).order(date: :desc, time: :desc).paginate(page: page, per_page:15)
+    # filter with date
+    elsif !date.empty? && field.empty? && username.empty?
+      findReservationsWithDate(business, date, page)
+    # filter with field
+    elsif !field.empty? && date.empty? && username.empty?
+      findReservationsWithField(business, field, page)
+      #filter with username
+    elsif !username.empty? && date.empty? && field.empty?
+      findReservationsWithUsername(business, username, page)
+    #filter with username and date
+    elsif !username.empty? && !date.empty? && field.empty?
+      findReservationsWithDateAndUsername(business, date, username, page)
+    #filter with username and field
+    elsif date.empty? && !field.empty? && !username.empty?
+      findReservationsWithUsernameAndField(business, field, username, page)
+    #filter with date and field
+    elsif !date.empty? && !field.empty? && username.empty?
+      findReservationsWithDateAndField(business, field, date, page)
+    #filter with all
+    elsif !date.empty? && !field.empty? && !username.empty?
+      findReservationsWithDateAndUsernameAndField(business, date, field, username, page)
+    end
+  end
+
+  def self.findReservationsWithDate(business, date, page)
+    d = Date.parse(date)
+    Reservation.where(business: business, date: d).order(time: :desc).paginate(page: page, per_page:15)
+  end
+
+  def self.findReservationsWithField(business, field, page)
+    Reservation.where(business: business, field_id: field).order(date: :desc, time: :desc)
+                                                          .paginate(page: page, per_page:15)
+  end
+
+  def self.findReservationsWithUsername(business, username, page)
+    u = User.friendly.find(username)
+    res = Reservation.where(business: business)
+    res.includes(:game).references(:game)
+    .where('games.user_id', u)
+    .order(date: :desc, time: :desc)
+    .paginate(page: page, per_page:15)
+    rescue ActiveRecord::RecordNotFound
+       nil
+  end
+
+  def self.findReservationsWithDateAndUsername(business, date, username, page)
+    d = Date.parse(date)
+    u = User.friendly.find(username)
+    res = Reservation.where(business: business, date: d)
+    res.includes(:game).references(:game)
+    .where('games.user_id', u)
+    .order(date: :desc, time: :desc)
+    .paginate(page: page, per_page:15)
+    rescue ActiveRecord::RecordNotFound
+       nil
+  end
+
+  def self.findReservationsWithUsernameAndField(business, field, username, page)
+    u = User.friendly.find(username)
+    res = Reservation.where(business: business, field_id: field)
+    res.includes(:game).references(:game)
+    .where('games.user_id', u)
+    .order(date: :desc, time: :desc)
+    .paginate(page: page, per_page:15)
+    rescue ActiveRecord::RecordNotFound
+       nil
+  end
+
+  def self.findReservationsWithDateAndField(business, field, date, page)
+    d = Date.parse(date)
+    Reservation.where(business: business, date: d, field_id: field)
+                .order(date: :desc, time: :desc)
+                .paginate(page: page, per_page:15)
+  end
+
+  def self.findReservationsWithDateAndUsernameAndField(business, date, field, username, page)
+    d = Date.parse(date)
+    u = User.friendly.find(username)
+    res = Reservation.where(business: business, date: d, field_id: field)
+    res.includes(:game).references(:game)
+    .where('games.user_id', u)
+    .order(date: :desc, time: :desc)
+    .paginate(page: page, per_page:15)
+    rescue ActiveRecord::RecordNotFound
+       nil
+  end
+
+    #validation
 
     ### Validate Date
   	def check_date_later_than_today
