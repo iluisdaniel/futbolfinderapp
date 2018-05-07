@@ -1,6 +1,21 @@
 <div class="container pymnts">
   <div class="col-md-12 col-sm-12">
-        <div class="card" style="margin-top: 30px;">
+    <div class="row">
+      <br>
+      <%= form_tag(charges_path, :method => "get", class: "form-inline") do %>
+        <div class="col-md-6">
+
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1"><i class="fa fa-search"></i></span>
+              <%= text_field_tag :charge_id, params[:charge_id], placeholder: "Charge ex '111111'", class: "form-control" %>
+            </div>
+
+            <%= submit_tag "Search", class: "btn btn-primary btn-fill btn-srch" %>
+        </div>
+        
+      <% end %>
+      </div>
+        <div class="card">
             <div class="header">
                 <h4>Payments</h4>
             </div>
@@ -46,7 +61,8 @@
                     
                     <div class="col-md-3 col-xs-6">
                         <br>
-                       <%= submit_tag "Search", class: "btn btn-primary btn-fill btn-srch" %>
+                       <%= submit_tag "Filter", class: "btn btn-primary btn-fill btn-srch" %>
+                       <%= link_to "Clear", charges_path %>
                     </div>
                   </div>  
 

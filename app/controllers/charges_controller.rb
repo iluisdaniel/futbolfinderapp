@@ -1,8 +1,18 @@
 class ChargesController < ApplicationController
 	before_action :signed_in_business_or_user?
-	before_action :set_charge, only: :show
+	# before_action :set_charge, only: :show
+	before_action :correct_biz_or_user, only: :show
 
 	def index
+		if params[:charge_id]
+			if Charge.exists?(id: params[:charge_id])
+				redirect_to charge_path(params[:charge_id])
+			else
+				redirect_to charges_path
+				flash[:danger] = "Doesn't exist."
+			end
+		end
+
 		if signed_in?
 			if (params[:date] && !params[:date].empty?) || 
 				(params[:game] && !params[:game].empty?) || 
@@ -61,6 +71,21 @@ class ChargesController < ApplicationController
 	
 
 	private
+
+		def correct_biz_or_user
+			begin
+				if signed_in?
+					charge = current_user.charges.find(params[:id])
+					redirect_to charges_path if charge.nil?
+				elsif logged_in?
+			  		charge = current_business.charges.find(params[:id])
+			  		redirect_to charges_path if charge.nil?
+			  	end
+		  	rescue ActiveRecord::RecordNotFound
+	  			redirect_to charges_path
+	  			flash[:danger] = "Doesn't exist"
+			end
+		end
 
 	  def set_charge
 	  	if signed_in?
