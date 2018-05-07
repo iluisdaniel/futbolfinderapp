@@ -5,18 +5,6 @@ module ReservationsHelper
 	      redirect_to root_url if res.nil?	
     end
 
-    def get_reservation_user(reservation)
-    	if reservation.game.nil?
-    		return current_business.name
-    	end
-
-        if reservation.game.user.nil?
-            return current_business.name
-        end
-
-    	return reservation.game.user.first_name + reservation.game.user.last_name
-    end
-
      def is_at_one_of_index_reservations?
         if current_page?(controller: '/reservations/past', action: 'index') 
 

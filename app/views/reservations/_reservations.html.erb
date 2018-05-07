@@ -22,7 +22,14 @@
           <td><%= reservation.time.strftime("%r") %></td>
           <td><%= reservation.end_time.strftime("%r") %></td>
           <td><%= get_field(reservation.field_id).name %></td>
-          <td><%= get_reservation_user(reservation) %></td>
+          <% if reservation.game %>
+          <td><%= link_to reservation.game.user do %>
+            @<%= reservation.game.user.slug%>
+            <% end %>
+          </td>
+          <% else %>
+             <td> <%= link_to reservation.business.name, reservation.business %></td>
+          <% end %>
           <td><%= reservation.created_at.strftime("%D at %r") %></td>
           <td>
             <%= link_to "Edit", :controller => "/reservations", :action => "edit", :id => reservation
