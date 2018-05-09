@@ -1,5 +1,5 @@
 class BusinessesController < ApplicationController
-  before_action :signed_in_business, only: [:edit, :update, :stripe_connect, :confirmation]
+  before_action :signed_in_business, only: [:edit, :update, :stripe_connect, :confirmation, :dashboard]
   before_action :redirect_back_when_is_already_logged_in?, only: [:new, :create]
   before_action :correct_business,   only: [:edit, :update]
   before_action :confirm_stripe_account, only: [:edit, :update, :confirmation]
@@ -87,6 +87,13 @@ class BusinessesController < ApplicationController
     end
 
     def confirmation
+    end
+
+    def dashboard
+      @reservations = current_business.reservations.where(date: Date.parse("23-04-2018"))
+      # flash[:info] = Date.parse("12-04-2018").day
+
+      @charges_amount = get_todays_charges_amount
     end 
 
   private
@@ -112,6 +119,17 @@ class BusinessesController < ApplicationController
     def correct_business
       @business = Business.friendly.find(params[:id])
       redirect_to(root_url) unless current_business?(@business)
+    end
+
+    def get_todays_charges_amount
+      d = Date.parse("12-04-2018")
+      charges = current_business.charges.where(status: "Success", created_at: d.beginning_of_day..d.end_of_day)
+      # flash[:info] = charges.count
+      amount = 0
+      charges.each do |c|
+        amount = amount + c.amount
+      end 
+      amount / 100 
     end
 
 end

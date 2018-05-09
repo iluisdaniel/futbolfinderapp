@@ -1,0 +1,86 @@
+<% provide(:title, 'Dashboard') %>
+<div class="container" style="margin-top: 20px;">
+	<div class="row">
+		<div class="col-md-4">
+			<div class="row">
+				<div class="col-md-6" style="">
+					<div class="well">
+						<h4>Todays Earnings</h4>
+						<%= number_to_currency @charges_amount %>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="well">
+						<h4># Reservations</h4>
+						<%= @reservations.count %>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="card">
+					<div class="header">
+						<h4>Notifications</h4>
+					</div>
+					<div class="content">
+						<table class="table">
+							<thead>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Luis reserved a new field</td>
+								</tr>
+								<tr>
+									<td>Luis reserved a new field</td>
+								</tr>
+								<tr>
+									<td>Luis reserved a new field</td>
+								</tr>
+							</tbody>
+
+						</table>
+						<a href="">All Notifications</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8">
+				<div class="row">
+					<a href="" class="btn btn-primary btn-fill pull-right">New Reservation</a>
+					<a href="" class="btn btn-info btn-fill pull-right">New Game</a>
+					<a href="" class="btn btn-default btn-fill pull-right">New Charge</a>
+				</div>
+				<div class="card">
+					<div class="header">
+						<h4>Todays Reservations</h4>
+					</div>
+					<div class="content">
+						<table class="table table-hover table-striped  table-responsive">
+							<thead>
+							</thead>
+							<tbody>
+								<% @reservations.each do |r| %>
+								<tr>
+									<td><%= r.id %></td>
+									<td><%= link_to r.date, reservation_path(r) %></td>
+									<td><%= r.time %></td>
+									<% if r.game %>
+							          <td><%= link_to r.game.user do %>
+							            @<%= r.game.user.slug%>
+							            <% end %>
+							          </td>
+							          <% else %>
+							             <td> <%= link_to r.business.name, r.business %></td>
+						          	<% end %>
+									<td><%= get_field(r.field_id).name %></td>
+								</tr>
+								<% end %>
+								
+							</tbody>
+
+						</table>
+						<a href="">All Reservations</a>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'b/signup'  => 'businesses#new'
   get 'b/stripe_connect' => 'businesses#stripe_connect'
   get 'b/confirmation' => 'businesses#confirmation'
+  get 'dashboard' => 'businesses#dashboard'
 
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
