@@ -4,7 +4,7 @@ module NotificationsHelper
         if n.actorable.class.to_s == "Business"
             return n.actorable.name
         elsif n.actorable.class.to_s == "User"
-            return n.actorable.first_name
+            return "@" + n.actorable.slug
         end
                 
     end
@@ -57,10 +57,10 @@ module NotificationsHelper
      		return " a "
         elsif n.action == "Added You"
                 return " as a "
-        elsif n.action == "Accepted Your"
-            return ""
+        elsif n.action == "reserved a field" || n.action == "cancelled the reservation" || n.action == "updated the reservation"
+            return " in "
      	else
-     		return " in a "	
+     		return ""	
      	end
      end
 

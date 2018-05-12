@@ -86,10 +86,19 @@ class ReservationsController < ApplicationController
 
 	def update
 		@reservation = Reservation.find(params[:id])
+		game = @reservation.game
 
 		if @reservation.update_attributes(reservation_params)
 		  flash[:success] = "Reservation updated"
 		  redirect_to @reservation
+
+		  if !game.nil? 
+		  	game.game_lines.uniq.each do |gl|
+  		        Notification.create(recipientable: gl.user, actorable: current_business_or_user, 
+		  		                action: "updated the reservation", notifiable: game)
+		  	end
+		  end
+
 		else
 		  render 'edit'
 		end
@@ -114,11 +123,11 @@ class ReservationsController < ApplicationController
 					game.game_lines.uniq.each do |gl|
 						    if gl.user != current_user
 						        Notification.create(recipientable: gl.user, actorable: current_business_or_user, 
-						                action: "cancelled a reservation", notifiable: game)
+						                action: "cancelled the reservation", notifiable: game)
 						    end
 						end
-					# Notification.create(recipientable: @reservation.business, actorable: current_user, 
-					# 	                action: "Cancelled", notifiable: @reservation)
+					Notification.create(recipientable: @reservation.business, actorable: current_user, 
+						                action: "Cancelled", notifiable: @reservation)
 				end
 		else
 			flash[:danger] = "You can't delete reservations that already checked in."
