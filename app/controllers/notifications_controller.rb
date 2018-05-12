@@ -8,6 +8,7 @@ class NotificationsController < ApplicationController
 	#### TODO When decline game, make it apper in a view
 	def index
 			@notifications = Notification.where(recipientable: current_business_or_user).order(created_at: :desc)
+										.paginate(page: params[:page], per_page: 15)
 	end
 
 	private
