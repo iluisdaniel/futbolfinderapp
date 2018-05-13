@@ -115,9 +115,16 @@ class GamesController < ApplicationController
 			flash[:danger] = "Please cancel your reservation first."
 			redirect_to @game
 		else
+			@game.game_lines.uniq.each do |gl|
+				    if gl.user != current_user
+				        Notification.create(recipientable: gl.user, actorable: current_business_or_user, 
+				                action: "cancelled", notifiable: @game)
+				    end
+			end
 			@game.destroy
 			flash[:success] = "Game destroyed"
 			redirect_to games_path
+
 		end
 	end
 	

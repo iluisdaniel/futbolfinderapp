@@ -11,6 +11,10 @@ class Games::PlayersController < ApplicationController
 			gl.update(accepted: "Accepted")
 			flash[:success] = "You are confirmed for this game!"
 			redirect_to game_path(gl.game)
+			if gl.user == current_user
+			    Notification.create(recipientable: gl.game.user, actorable: current_user, 
+			            action: "Confirmed", notifiable: gl.game)
+			end
 		end
 	end
 end

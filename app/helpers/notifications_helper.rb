@@ -10,17 +10,15 @@ module NotificationsHelper
     end
 
 	def get_right_icon_name(n)
-        if n.notifiable.class.to_s == "Game"
+        if n.notifiable_type == "Game"
             if n.action == "Commented"
             	return "comment"
-            elsif n.action == "reserved a field" || n.action == "cancelled a reservation"
+            elsif n.action == "reserved a field" || n.action == "cancelled the reservation"
             	return "calendar"
             end
             return "soccer-ball-o"
-        elsif n.notifiable.class.to_s == "Reservation"
+        elsif n.notifiable_type == "Reservation"
         	return "calendar"
-        elsif n.notifiable.class.to_s == "Friendship"
-            return "user-plus"    
         end
      end
 
@@ -50,16 +48,18 @@ module NotificationsHelper
 
      def get_rest_of_the_setence(n)
      	if n.action == "Invited You"
-     		return " to a "
+     		return " to  "
      	elsif n.action == "Removed You"
      		return " from a "
      	elsif n.action == "Made"
      		return " a "
         elsif n.action == "Added You"
                 return " as a "
-        elsif n.action == "reserved a field" || n.action == "cancelled the reservation" || n.action == "updated the reservation"
+        elsif n.action == "reserved a field" || n.action == "cancelled the reservation" || n.action == "updated the reservation" || n.action == "Confirmed" || n.action == "Declined" || n.action == "Removed Themselves"
             return " in "
-     	else
+     	elsif n.action == "Requested"
+            return " to be in "
+        else
      		return ""	
      	end
      end

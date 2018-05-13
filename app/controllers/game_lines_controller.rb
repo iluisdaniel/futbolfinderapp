@@ -31,6 +31,8 @@ class GameLinesController < ApplicationController
 	      if @game_line.user == current_user
 	      	@game_line.update(accepted: "Requested")
 	      	@game_line.save
+	      	Notification.create(recipientable: @game_line.game.user, actorable: current_user, 
+	      	      	action: "Requested", notifiable: @game_line.game)
 	      end
 	    else
 	    	flash[:danger] = msg_error
@@ -50,11 +52,14 @@ class GameLinesController < ApplicationController
 			if @game_line.user != current_business_or_user
 				Notification.create(recipientable: @game_line.user, actorable: current_business_or_user, 
 	      				action: get_update_notification_message(params[:accepted], @game_line), notifiable: @game_line.game)
+			else
+				Notification.create(recipientable: @game_line.game.user, actorable: current_business_or_user, 
+				      	action: get_update_notification_message(params[:accepted], @game_line), notifiable: @game_line.game)
 			end
-			if !@game_line.game.business.nil?
-				Notification.create(recipientable: @game_line.game.business, actorable: current_user, 
-	      				action: get_update_notification_message(params[:accepted], @game_line), notifiable: @game_line.game)
-			end
+			# if !@game_line.game.business.nil?
+			# 	Notification.create(recipientable: @game_line.game.business, actorable: current_user, 
+	  #     				action: get_update_notification_message(params[:accepted], @game_line), notifiable: @game_line.game)
+			# end
 		else
 			flash[:danger] = "Error, please try refresh and try again"
 			redirect_back fallback_location: root_path
@@ -70,6 +75,9 @@ class GameLinesController < ApplicationController
 		  	if @game_line.user != current_business_or_user
 		  		Notification.create(recipientable: @game_line.user, actorable: current_business_or_user, 
 	      				action: "Removed You", notifiable: @game_line.game)
+		  	else
+		  		Notification.create(recipientable: @game_line.game.user, actorable: current_business_or_user, 
+		  		      	action: "Removed Themselves", notifiable: @game_line.game)
 		  	end
 		end
 		redirect_back fallback_location: root_path
@@ -95,12 +103,18 @@ class GameLinesController < ApplicationController
 			if !gl.game.business.nil?
 				return "Confirmed"
 			end
-			return "Confirmed you"
+			return "Confirmed for you"
+		elsif accepted_value == "Approved"
+			return "Approved you"
 		else
 			if !gl.game.business.nil?
 				return "Declined"
 			end
-			return "Declined you"
+			if gl.user == current_user
+				return "Declined"
+			end
+			return "Declined for you"
+
 		end
 	end
 
