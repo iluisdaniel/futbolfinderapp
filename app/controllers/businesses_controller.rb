@@ -94,6 +94,8 @@ class BusinessesController < ApplicationController
       # flash[:info] = Date.parse("12-04-2018").day
 
       @charges_amount = get_todays_charges_amount
+
+      @notifications = Notification.where(recipientable: current_business_or_user).order(created_at: :desc).limit(5)
     end 
 
   private
@@ -122,8 +124,10 @@ class BusinessesController < ApplicationController
     end
 
     def get_todays_charges_amount
-      d = Date.parse("12-04-2018")
-      charges = current_business.charges.where(status: "Success", created_at: d.beginning_of_day..d.end_of_day)
+      # d = Date.parse("12-05-2018")
+      d = Date.current - 1.day
+      # d = Date.current - 1.day
+      charges = current_business.charges.where(status: "Successful", created_at: d.beginning_of_day..d.end_of_day)
       # flash[:info] = charges.count
       amount = 0
       charges.each do |c|

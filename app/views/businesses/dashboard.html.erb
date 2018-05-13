@@ -1,18 +1,19 @@
 <% provide(:title, 'Dashboard') %>
-<div class="container" style="margin-top: 20px;">
+<div class="container dsh" style="margin-top: 20px;">
 	<div class="row">
 		<div class="col-md-4">
 			<div class="row">
 				<div class="col-md-6" style="">
 					<div class="well">
-						<h4>Todays Earnings</h4>
-						<%= number_to_currency @charges_amount %>
+						<p style="text-align: center; font-size: 2rem;"><%= number_to_currency @charges_amount %></p>
+						<h5 class="lead" style="font-size: 1.6rem; text-align: center;">Todays<br> Earnings</h5>
+						
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="well">
-						<h4># Reservations</h4>
-						<%= @reservations.count %>
+						<p style="text-align: center; font-size: 2rem;"><%= @reservations.count %></p>
+						<h5 class="lead" style="font-size: 1.6rem; text-align: center;">Todays Reservations</h5>
 					</div>
 				</div>
 			</div>
@@ -22,39 +23,62 @@
 						<h4>Notifications</h4>
 					</div>
 					<div class="content">
-						<table class="table">
-							<thead>
-							</thead>
-							<tbody>
-								<tr>
-									<td>Luis reserved a new field</td>
-								</tr>
-								<tr>
-									<td>Luis reserved a new field</td>
-								</tr>
-								<tr>
-									<td>Luis reserved a new field</td>
-								</tr>
-							</tbody>
+						<table class="table table-hover">
+							<% if @notifications.empty?%>
+							<br>
+								No new notifications at the moment
+							<% end %>
+
+								<% @notifications.each do |n| %>
+						            <tr>
+						              <td>
+						              	<% if n.action["error"] %>
+						              		<i class="fa fa-exclamation-circle" style="font-size: 2rem;"></i> 
+						              		<%= n.action %> <%= link_to n.actorable.name, n.actorable %>. 
+
+							              	<% if n.notifiable.nil? %>
+							              		<%= n.notifiable_type.underscore.humanize.downcase %> <%= n.notifiable_id.to_s %>	
+							              	<% else %>
+						              			<%= link_to n.notifiable.class.to_s.underscore.humanize.downcase + " " + n.notifiable_id.to_s, get_notifiable_path(n) %> 
+						              		<% end %>
+
+						              		<span class="pull-right">Go to <%= link_to "payments", charges_path %></span>
+
+						              	<% else %>
+						              	<i class="fa fa-<%= get_right_icon_name(n) %>" style="font-size: 2rem;"></i> 
+						              	<%= link_to get_name_from_actionable(n), get_actorable_path(n) %> 
+						              	<%= n.action.downcase %>
+						              	<%= get_rest_of_the_setence(n) %>
+						              	<% if n.notifiable.nil? %>
+						              		<%= n.notifiable_type.underscore.humanize.downcase %> <%= n.notifiable_id.to_s %>	
+						              	<% else %>
+					              			<%= link_to n.notifiable.class.to_s.underscore.humanize.downcase + " " + n.notifiable_id.to_s, get_notifiable_path(n) %> 
+					              		<% end %>
+						              	<span class="label label-default"><%= get_new_if_no_read(n) %></span>
+						              	<small class="pull-right"><%= time_ago_in_words(n.created_at) %> ago</small>
+						              	<% end %>
+						              </td>
+						            </tr>
+				 				<% end %>
 
 						</table>
-						<a href="">All Notifications</a>
+						<%= link_to "All Notifications", notifications_path %>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-8">
 				<div class="row">
-					<a href="" class="btn btn-primary btn-fill pull-right">New Reservation</a>
-					<a href="" class="btn btn-info btn-fill pull-right">New Game</a>
-					<a href="" class="btn btn-default btn-fill pull-right">New Charge</a>
+					<a href="" class="btn btn-primary btn-fill pull-right" style="margin-left: 10px;"> <i class="fa fa-calendar" style="font-size: 2rem;"></i></a>
+					<a href="" class="btn btn-info btn-fill pull-right" style="margin-left: 10px;"><i class="fa fa-soccer-ball-o" style="font-size: 2rem;"></i></a>
+					<a href="" class="btn btn-default btn-fill pull-right"><i class="fa fa-dollar" style="font-size: 2rem;"></i></a>
 				</div>
 				<div class="card">
 					<div class="header">
 						<h4>Todays Reservations</h4>
 					</div>
 					<div class="content">
-						<table class="table table-hover table-striped  table-responsive">
+						<table class="table table-hover">
 							<thead>
 							</thead>
 							<tbody>
@@ -78,7 +102,7 @@
 							</tbody>
 
 						</table>
-						<a href="">All Reservations</a>
+						<%= link_to "All Reservations", reservations_path %>
 					</div>
 				</div>
 		</div>
