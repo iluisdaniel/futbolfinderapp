@@ -1,6 +1,6 @@
 <% provide(:title, 'Notifications') %>
 
-<div class="container" style="margin-top:20px;">
+<div class="container ntf" style="margin-top:20px;">
 	<div class="card">
 		<div class="header">
 			<h4>Notifications</h4>
@@ -16,21 +16,4 @@
 			</div>
 		</div>	
     </div>
-</div>
-
-<div class="container">
-<% @notifications.each do |notification| %>
-	N id: <%= notification.id%> |  
-	r id: <%= notification.recipientable_id %> |  
-	r type: <%= notification.recipientable_type%> |  
-	a id: <%= notification.actorable_id%> |  
-	a type: <%= notification.actorable_type%> |  
-	read <%= notification.read_at%> |  
-	action <%= notification.action%> |  
-	n id: <%= notification.notifiable_id%> |  
-	n type: <%= notification.notifiable_type %>
-	<br>
-<% end %>
-
-
 </div>

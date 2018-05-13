@@ -63,6 +63,9 @@ class ChargesController < ApplicationController
 			flash[:success] = "Charge for " + charge.user.first_name + " was refunded succesfully!"
 			redirect_to charge.reservation
 
+			Notification.create(recipientable: charge.user, actorable: current_business_or_user, 
+			        action: "Refunded your payment for ", notifiable: charge.reservation.game)
+
 		rescue Stripe::InvalidRequestError => e
 			flash[:danger] = e.to_s
 			redirect_to charge.reservation
