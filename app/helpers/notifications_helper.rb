@@ -13,6 +13,8 @@ module NotificationsHelper
         if n.notifiable_type == "Game"
             if n.action == "Commented"
             	return "comment"
+            elsif n.action["Charged"]
+                    return "dollar"
             elsif n.action == "reserved a field" || n.action == "cancelled the reservation"
             	return "calendar"
             end

@@ -9,7 +9,21 @@
 	        
 	          <% notifications.each do |n| %>
 	            <tr>
-	              <td><i class="fa fa-<%= get_right_icon_name(n) %>" style="font-size: 2rem;"></i> 
+	              <td>
+	              	<% if n.action["error"] %>
+	              		<i class="fa fa-exclamation-circle" style="font-size: 2rem;"></i> 
+	              		<%= n.action %> <%= link_to n.actorable.name, n.actorable %>. 
+
+		              	<% if n.notifiable.nil? %>
+		              		<%= n.notifiable_type.underscore.humanize.downcase %> <%= n.notifiable_id.to_s %>	
+		              	<% else %>
+	              			<%= link_to n.notifiable.class.to_s.underscore.humanize.downcase + " " + n.notifiable_id.to_s, get_notifiable_path(n) %> 
+	              		<% end %>
+
+	              		<span class="pull-right">Go to <%= link_to "payments", charges_path %></span>
+
+	              	<% else %>
+	              	<i class="fa fa-<%= get_right_icon_name(n) %>" style="font-size: 2rem;"></i> 
 	              	<%= link_to get_name_from_actionable(n), get_actorable_path(n) %> 
 	              	<%= n.action.downcase %>
 	              	<%= get_rest_of_the_setence(n) %>
@@ -20,6 +34,7 @@
               		<% end %>
 	              	<span class="label label-default"><%= get_new_if_no_read(n) %></span>
 	              	<span class="pull-right"><%= time_ago_in_words(n.created_at) %> ago</span>
+	              	<% end %>
 	              </td>
 	            </tr>
  				<% end %>

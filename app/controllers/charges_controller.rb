@@ -20,7 +20,7 @@ class ChargesController < ApplicationController
 				# @charges = current_user.charges.paginate(page: params[:page], per_page: 15)
 				@charges = Charge.findCharges(params[:date], params[:game], params[:business], current_user, params[:page])
 			else
-				@charges = current_user.charges.paginate(page: params[:page], per_page: 15)
+				@charges = current_user.charges.order(created_at: :desc).paginate(page: params[:page], per_page: 15)
 			end
 		else
 			if (params[:date] && !params[:date].empty?) || 
@@ -29,7 +29,7 @@ class ChargesController < ApplicationController
 				# @charges = current_business.charges.paginate(page: params[:page], per_page: 15)
 				@charges = Charge.findCharges(params[:date], params[:reservation], params[:username], current_business, params[:page])
 			else
-				@charges = current_business.charges.paginate(page: params[:page], per_page: 15)
+				@charges = current_business.charges.order(created_at: :desc).paginate(page: params[:page], per_page: 15)
 			end
 		end
 	end

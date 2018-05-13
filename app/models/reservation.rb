@@ -58,7 +58,7 @@ class Reservation < ApplicationRecord
       gls.each do |gl|
         if check_there_is_no_charge(gl.user).empty?
           if gl.user.card_last4
-            charge_player(gl.user, amount_by_player, application_fee, "Successful")
+            charge_player(gl, amount_by_player, application_fee, "Successful")
           end
         end
       end
@@ -79,10 +79,10 @@ class Reservation < ApplicationRecord
     self.charges.where(user: player)
   end
 
-  def charge_player(player, amount, fee, msg)
+  def charge_player(gl, amount, fee, msg)
     begin
       token = Stripe::Token.create({
-        customer: player.stripe_id
+        customer: gl.user.stripe_id
         }, {stripe_account: self.business.stripe_user_id})
 
       charge = Stripe::Charge.create({
@@ -93,15 +93,19 @@ class Reservation < ApplicationRecord
       }, :stripe_account => self.business.stripe_user_id)
 
       # if created save charge on charges table. Save charge id, amount, 
-      c = self.charges.build(stripe_id: charge.id, business: self.business, user: player, 
+      c = self.charges.build(stripe_id: charge.id, business: self.business, user: gl.user, 
         status: msg, amount: amount, application_fee: fee, card_brand: charge.source.brand,
         card_last4: charge.source.last4, card_exp_month: charge.source.exp_month, card_exp_year: charge.source.exp_year)
       c.save
+      Notification.create(recipientable: gl.user, actorable: self.business, 
+                        action: "Charged you " + ActionController::Base.helpers.number_to_currency(amount / 100) + " for ", notifiable: gl.game)
     rescue Stripe::InvalidRequestError, Stripe::CardError => e
       # update charge with error
-      c = self.charges.build(business: self.business, user: player, 
+      c = self.charges.build(business: self.business, user: gl.user, 
         status: "Error", amount: amount, error_msg: e.to_s)
       c.save
+      Notification.create(recipientable: gl.user, actorable: self.business, 
+                        action: "There was an error with your card. Please, contact ", notifiable: gl.game)
     end
   end
 
