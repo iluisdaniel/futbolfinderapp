@@ -55,7 +55,7 @@ module NotificationsHelper
      		return " a "
         elsif n.action == "Added You"
                 return " as a "
-        elsif n.action == "reserved a field" || n.action == "cancelled the reservation" || n.action == "updated the reservation" || n.action == "Confirmed" || n.action == "Declined" || n.action == "Removed Themselves"
+        elsif n.action == "reserved a field" || n.action == "cancelled the reservation" || n.action == "updated the reservation" || n.action == "Confirmed" || n.action == "Declined" || n.action == "Removed Themselves" || n.action == "Commented"
             return " in "
      	elsif n.action == "Requested"
             return " to be in "
