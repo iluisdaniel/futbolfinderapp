@@ -6,7 +6,8 @@ class StaticPagesController < ApplicationController
   	elsif logged_in?
       redirect_to dashboard_path
   	else
-  		redirect_to login_path
+  		@coming_soon = true
+      @launching_email = LaunchingEmail.new
   	end
 
   end

@@ -1,19 +1,57 @@
-<% if !(logged_in? || signed_in?) %> 
-<div class="center jumbotron">
-	<h1> Futbol Finder</h1>
-	<%= link_to "Sign up now!", b_signup_path, class: "btn btn-lg btn-primary" %>
-	<%= link_to "User Sign up now!", u_signup_path, class: "btn btn-lg btn-primary" %>
-	
-</div>
+<% provide(:include_menu, 'false') %>
 
-<% else %>
-	<%if logged_in? && !current_business.subscribed? %>
-		<%= link_to "Subscribe", new_subscription_path(plan: "monthly19"), class: "btn btn-primary" %>
-	<% end %>
-	<%= link_to "Make a new game", new_game_path, class: "btn btn-lg btn-primary" %>
-	<hr>
-	<h3>Games for this week</h3>
-	
+<% if @coming_soon %>
 
+
+	<div class="cmg-soon" style="background-image: url(&quot;https://s3-us-east-2.amazonaws.com/futfinder.com/soccer-game.png&quot;); background-position: center center; background-size: cover; margin-top: -50px; height: 100%;">
+		<header class="navbar">
+		  <div class="container-fluid">
+		      <div class="navbar-header">
+		          <%= link_to root_path, :id => "logo" do %>
+		             <span style="font-size: 1.0em;"><i class="fa fa-soccer-ball-o"></i></span> FutFinder  
+		          <% end %>
+		      </div><!-- end div navbar-header -->           
+		      
+		    </div><!-- End div container fluid -->
+		</header>
+
+		<div class="container">
+			<div class="row" style="margin-top: 200px">
+				<div class="col-md-6 col-md-offset-3">
+					<h2 class="lead" style="color:white; font-weight: 600; font-size: 3rem;">Organize your games <span class="hghlight">easier</span></h2>
+					<p class="" style="color:white; font-weight: 600; font-size: 1.3rem; margin-bottom: 30px;">
+						We want to make the football player's life easier by providing them the necessary features to plan, find, and organize their football games. 
+
+						<br><br>
+
+						Please, leave your email and we will you let you know about our launching date. 
+
+						<br>
+						<br>
+
+						Thank you for your support,<br>
+						FUTFINDER Team
+					</p>
+					<div class="container" style="margin-bottom: 10px;">
+					<% if params[:message] %>
+						<% if params[:message_type] == "success" %>     
+						 
+						   
+						     <span style="color:white; background-color: green; padding: 5px;"><%= params[:message] %></span>
+						 <% else %>
+						 	<span style="color:white; background-color: red; padding: 5px;"><%= params[:message] %></span>
+						 <% end %>
+					<% end %>
+					</div>
+					<%= form_tag(saving_email_path, :method => "post") do %>
+
+						<%= text_field_tag :email, params[:email], placeholder: "Email" , class: 'form-control' %>
+						<%= submit_tag "Save Email", class: "btn btn-primary btn-fill pull-right" %> 
+					<% end %>
+					
+					
+				</div>
+			</div>
+		</div>
+	</div>	
 <% end %>
-

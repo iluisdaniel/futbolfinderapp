@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   # get 'check_in' => 'reservations#check_in'
 
   put 'refund' => 'charges#refund'
+
+  post 'saving_email' => 'launching_emails#create'
   # post 'record_charge' => 'charges#record_charge'
   # post 'confirmed' => 'reservations#confirmed'
 
