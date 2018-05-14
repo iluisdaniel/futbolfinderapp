@@ -102,7 +102,7 @@ class Reservation < ApplicationRecord
     rescue Stripe::InvalidRequestError, Stripe::CardError => e
       # update charge with error
       c = self.charges.build(business: self.business, user: gl.user, 
-        status: "Error", amount: amount, error_msg: e.to_s)
+        status: "Error", amount: amount, application_fee: fee, error_msg: e.to_s)
       c.save
       Notification.create(recipientable: gl.user, actorable: self.business, 
                         action: "There was an error with your card. Please, contact ", notifiable: gl.game)

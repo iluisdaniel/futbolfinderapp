@@ -78,13 +78,15 @@
                     <tbody>
                       <% @charges.each do |charge| %>
                           <tr>
-                            <td><%= charge.id %></td>
+                            <td><%= link_to charge.id, charge_path(charge) %></td>
                             <td><%= charge.user.first_name %></td>
                             <td><%= charge.status %></td>
-                            <td><%= number_to_currency charge.amount / 100.0 %></td>
+                            <td><%= number_to_currency get_charge_amount(charge) %></td>
                             <td>
-                              <% if charge.status != "Refunded" %>
-                              <%= link_to "Refund", refund_path(charge_id: charge.id), method: "put" %>
+                              <% if charge.status != "Refunded" && charge.status != "Error" %>
+                              <%= link_to "Refund", refund_path(charge_id: charge.id), method: "put", 
+                                      data: { confirm: "Are you sure you want to make this action?" },
+                                      title: charge.id, class: "" %>
                                 <% end %>
                               </td>
                           </tr>
