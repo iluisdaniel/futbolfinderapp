@@ -2038,4 +2038,15 @@ ul.alert-dropdown {
     h2 .hghlight{
         color:$primary-color;
     }
+
+    .row{
+        margin-top: 200px;
+    }
+}
+@media only screen and (max-width: 800px){
+    .cmg-soon{
+        .row{
+            margin-top: 50px;
+        }
+    }
 }
