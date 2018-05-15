@@ -117,11 +117,11 @@ class UserTest < ActiveSupport::TestCase
 
   end
 
-  test "Date of birth should be at least 13 years old" do
-    @user.dob = Date.today - 12.years
+  # test "Date of birth should be at least 13 years old" do
+  #   @user.dob = Date.today - 12.years
     
-    assert_not @user.valid?
-  end
+  #   assert_not @user.valid?
+  # end
 
   # test "First name validatioion should reject invalid names" do 
   #   invalid_names = %w[#qwe123456]

@@ -14,7 +14,7 @@ class ActiveSupport::TestCase
   end
 
   def get_next_monday_date
-    d = Date.today
+    d = Date.current
     if d.strftime("%A") == "Monday"
       d = d + 7.days
     else

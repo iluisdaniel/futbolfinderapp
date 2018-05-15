@@ -125,11 +125,11 @@ class User < ApplicationRecord
   		rand(100)
   	end
 
-  	def check_date_of_birth
-  		if !dob.nil? 
-			errors.add(:dob, "User should have at least 13 years old") unless dob < Date.today - 13.years	
-		end
-	end
+ #  	def check_date_of_birth
+ #  		if !dob.nil? 
+	# 		errors.add(:dob, "User should have at least 13 years old") unless dob < Date.today - 13.years	
+	# 	end
+	# end
 
 	private
 

@@ -8,7 +8,7 @@ jose:
   first_name: Luis
   last_name: Fonseca
   gender: Male
-  dob: 1991-08-23
+  # dob: 1991-08-23
   slug: luisdaniel
   games_played: nil
   phone: "5555555555"

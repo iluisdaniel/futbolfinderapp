@@ -2,7 +2,7 @@
 
 one:
   day: Monday
-  open_time: 2016-07-15 10:00:00
-  close_time: 2016-07-15 22:00:00
+  open_time: "10:00"
+  close_time: "22:00"
   business_id: 1
 

@@ -29,12 +29,12 @@ class ScheduleTest < ActiveSupport::TestCase
   	end
 
   	test "Open Time should be present" do
-  		@schedule.open_time = nil
+  		@schedule.open_time = ""
   		assert_not @schedule.valid?
   	end
 
   	test "Close time should be present" do
-  		@schedule.day = nil
+  		@schedule.day = ""
   		assert_not @schedule.valid? 
   	end
 

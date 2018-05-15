@@ -21,9 +21,6 @@ class CustomVenueTest < ActiveSupport::TestCase
   	@cv.number_players = nil
   	@cv.ground = ""
   	@cv.field_type = ""
-  	@cv.city = ""
-  	@cv.state = ""
-  	@cv.zipcode = ""
   	assert @cv.valid?
   end
 
