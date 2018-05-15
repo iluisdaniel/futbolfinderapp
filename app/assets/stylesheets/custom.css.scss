@@ -2035,8 +2035,12 @@ ul.alert-dropdown {
 
 /********** Landing Page *******************/
 .cmg-soon{
-    h2 .hghlight{
+    .hghlight{
         color:$primary-color;
+    }
+
+    p{
+        color:white; font-weight: 600; font-size: 1.8rem;
     }
 
     .row{

@@ -4,7 +4,7 @@ class LaunchingEmailsController < ApplicationController
 		@launching_email = LaunchingEmail.new(email: params[:email])
 
 		if @launching_email.save
-			redirect_to root_path(email: "Saved", message_type: "success", message: "Email saved!" )
+			redirect_to root_path(email: "Saved", message_type: "success", message: "Email saved! Thank you for your support!" )
 		else
 			redirect_to root_path( message_type: "dabger", message: "Sorry email was not saved. Please try again. " + @launching_email.errors.full_messages.to_s)
 		end
