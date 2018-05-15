@@ -3,7 +3,7 @@
 <% if @coming_soon %>
 
 
-	<div class="cmg-soon" style="background-image: url(&quot;https://s3-us-east-2.amazonaws.com/futfinder.com/soccer-game.png&quot;); background-position: center center; background-size: cover; margin-top: -50px; height: 100%;">
+	<div class="cmg-soon" style="background-image: url(&quot;https://s3-us-east-2.amazonaws.com/futfinder.com/soccer-game.png&quot;); background-position: center center; background-size: cover; margin-top: -50px; min-height: 100%; width:100%; height: auto; position: fixed;">
 		<header class="navbar">
 		  <div class="container-fluid">
 		      <div class="navbar-header">
@@ -48,8 +48,8 @@
 						<%= text_field_tag :email, params[:email], placeholder: "Email" , class: 'form-control' %>
 						<%= submit_tag "Save Email", class: "btn btn-primary btn-fill pull-right" %> 
 					<% end %>
-					
-					
+
+
 				</div>
 			</div>
 		</div>
