@@ -1,24 +1,23 @@
 <% provide(:title, 'New Game') %>
-<% provide(:include_menu, 'false') %>
 
-<div class="container ngf">
+<div class="container ngf" style="margin-top: 40px;">
   <div class="row">
     <div class="col-md-8 col-md-offset-2 col-sm-12">
-      <%= render 'shared/logo' %>
-
-      <% if signed_in? %>
-        <div style="text-align:center;margin-top:20px; margin-bottom:30px;">
-          <span class="step active"></span>
-          <span class="step"></span>
-          <span class="step"></span>
-          <% if current_user.card_last4.nil? %>
-            <span class="step"></span>
-          <% end %>
-        </div>
-      <% end %>  
       <div class="card">
       <div class="header">
-        <h4>New Game Settings</h4>
+        <h4>New Game Settings
+          <% if signed_in? %>
+            <div class="pull-right" style="margin-right:30px;">
+               <small>Step 1</small>
+              <span class="step active"></span>
+              <span class="step"></span>
+              <span class="step"></span>
+              <% if current_user.card_last4.nil? %>
+                <span class="step"></span>
+              <% end %>
+            </div>
+          <% end %>  
+        </h4>
       </div>
       <div class="content">
         <%= form_for(@game) do |f| %>

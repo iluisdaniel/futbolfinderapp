@@ -1,31 +1,29 @@
 <% provide(:title, 'Confirmation') %>
-<% provide(:include_menu, 'false') %>
 
 
-<div class="container ngf ngf3">
+<div class="container ngf ngf3" style="margin-top: 40px;">
   <div class="row">
     <div class="col-md-10 col-md-offset-1 col-sm-12">
-      <h1 id="logo-black">
-        <i class="fa fa-soccer-ball-o"></i> FUTFINDER 
-        <% if params[:date] %>
-          <br><small>New Game</small>
-        <% end %>  
-      </h1>
-
-      <% if params[:date] %>
-          <div style="text-align:center;margin-top:20px; margin-bottom:30px;">
-            <span class="step finish"></span>
-            <span class="step finish"></span>
-            <% if params[:source] == "Card" %>
-              <span class="step finish"></span>
-            <% end %>
-            <span class="step active"></span>
-          </div>
-      <% end %>    
-
+      
       <div class="card">
         <div class="header">
-          <h4>Confirmation</h4>
+          <h4>Confirmation
+            <% if params[:date] %>
+                <div class="pull-right" style="margin-right:30px;">
+                  <% if params[:source] == "card"%>
+                    <small>Step 4</small>
+                  <% else %>
+                    <small>Step 3</small>
+                  <% end %>
+                  <span class="step finish"></span>
+                  <span class="step finish"></span>
+                  <% if params[:source] == "Card" %>
+                    <span class="step finish"></span>
+                  <% end %>
+                  <span class="step active"></span>
+                </div>
+            <% end %> 
+          </h4>
         </div>
         <div class="content">
             <div class="row">
