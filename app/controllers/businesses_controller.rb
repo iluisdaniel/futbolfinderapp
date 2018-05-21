@@ -90,7 +90,7 @@ class BusinessesController < ApplicationController
     end
 
     def dashboard
-      @reservations = current_business.reservations.where(date: Date.parse("23-04-2018"))
+      @reservations = current_business.reservations.order(date: :desc, time: :desc).limit(10)
       # flash[:info] = Date.parse("12-04-2018").day
 
       @charges_amount = get_todays_charges_amount
