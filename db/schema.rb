@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180514075314) do
+ActiveRecord::Schema.define(version: 20180909084430) do
 
   create_table "businesses", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string "name"
@@ -191,8 +191,8 @@ ActiveRecord::Schema.define(version: 20180514075314) do
 
   create_table "reservations", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.date "date"
-    t.time "time"
-    t.time "end_time"
+    t.datetime "time"
+    t.datetime "end_time"
     t.integer "business_id"
     t.integer "field_id"
     t.integer "game_id"

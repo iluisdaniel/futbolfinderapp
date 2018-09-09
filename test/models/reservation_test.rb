@@ -10,7 +10,7 @@ class ReservationTest < ActiveSupport::TestCase
   	# @schedule = Schedule.new(day: "Tuesday", open_time: "10:00", close_time: "22:00", business: @business)
     @schedule = schedules(:one)
   	@reservation = Reservation.new(time: "13:00:00", 
-  		end_time: "14:00:00", business_id: @business.id, field_id: @field.id, date: Date.parse("21-05-2018"))
+  		end_time: "14:00:00", business_id: @business.id, field_id: @field.id, date: Date.parse("24-09-2018"))
     # @reservation.date = get_next_monday_date
     # @reservation.date = Date.parse("21-05-2018")
   end
