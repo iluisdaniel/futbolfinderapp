@@ -29,7 +29,7 @@
           </div>
           <div class="col-md-8">
             <div class="col-md-6">
-                <%= f.time_select :time, {prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 6, time_separator: "</div><div class='col-md-6'>"}, {class: 'form-control'} %> 
+                <%= f.datetime_select :time, {prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 0, time_separator: "</div><div class='col-md-6'>"}, {class: 'form-control'} %> 
             </div>
           </div>
         </div>   
@@ -42,7 +42,7 @@
           </div>
           <div class="col-md-8">
             <div class="col-md-6">
-                <%= f.time_select :end_time, {prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 10, time_separator: "</div><div class='col-md-6'>"}, {class: 'form-control'} %>
+                <%= f.datetime_select :end_time, {prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 0, time_separator: "</div><div class='col-md-6'>"}, {class: 'form-control'} %>
             </div>
           </div>
         </div>   

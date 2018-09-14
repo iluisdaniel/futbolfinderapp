@@ -34,9 +34,9 @@
               <!-- List group -->
               <ul class="list-group">
                 <li class="list-group-item"><i class="fa fa-futbol-o"></i> Field: <span class="label label-success"><%= get_field(@reservation.field_id).name %></li> 
-                <li class="list-group-item"><i class="fa fa-calendar"></i> <%= @reservation.date %></li>
+                <li class="list-group-item"><i class="fa fa-calendar"></i> <%= @reservation.time.strftime("%D") %></li>
                 <li class="list-group-item"><i class="fa fa-dollar"></i> <%= @reservation.field_price / 100.00 unless @reservation.field_price.nil? %></li>
-                <li class="list-group-item"> <i class="fa fa-clock-o"></i> <%= @reservation.time.strftime("%I:%M %p") %> - <%= @reservation.end_time.strftime("%I:%M %p") %></li>
+                <li class="list-group-item"> <i class="fa fa-clock-o"></i> <%= @reservation.time.strftime("%D %I:%M %p") %> - <%= @reservation.end_time.strftime("%D %I:%M %p") %></li>
                 <li class="list-group-item"><i class="fa fa-user"></i> 
                   Created by 
                   <% if @reservation.game %>

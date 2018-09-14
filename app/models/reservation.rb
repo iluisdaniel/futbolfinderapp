@@ -5,21 +5,17 @@ class Reservation < ApplicationRecord
   has_one :checkin_time
 
   before_create :randomize_id
-  validates :date, uniqueness: {scope: [ :time, :end_time, :field_id ]}
+  validates :time, uniqueness: {scope: [ :end_time, :field_id ]}
   
-  validates :date, presence: true
 	validates :time, presence: true
 	validates :end_time, presence: true
 	validates :field_id, presence: true
-	validates :business_id, presence: true
 
 	#Validate Date
-  validate :check_date_later_than_today
-  validate :check_year_not_greater_than_a_year
+  validate :check_time_greater_than_current_time
 
   #Validate Time
   validate :check_game_is_at_least_one_hour
-  validate :check_game_time_greater_than_time_now
   validate :check_if_the_business_is_open_at_that_time
 
   #Validate Field 
@@ -211,21 +207,13 @@ class Reservation < ApplicationRecord
     #validation
 
     ### Validate Date
-  	def check_date_later_than_today
-  		errors.add(:date, "Date should be today or later") unless date >= Date.current
+  	def check_time_greater_than_current_time
+  		errors.add(:date, "Time should be greater than current time") unless time >= DateTime.current
   	end
-
-    def check_year_not_greater_than_a_year
-      errors.add(:date, "Date should not be greater than a year") unless date < Date.current + 1.year
-    end
 
     ### Validate Time
   	def check_game_is_at_least_one_hour
   		errors.add(:end_time, "A game should be at least for an hour") unless game_time_greater_than_one_hour?
-  	end
-
-  	def check_game_time_greater_than_time_now
-  		errors.add(:time, " should be greater for time now") unless game_time_greater_than_time_now?
   	end
 
   	## Validate business Schedule
@@ -321,28 +309,18 @@ class Reservation < ApplicationRecord
   ######### TIME ################
 
   def game_time_greater_than_one_hour?
-    t = time.to_i
-    t_end =  end_time.to_i
+    time_test = time + 1.hour
 
-    if t_end - t < 3600
-     return false
+
+    # t = time.to_i
+    # t_end =  end_time.to_i
+
+    # if t_end - t < 3600
+    if time_test <= end_time
+     return true
     end
 
-    return true
-  end
-
-  def game_time_greater_than_time_now?
-    today = Date.current
-
-    if date == today
-      d = Time.current
-
-      if (time.hour <= d.hour)
-        return false
-      end
-    end
-
-    return true
+    return false
   end
 
   ######### Check Business Schedule ######################
@@ -358,50 +336,109 @@ class Reservation < ApplicationRecord
   end
 
   def is_it_open?
-    day = date.strftime("%A")
-    schedule = Schedule.where(business_id:business_id, day: day)
+    # TO-DO: We shouldn't check for schedule.many?, since we are planning to have one only schedule for day for business. 
+      
+        
+      # Check if time is before 6 am, it should check for the day before instead. 
+      # for example: business input schedule 10 to 2 am. the 2 am is alreday the next day.
+      if time.hour < 6
+        day = (time - 1.day).strftime("%A")
+      else
+        day = time.strftime("%A")
+      end
+
+
+     # logger.info " **************
+
+     #  here 
+
+     # "
+
+    schedule = Schedule.where(business_id: business_id, day: day).first
+
+    # logger.info " **************
+
+    #   day #{day}
+    #   schedule #{schedule.day.to_s unless schedule.nil?}
+
+      
+    #  "
 
     # check if there are schedules for the date of the game
-    if !schedule.empty?
-      schedule_to_hash = schedule.as_json
-
-      if schedule.many?
-        # check in all the times
-        is_open = false
-
-        for i in 0..schedule.count - 1
-          is_open = compare_times?(schedule_to_hash[i]['open_time'], 
-          schedule_to_hash[i]['close_time'], 
-          time, end_time, day)
-
-          if is_open == true 
-            break
-          end	
-        end
-
-        return is_open
-      else
-        #just one scheudle for day
-        return compare_times?(schedule_to_hash[0]['open_time'], 
-        schedule_to_hash[0]['close_time'], 
-        time, end_time, day)
-      end
+    if !schedule.nil?
+        return compare_times?(schedule.open_time, schedule.close_time, schedule.day)
     else
       return false
     end
   end
 
 	#returns true if game time is in between the open time and close time
-	def compare_times?(b_open_time,b_close_time, g_time, g_end_time, day)
-		b_open_time = b_open_time
-		b_close_time = b_close_time
-		g_time = g_time.strftime("%H:%M")
-		g_end_time = g_end_time.strftime("%H:%M")
+  # TODO: When we change how time zones are handled (ex: by each user) we need to adapt this method
+	def compare_times?(b_open_time_str, b_close_time_str, day)
+    # logger.info "*********************************************"
+    # logger.info "               "
+
+    d = 0
+    if time.hour < 6
+      d = 1
+    end 
+
+    t = Time.parse(b_open_time_str)
+    b_open_time = DateTime.new(time.year,time.month,time.day - d,t.hour,t.min, 0, "-0400")
+
+    t_end = Time.parse(b_close_time_str)
+    b_close_time = DateTime.new(time.year,time.month,time.day - d,t_end.hour,t_end.min, 0, "-0400")
+
+    if b_close_time_str < b_open_time_str
+        b_close_time = b_close_time + 1.day
+    end
+
+    # first = false
+    # second = false
+    # third = false
+
+    # if b_open_time <= time
+    #   first = true
+    # end
+
+    # if time <= b_close_time
+    #   second = true
+    # end
+
+    # if end_time <= b_close_time
+    #   third = true
+    # end
+
+    # logger.info "
+    #     Variables:
+
+    #         time #{time.to_s}
+    #         end_time #{end_time.to_s}
+
+    #         day #{day}
+    #         b_open_time_str #{b_open_time_str}
+    #         b_close_time_str #{b_close_time_str}
+
+    #         t #{t.to_s}
+    #         t_end #{t_end.to_s}
+
+    #         b_open_time #{b_open_time.to_s}
+    #         b_close_time #{b_close_time.to_s}
+
+    #         first #{first.to_s}
+    #         second #{second.to_s}
+    #         third #{third.to_s}
+
+                    
+    #  "
 
 
-		if (b_open_time <= g_time) && (g_time <= b_close_time) && 
-			(g_end_time <= b_close_time)
+		if (b_open_time <= time) && (time < b_close_time) && 
+			(end_time <= b_close_time)
 			return true
+    elsif (end_time <= b_close_time) && 
+      (time - 1.day).strftime("%A") == b_open_time.strftime("%A")
+        return true
 		else
 			return false
 		end

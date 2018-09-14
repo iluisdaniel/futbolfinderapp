@@ -77,6 +77,7 @@ class ReservationsController < ApplicationController
 		else
 			render 'new'
 			flash[:danger] = @reservation.errors.full_messages.to_s
+			flash[:info] =@reservation.end_time
 		end
 	end
 

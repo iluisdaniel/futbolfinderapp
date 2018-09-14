@@ -111,10 +111,16 @@ class Business < ApplicationRecord
         end 
   end
 
-  def self.get_open_businesses_at(date, time)
-      Business.all.includes(:schedules).references(:schedules)
-          .where("schedules.day = ? AND schedules.open_time <= ? AND schedules.close_time > ?", 
-                  date.to_date.strftime("%A"), time.strftime("%H:%M"), time.strftime("%H:%M"))
+  def self.get_open_businesses_at(date, time, end_time)
+      if time < end_time
+        Business.all.includes(:schedules).references(:schedules)
+          .where("schedules.day = ? AND schedules.open_time <= ?", 
+                  date.to_date.strftime("%A"), time.strftime("%H:%M"))
+      else
+        Business.all.includes(:schedules).references(:schedules)
+          .where("schedules.day = ?", 
+                  date.to_date.strftime("%A"))
+      end
   end
 
 end

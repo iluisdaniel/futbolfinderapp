@@ -4,7 +4,6 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Date</th>
         <th>Time</th>
         <th>End Time</th> 
         <th>Field Name</th>
@@ -18,8 +17,7 @@
 
         <tr>
           <td><%= reservation.id %></td>
-          <td><%= link_to reservation.date.strftime("%B %e %Y"), reservation %></td>
-          <td><%= reservation.time.strftime("%Y") %></td>
+          <td><%= reservation.time.strftime("%a %b %e %r %Y") %></td>
           <td><%= reservation.end_time.strftime("%r") %></td>
           <td><%= get_field(reservation.field_id).name %></td>
           <% if reservation.game %>

@@ -1,8 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  day: Monday
+  day: "<%= DateTime.current.strftime('%A')%>"
   open_time: "10:00"
-  close_time: "22:00"
+  close_time: "20:00"
   business_id: 1
+
+two:
+  day: "<%= (DateTime.current + 2.day).strftime('%A')%>"
+  open_time: "10:00"
+  close_time: "02:00"
+  business_id: 1  
+
 

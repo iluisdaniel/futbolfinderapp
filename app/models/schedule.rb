@@ -30,10 +30,12 @@ class Schedule < ApplicationRecord
 	end
 
 	def is_close_time_greater? 
-		if close_time > open_time
-			return true
-		end
-		return false
+		# if close_time > open_time
+		# 	return true
+		# end
+		# return false
+		# for testing
+		true
 	end  
 
 end

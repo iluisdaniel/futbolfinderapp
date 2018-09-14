@@ -30,8 +30,9 @@ class AvailableFieldsController < ApplicationController
 				today > date_parsed
 				@message = "Sorry, reservations should be at least one hour from now."
 			else
+				flash[:info] = Business.get_open_businesses_at(params[:date], Time.zone.parse(time), Time.zone.parse(time) + (params[:duration].to_f).hour).count.to_s
 				@businesses = get_available_businesses(Business.get_open_businesses_at(params[:date], 
-														Time.zone.parse(time)), time)
+														Time.zone.parse(time), Time.zone.parse(time) + (params[:duration].to_f).hour), Time.zone.parse(time))
 				if @businesses.empty?
 					@message = "We couldn't find a business available at " + '"' + params[:date] + ", " + time + '"'
 				end
@@ -60,9 +61,12 @@ class AvailableFieldsController < ApplicationController
 		bs = Hash.new
 		businesses.each do |b|
 			b.fields.each do |f|
-				end_time = Time.zone.parse(time) + (params[:duration].to_f).hour 
-				res = Reservation.new(date: params[:date], time: Time.zone.parse(time), 
-					end_time: end_time, business_id: b.id, field_id: f.id)
+				date = Date.parse(params[:date])
+				time_res = DateTime.new(date.year,date.month,date.day,time.hour,time.min, 0, "-0400")
+				end_time_res = time_res + (params[:duration].to_f).hour
+				# end_time = Time.zone.parse(time) + (params[:duration].to_f).hour 
+				res = Reservation.new(time: time_res, 
+					end_time: end_time_res, business_id: b.id, field_id: f.id)
 				if res.valid?
 					# for debuggin
 					# flash[:info] = "found a res valid"
