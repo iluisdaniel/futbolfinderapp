@@ -106,18 +106,6 @@
           
         <% end %>
       </div>
-      <div class="col-md-4">
-        <% if current_user.card_last4.nil? %>
-          <%= link_to "Add Payment Method", new_payment_method_path, class: "btn btn-primary btn-fill" %>
-        <% else %>
-          <h5 class="lead" style="margin-top: 50px;">CARD ON FILE</h5>
-          <div><strong>Card on File:</strong> <%= current_user.card_brand %> (**** **** **** <%= current_user.card_last4 %>)</div>
-          <div style="margin-bottom: 20px;"><strong>Expiration:</strong> <%= current_user.card_exp_month %> / <%= current_user.card_exp_year %></div>
-
-          <%= link_to "Charges", charges_path, class: "btn btn-primary btn-fill" %>
-          <%= link_to "Update your card", new_payment_method_path, class: "btn btn-default" %>
-        <% end %>  
-      </div>
 
     </div>
 </dir>

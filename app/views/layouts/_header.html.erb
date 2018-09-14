@@ -11,12 +11,6 @@
         </div><!-- end div navbar-header -->           
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right" style="">
-
-               <li class="<%= 'active' if current_page?(controller: '/businesses', action: 'index') %>">
-                  <%= link_to b_businesses_path do %>
-                   <i class="fa fa-building"></i> Businesses
-                  <% end %>
-                </li>
                 
                 <li class="<%= 'active' if current_page?(controller: '/users', action: 'index') %>">
                   <%= link_to u_users_path do %>
@@ -47,7 +41,6 @@
                     </a>
                     <ul class="dropdown-menu">
                       <li><%= link_to "Profile", current_user %></li>
-                      <li><%= link_to "Payments", charges_path %></li>
                       <li><%= link_to "Settings", edit_user_path(current_user) %></li>
                       <li class="divider"></li>
                       <li>
