@@ -45,11 +45,6 @@ class GameTest < ActiveSupport::TestCase
     assert_not @game.valid?
   end
 
-  test "Title shuold be greater than 4" do
-    @game.title = "aa"
-    assert_not @game.valid?
-  end
-
   test "title should minimum than 60" do 
     @game.title = "a" * 61
     assert_not @game.valid?
@@ -60,20 +55,11 @@ class GameTest < ActiveSupport::TestCase
     assert_not @game.valid?
   end
 
-  test "desc should be greater than 6" do
-    @game.description = "aa"
-    assert_not @game.valid?
-  end
-
   test "des should be less than 500" do 
     @game.description = "a" * 501
     assert_not @game.valid?
   end
 
-  test "description should be present" do 
-    @game.description = ""
-    assert_not @game.valid?
-  end
   # test "game should be valid" do*
   # 	assert @game.valid?
   # end

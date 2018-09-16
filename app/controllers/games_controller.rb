@@ -10,17 +10,13 @@ class GamesController < ApplicationController
 		#FIX displaying same day games in games and not in old games
 		# TODO: Maybe, include game status ex: planning, ready, complete?
 		@games = Game.withReservationOrVenue(current_business_or_user, params[:page])
-		if (params[:date] && !params[:date].empty?) || 
-			(params[:public] && !params[:public].empty?) || 
-			(params[:current] && !params[:current].empty?)
-			@games = Game.FindGames(current_business_or_user, params[:date], params[:public], params[:current],  params[:page])
-
-			if !params[:date].empty?
-				params[:current] = "Current"
-			end
-		elsif params[:invited] && !params[:invited].empty?
+		if (params[:date] && !params[:date].empty?)
+			@games = Game.searchWithReservationOrVenue(current_business_or_user, params[:date], params[:page])
+		elsif params[:status] == "Invited"
 			@games = Game.get_invited_ones(current_user, params[:page])
-		elsif params[:planning] && !params[:planning].empty?
+		elsif params[:status] == "Completed"
+			@games = Game.old_reservations_or_custom_venues(current_business_or_user, params[:page])
+		elsif params[:status] == "Planning"
 			@games = Game.without_reservation(current_business_or_user, params[:page])
 		else
 			@games = Game.withReservationOrVenue(current_business_or_user, params[:page])
@@ -31,7 +27,7 @@ class GamesController < ApplicationController
 				@msg = "You don't have any invitations pending at the moment."
 			elsif params[:date] || params[:current] || params[:public]
 				@msg = "Sorry, we couldn't find any games"
-			elsif params[:planning]
+			elsif params[:status]
 					@msg = "You don't have any planning games at this moment"
 			else
 				@msg = "You don't have any games at this moment"
@@ -52,6 +48,7 @@ class GamesController < ApplicationController
 		# users can set alerts in case a filed got reserved on a time. Maybe, choose prefered place and time and if another users reserved they get an alert. 
 		#use bootstrap h1 predertemined header
 		@game = Game.find(params[:id])
+		@reservation = Reservation.new
 		#Bug - when a field is erased from a business, and the show action is called it fails because it cannot find field to show field info into the show page
 		# Make impossible to erase a field in the case there are open games. Or it has to erased all of them. 
 	end
@@ -82,16 +79,46 @@ class GamesController < ApplicationController
 
 		@game = current_user.games.build(game_params)
 
-		if @game.save
-			redirect_to available_fields_path(game: @game)
+		# if params[:time]
+		# 	flash[:success] = params[:time].values[1] 
+		# 	flash[:info] = params[:date] 
+		# 	params[:time] = nil
+		# end
+
+		if (params[:date] && !params[:date].empty?) && 
+			(!params[:time].values[0].empty?)
+			date = Date.strptime(params[:date], '%m/%d/%Y')
+			time = DateTime.new(date.year,date.month,date.day,params[:time].values[0].to_i ,params[:time].values[1].to_i , 0, "-0400")
+			@reservation = Reservation.new(time: time, end_time: time + (params[:duration].to_f).hour)
+		end
+
+
+		if !@reservation.nil? && @reservation.valid? && @game.save
+			# redirect_to available_fields_path(game: @game)
+			 flash[:success] = "Game created!"
+			redirect_to @game
+
+			@reservation.game = @game
+			@reservation.save
+
 			if !@game.user_id.nil?
 				gl = GameLine.new(user_id: @game.user_id, game_id: @game.id, invited_by: nil)
 				gl.save
 				gl = @game.game_lines.first.update(accepted: "Accepted")
 			end
 		else
+			if @reservation.nil? 
+				flash[:danger] = "Please choose a correct date and time"
+			elsif !@reservation.valid?
+				flash[:danger] = @reservation.errors.full_messages.first.to_s
+			else
+				flash[:danger] = @game.errors.full_messages.first.to_s
+			end
+			params[:time] = nil
 			render 'new'
 		end
+
+		
 	end
 
 	def edit

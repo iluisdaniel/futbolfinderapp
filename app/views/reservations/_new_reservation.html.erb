@@ -1,11 +1,8 @@
-<% if signed_in? %>
-    <%= link_to "New Reservation", available_fields_path(game: @game), class: "btn btn-primary btn-fill btn-round" %>
-<% else %>
 <!-- Button trigger modal -->
 
   <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
 
-   Make New Reservation
+    New Venue
 
   </button>
 
@@ -21,7 +18,7 @@
 
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 
-            <h4 class="modal-title" id="myModalLabel">New Reservation</h4>
+            <h4 class="modal-title" id="myModalLabel">New Time</h4>
 
           </div>
 
@@ -30,15 +27,34 @@
            <div class="row">
            <%= render 'shared/error_messages', object: f.object %>
            </div> 
+
            
              <div class="row">
                <div class="form-group">
-                 <div class="col-md-2">
-                   <%= f.label :date, 'Date' %>
-                 </div>
-                 <div class="col-md-8">
+                 
+                 <div class="col-md-5 col-md-offset-1">
                    <div class="col-md-4">
-                      <%= f.date_select :date, {prompt: { day: 'Day', month: 'Month' }, start_year: Date.today.year, end_year: Date.today.year,  with_css_classes: true, date_separator: "</div><div class='col-md-4'>"}, { class: 'form-control'} %>
+                     <%= f.label :date, 'Date' %>
+                   </div>
+                   <div class="col-md-8">
+                        <%= text_field_tag :date, params[:date], data:{ provide:'datepicker', 'date-autoclose' => 'true' }, placeholder: "MM-DD-YYYY", class: "form-control", :autocomplete => :off %>
+                   </div>
+                 </div>
+                 <div class="col-md-5">
+                   <div class="col-md-4">
+                    <%= f.label :duration, 'Duration' %>
+                   </div>
+                   <div class="col-md-7">
+                         <%= select_tag :duration, 
+                              options_for_select([
+                                  ['1 Hour', '1'],
+                                  ['1 Hour 30 Min', '1.5'],
+                                  ['2 Hour', '2'],
+                                  ['2 Hour 30 Min', '2.5'],
+                                  ['3 Hour', '3'],
+                                  ['3 Hour 30 Min', '3.5']
+                                ], 
+                                params[:duration]),  class: "form-control" %>
                    </div>
                  </div>
                </div>   
@@ -46,61 +62,18 @@
              
              <div class="row">
                <div class="form-group">
-                 <div class="col-md-2">
+                 <div class="col-md-1 col-md-offset-1">
                    <%= f.label :time, 'Time' %>
                  </div>
                  <div class="col-md-8">
                    <div class="col-md-6">
-                       <%= f.time_select :time, {prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 6, time_separator: "</div><div class='col-md-6'>"}, {class: 'form-control'} %> 
+                       <%= time_select :time, params[:time], {prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 0, time_separator: "</div><div class='col-md-6'>"}, {class: 'form-control'} %> 
                    </div>
                  </div>
                </div>   
              </div>
 
-             <div class="row">
-               <div class="form-group">
-                 <div class="col-md-2">
-                  <%= f.label :end_time, 'End Time' %>
-                 </div>
-                 <div class="col-md-8">
-                   <div class="col-md-6">
-                       <%= f.time_select :end_time, {prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 10, time_separator: "</div><div class='col-md-6'>"}, {class: 'form-control'} %>
-                   </div>
-                 </div>
-               </div>   
-             </div>
-
-             <% if !logged_in? %> 
-             <div class="row">
-               <div class="form-group">
-                 <div class="col-md-2">
-                 <%= f.label :business_id, 'Business' %>
-                 </div>
-                 <div class="col-md-10">
-                   <div class="col-md-8">
-                     <%= f.collection_select(:business_id, @businesses, :id,:name, {prompt: true},  {:class => 'form-control'}) %>   
-                   </div>
-                 </div>   
-               </div>
-             </div>
-             <% end %>
-
-             <% if !signed_in? %>
-             <div class="row">
-               <div class="form-group">
-                 <div class="col-md-2">
-                 <%= f.label :field_id, 'Field' %>
-                 </div>
-                 <div class="col-md-10">
-                   <div class="col-md-8">
-                     <%= f.collection_select(:field_id, @fields, :id,:name, {prompt: true},  {:class => 'form-control'}) %>      
-                   </div>
-                 </div>   
-               </div>
-             </div>
-             <% end %>
-
-             <%= f.hidden_field :game_id, :value => @game.id %>
+             <%= hidden_field_tag :game_id, @game.id %>
 
           </div>
 
@@ -117,5 +90,3 @@
       </div>
 
     </div>
-
-<% end %>

@@ -5,25 +5,88 @@
     <div class="col-md-8 col-md-offset-2 col-sm-12">
       <div class="card">
       <div class="header">
-        <h4>New Game Settings
-          <% if signed_in? %>
-            <div class="pull-right" style="margin-right:30px;">
-               <small>Step 1</small>
-              <span class="step active"></span>
-              <span class="step"></span>
-              <span class="step"></span>
-              <% if current_user.card_last4.nil? %>
-                <span class="step"></span>
-              <% end %>
-            </div>
-          <% end %>  
+        <h4>⚽️ New Game 
         </h4>
       </div>
       <div class="content">
         <%= form_for(@game) do |f| %>
+        
+
+      <a class="">
+        Time and Venue <i class="fa fa-caret-down"></i>
+      </a>
+      <hr style="margin-top: 5px;">
+      <div >
         <div class="row">
-          <%= render 'shared/error_messages', object: f.object %>
-        </div>	
+          <div class="form-group">
+
+            <div class="col-md-4 col-md-offset-1">
+              <div class="col-md-4">
+                <%= f.label :date, 'Date' %>
+              </div>
+              <div class="col-md-8">
+                   <%= text_field_tag :date, params[:date], data:{ provide:'datepicker', 'date-autoclose' => 'true' }, placeholder: "MM/DD/YYYY", class: "form-control", :autocomplete => :off %>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="col-md-4">
+               <%= f.label :duration, 'Duration' %>
+              </div>
+              <div class="col-md-7">
+                    <%= select_tag :duration, 
+                         options_for_select([
+                             ['1 Hour', '1'],
+                             ['1 Hour 30 Min', '1.5'],
+                             ['2 Hour', '2'],
+                             ['2 Hour 30 Min', '2.5'],
+                             ['3 Hour', '3'],
+                             ['3 Hour 30 Min', '3.5']
+                           ], 
+                           params[:duration]),  class: "form-control" %>
+              </div>
+            </div>
+            <div class="col-md-1">
+              
+            </div>
+          </div>   
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-1 col-md-offset-1">
+              <%= f.label :time, 'Time' %>
+            </div>
+            <div class="col-md-8">
+              <div class="col-md-6">
+                  <%= time_select :time, params[:time], {prompt: {hour: 'Choose hour', minute: 'Choose minute'}, minute_step: 30, ignore_date: true, ampm: true, start_hour: 0, time_separator: "</div><div class='col-md-6'>"}, {class: 'form-control'} %> 
+              </div>
+            </div>
+          </div>   
+        </div>
+
+        <div class="row" style="margin-bottom: 40px;">
+               <div class="form-group">
+                 <div class="form-group">
+                   <div class="col-md-2">
+                     <%= f.label :location, 'Location' %>
+                   </div>
+                   <div class="col-md-8">
+                         <%= text_field_tag :location, params[:location], class: 'form-control' %>
+                   </div>
+                 </div>  
+               </div>   
+       </div>
+     </div>
+
+        <a class="" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+          Game Settings <i class="fa fa-caret-down"></i>
+        </a>
+        <hr style="margin-top: 5px;">
+
+        <div class="row">
+        <div class="collapse" id="collapseExample">
+
+       
 
         <div class="row">
           <div class="form-group">
@@ -80,7 +143,7 @@
               </div>
               <div class="col-md-9">
                 <div class="col-md-8">
-                  <%= f.select :number_players, options_for_select((6..22)), {prompt: "Select"}, { class: 'form-control'} %>     
+                  <%= f.select :number_players, options_for_select((6..22),  10), {prompt: "Select"}, { class: 'form-control'} %>     
                 </div>
               </div>   
             </div>
@@ -88,12 +151,8 @@
 
                 
 
-          <hr>
-
-          <%= hidden_field :business, params[:business] %>
-          <%= hidden_field :field, params[:field] %>
-          <%= hidden_field :date, params[:date] %>
-          <%= hidden_field :time, params[:time] %>
+        </div>
+        </div>
 
           <div class="row">
             <div class="col-md-10">

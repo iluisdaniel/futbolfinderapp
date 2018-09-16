@@ -49,16 +49,23 @@ class ReservationsController < ApplicationController
 	end
 
 	def create
-		# fix redirection when businesses create reservations from games
-		if logged_in?
-			@reservation = current_business.reservations.build(reservation_params)
-		elsif signed_in?
-			@reservation = Reservation.new(reservation_params)
-			# @reservation[:field_id] = get_available_field(@reservation[:business_id], @reservation)
-		end
-		flash[:warning] = @reservation.time
+		# # fix redirection when businesses create reservations from games
+		# if logged_in?
+		# 	@reservation = current_business.reservations.build(reservation_params)
+		# elsif signed_in?
+		# 	@reservation = Reservation.new(reservation_params)
+		# 	# @reservation[:field_id] = get_available_field(@reservation[:business_id], @reservation)
+		# end
+		# flash[:warning] = @reservation.time
 
-		if @reservation.save
+		if (params[:date] && !params[:date].empty?) && 
+			(!params[:time].values[0].empty?)
+			date = Date.strptime(params[:date], '%m/%d/%Y')
+			time = DateTime.new(date.year,date.month,date.day,params[:time].values[0].to_i ,params[:time].values[1].to_i , 0, "-0400")
+			@reservation = Reservation.new(time: time, end_time: time + (params[:duration].to_f).hour, game_id: params[:game_id])
+		end
+
+		if !@reservation.nil? && @reservation.save
 			if logged_in?
 				redirect_to @reservation
 			elsif signed_in?
@@ -75,9 +82,15 @@ class ReservationsController < ApplicationController
 			
 			flash[:success] = "Reservation created succesfully"
 		else
-			render 'new'
-			flash[:danger] = @reservation.errors.full_messages.to_s
-			flash[:info] =@reservation.end_time
+			flash[:danger] = "Please choose a correct date and time"
+			if @reservation.nil?
+				redirect_to Game.find(params[:game_id])
+			else
+				redirect_to @reservation.game
+			end
+
+			# flash[:danger] = @reservation.errors.full_messages.to_s
+			# flash[:info] =@reservation.end_time
 		end
 	end
 

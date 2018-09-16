@@ -14,13 +14,13 @@
                 
                 <li class="<%= 'active' if current_page?(controller: '/users', action: 'index') %>">
                   <%= link_to u_users_path do %>
-                    <i class="fa fa-users"></i> Users
+                     👤 Users
                   <% end %>
                 </li>
 
                 <li class="dropdown <%= 'active' if current_page?(controller: '/games', action: 'new') || current_page?(controller: '/games', action: 'index') %>">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-soccer-ball-o"></i> Games <b class="caret"></b>
+                      ⚽️ Games <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
                       <li><%= link_to "My Games", games_path %></li>
@@ -30,7 +30,7 @@
 
                 <li data-behavior="notifications <%= 'active' if current_page?(controller: '/notifications', action: 'index')%> ">
                   <%= link_to notifications_path do%>
-                    <i class="fa fa-bell"></i> <span class="badge"><%= get_number_notifications %></span>
+                    🔔 <span class="badge"><%= get_number_notifications %></span>
 
                 </li>    
                 <% end %>

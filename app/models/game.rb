@@ -1,6 +1,9 @@
 class Game < ApplicationRecord
+
   belongs_to :user, optional: true
   belongs_to :business, optional: true
+
+  after_initialize :init
 
   #BUG: it doesnt work for users. only for businesses for some reason.
   before_create :randomize_id
@@ -12,13 +15,24 @@ class Game < ApplicationRecord
   has_many :game_lines, dependent: :destroy
   has_many :comments, as: :commentable
 
-  validates :description, presence: true, length: { maximum: 500, minimum: 6 }
-  validates :title, presence: true, length: { minimum: 4, maximum: 60}
+  validates :description, length: { maximum: 500 }
+  validates :title, presence: true, length: { maximum: 60}
   validates :number_players, presence: true, numericality: {only_integer: true}
   validates :public, presence: true, length: {minimum:3, maximum:20}
 
   #validate public 
   validate :check_invite_allowed_presence
+
+
+    def init
+      self.title ||= "New Game"
+      self.description ||= ""
+      self.number_players ||= 10
+      self.public ||= "Public"
+      self.invite_allowed ||= true
+    end
+
+
   
 
     ####### validate public presence
@@ -39,8 +53,8 @@ class Game < ApplicationRecord
       else
         gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
             .where('reservations.id IS NOT NULL OR custom_venues.id IS NOT NULL')
-            .where('reservations.date >= ? OR custom_venues.date >= ?', Date.current, Date.current)
-            .order("reservations.date asc", "custom_venues.date asc")
+            .where('reservations.time >= ? OR custom_venues.date >= ?', DateTime.current, Date.current)
+            .order("reservations.time asc", "custom_venues.date asc")
             .paginate(page: page, per_page: 10)
       end
 
@@ -49,7 +63,7 @@ class Game < ApplicationRecord
       #     .order("reservations.date asc")
     end
 
-    def self.FindGames(user_business, date, public_or_private, current_or_completed, page)
+    def self.FindGames(user_business, date, page)
     	if date.empty? && current_or_completed.empty? && !public_or_private.empty? 
     		searchPublicOrPrivateWithReservationOrVenue(user_business, public_or_private, page)
 		elsif public_or_private.empty? && date.empty? && !current_or_completed.empty?
@@ -90,14 +104,15 @@ class Game < ApplicationRecord
       else
         gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
             .where('reservations.id IS NOT NULL OR custom_venues.id IS NOT NULL')
-            .where('reservations.date >= ? OR custom_venues.date >= ?', Date.current, Date.current)
+            .where('reservations.time >= ? OR custom_venues.date >= ?', DateTime.current, Date.current)
             .where('games.public = ?', public_or_private)
-            .order("reservations.date asc", "custom_venues.date asc")
+            .order("reservations.time asc", "custom_venues.date asc")
             .paginate(page: page, per_page: 10)
       end
     end
 
     def self.searchWithReservationOrVenue(user_business, date, page)
+      d = date.to_date
       gs = get_games(user_business)
       if user_business.instance_of? Business
           gs.includes(:reservation).references(:reservation)
@@ -107,8 +122,8 @@ class Game < ApplicationRecord
       else
         gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
             .where('reservations.id IS NOT NULL OR custom_venues.id IS NOT NULL')
-            .where('reservations.date = ? OR custom_venues.date = ?', date.to_date, date.to_date)
-            .order("reservations.date asc", "custom_venues.date asc")
+            .where('reservations.time >= ? OR reservations.time >= ?', d.beginning_of_day, d.end_of_day)
+            .order("reservations.time asc", "custom_venues.date asc")
             .paginate(page: page, per_page: 10)
       end
     end
@@ -149,8 +164,8 @@ class Game < ApplicationRecord
           else
             gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
                 .where('reservations.id IS NOT NULL OR custom_venues.id IS NOT NULL')
-                .where('reservations.date < ? OR custom_venues.date < ?', Date.current, Date.current)
-                .order("reservations.date desc", "custom_venues.date desc")
+                .where('reservations.time < ? OR custom_venues.date < ?', DateTime.current, DateTime.current)
+                .order("reservations.time desc", "custom_venues.date desc")
                 .paginate(page: page, per_page: 10)
           end
     end
@@ -193,9 +208,9 @@ class Game < ApplicationRecord
     def self.get_invited_ones(user, page)
       gs = get_invited_games(user)
       gs.includes(:reservation, :custom_venue).references(:reservation, :custom_venue)
-      .where('reservations.date <= ? OR custom_venues.date <= ? OR 
+      .where('reservations.time <= ? OR custom_venues.date <= ? OR 
       			(reservations.id IS NULL AND custom_venues.id IS NULL)', 
-      			Date.current, Date.current)
+      			DateTime.current, Date.current)
       .paginate(page: page, per_page: 10)	
     end
 

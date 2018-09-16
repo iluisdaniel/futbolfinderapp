@@ -16,14 +16,13 @@
 			<h4 class="title" style="text-align: center;"><%= game.title %><br>
 			</h4>
 		<% end %>
-		<p style="text-align: center; color: white;"> <i class="fa fa-calendar"></i> <%=  game.get_date.strftime("%^b %d")%> <i class="fa fa-clock-o"></i><%= game.get_time.strftime("%l:%M %p") %> - <%= game.get_end_time.strftime("%l:%M %p") %></p>
+		<p style="text-align: center; color: white;"> <i class="fa fa-calendar"></i> <%=  game.reservation.time.strftime("%^b %d")%> <i class="fa fa-clock-o"></i><%= game.reservation.time.strftime("%l:%M %p") %> - <%= game.get_end_time.strftime("%l:%M %p") %></p>
 	</div>
 	<div class="footer">
 		<i class="fa fa-map-marker"></i> 
-		<% if game.reservation %>
+		<% if game.reservation.business %>
 			<%= link_to game.reservation.business.name, game.reservation.business %>
-		<% else %>
-		<%= game.custom_venue.address %>
+		
 		<% end %>	
 
 		<div class="author pull-right">

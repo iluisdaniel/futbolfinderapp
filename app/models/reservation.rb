@@ -1,30 +1,29 @@
 class Reservation < ApplicationRecord
 	belongs_to :game, optional: true
-	belongs_to :business
+	belongs_to :business, optional: true
   has_many :charges, dependent: :nullify
   has_one :checkin_time
 
   before_create :randomize_id
-  validates :time, uniqueness: {scope: [ :end_time, :field_id ]}
+  # validates :time, uniqueness: {scope: [ :end_time, :field_id ]}
   
 	validates :time, presence: true
 	validates :end_time, presence: true
-	validates :field_id, presence: true
-
-	#Validate Date
-  validate :check_time_greater_than_current_time
+	# validates :field_id, presence: true
 
   #Validate Time
+  # validate :check_there_is_no_reservations_overlap
   validate :check_game_is_at_least_one_hour
-  validate :check_if_the_business_is_open_at_that_time
+  validate :check_time_greater_than_current_time
+  # validate :check_if_the_business_is_open_at_that_time
 
   #Validate Field 
-  validate :check_if_the_business_has_fields
-  validate :check_if_field_belongs_to_business
-  validate :check_if_field_is_reserved_on_this_time
+  # validate :check_if_the_business_has_fields
+  # validate :check_if_field_belongs_to_business
+  # validate :check_if_field_is_reserved_on_this_time
 
   #Validate Business
-  validate :check_if_business_exists
+  # validate :check_if_business_exists
 
   # CHARGES
 
@@ -206,6 +205,11 @@ class Reservation < ApplicationRecord
 
     #validation
 
+    def check_there_is_no_reservations_overlap
+      errors.add(:time, "There is a game at that time") unless !are_there_any_overlaps?
+    end
+
+
     ### Validate Date
   	def check_time_greater_than_current_time
   		errors.add(:date, "Time should be greater than current time") unless time >= DateTime.current
@@ -263,8 +267,34 @@ class Reservation < ApplicationRecord
       return DateTime.new(d.year, d.month, d.day, t.hour, t.min, t.sec, t.zone)
     end
 
+    def overlap_between_times?(time, end_time, time_to_compare, end_time_to_compare)
+      if ((time_to_compare <= time) && (end_time_to_compare >= end_time)) || 
+            ((time_to_compare >= time) && (time_to_compare < end_time)) ||
+            ((end_time_to_compare > time) && (end_time_to_compare <= end_time))
+        return true
+      end 
+      return false
+    end
+
   
   	private
+
+    def are_there_any_overlaps?
+      reservations = Reservation.where(time: time.beginning_of_day..time.end_of_day)
+      if reservations.empty?
+        return false
+      end
+
+
+      reservations.each do |res|
+        if overlap_between_times?(time, end_time, res.time, res.end_time)
+          return true
+        end
+      end
+
+      return false
+
+    end
 
     def randomize_id
         begin

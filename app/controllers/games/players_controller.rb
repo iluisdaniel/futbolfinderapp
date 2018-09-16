@@ -3,6 +3,7 @@ class Games::PlayersController < ApplicationController
 	before_action :correct_business_or_user_to_see,   only: [:index]
 
 	def index
+		@reservation = Reservation.new
 		@game = Game.find(params[:id])
 		@game_line = GameLine.new
 
