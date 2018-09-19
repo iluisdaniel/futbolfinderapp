@@ -23,8 +23,8 @@
 	      <form class="navbar-form navbar-right">
 	        <%= form_tag(games_path, :method => "get", class: "navbar-form navbar-right") do %>
 		        <div class="input-group">
-		        	  <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
-		        	  <%= text_field_tag :date, params[:date], data:{ provide:'datepicker', 'date-format' => 'dd-mm-yyyy', 'date-autoclose' => 'true' }, placeholder: "DD-MM-YYYY", class: "form-control" %>
+		       		<span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+						<%= text_field_tag :date, params[:date], data:{ provide:'datepicker', 'date-format' => 'dd-mm-yyyy', 'date-autoclose' => 'true' }, placeholder: "DD-MM-YYYY", class: "form-control", :autocomplete => :off %>
 		        </div>	
 	        	
 	        	<%= submit_tag "Search", class: "btn btn-primary btn-fill" %>
